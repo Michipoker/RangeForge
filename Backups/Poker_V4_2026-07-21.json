@@ -1,0 +1,3815 @@
+{
+  "spots": [
+    {
+      "name": "SB vs BB",
+      "textures": [
+        {
+          "name": "BBLF",
+          "board": "QCJH7C",
+          "flopNodes": [
+            {
+              "name": "CB75",
+              "combos": [
+                {
+                  "id": "set",
+                  "name": "Set",
+                  "sort": 5,
+                  "note": "todos",
+                  "hands": [
+                    {
+                      "hand": "77",
+                      "selected": [
+                        "7h7d",
+                        "7h7s",
+                        "7d7s"
+                      ]
+                    },
+                    {
+                      "hand": "QQ",
+                      "selected": [
+                        "QhQd",
+                        "QhQs",
+                        "QdQs"
+                      ]
+                    },
+                    {
+                      "hand": "JJ",
+                      "selected": [
+                        "JdJc",
+                        "JdJs",
+                        "JcJs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "todos menos el peor 8J7)",
+                  "hands": [
+                    {
+                      "hand": "QJ",
+                      "selected": [
+                        "QdJd",
+                        "QsJs",
+                        "QhJd",
+                        "QhJc",
+                        "QhJs",
+                        "QdJc",
+                        "QdJs",
+                        "QsJd",
+                        "QsJc"
+                      ]
+                    },
+                    {
+                      "hand": "Q7",
+                      "selected": [
+                        "Qh7h",
+                        "Qd7d",
+                        "Qs7s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AhAc",
+                        "AdAc",
+                        "AcAs"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KhKc",
+                        "KdKc",
+                        "KcKs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AhQh",
+                        "AcQh",
+                        "AcQd",
+                        "AcQs"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KhQh",
+                        "KcQh",
+                        "KcQd",
+                        "KcQs"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QhTh",
+                        "QhTc",
+                        "QdTc",
+                        "QsTc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "la mejor y las que tienen kicker 6-",
+                  "hands": [
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jc6c"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jc5c"
+                      ]
+                    },
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jc4c"
+                      ]
+                    },
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AcJc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "7x con BDFD&nbsp;",
+                  "hands": [
+                    {
+                      "hand": "74",
+                      "selected": [
+                        "7h4h"
+                      ]
+                    },
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7h5h"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7h6h"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8h7h"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9h7h"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ah7h",
+                        "Ac7h",
+                        "Ac7d",
+                        "Ac7s"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kh7h"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Th7h"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "solo con el BDFD",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2h2c",
+                        "2d2c",
+                        "2c2s"
+                      ]
+                    },
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3h3c",
+                        "3d3c",
+                        "3c3s"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4h4c",
+                        "4d4c",
+                        "4c4s"
+                      ]
+                    },
+                    {
+                      "hand": "55",
+                      "selected": [
+                        "5h5c",
+                        "5d5c",
+                        "5c5s"
+                      ]
+                    },
+                    {
+                      "hand": "66",
+                      "selected": [
+                        "6h6c",
+                        "6d6c",
+                        "6c6s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "solo al As y al K con kicker bajo 6-&nbsp;",
+                  "hands": [
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ac6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ac5c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ac4c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ac3c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ac2c"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kc6c"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kc5c"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kc4c"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kc3c"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kc2c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "solo los mejores",
+                  "hands": [
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KhTh",
+                        "KdTd",
+                        "KsTs",
+                        "KhTd",
+                        "KhTc",
+                        "KhTs",
+                        "KdTh",
+                        "KdTc",
+                        "KdTs",
+                        "KcTh",
+                        "KcTd",
+                        "KcTs",
+                        "KsTh",
+                        "KsTd",
+                        "KsTc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9h8h",
+                        "9h8c",
+                        "9d8c",
+                        "9c8h",
+                        "9c8d",
+                        "9c8s",
+                        "9s8c"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kh9h",
+                        "Kh9c",
+                        "Kd9c",
+                        "Kc9h",
+                        "Kc9d",
+                        "Kc9s",
+                        "Ks9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Th8h",
+                        "Th8c",
+                        "Td8c",
+                        "Tc8h",
+                        "Tc8d",
+                        "Tc8s",
+                        "Ts8c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5h4h"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6h4h"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6h5h"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8h5h"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8h6h"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9h6h"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9h"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8h",
+                        "Ac8h",
+                        "Ac8d",
+                        "Ac8s"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6h",
+                        "Ac6h",
+                        "Ac6d",
+                        "Ac6s"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5h",
+                        "Ac5h",
+                        "Ac5d",
+                        "Ac5s"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4h",
+                        "Ac4h",
+                        "Ac4d",
+                        "Ac4s"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ah3h",
+                        "Ac3h",
+                        "Ac3d",
+                        "Ac3s"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ah2h",
+                        "Ac2h",
+                        "Ac2d",
+                        "Ac2s"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kc8h",
+                        "Kc8d",
+                        "Kc8s"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Th6h"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5h3h"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kh6h"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kh5h"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kh4h"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kh3h"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kh2h"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [
+                {
+                  "name": "2S",
+                  "turnActions": [
+                    {
+                      "name": "CB150",
+                      "combos": [
+                        {
+                          "id": "set",
+                          "name": "Set",
+                          "sort": 5,
+                          "note": "todos",
+                          "hands": [
+                            {
+                              "hand": "22",
+                              "selected": [
+                                "2h2c",
+                                "2d2c"
+                              ]
+                            },
+                            {
+                              "hand": "77",
+                              "selected": [
+                                "7h7d",
+                                "7h7s",
+                                "7d7s"
+                              ]
+                            },
+                            {
+                              "hand": "QQ",
+                              "selected": [
+                                "QhQd",
+                                "QhQs",
+                                "QdQs"
+                              ]
+                            },
+                            {
+                              "hand": "JJ",
+                              "selected": [
+                                "JdJc",
+                                "JdJs",
+                                "JcJs"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "two-pair",
+                          "name": "Two pair",
+                          "sort": 7,
+                          "note": "todos",
+                          "hands": [
+                            {
+                              "hand": "QJ",
+                              "selected": [
+                                "QdJd",
+                                "QsJs",
+                                "QhJd",
+                                "QhJc",
+                                "QhJs",
+                                "QdJc",
+                                "QdJs",
+                                "QsJd",
+                                "QsJc"
+                              ]
+                            },
+                            {
+                              "hand": "Q7",
+                              "selected": [
+                                "Qh7h",
+                                "Qd7d",
+                                "Qs7s"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "overpair",
+                          "name": "Overpair",
+                          "sort": 8,
+                          "note": "todos",
+                          "hands": [
+                            {
+                              "hand": "AA",
+                              "selected": [
+                                "AhAc",
+                                "AdAc",
+                                "AcAs"
+                              ]
+                            },
+                            {
+                              "hand": "KK",
+                              "selected": [
+                                "KhKc",
+                                "KdKc",
+                                "KcKs"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "top-pair",
+                          "name": "Top pair",
+                          "sort": 9,
+                          "note": "kicker K+",
+                          "hands": [
+                            {
+                              "hand": "AQ",
+                              "selected": [
+                                "AhQh",
+                                "AcQh",
+                                "AcQd",
+                                "AcQs"
+                              ]
+                            },
+                            {
+                              "hand": "KQ",
+                              "selected": [
+                                "KhQh",
+                                "KcQh",
+                                "KcQd",
+                                "KcQs"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "mid-pair",
+                          "name": "Middle pair",
+                          "sort": 11,
+                          "note": "los peores, hacen foldean a Jx mejores y pagan FD que le vamos aganando",
+                          "hands": [
+                            {
+                              "hand": "J6",
+                              "selected": [
+                                "Jc6c"
+                              ]
+                            },
+                            {
+                              "hand": "J5",
+                              "selected": [
+                                "Jc5c"
+                              ]
+                            },
+                            {
+                              "hand": "J4",
+                              "selected": [
+                                "Jc4c"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "3rd-pair",
+                          "name": "3rd pair",
+                          "sort": 13,
+                          "note": "los peores kicker 7- todos los 2x",
+                          "hands": [
+                            {
+                              "hand": "74",
+                              "selected": [
+                                "7h4h"
+                              ]
+                            },
+                            {
+                              "hand": "75",
+                              "selected": [
+                                "7h5h"
+                              ]
+                            },
+                            {
+                              "hand": "76",
+                              "selected": [
+                                "7h6h"
+                              ]
+                            },
+                            {
+                              "hand": "A2",
+                              "selected": [
+                                "Ac2c",
+                                "Ah2h",
+                                "Ac2h",
+                                "Ac2d"
+                              ]
+                            },
+                            {
+                              "hand": "K2",
+                              "selected": [
+                                "Kc2c"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "pp-below-3rd",
+                          "name": "PP below 3rd",
+                          "sort": 14,
+                          "note": "todos",
+                          "hands": [
+                            {
+                              "hand": "33",
+                              "selected": [
+                                "3h3c",
+                                "3d3c",
+                                "3c3s"
+                              ]
+                            },
+                            {
+                              "hand": "44",
+                              "selected": [
+                                "4h4c",
+                                "4d4c",
+                                "4c4s"
+                              ]
+                            },
+                            {
+                              "hand": "55",
+                              "selected": [
+                                "5h5c",
+                                "5d5c",
+                                "5c5s"
+                              ]
+                            },
+                            {
+                              "hand": "66",
+                              "selected": [
+                                "6h6c",
+                                "6d6c",
+                                "6c6s"
+                              ]
+                            }
+                          ],
+                          "expanded": false
+                        },
+                        {
+                          "id": "fd-2",
+                          "name": "FD (2crd)",
+                          "sort": 17,
+                          "note": "todos",
+                          "hands": [
+                            {
+                              "hand": "A6",
+                              "selected": [
+                                "Ac6c"
+                              ]
+                            },
+                            {
+                              "hand": "A5",
+                              "selected": [
+                                "Ac5c"
+                              ]
+                            },
+                            {
+                              "hand": "A4",
+                              "selected": [
+                                "Ac4c"
+                              ]
+                            },
+                            {
+                              "hand": "A3",
+                              "selected": [
+                                "Ac3c"
+                              ]
+                            },
+                            {
+                              "hand": "K6",
+                              "selected": [
+                                "Kc6c"
+                              ]
+                            },
+                            {
+                              "hand": "K5",
+                              "selected": [
+                                "Kc5c"
+                              ]
+                            },
+                            {
+                              "hand": "K4",
+                              "selected": [
+                                "Kc4c"
+                              ]
+                            },
+                            {
+                              "hand": "K3",
+                              "selected": [
+                                "Kc3c"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "oesd-2",
+                          "name": "OESD (2crd)",
+                          "sort": 19,
+                          "note": "todos",
+                          "hands": [
+                            {
+                              "hand": "KT",
+                              "selected": [
+                                "KhTh",
+                                "KdTd",
+                                "KsTs",
+                                "KhTd",
+                                "KhTc",
+                                "KhTs",
+                                "KdTh",
+                                "KdTc",
+                                "KdTs",
+                                "KcTh",
+                                "KcTd",
+                                "KcTs",
+                                "KsTh",
+                                "KsTd",
+                                "KsTc"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "gs-2",
+                          "name": "GS (2crd)",
+                          "sort": 21,
+                          "note": "",
+                          "hands": [
+                            {
+                              "hand": "K9",
+                              "selected": [
+                                "Kh9h",
+                                "Kh9c",
+                                "Kd9c",
+                                "Kc9h",
+                                "Kc9d",
+                                "Kc9s",
+                                "Ks9c"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "bdfd",
+                          "name": "BDFD",
+                          "sort": 24,
+                          "note": "",
+                          "hands": [
+                            {
+                              "hand": "K6",
+                              "selected": [
+                                "Kh6h"
+                              ]
+                            },
+                            {
+                              "hand": "K5",
+                              "selected": [
+                                "Kh5h"
+                              ]
+                            },
+                            {
+                              "hand": "K4",
+                              "selected": [
+                                "Kh4h"
+                              ]
+                            },
+                            {
+                              "hand": "K3",
+                              "selected": [
+                                "Kh3h"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        }
+                      ],
+                      "generalNote": "",
+                      "imageData": "",
+                      "riverCards": [
+                        {
+                          "name": "6D",
+                          "riverActions": [
+                            {
+                              "name": "Push",
+                              "combos": [
+                                {
+                                  "id": "set",
+                                  "name": "Set",
+                                  "sort": 5,
+                                  "note": "todos",
+                                  "hands": [
+                                    {
+                                      "hand": "22",
+                                      "selected": [
+                                        "2h2c",
+                                        "2d2c"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "66",
+                                      "selected": [
+                                        "6h6c",
+                                        "6c6s"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "77",
+                                      "selected": [
+                                        "7h7d",
+                                        "7h7s",
+                                        "7d7s"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "QQ",
+                                      "selected": [
+                                        "QhQd",
+                                        "QhQs",
+                                        "QdQs"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "JJ",
+                                      "selected": [
+                                        "JdJc",
+                                        "JdJs",
+                                        "JcJs"
+                                      ]
+                                    }
+                                  ],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "two-pair",
+                                  "name": "Two pair",
+                                  "sort": 7,
+                                  "note": "todos",
+                                  "hands": [
+                                    {
+                                      "hand": "76",
+                                      "selected": [
+                                        "7h6h"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "QJ",
+                                      "selected": [
+                                        "QdJd",
+                                        "QsJs",
+                                        "QhJd",
+                                        "QhJc",
+                                        "QhJs",
+                                        "QdJc",
+                                        "QdJs",
+                                        "QsJd",
+                                        "QsJc"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "Q7",
+                                      "selected": [
+                                        "Qh7h",
+                                        "Qd7d",
+                                        "Qs7s"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "J6",
+                                      "selected": [
+                                        "Jc6c"
+                                      ]
+                                    }
+                                  ],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "overpair",
+                                  "name": "Overpair",
+                                  "sort": 8,
+                                  "note": "todos",
+                                  "hands": [
+                                    {
+                                      "hand": "AA",
+                                      "selected": [
+                                        "AhAc",
+                                        "AdAc",
+                                        "AcAs"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "KK",
+                                      "selected": [
+                                        "KhKc",
+                                        "KdKc",
+                                        "KcKs"
+                                      ]
+                                    }
+                                  ],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "top-pair",
+                                  "name": "Top pair",
+                                  "sort": 9,
+                                  "note": "",
+                                  "hands": [],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "mid-pair",
+                                  "name": "Middle pair",
+                                  "sort": 11,
+                                  "note": "",
+                                  "hands": [],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "3rd-pair",
+                                  "name": "3rd pair",
+                                  "sort": 13,
+                                  "note": "",
+                                  "hands": [],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "pp-below-3rd",
+                                  "name": "PP below 3rd",
+                                  "sort": 14,
+                                  "note": "",
+                                  "hands": [],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "ace-high",
+                                  "name": "Ace high",
+                                  "sort": 15,
+                                  "note": "",
+                                  "hands": [],
+                                  "expanded": false
+                                },
+                                {
+                                  "id": "air",
+                                  "name": "Air",
+                                  "sort": 26,
+                                  "note": "",
+                                  "hands": [
+                                    {
+                                      "hand": "K5",
+                                      "selected": [
+                                        "Kh5h"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "K4",
+                                      "selected": [
+                                        "Kh4h"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "K3",
+                                      "selected": [
+                                        "Kh3h"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "KT",
+                                      "selected": [
+                                        "KhTh",
+                                        "KhTd",
+                                        "KhTs",
+                                        "KdTh",
+                                        "KsTh"
+                                      ]
+                                    },
+                                    {
+                                      "hand": "K9",
+                                      "selected": [
+                                        "Kh9h"
+                                      ]
+                                    }
+                                  ],
+                                  "expanded": false
+                                }
+                              ],
+                              "generalNote": "",
+                              "imageData": "",
+                              "locked": true
+                            }
+                          ]
+                        }
+                      ],
+                      "locked": true
+                    }
+                  ]
+                }
+              ],
+              "locked": true
+            },
+            {
+              "name": "XC",
+              "combos": [
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "todos",
+                  "hands": [
+                    {
+                      "hand": "J7",
+                      "selected": [
+                        "Jd7d",
+                        "Js7s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "todos",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AhAd",
+                        "AhAs",
+                        "AdAs"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KhKd",
+                        "KhKs",
+                        "KdKs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AdQd",
+                        "AsQs",
+                        "AhQd",
+                        "AhQs",
+                        "AdQh",
+                        "AdQs",
+                        "AsQh",
+                        "AsQd"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KdQd",
+                        "KsQs",
+                        "KhQd",
+                        "KhQs",
+                        "KdQh",
+                        "KdQs",
+                        "KsQh",
+                        "KsQd"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QdTd",
+                        "QsTs",
+                        "QhTd",
+                        "QhTs",
+                        "QdTh",
+                        "QdTs",
+                        "QsTh",
+                        "QsTd"
+                      ]
+                    },
+                    {
+                      "hand": "Q9",
+                      "selected": [
+                        "Qh9h",
+                        "Qd9d",
+                        "Qs9s",
+                        "Qh9d",
+                        "Qh9c",
+                        "Qh9s",
+                        "Qd9h",
+                        "Qd9c",
+                        "Qd9s",
+                        "Qs9h",
+                        "Qs9d",
+                        "Qs9c"
+                      ]
+                    },
+                    {
+                      "hand": "Q8",
+                      "selected": [
+                        "Qh8h",
+                        "Qd8d",
+                        "Qs8s",
+                        "Qh8d",
+                        "Qh8c",
+                        "Qh8s",
+                        "Qd8h",
+                        "Qd8c",
+                        "Qd8s",
+                        "Qs8h",
+                        "Qs8d",
+                        "Qs8c"
+                      ]
+                    },
+                    {
+                      "hand": "Q6",
+                      "selected": [
+                        "Qh6h",
+                        "Qd6d",
+                        "Qs6s"
+                      ]
+                    },
+                    {
+                      "hand": "Q5",
+                      "selected": [
+                        "Qh5h",
+                        "Qd5d",
+                        "Qs5s"
+                      ]
+                    },
+                    {
+                      "hand": "Q4",
+                      "selected": [
+                        "Qh4h",
+                        "Qd4d",
+                        "Qs4s"
+                      ]
+                    },
+                    {
+                      "hand": "Q3",
+                      "selected": [
+                        "Qh3h",
+                        "Qd3d",
+                        "Qs3s"
+                      ]
+                    },
+                    {
+                      "hand": "Q2",
+                      "selected": [
+                        "Qh2h",
+                        "Qd2d",
+                        "Qs2s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AdJd",
+                        "AsJs",
+                        "AhJd",
+                        "AhJc",
+                        "AhJs",
+                        "AdJc",
+                        "AdJs",
+                        "AcJd",
+                        "AcJs",
+                        "AsJd",
+                        "AsJc"
+                      ]
+                    },
+                    {
+                      "hand": "KJ",
+                      "selected": [
+                        "KdJd",
+                        "KcJc",
+                        "KsJs",
+                        "KhJd",
+                        "KhJc",
+                        "KhJs",
+                        "KdJc",
+                        "KdJs",
+                        "KcJd",
+                        "KcJs",
+                        "KsJd",
+                        "KsJc"
+                      ]
+                    },
+                    {
+                      "hand": "JT",
+                      "selected": [
+                        "JdTd",
+                        "JcTc",
+                        "JsTs",
+                        "JdTh",
+                        "JdTc",
+                        "JdTs",
+                        "JcTh",
+                        "JcTd",
+                        "JcTs",
+                        "JsTh",
+                        "JsTd",
+                        "JsTc"
+                      ]
+                    },
+                    {
+                      "hand": "J9",
+                      "selected": [
+                        "Jd9d",
+                        "Jc9c",
+                        "Js9s",
+                        "Jd9h",
+                        "Jd9c",
+                        "Jd9s",
+                        "Jc9h",
+                        "Jc9d",
+                        "Jc9s",
+                        "Js9h",
+                        "Js9d",
+                        "Js9c"
+                      ]
+                    },
+                    {
+                      "hand": "J8",
+                      "selected": [
+                        "Jd8d",
+                        "Jc8c",
+                        "Js8s",
+                        "Jd8h",
+                        "Jd8c",
+                        "Jd8s",
+                        "Jc8h",
+                        "Jc8d",
+                        "Jc8s",
+                        "Js8h",
+                        "Js8d",
+                        "Js8c"
+                      ]
+                    },
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jd6d",
+                        "Js6s"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jd5d",
+                        "Js5s"
+                      ]
+                    },
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jd4d",
+                        "Js4s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "pp-below-mp",
+                  "name": "PP below MP",
+                  "sort": 12,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "88",
+                      "selected": [
+                        "8h8d",
+                        "8h8c",
+                        "8h8s",
+                        "8d8c",
+                        "8d8s",
+                        "8c8s"
+                      ]
+                    },
+                    {
+                      "hand": "99",
+                      "selected": [
+                        "9h9d",
+                        "9h9c",
+                        "9h9s",
+                        "9d9c",
+                        "9d9s",
+                        "9c9s"
+                      ]
+                    },
+                    {
+                      "hand": "TT",
+                      "selected": [
+                        "ThTd",
+                        "ThTc",
+                        "ThTs",
+                        "TdTc",
+                        "TdTs",
+                        "TcTs"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "74",
+                      "selected": [
+                        "7d4d",
+                        "7s4s"
+                      ]
+                    },
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7d5d",
+                        "7s5s"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7d6d",
+                        "7s6s"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8d7d",
+                        "8s7s"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9d7d",
+                        "9s7s"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ad7d",
+                        "As7s",
+                        "Ah7d",
+                        "Ah7s",
+                        "Ad7h",
+                        "Ad7s",
+                        "As7h",
+                        "As7d"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kd7d",
+                        "Ks7s"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Td7d",
+                        "Ts7s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2h2d",
+                        "2h2s",
+                        "2d2s"
+                      ]
+                    },
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3h3d",
+                        "3h3s",
+                        "3d3s"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4h4d",
+                        "4h4s",
+                        "4d4s"
+                      ]
+                    },
+                    {
+                      "hand": "55",
+                      "selected": [
+                        "5h5d",
+                        "5h5s",
+                        "5d5s"
+                      ]
+                    },
+                    {
+                      "hand": "66",
+                      "selected": [
+                        "6h6d",
+                        "6h6s",
+                        "6d6s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ad9d",
+                        "As9s",
+                        "Ah9d",
+                        "Ah9s",
+                        "Ad9h",
+                        "Ad9s",
+                        "As9h",
+                        "As9d"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ad8d",
+                        "As8s",
+                        "Ah8d",
+                        "Ah8s",
+                        "Ad8h",
+                        "Ad8s",
+                        "As8h",
+                        "As8d"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ad6d",
+                        "As6s",
+                        "Ah6d",
+                        "Ah6s",
+                        "Ad6h",
+                        "Ad6s",
+                        "As6h",
+                        "As6d"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ad5d",
+                        "As5s",
+                        "Ah5d",
+                        "Ah5s",
+                        "Ad5h",
+                        "Ad5s",
+                        "As5h",
+                        "As5d"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ad4d",
+                        "As4s",
+                        "Ah4d",
+                        "Ah4s",
+                        "Ad4h",
+                        "Ad4s",
+                        "As4h",
+                        "As4d"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ad3d",
+                        "As3s",
+                        "Ah3d",
+                        "Ah3s",
+                        "Ad3h",
+                        "Ad3s",
+                        "As3h",
+                        "As3d"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ad2d",
+                        "As2s",
+                        "Ah2d",
+                        "Ah2s",
+                        "Ad2h",
+                        "Ad2s",
+                        "As2h",
+                        "As2d"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5c3c"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5c4c"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6c4c"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6c5c"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8c5c"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8c6c"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9c6c"
+                      ]
+                    },
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9c8c"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AcKc"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AcTc"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ac9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ac8c"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KcTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kc9c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kc8c"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Tc9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Tc8c"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Tc6c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Th9h",
+                        "Td9d",
+                        "Ts9s",
+                        "Th9d",
+                        "Th9c",
+                        "Th9s",
+                        "Td9h",
+                        "Td9c",
+                        "Td9s",
+                        "Tc9h",
+                        "Tc9d",
+                        "Tc9s",
+                        "Ts9h",
+                        "Ts9d",
+                        "Ts9c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9d8d",
+                        "9s8s",
+                        "9h8d",
+                        "9h8s",
+                        "9d8h",
+                        "9d8s",
+                        "9s8h",
+                        "9s8d"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AhKh",
+                        "AdKd",
+                        "AsKs",
+                        "AhKd",
+                        "AhKc",
+                        "AhKs",
+                        "AdKh",
+                        "AdKc",
+                        "AdKs",
+                        "AcKh",
+                        "AcKd",
+                        "AcKs",
+                        "AsKh",
+                        "AsKd",
+                        "AsKc"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AhTh",
+                        "AdTd",
+                        "AsTs",
+                        "AhTd",
+                        "AhTc",
+                        "AhTs",
+                        "AdTh",
+                        "AdTc",
+                        "AdTs",
+                        "AcTh",
+                        "AcTd",
+                        "AcTs",
+                        "AsTh",
+                        "AsTd",
+                        "AsTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kd9d",
+                        "Ks9s",
+                        "Kh9d",
+                        "Kh9s",
+                        "Kd9h",
+                        "Kd9s",
+                        "Ks9h",
+                        "Ks9d"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Td8d",
+                        "Ts8s",
+                        "Th8d",
+                        "Th8s",
+                        "Td8h",
+                        "Td8s",
+                        "Ts8h",
+                        "Ts8d"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9c",
+                        "Ad9c",
+                        "Ac9h",
+                        "Ac9d",
+                        "Ac9s",
+                        "As9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8c",
+                        "Ad8c",
+                        "As8c"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6c",
+                        "Ad6c",
+                        "As6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5c",
+                        "Ad5c",
+                        "As5c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4c",
+                        "Ad4c",
+                        "As4c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ah3c",
+                        "Ad3c",
+                        "As3c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ah2c",
+                        "Ad2c",
+                        "As2c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kh8h",
+                        "Kh8c",
+                        "Kd8c",
+                        "Ks8c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5d3d",
+                        "5s3s"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5d4d",
+                        "5s4s"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6d4d",
+                        "6s4s"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6d5d",
+                        "6s5s"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8d5d",
+                        "8s5s"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8d6d",
+                        "8s6s"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9d6d",
+                        "9s6s"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kd8d",
+                        "Ks8s",
+                        "Kh8d",
+                        "Kh8s",
+                        "Kd8h",
+                        "Kd8s",
+                        "Ks8h",
+                        "Ks8d"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kd6d",
+                        "Ks6s"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kd5d",
+                        "Ks5s"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kd4d",
+                        "Ks4s"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kd3d",
+                        "Ks3s"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kd2d",
+                        "Ks2s"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Td6d",
+                        "Ts6s"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [],
+              "locked": false
+            }
+          ],
+          "deletedHands": [
+            "32o",
+            "32s",
+            "42o",
+            "42s",
+            "43o",
+            "43s",
+            "52o",
+            "52s",
+            "53o",
+            "54o",
+            "62o",
+            "62s",
+            "63o",
+            "63s",
+            "64o",
+            "65o",
+            "72o",
+            "72s",
+            "73o",
+            "73s",
+            "74o",
+            "75o",
+            "76o",
+            "82o",
+            "82s",
+            "83o",
+            "83s",
+            "84o",
+            "84s",
+            "85o",
+            "86o",
+            "87o",
+            "92o",
+            "92s",
+            "93o",
+            "93s",
+            "94o",
+            "94s",
+            "95o",
+            "95s",
+            "96o",
+            "97o",
+            "J2o",
+            "J2s",
+            "J3o",
+            "J3s",
+            "J4o",
+            "J5o",
+            "J6o",
+            "J7o",
+            "K2o",
+            "K3o",
+            "K4o",
+            "K5o",
+            "K6o",
+            "K7o",
+            "Q2o",
+            "Q3o",
+            "Q4o",
+            "Q5o",
+            "Q6o",
+            "Q7o",
+            "T2o",
+            "T2s",
+            "T3o",
+            "T3s",
+            "T4o",
+            "T4s",
+            "T5o",
+            "T5s",
+            "T6o",
+            "T7o"
+          ]
+        },
+        {
+          "name": " 3 STG",
+          "board": "QDTD9S",
+          "flopNodes": [
+            {
+              "name": "CB33",
+              "combos": [
+                {
+                  "id": "straight",
+                  "name": "Straight",
+                  "sort": 4,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "KJ",
+                      "selected": [
+                        "KsJs",
+                        "KhJd",
+                        "KdJh",
+                        "KdJc",
+                        "KdJs",
+                        "KcJd",
+                        "KsJd"
+                      ]
+                    },
+                    {
+                      "hand": "J8",
+                      "selected": [
+                        "Js8s"
+                      ]
+                    }
+                  ],
+                  "expanded": false
+                },
+                {
+                  "id": "set",
+                  "name": "Set",
+                  "sort": 5,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "99",
+                      "selected": [
+                        "9h9d",
+                        "9d9c"
+                      ]
+                    }
+                  ],
+                  "expanded": false
+                },
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "solo la mejor (QT)",
+                  "hands": [
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QhTh",
+                        "QcTc",
+                        "QsTs",
+                        "QhTc",
+                        "QhTs",
+                        "QcTh",
+                        "QcTs",
+                        "QsTh",
+                        "QsTc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "solo KK con BDFD",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AhAd",
+                        "AdAc",
+                        "AdAs"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KhKd",
+                        "KdKc",
+                        "KdKs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AsQs",
+                        "AdQh",
+                        "AdQc",
+                        "AdQs"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KsQs",
+                        "KdQh",
+                        "KdQc",
+                        "KdQs"
+                      ]
+                    },
+                    {
+                      "hand": "QJ",
+                      "selected": [
+                        "QsJs",
+                        "QhJd",
+                        "QcJd",
+                        "QsJd"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-tp",
+                  "name": "PP below TP",
+                  "sort": 10,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "JJ",
+                      "selected": [
+                        "JhJd",
+                        "JdJc",
+                        "JdJs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "solo BDFD",
+                  "hands": [
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AsTs",
+                        "AdTh",
+                        "AdTc",
+                        "AdTs"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KsTs",
+                        "KdTh",
+                        "KdTc",
+                        "KdTs"
+                      ]
+                    },
+                    {
+                      "hand": "JT",
+                      "selected": [
+                        "JsTs",
+                        "JdTh",
+                        "JdTc",
+                        "JdTs"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Ts8s"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Ts7s"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Ts6s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "solo con BFDF del kicker alto",
+                  "hands": [
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ad9h",
+                        "Ad9c"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kd9h",
+                        "Kd9c"
+                      ]
+                    },
+                    {
+                      "hand": "J9",
+                      "selected": [
+                        "Jd9h",
+                        "Jd9c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2h2d",
+                        "2d2c",
+                        "2d2s"
+                      ]
+                    },
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3h3d",
+                        "3d3c",
+                        "3d3s"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4h4d",
+                        "4d4c",
+                        "4d4s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "solo con kicker 7-",
+                  "hands": [
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ad6d"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ad5d"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ad4d"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ad3d"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ad2d"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kd6d"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kd5d"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kd4d"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kd3d"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kd2d"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AsJs",
+                        "AhJd",
+                        "AdJh",
+                        "AdJc",
+                        "AdJs",
+                        "AcJd",
+                        "AsJd"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "oesd-1",
+                  "name": "OESD (1crd)",
+                  "sort": 20,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "solo con BDFD",
+                  "hands": [
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AsKs",
+                        "AhKd",
+                        "AdKh",
+                        "AdKc",
+                        "AdKs",
+                        "AcKd",
+                        "AsKd"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "gs-1",
+                  "name": "GS (1crd)",
+                  "sort": 22,
+                  "note": "con BDFD",
+                  "hands": [
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ad8h",
+                        "Ad8c",
+                        "Ad8s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "BDFD al As solo",
+                  "hands": [
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ad7h",
+                        "Ad7c",
+                        "Ad7s"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ad6h",
+                        "Ad6c",
+                        "Ad6s"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ad5h",
+                        "Ad5c",
+                        "Ad5s"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ad4h",
+                        "Ad4c",
+                        "Ad4s"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ad3h",
+                        "Ad3c",
+                        "Ad3s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [],
+                  "expanded": true
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [],
+              "locked": true
+            },
+            {
+              "name": "Check",
+              "combos": [
+                {
+                  "id": "straight",
+                  "name": "Straight",
+                  "sort": 4,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "KJ",
+                      "selected": [
+                        "KhJh",
+                        "KdJd",
+                        "KcJc",
+                        "KhJc",
+                        "KhJs",
+                        "KcJh",
+                        "KcJs",
+                        "KsJh",
+                        "KsJc"
+                      ]
+                    },
+                    {
+                      "hand": "J8",
+                      "selected": [
+                        "Jh8h",
+                        "Jd8d",
+                        "Jc8c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "set",
+                  "name": "Set",
+                  "sort": 5,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "99",
+                      "selected": [
+                        "9h9c"
+                      ]
+                    },
+                    {
+                      "hand": "QQ",
+                      "selected": [
+                        "QhQc",
+                        "QhQs",
+                        "QcQs"
+                      ]
+                    },
+                    {
+                      "hand": "TT",
+                      "selected": [
+                        "ThTc",
+                        "ThTs",
+                        "TcTs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "Q9",
+                      "selected": [
+                        "Qh9h",
+                        "Qc9c",
+                        "Qh9d",
+                        "Qh9c",
+                        "Qc9h",
+                        "Qc9d",
+                        "Qs9h",
+                        "Qs9d",
+                        "Qs9c"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Th9h",
+                        "Tc9c",
+                        "Th9d",
+                        "Th9c",
+                        "Tc9h",
+                        "Tc9d",
+                        "Ts9h",
+                        "Ts9d",
+                        "Ts9c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AhAc",
+                        "AhAs",
+                        "AcAs"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KhKc",
+                        "KhKs",
+                        "KcKs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AhQh",
+                        "AcQc",
+                        "AhQc",
+                        "AhQs",
+                        "AcQh",
+                        "AcQs",
+                        "AsQh",
+                        "AsQc"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KhQh",
+                        "KcQc",
+                        "KhQc",
+                        "KhQs",
+                        "KcQh",
+                        "KcQs",
+                        "KsQh",
+                        "KsQc"
+                      ]
+                    },
+                    {
+                      "hand": "QJ",
+                      "selected": [
+                        "QhJh",
+                        "QcJc",
+                        "QhJc",
+                        "QhJs",
+                        "QcJh",
+                        "QcJs",
+                        "QsJh",
+                        "QsJc"
+                      ]
+                    },
+                    {
+                      "hand": "Q8",
+                      "selected": [
+                        "Qh8h",
+                        "Qc8c",
+                        "Qs8s"
+                      ]
+                    },
+                    {
+                      "hand": "Q7",
+                      "selected": [
+                        "Qh7h",
+                        "Qc7c",
+                        "Qs7s"
+                      ]
+                    },
+                    {
+                      "hand": "Q6",
+                      "selected": [
+                        "Qh6h",
+                        "Qc6c",
+                        "Qs6s"
+                      ]
+                    },
+                    {
+                      "hand": "Q5",
+                      "selected": [
+                        "Qh5h",
+                        "Qc5c",
+                        "Qs5s"
+                      ]
+                    },
+                    {
+                      "hand": "Q4",
+                      "selected": [
+                        "Qh4h",
+                        "Qc4c",
+                        "Qs4s"
+                      ]
+                    },
+                    {
+                      "hand": "Q3",
+                      "selected": [
+                        "Qh3h",
+                        "Qc3c",
+                        "Qs3s"
+                      ]
+                    },
+                    {
+                      "hand": "Q2",
+                      "selected": [
+                        "Qh2h",
+                        "Qc2c",
+                        "Qs2s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-tp",
+                  "name": "PP below TP",
+                  "sort": 10,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "JJ",
+                      "selected": [
+                        "JhJc",
+                        "JhJs",
+                        "JcJs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AhTh",
+                        "AcTc",
+                        "AhTc",
+                        "AhTs",
+                        "AcTh",
+                        "AcTs",
+                        "AsTh",
+                        "AsTc"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KhTh",
+                        "KcTc",
+                        "KhTc",
+                        "KhTs",
+                        "KcTh",
+                        "KcTs",
+                        "KsTh",
+                        "KsTc"
+                      ]
+                    },
+                    {
+                      "hand": "JT",
+                      "selected": [
+                        "JhTh",
+                        "JcTc",
+                        "JhTc",
+                        "JhTs",
+                        "JcTh",
+                        "JcTs",
+                        "JsTh",
+                        "JsTc"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Th8h",
+                        "Tc8c"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Th7h",
+                        "Tc7c"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Th6h",
+                        "Tc6c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9h6h",
+                        "9d6d",
+                        "9c6c"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9h7h",
+                        "9d7d",
+                        "9c7c"
+                      ]
+                    },
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9h8h",
+                        "9d8d",
+                        "9c8c"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9h",
+                        "Ad9d",
+                        "Ac9c",
+                        "Ah9d",
+                        "Ah9c",
+                        "Ac9h",
+                        "Ac9d",
+                        "As9h",
+                        "As9d",
+                        "As9c"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kh9h",
+                        "Kd9d",
+                        "Kc9c",
+                        "Kh9d",
+                        "Kh9c",
+                        "Kc9h",
+                        "Kc9d",
+                        "Ks9h",
+                        "Ks9d",
+                        "Ks9c"
+                      ]
+                    },
+                    {
+                      "hand": "J9",
+                      "selected": [
+                        "Jh9h",
+                        "Jd9d",
+                        "Jc9c",
+                        "Jh9d",
+                        "Jh9c",
+                        "Jc9h",
+                        "Jc9d",
+                        "Js9h",
+                        "Js9d",
+                        "Js9c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2h2c",
+                        "2h2s",
+                        "2c2s"
+                      ]
+                    },
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3h3c",
+                        "3h3s",
+                        "3c3s"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4h4c",
+                        "4h4s",
+                        "4c4s"
+                      ]
+                    },
+                    {
+                      "hand": "55",
+                      "selected": [
+                        "5h5d",
+                        "5h5c",
+                        "5h5s",
+                        "5d5c",
+                        "5d5s",
+                        "5c5s"
+                      ]
+                    },
+                    {
+                      "hand": "66",
+                      "selected": [
+                        "6h6d",
+                        "6h6c",
+                        "6h6s",
+                        "6d6c",
+                        "6d6s",
+                        "6c6s"
+                      ]
+                    },
+                    {
+                      "hand": "77",
+                      "selected": [
+                        "7h7d",
+                        "7h7c",
+                        "7h7s",
+                        "7d7c",
+                        "7d7s",
+                        "7c7s"
+                      ]
+                    },
+                    {
+                      "hand": "88",
+                      "selected": [
+                        "8h8d",
+                        "8h8c",
+                        "8h8s",
+                        "8d8c",
+                        "8d8s",
+                        "8c8s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ah7h",
+                        "Ac7c",
+                        "Ah7c",
+                        "Ah7s",
+                        "Ac7h",
+                        "Ac7s",
+                        "As7h",
+                        "As7c"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6h",
+                        "Ac6c",
+                        "Ah6c",
+                        "Ah6s",
+                        "Ac6h",
+                        "Ac6s",
+                        "As6h",
+                        "As6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5h",
+                        "Ac5c",
+                        "Ah5c",
+                        "Ah5s",
+                        "Ac5h",
+                        "Ac5s",
+                        "As5h",
+                        "As5c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4h",
+                        "Ac4c",
+                        "Ah4c",
+                        "Ah4s",
+                        "Ac4h",
+                        "Ac4s",
+                        "As4h",
+                        "As4c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ah3h",
+                        "Ac3c",
+                        "Ah3c",
+                        "Ah3s",
+                        "Ac3h",
+                        "Ac3s",
+                        "As3h",
+                        "As3c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ah2h",
+                        "Ac2c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5d3d"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5d4d"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6d4d"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6d5d"
+                      ]
+                    },
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7d5d"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7d6d"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8d5d"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8d6d"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8d7d"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AdKd"
+                      ]
+                    },
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AdJd"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ad8d"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ad7d"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kd8d"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kd7d"
+                      ]
+                    },
+                    {
+                      "hand": "J7",
+                      "selected": [
+                        "Jd7d"
+                      ]
+                    },
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jd6d"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jd5d"
+                      ]
+                    },
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jd4d"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8h6h",
+                        "8c6c",
+                        "8s6s"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8h7h",
+                        "8c7c",
+                        "8s7s"
+                      ]
+                    },
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AhJh",
+                        "AcJc",
+                        "AhJc",
+                        "AhJs",
+                        "AcJh",
+                        "AcJs",
+                        "AsJh",
+                        "AsJc"
+                      ]
+                    },
+                    {
+                      "hand": "J7",
+                      "selected": [
+                        "Jh7h",
+                        "Jc7c",
+                        "Js7s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "oesd-1",
+                  "name": "OESD (1crd)",
+                  "sort": 20,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jh6h",
+                        "Jc6c",
+                        "Js6s"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jh5h",
+                        "Jc5c",
+                        "Js5s"
+                      ]
+                    },
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jh4h",
+                        "Jc4c",
+                        "Js4s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7h6h",
+                        "7c6c",
+                        "7s6s"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AhKh",
+                        "AcKc",
+                        "AhKc",
+                        "AhKs",
+                        "AcKh",
+                        "AcKs",
+                        "AsKh",
+                        "AsKc"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "gs-1",
+                  "name": "GS (1crd)",
+                  "sort": 22,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8h5h",
+                        "8c5c",
+                        "8s5s"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8h",
+                        "Ac8c",
+                        "As8s",
+                        "Ah8d",
+                        "Ah8c",
+                        "Ah8s",
+                        "Ac8h",
+                        "Ac8d",
+                        "Ac8s",
+                        "As8h",
+                        "As8d",
+                        "As8c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kh8h",
+                        "Kc8c",
+                        "Ks8s",
+                        "Kh8d",
+                        "Kh8c",
+                        "Kh8s",
+                        "Kd8h",
+                        "Kd8c",
+                        "Kd8s",
+                        "Kc8h",
+                        "Kc8d",
+                        "Kc8s",
+                        "Ks8h",
+                        "Ks8d",
+                        "Ks8c"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kh7h",
+                        "Kc7c",
+                        "Ks7s"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kh6h",
+                        "Kc6c",
+                        "Ks6s"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kh5h",
+                        "Kc5c",
+                        "Ks5s"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kh4h",
+                        "Kc4c",
+                        "Ks4s"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kh3h",
+                        "Kc3c",
+                        "Ks3s"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kh2h",
+                        "Kc2c",
+                        "Ks2s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5s3s"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5s4s"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6s4s"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6s5s"
+                      ]
+                    },
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7s5s"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "As7s",
+                        "Ah7d",
+                        "Ac7d",
+                        "As7d"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "As6s",
+                        "Ah6d",
+                        "Ac6d",
+                        "As6d"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "As5s",
+                        "Ah5d",
+                        "Ac5d",
+                        "As5d"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "As4s",
+                        "Ah4d",
+                        "Ac4d",
+                        "As4d"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "As3s",
+                        "Ah3d",
+                        "Ac3d",
+                        "As3d"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "As2s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5h3h",
+                        "5c3c"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5h4h",
+                        "5c4c"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6h4h",
+                        "6c4c"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6h5h",
+                        "6c5c"
+                      ]
+                    },
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7h5h",
+                        "7c5c"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [],
+              "locked": false
+            }
+          ],
+          "deletedHands": [
+            "32o",
+            "32s",
+            "42o",
+            "42s",
+            "43o",
+            "43s",
+            "52o",
+            "52s",
+            "53o",
+            "54o",
+            "62o",
+            "62s",
+            "63o",
+            "63s",
+            "64o",
+            "65o",
+            "72o",
+            "72s",
+            "73o",
+            "73s",
+            "74o",
+            "74s",
+            "75o",
+            "76o",
+            "82o",
+            "82s",
+            "83o",
+            "83s",
+            "84o",
+            "84s",
+            "85o",
+            "86o",
+            "87o",
+            "92o",
+            "92s",
+            "93o",
+            "93s",
+            "94o",
+            "94s",
+            "95o",
+            "95s",
+            "96o",
+            "97o",
+            "98o",
+            "A2o",
+            "J2o",
+            "J2s",
+            "J3o",
+            "J3s",
+            "J4o",
+            "J5o",
+            "J6o",
+            "J7o",
+            "J8o",
+            "K2o",
+            "K3o",
+            "K4o",
+            "K5o",
+            "K6o",
+            "K7o",
+            "Q2o",
+            "Q3o",
+            "Q4o",
+            "Q5o",
+            "Q6o",
+            "Q7o",
+            "Q8o",
+            "T2o",
+            "T2s",
+            "T3o",
+            "T3s",
+            "T4o",
+            "T4s",
+            "T5o",
+            "T5s",
+            "T6o",
+            "T7o",
+            "T8o"
+          ]
+        }
+      ]
+    }
+  ]
+}

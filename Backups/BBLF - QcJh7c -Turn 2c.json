@@ -1,0 +1,1917 @@
+{
+  "spots": [
+    {
+      "name": "SB vs BB",
+      "textures": [
+        {
+          "name": "BBLF",
+          "board": "qcjh7c",
+          "flopNodes": [
+            {
+              "name": "CB75",
+              "combos": [
+                {
+                  "id": "set",
+                  "name": "Set",
+                  "sort": 5,
+                  "note": "sacamos valor a draws y manos hechas",
+                  "hands": [
+                    {
+                      "hand": "77",
+                      "selected": [
+                        "7h7d",
+                        "7h7s",
+                        "7d7s"
+                      ]
+                    },
+                    {
+                      "hand": "QQ",
+                      "selected": [
+                        "QhQd",
+                        "QhQs",
+                        "QdQs"
+                      ]
+                    },
+                    {
+                      "hand": "JJ",
+                      "selected": [
+                        "JdJc",
+                        "JdJs",
+                        "JcJs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "solo QJ, por valor pagan muchas manos que vamos gananado",
+                  "hands": [
+                    {
+                      "hand": "QJ",
+                      "selected": [
+                        "QdJd",
+                        "QsJs",
+                        "QdJc",
+                        "QdJs",
+                        "QhJc",
+                        "QhJd",
+                        "QhJs",
+                        "QsJc",
+                        "QsJd"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "solo con BDFD juegan fácil cuando cae un trébol y tiene EQ adicional",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AcAs",
+                        "AdAc",
+                        "AhAc"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KcKs",
+                        "KdKc",
+                        "KhKc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "solo con BDFD, tienen EQ adicional",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AhQh",
+                        "AcQd",
+                        "AcQh",
+                        "AcQs"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KhQh",
+                        "KcQd",
+                        "KcQh",
+                        "KcQs"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QhTh",
+                        "QdTc",
+                        "QhTc",
+                        "QsTc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "Jx débiles son buenas para Pot + Pot y ya empiezan a foldear Qx débiles, Jx mejores y siguen pagando FDs mejores",
+                  "hands": [
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AcJc"
+                      ]
+                    },
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jc6c"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jc5c"
+                      ]
+                    },
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jc4c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-mp",
+                  "name": "PP below MP",
+                  "sort": 12,
+                  "note": "",
+                  "hands": [],
+                  "expanded": true
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "foldean 99, 88, 7x mejores, tiene EQ adicional con el BDFD, bluffing Spot en river ya que no blockea rango de fold, por lo menos los 7x bajos",
+                  "hands": [
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7h5h"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7h6h"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8h7h"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9h7h"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ah7h",
+                        "Ac7d",
+                        "Ac7h",
+                        "Ac7s"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kh7h"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Th7h"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "solo con BDFD, si hiteamos set no completa flush, foldean manos mejores 7x y PPs",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2c2s",
+                        "2d2c",
+                        "2h2c"
+                      ]
+                    },
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3c3s",
+                        "3d3c",
+                        "3h3c"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4c4s",
+                        "4d4c",
+                        "4h4c"
+                      ]
+                    },
+                    {
+                      "hand": "55",
+                      "selected": [
+                        "5c5s",
+                        "5d5c",
+                        "5h5c"
+                      ]
+                    },
+                    {
+                      "hand": "66",
+                      "selected": [
+                        "6c6s",
+                        "6d6c",
+                        "6h6c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [],
+                  "expanded": true
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "tienen mucha EQ, 2 barrels de semibluff fácil",
+                  "hands": [
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ac6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ac5c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ac2c"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kc6c"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kc5c"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kc2c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "solo con BDFD tienen muchas EQ",
+                  "hands": [
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KhTh",
+                        "KcTd",
+                        "KcTh",
+                        "KcTs",
+                        "KdTc",
+                        "KhTc",
+                        "KsTc"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Th9h",
+                        "Tc9d",
+                        "Tc9h",
+                        "Tc9s",
+                        "Td9c",
+                        "Th9c",
+                        "Ts9c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "solo con BDFD, las plusvalicas nos permiten jugar mejor en turn trébol, hacemos foldear a un grupo grande manos mejores Ax de picas y diamantes, NMH de 5 outs foldean, pueden hacer foldean algunas GS mejores en turn",
+                  "hands": [
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9h8h",
+                        "9c8d",
+                        "9c8h",
+                        "9c8s",
+                        "9d8c",
+                        "9h8c",
+                        "9s8c"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kh9h",
+                        "Kc9d",
+                        "Kc9h",
+                        "Kc9s",
+                        "Kd9c",
+                        "Kh9c",
+                        "Ks9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Th8h"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "con BDFD, tienen EQ adicional, foldean Ax sin BD, PPs bajas y otras NMH con 5 outs",
+                  "hands": [
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9h",
+                        "Ac9d",
+                        "Ac9h",
+                        "Ac9s"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8h",
+                        "Ac8d",
+                        "Ac8h",
+                        "Ac8s"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6h",
+                        "Ac6d",
+                        "Ac6h",
+                        "Ac6s"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5h",
+                        "Ac5d",
+                        "Ac5h",
+                        "Ac5s"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4h",
+                        "Ac4d",
+                        "Ac4h",
+                        "Ac4s"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ah3h"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ah2h"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kh8h"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kh6h"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kh5h"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kh4h"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kh3h"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kh2h"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [],
+                  "expanded": true
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [
+                {
+                  "name": "2S",
+                  "turnActions": [
+                    {
+                      "name": "CB150",
+                      "combos": [
+                        {
+                          "id": "set",
+                          "name": "Set",
+                          "sort": 5,
+                          "note": "por valor pagan CD y FDs al As, se perciben&nbsp; blluffs",
+                          "hands": [
+                            {
+                              "hand": "22",
+                              "selected": [
+                                "2d2c",
+                                "2h2c"
+                              ]
+                            },
+                            {
+                              "hand": "77",
+                              "selected": [
+                                "7h7d",
+                                "7h7s",
+                                "7d7s"
+                              ]
+                            },
+                            {
+                              "hand": "QQ",
+                              "selected": [
+                                "QhQd",
+                                "QhQs",
+                                "QdQs"
+                              ]
+                            },
+                            {
+                              "hand": "JJ",
+                              "selected": [
+                                "JdJc",
+                                "JdJs",
+                                "JcJs"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "two-pair",
+                          "name": "Two pair",
+                          "sort": 7,
+                          "note": "por valor bloqueamos rango de call pero hay manos que siguen pagando como CDs, FDs al As, OESDs, se perciben blufs",
+                          "hands": [
+                            {
+                              "hand": "QJ",
+                              "selected": [
+                                "QdJd",
+                                "QsJs",
+                                "QdJc",
+                                "QdJs",
+                                "QhJc",
+                                "QhJd",
+                                "QhJs",
+                                "QsJc",
+                                "QsJd"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "overpair",
+                          "name": "Overpair",
+                          "sort": 8,
+                          "note": "No bloqueamos Qx, hay manos que siguen pagando como CDs, FDs al As, OESDs, se perciben blufs",
+                          "hands": [
+                            {
+                              "hand": "AA",
+                              "selected": [
+                                "AcAs",
+                                "AdAc",
+                                "AhAc"
+                              ]
+                            },
+                            {
+                              "hand": "KK",
+                              "selected": [
+                                "KcKs",
+                                "KdKc",
+                                "KhKc"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "top-pair",
+                          "name": "Top pair",
+                          "sort": 9,
+                          "note": "mejores kickers hay manos que siguen pagando como CDs, FDs al As, OESDs, se perciben blufs, podemos usar Pot en vez de OB",
+                          "hands": [
+                            {
+                              "hand": "AQ",
+                              "selected": [
+                                "AhQh",
+                                "AcQd",
+                                "AcQh",
+                                "AcQs"
+                              ]
+                            },
+                            {
+                              "hand": "KQ",
+                              "selected": [
+                                "KhQh",
+                                "KcQd",
+                                "KcQh",
+                                "KcQs"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "mid-pair",
+                          "name": "Middle pair",
+                          "sort": 11,
+                          "note": "podemos hacer Pot en vez de OB,&nbsp; conseguimos fold de manos mejores como Qx bajos y Jx mejores",
+                          "hands": [
+                            {
+                              "hand": "AJ",
+                              "selected": [
+                                "AcJc"
+                              ]
+                            },
+                            {
+                              "hand": "J6",
+                              "selected": [
+                                "Jc6c"
+                              ]
+                            },
+                            {
+                              "hand": "J5",
+                              "selected": [
+                                "Jc5c"
+                              ]
+                            },
+                            {
+                              "hand": "J4",
+                              "selected": [
+                                "Jc4c"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "3rd-pair",
+                          "name": "3rd pair",
+                          "sort": 13,
+                          "note": "bluffing spot en river, foldean manos mejores, Jx, Qx, , pagan FDs que vamos ganando, aun tenemos 5 outs que nos pueden servir.",
+                          "hands": [
+                            {
+                              "hand": "75",
+                              "selected": [
+                                "7h5h"
+                              ]
+                            },
+                            {
+                              "hand": "76",
+                              "selected": [
+                                "7h6h"
+                              ]
+                            },
+                            {
+                              "hand": "87",
+                              "selected": [
+                                "8h7h"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "pp-below-3rd",
+                          "name": "PP below 3rd",
+                          "sort": 14,
+                          "note": "bluffing spot en river foldean manos mejores, Jx, Qx, OC con 6 outs, pagan FDs que vamos ganando, aun tenemos 5 outs que nos pueden servir.",
+                          "hands": [
+                            {
+                              "hand": "33",
+                              "selected": [
+                                "3c3s",
+                                "3d3c",
+                                "3h3c"
+                              ]
+                            },
+                            {
+                              "hand": "44",
+                              "selected": [
+                                "4c4s",
+                                "4d4c",
+                                "4h4c"
+                              ]
+                            },
+                            {
+                              "hand": "55",
+                              "selected": [
+                                "5c5s",
+                                "5d5c",
+                                "5h5c"
+                              ]
+                            },
+                            {
+                              "hand": "66",
+                              "selected": [
+                                "6c6s",
+                                "6d6c",
+                                "6h6c"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "fd-2",
+                          "name": "FD (2crd)",
+                          "sort": 17,
+                          "note": "tienen EQ y pagan FDs perores (fuera de outs)&nbsp;",
+                          "hands": [
+                            {
+                              "hand": "A6",
+                              "selected": [
+                                "Ac6c"
+                              ]
+                            },
+                            {
+                              "hand": "A5",
+                              "selected": [
+                                "Ac5c"
+                              ]
+                            },
+                            {
+                              "hand": "K6",
+                              "selected": [
+                                "Kc6c"
+                              ]
+                            },
+                            {
+                              "hand": "K5",
+                              "selected": [
+                                "Kc5c"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "oesd-2",
+                          "name": "OESD (2crd)",
+                          "sort": 19,
+                          "note": "tienen EQ, T9 foldean manos mejores, Jx, Qx,",
+                          "hands": [
+                            {
+                              "hand": "KT",
+                              "selected": [
+                                "KhTh",
+                                "KcTd",
+                                "KcTh",
+                                "KcTs",
+                                "KdTc",
+                                "KhTc",
+                                "KsTc"
+                              ]
+                            },
+                            {
+                              "hand": "T9",
+                              "selected": [
+                                "Th9h",
+                                "Tc9d",
+                                "Tc9h",
+                                "Tc9s",
+                                "Td9c",
+                                "Th9c",
+                                "Ts9c"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "gs-2",
+                          "name": "GS (2crd)",
+                          "sort": 21,
+                          "note": "",
+                          "hands": [
+                            {
+                              "hand": "98",
+                              "selected": [
+                                "9h8h",
+                                "9c8d",
+                                "9c8h",
+                                "9c8s",
+                                "9d8c",
+                                "9h8c",
+                                "9s8c"
+                              ]
+                            },
+                            {
+                              "hand": "K9",
+                              "selected": [
+                                "Kh9h",
+                                "Kc9d",
+                                "Kc9h",
+                                "Kc9s",
+                                "Kd9c",
+                                "Kh9c",
+                                "Ks9c"
+                              ]
+                            },
+                            {
+                              "hand": "T8",
+                              "selected": [
+                                "Th8h"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "bdfd",
+                          "name": "BDFD",
+                          "sort": 24,
+                          "note": "",
+                          "hands": [],
+                          "expanded": true
+                        }
+                      ],
+                      "generalNote": "",
+                      "imageData": "",
+                      "riverCards": [],
+                      "locked": false
+                    },
+                    {
+                      "name": "XF",
+                      "combos": [
+                        {
+                          "id": "top-pair",
+                          "name": "Top pair",
+                          "sort": 9,
+                          "note": "",
+                          "hands": [
+                            {
+                              "hand": "QT",
+                              "selected": [
+                                "QhTh",
+                                "QdTc",
+                                "QhTc",
+                                "QsTc"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "3rd-pair",
+                          "name": "3rd pair",
+                          "sort": 13,
+                          "note": "",
+                          "hands": [
+                            {
+                              "hand": "97",
+                              "selected": [
+                                "9h7h"
+                              ]
+                            },
+                            {
+                              "hand": "A7",
+                              "selected": [
+                                "Ah7h",
+                                "Ac7d",
+                                "Ac7h",
+                                "Ac7s"
+                              ]
+                            },
+                            {
+                              "hand": "K7",
+                              "selected": [
+                                "Kh7h"
+                              ]
+                            },
+                            {
+                              "hand": "T7",
+                              "selected": [
+                                "Th7h"
+                              ]
+                            },
+                            {
+                              "hand": "A2",
+                              "selected": [
+                                "Ac2c",
+                                "Ah2h"
+                              ]
+                            },
+                            {
+                              "hand": "K2",
+                              "selected": [
+                                "Kc2c",
+                                "Kh2h"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        },
+                        {
+                          "id": "bdfd",
+                          "name": "BDFD",
+                          "sort": 24,
+                          "note": "",
+                          "hands": [
+                            {
+                              "hand": "A9",
+                              "selected": [
+                                "Ah9h",
+                                "Ac9d",
+                                "Ac9h",
+                                "Ac9s"
+                              ]
+                            },
+                            {
+                              "hand": "A8",
+                              "selected": [
+                                "Ah8h",
+                                "Ac8d",
+                                "Ac8h",
+                                "Ac8s"
+                              ]
+                            },
+                            {
+                              "hand": "A6",
+                              "selected": [
+                                "Ah6h",
+                                "Ac6d",
+                                "Ac6h",
+                                "Ac6s"
+                              ]
+                            },
+                            {
+                              "hand": "A5",
+                              "selected": [
+                                "Ah5h",
+                                "Ac5d",
+                                "Ac5h",
+                                "Ac5s"
+                              ]
+                            },
+                            {
+                              "hand": "A4",
+                              "selected": [
+                                "Ah4h",
+                                "Ac4d",
+                                "Ac4h",
+                                "Ac4s"
+                              ]
+                            },
+                            {
+                              "hand": "A3",
+                              "selected": [
+                                "Ah3h"
+                              ]
+                            },
+                            {
+                              "hand": "K8",
+                              "selected": [
+                                "Kh8h"
+                              ]
+                            },
+                            {
+                              "hand": "K6",
+                              "selected": [
+                                "Kh6h"
+                              ]
+                            },
+                            {
+                              "hand": "K5",
+                              "selected": [
+                                "Kh5h"
+                              ]
+                            },
+                            {
+                              "hand": "K4",
+                              "selected": [
+                                "Kh4h"
+                              ]
+                            },
+                            {
+                              "hand": "K3",
+                              "selected": [
+                                "Kh3h"
+                              ]
+                            }
+                          ],
+                          "expanded": true
+                        }
+                      ],
+                      "generalNote": "",
+                      "imageData": "",
+                      "riverCards": [],
+                      "locked": false
+                    }
+                  ]
+                }
+              ],
+              "locked": true
+            },
+            {
+              "name": "XC",
+              "combos": [
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "Controlamos el pot y jugamos fácil el tiene muchos draws y manos hechas que vamos ganando",
+                  "hands": [
+                    {
+                      "hand": "Q7",
+                      "selected": [
+                        "Qh7h",
+                        "Qd7d",
+                        "Qs7s"
+                      ]
+                    },
+                    {
+                      "hand": "J7",
+                      "selected": [
+                        "Jd7d",
+                        "Js7s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "pagamos cómodos flop y turn",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AhAd",
+                        "AhAs",
+                        "AdAs"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KhKd",
+                        "KhKs",
+                        "KdKs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "El rival debería hacer float en frec. ↓ algunos BDFD, NMH, draws, que vamos ganando",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AdQd",
+                        "AsQs",
+                        "AhQd",
+                        "AhQs",
+                        "AdQh",
+                        "AdQs",
+                        "AsQh",
+                        "AsQd"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KdQd",
+                        "KsQs",
+                        "KhQd",
+                        "KhQs",
+                        "KdQh",
+                        "KdQs",
+                        "KsQh",
+                        "KsQd"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QdTd",
+                        "QsTs",
+                        "QhTd",
+                        "QhTs",
+                        "QdTh",
+                        "QdTs",
+                        "QsTh",
+                        "QsTd"
+                      ]
+                    },
+                    {
+                      "hand": "Q9",
+                      "selected": [
+                        "Qh9h",
+                        "Qd9d",
+                        "Qs9s",
+                        "Qh9d",
+                        "Qh9c",
+                        "Qh9s",
+                        "Qd9h",
+                        "Qd9c",
+                        "Qd9s",
+                        "Qs9h",
+                        "Qs9d",
+                        "Qs9c"
+                      ]
+                    },
+                    {
+                      "hand": "Q8",
+                      "selected": [
+                        "Qh8h",
+                        "Qd8d",
+                        "Qs8s",
+                        "Qh8d",
+                        "Qh8c",
+                        "Qh8s",
+                        "Qd8h",
+                        "Qd8c",
+                        "Qd8s",
+                        "Qs8h",
+                        "Qs8d",
+                        "Qs8c"
+                      ]
+                    },
+                    {
+                      "hand": "Q6",
+                      "selected": [
+                        "Qh6h",
+                        "Qd6d",
+                        "Qs6s"
+                      ]
+                    },
+                    {
+                      "hand": "Q5",
+                      "selected": [
+                        "Qh5h",
+                        "Qd5d",
+                        "Qs5s"
+                      ]
+                    },
+                    {
+                      "hand": "Q4",
+                      "selected": [
+                        "Qh4h",
+                        "Qd4d",
+                        "Qs4s"
+                      ]
+                    },
+                    {
+                      "hand": "Q3",
+                      "selected": [
+                        "Qh3h",
+                        "Qd3d",
+                        "Qs3s"
+                      ]
+                    },
+                    {
+                      "hand": "Q2",
+                      "selected": [
+                        "Qh2h",
+                        "Qd2d",
+                        "Qs2s"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AcJd",
+                        "AcJs",
+                        "AdJc",
+                        "AsJc"
+                      ]
+                    },
+                    {
+                      "hand": "KJ",
+                      "selected": [
+                        "KcJc",
+                        "KcJd",
+                        "KcJs",
+                        "KdJc",
+                        "KsJc"
+                      ]
+                    },
+                    {
+                      "hand": "JT",
+                      "selected": [
+                        "JcTc",
+                        "JcTd",
+                        "JcTh",
+                        "JcTs",
+                        "JdTc",
+                        "JsTc"
+                      ]
+                    },
+                    {
+                      "hand": "J9",
+                      "selected": [
+                        "Jc9c",
+                        "Jc9d",
+                        "Jc9h",
+                        "Jc9s",
+                        "Jd9c",
+                        "Js9c"
+                      ]
+                    },
+                    {
+                      "hand": "J8",
+                      "selected": [
+                        "Jc8c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-mp",
+                  "name": "PP below MP",
+                  "sort": 12,
+                  "note": "solo TT con BDFD, sizing depend",
+                  "hands": [
+                    {
+                      "hand": "TT",
+                      "selected": [
+                        "TcTs",
+                        "TdTc",
+                        "ThTc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [],
+                  "expanded": false
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "tienen mucha EQ y algunas pagan 2 calles fácil",
+                  "hands": [
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4c3c"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5c3c"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5c4c"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6c4c"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6c5c"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8c5c"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8c6c"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9c6c"
+                      ]
+                    },
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9c8c"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AcKc"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AcTc"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ac9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ac8c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ac4c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ac3c"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KcTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kc9c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kc8c"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kc4c"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kc3c"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Tc9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Tc8c"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Tc6c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "tienen mucha EQ, el rival tiene que apostar GS, BDFD, además vs manos hechas tenemos mucha EQ",
+                  "hands": [
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KdTd",
+                        "KsTs",
+                        "KhTd",
+                        "KhTs",
+                        "KdTh",
+                        "KdTs",
+                        "KsTh",
+                        "KsTd"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Td9d",
+                        "Ts9s",
+                        "Th9d",
+                        "Th9s",
+                        "Td9h",
+                        "Td9s",
+                        "Ts9h",
+                        "Ts9d"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9d8d",
+                        "9s8s",
+                        "9h8d",
+                        "9h8s",
+                        "9d8h",
+                        "9d8s",
+                        "9s8h",
+                        "9s8d"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AhKh",
+                        "AdKd",
+                        "AsKs",
+                        "AhKd",
+                        "AhKc",
+                        "AhKs",
+                        "AdKh",
+                        "AdKc",
+                        "AdKs",
+                        "AcKh",
+                        "AcKd",
+                        "AcKs",
+                        "AsKh",
+                        "AsKd",
+                        "AsKc"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AhTh",
+                        "AdTd",
+                        "AsTs",
+                        "AhTd",
+                        "AhTc",
+                        "AhTs",
+                        "AdTh",
+                        "AdTc",
+                        "AdTs",
+                        "AcTh",
+                        "AcTd",
+                        "AcTs",
+                        "AsTh",
+                        "AsTd",
+                        "AsTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kd9d",
+                        "Ks9s",
+                        "Kh9d",
+                        "Kh9s",
+                        "Kd9h",
+                        "Kd9s",
+                        "Ks9h",
+                        "Ks9d"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Td8d",
+                        "Ts8s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4h3h"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5h3h"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5h4h"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6h4h"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6h5h"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8h5h"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8h6h"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9h6h"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Th6h"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9c",
+                        "Ad9c",
+                        "As9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8c",
+                        "Ad8c",
+                        "As8c"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6c",
+                        "Ad6c",
+                        "As6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5c",
+                        "Ad5c",
+                        "As5c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4c",
+                        "Ad4c",
+                        "As4c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4d3d",
+                        "4s3s"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5d3d",
+                        "5s3s"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5d4d",
+                        "5s4s"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6d4d",
+                        "6s4s"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6d5d",
+                        "6s5s"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8d5d",
+                        "8s5s"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8d6d",
+                        "8s6s"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9d6d",
+                        "9s6s"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kd8d",
+                        "Ks8s"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kd6d",
+                        "Ks6s"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kd5d",
+                        "Ks5s"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kd4d",
+                        "Ks4s"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kd3d",
+                        "Ks3s"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kd2d",
+                        "Ks2s"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Td6d",
+                        "Ts6s"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [],
+              "locked": false
+            }
+          ]
+        }
+      ],
+      "preflopRange": [
+        "AAp",
+        "KKp",
+        "QQp",
+        "JJp",
+        "TTp",
+        "99p",
+        "88p",
+        "77p",
+        "66p",
+        "55p",
+        "44p",
+        "33p",
+        "22p",
+        "AKs",
+        "AQs",
+        "AJs",
+        "ATs",
+        "A9s",
+        "A8s",
+        "A7s",
+        "A6s",
+        "A5s",
+        "A4s",
+        "A3s",
+        "A2s",
+        "KQs",
+        "KJs",
+        "KTs",
+        "K9s",
+        "K8s",
+        "K7s",
+        "K6s",
+        "K5s",
+        "K4s",
+        "K3s",
+        "K2s",
+        "QJs",
+        "QTs",
+        "Q9s",
+        "Q8s",
+        "Q7s",
+        "Q6s",
+        "Q5s",
+        "Q4s",
+        "Q3s",
+        "Q2s",
+        "JTs",
+        "J9s",
+        "J8s",
+        "J7s",
+        "J6s",
+        "J5s",
+        "J4s",
+        "T9s",
+        "T8s",
+        "T7s",
+        "T6s",
+        "98s",
+        "97s",
+        "96s",
+        "87s",
+        "86s",
+        "85s",
+        "76s",
+        "75s",
+        "65s",
+        "64s",
+        "54s",
+        "53s",
+        "43s",
+        "AKo",
+        "AQo",
+        "AJo",
+        "ATo",
+        "A9o",
+        "A8o",
+        "A7o",
+        "A6o",
+        "A5o",
+        "A4o",
+        "KQo",
+        "KJo",
+        "KTo",
+        "K9o",
+        "QJo",
+        "QTo",
+        "Q9o",
+        "Q8o",
+        "JTo",
+        "J9o",
+        "T9o",
+        "98o"
+      ]
+    }
+  ],
+  "library": [
+    {
+      "category": "OR",
+      "ranges": [
+        {
+          "name": "SB",
+          "value": "AA-22,AKs-A2s,KQs-K2s,QJs-Q2s,JTs-J4s,T9s-T6s,98s-96s,87s-85s,76s-75s,65s-64s,54s-53s,43s,AKo-A4o,KQo-K9o,QJo-Q8o,JTo-J9o,T9o,98o"
+        },
+        {
+          "name": "UTG",
+          "value": "AA-77,AKs-A2s,KQs-K9s,QJs-Q9s,JTs-J9s,T9s,AKo-ATo,KQo-KJo"
+        },
+        {
+          "name": "CO",
+          "value": "AA-44,AKs-A2s,KQs-K3s,QJs-Q5s,JTs-J7s,T9s-T8s,98s,87s,76s,65s,54s,AKo-A9o,A5o,KQo-KTo,QJo-QTo,JTo"
+        },
+        {
+          "name": "BTN",
+          "value": "AA-22,AKs-A2s,KQs-K2s,QJs-Q2s,JTs-J4s,T9s-T6s,98s-96s,87s-85s,76s-75s,65s-64s,54s-53s,AKo-A4o,KQo-K9o,QJo-Q8o,JTo-J9o,T9o,98o"
+        }
+      ]
+    },
+    {
+      "category": "3B",
+      "ranges": [
+        {
+          "name": "MP- CO-BTN-SB vs EP (6%)",
+          "value": "AA-TT,AKs-AJs,A5s,KQs-KTs,QJs,AKo-AQo"
+        },
+        {
+          "name": "CO-BTN-SB vs MP",
+          "value": "AA-99,AKs-ATs,A5s,KQs-KTs,QJs-QTs,AKo-AQo,KQo"
+        }
+      ]
+    }
+  ]
+}
