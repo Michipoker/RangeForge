@@ -2780,7 +2780,7 @@
             cmRefreshGridActive();
         }
 
-        function openCardModal2(ci, type, cid) {
+        
             if (isNodeLocked(type)) return alert('Desbloquea el nodo para editar combos.');
             cmCtx = { ci, type, cid };
             cmHand = null;
@@ -2794,20 +2794,28 @@
                 const excluded = getUsedSiblingsCombos(type);
                 
                 let sourcePool = [];
-                const preRange = getActivePreflopRange();
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
-                        const r1 = key[0], r2 = key[1];
-                        const isPair = r1 === r2;
-                        const g = isPair ? 'p' : key[2];
-                        suitCombos(r1+r2).forEach(sc => {
-                            if (g === 's' && sc.g !== 's') return;
-                            if (g === 'o' && sc.g !== 'o') return;
-                            if (g === 'p' && sc.g !== 'p') return;
-                            sourcePool.push(sc.id);
+                if (type === 'flop') {
+                    const preRange = getActivePreflopRange();
+                    if (preRange.length > 0) {
+                        preRange.forEach(key => {
+                            const r1 = key[0], r2 = key[1];
+                            const isPair = r1 === r2;
+                            const g = isPair ? 'p' : key[2];
+                            suitCombos(r1+r2).forEach(sc => {
+                                if (g === 's' && sc.g !== 's') return;
+                                if (g === 'o' && sc.g !== 'o') return;
+                                if (g === 'p' && sc.g !== 'p') return;
+                                sourcePool.push(sc.id);
+                            });
                         });
-                    });
-                } else {
+                    }
+                } else if (type === 'turnAction') {
+                    sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
+                } else if (type === 'riverAction') {
+                    sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]);
+                }
+                
+                if (sourcePool.length === 0 && type === 'flop') {
                     if (type === 'flop') {
                         for (let i = 0; i < RANKS.length; i++) {
                             for (let j = i; j < RANKS.length; j++) {
