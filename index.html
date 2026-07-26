@@ -1776,6 +1776,7 @@
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[i]; 
             if(!card.turnActions) card.turnActions=[]; 
             document.getElementById('turn-actions-row').style.display='flex'; 
+            document.getElementById('turn-actions-tabs-row').style.display='flex'; 
             document.getElementById('river-col').style.display='none'; 
             renderTurnCardsTabs(); 
             renderTurnActionsTabs(); 
@@ -1835,6 +1836,7 @@
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[i]; 
             if(!card.riverActions) card.riverActions=[]; 
             document.getElementById('river-actions-row').style.display='flex'; 
+            document.getElementById('river-actions-tabs-row').style.display='flex'; 
             renderRiverCardsTabs(); 
             renderRiverActionsTabs(); 
             if(card.riverActions.length>0) selectRiverAction(0); 
@@ -1845,12 +1847,30 @@
         function selectRiverAction(i) { aRA=i; let act=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions[i]; renderCombosUI('river-combos-container', act.combos, 'riverAction'); updateMicroButtons('riverAction', act); renderRiverActionsTabs(); commit(); }
         function delRiverCard(i) { if(!confirm('¿Borrar River?')) return; data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards.splice(i,1); aRC=-1; hideRiverUI(); commit(); let c=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards; if(c.length>0) selectRiverCard(0); else renderRiverCardsTabs(); }
         function delRiverAction(i) { if(!confirm('¿Borrar?')) return; data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions.splice(i,1); aRA=-1; commit(); let a=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions; if(a.length>0) selectRiverAction(0); else { document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); renderRiverActionsTabs(); } }
-        function hideTurnUI() { document.getElementById('turn-actions-row').style.display='none'; document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); }
-        function hideRiverUI() { document.getElementById('river-actions-row').style.display='none'; document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); }
+        function hideTurnUI() { document.getElementById('turn-actions-row').style.display='none'; document.getElementById('turn-actions-tabs-row').style.display='none'; document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); }
+        function hideRiverUI() { document.getElementById('river-actions-row').style.display='none'; document.getElementById('river-actions-tabs-row').style.display='none'; document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); }
         function clearWorkspace() { document.getElementById('flop-combos-container').innerHTML=''; document.getElementById('flop-tabs').innerHTML=''; document.getElementById('turn-col').style.display='none'; document.getElementById('river-col').style.display='none'; updateMicroButtons('flop', null); hideTurnUI(); }
         function clearAll() { document.getElementById('editor').style.display='none'; document.getElementById('header-breadcrumb').style.display='none'; document.getElementById('empty-state').style.display='block'; clearWorkspace(); }
         function getBoardCards() { if (aS===-1||aT===-1) return []; const b = data.spots[aS].textures[aT].board || ''; return (b.match(/[KQJTA2-9][dhsc]/gi) || []).map(c => c.toLowerCase()); }
-        function renderBoard() { if (aS===-1||aT===-1) return; const cards = getBoardCards(); const el = document.getElementById('boardExample'); if (cards.length === 0) { el.innerHTML = '<span class="ph">Board</span>'; return; } el.innerHTML = cards.map((c,idx) => `<span class="mc c${c[1]}" onclick="removeBoardCard(${idx})" title="Click para quitar"><span class="mc-rank">${c[0].toUpperCase()}</span></span>`).join(''); }
+        function renderBoard() { 
+            if(aS===-1||aT===-1) return; 
+            let cards = getBoardCards(); 
+            if (aF !== -1 && aTC !== -1) {
+                const fnode = data.spots[aS].textures[aT].flopNodes[aF];
+                if (fnode && fnode.turnCards && fnode.turnCards[aTC]) {
+                    cards.push(...(fnode.turnCards[aTC].name.match(/[KQJTA2-9][dhsc]/gi) || []).map(c => c.toLowerCase()));
+                }
+                if (aTA !== -1 && fnode.turnCards[aTC].turnActions && fnode.turnCards[aTC].turnActions[aTA]) {
+                    const tact = fnode.turnCards[aTC].turnActions[aTA];
+                    if (aRC !== -1 && tact.riverCards && tact.riverCards[aRC]) {
+                        cards.push(...(tact.riverCards[aRC].name.match(/[KQJTA2-9][dhsc]/gi) || []).map(c => c.toLowerCase()));
+                    }
+                }
+            }
+            const el = document.getElementById('boardExample'); 
+            if (cards.length === 0) { el.innerHTML = '<span class="ph">Board</span>'; return; } 
+            el.innerHTML = cards.map((c,idx) => `<span class="mc c${c[1]}" onclick="removeBoardCard(${idx})" title="Click para quitar"><span class="mc-rank">${c[0].toUpperCase()}</span></span>`).join(''); 
+        }
         function removeBoardCard(idx) { const cards = getBoardCards(); if (idx < 0 || idx >= cards.length) return; cards.splice(idx,1); data.spots[aS].textures[aT].board = cards.join(''); renderBoard(); commit(); }
         function formatBoard(el) { /* no-op */ }
         function colorCards(text) { return text; }
