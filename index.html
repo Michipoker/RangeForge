@@ -1060,7 +1060,6 @@
                 <span class="header-sep">/</span>
                 <input type="text" id="textureHeader" class="header-input" oninput="saveTexts()">
                 <span class="header-sep">/</span>
-                <div id="boardExample" class="board-display"></div>
                 <div class="add-card-btn" onclick="openPickCard('board')" title="Añadir/Editar Flop">F</div>
             </div>
         </div>
@@ -1070,7 +1069,8 @@
                 <div class="workspace-col" id="flop-col">
                     <div class="flow-row">
                         <div class="flow-label">Flop</div>
-                        <div style="flex:1; min-height: 22px;"></div> <!-- Espacio para igualar a la fila de cartas -->
+                        <div id="boardExample" class="board-display"></div>
+                        <div class="add-card-btn" onclick="openPickCard('board')" title="Añadir/Editar Flop">F</div>
                     </div>
                     <div class="flow-row">
                         <div class="flow-label"></div>
