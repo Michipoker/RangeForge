@@ -1068,9 +1068,12 @@
             <div id="empty-state"><p>Selecciona una textura</p></div>
             <div id="editor">
                 <div class="workspace-col" id="flop-col">
-                    <div class="flow-row" style="visibility: hidden; height: 26px; margin-bottom: 8px;"></div>
                     <div class="flow-row">
                         <div class="flow-label">Flop</div>
+                        <div style="flex:1; min-height: 22px;"></div> <!-- Espacio para igualar a la fila de cartas -->
+                    </div>
+                    <div class="flow-row">
+                        <div class="flow-label"></div>
                         <div class="auto-btn" onclick="autoFillPanel('flop')" title="Autodetectar todo desde el board">A</div>
                         <div class="lock-btn" id="flop-lock-btn" onclick="toggleLock('flop')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="flop-note-btn" onclick="openNoteModal('flop')">N</div>
@@ -1792,7 +1795,7 @@
             else { document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); } 
             commit(); 
         }
-        
+
         function selectTurnAction(i) { 
             aTA=i; aRC=-1; aRA=-1; 
             let act=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[i]; 
