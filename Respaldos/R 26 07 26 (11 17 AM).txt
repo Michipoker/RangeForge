@@ -271,10 +271,13 @@
             padding-left: 16px;
         }
 
-        .flow-row { display: flex; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 4px; padding-left: 0; justify-content: flex-start; }
-        .tabs-container { display: flex; align-items: center; flex: 1; flex-wrap: wrap; gap: 2px; }
-        .street-row { min-height: 26px; }
-        
+        .flow-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
         .flow-label {
             font-size: 10px;
             font-weight: 700;
@@ -1065,56 +1068,51 @@
             <div id="empty-state"><p>Selecciona una textura</p></div>
             <div id="editor">
                 <div class="workspace-col" id="flop-col">
-                    <div class="flow-row street-row"></div>
                     <div class="flow-row">
                         <div class="flow-label">Flop</div>
+                        <div class="tabs-container" id="flop-tabs"></div>
+                        <div class="add-combo-btn" onclick="openComboModal('flop')">+</div>
                         <div class="auto-btn" onclick="autoFillPanel('flop')" title="Autodetectar todo desde el board">A</div>
                         <div class="lock-btn" id="flop-lock-btn" onclick="toggleLock('flop')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="flop-note-btn" onclick="openNoteModal('flop')">N</div>
                         <div class="micro-btn" id="flop-img-btn" onclick="openImgModal('flop')">I</div>
                         <div class="add-node-btn" onclick="openActionModal('flop')">+nodo</div>
                     </div>
-                    <div class="flow-row">
-                        <div class="tabs-container" id="flop-tabs"></div>
-                        <div class="add-combo-btn" onclick="openComboModal('flop')">+</div>
-                    </div>
                     <div class="dev-area" id="flop-combos-container"></div>
                 </div>
                 <div class="workspace-col turn-col" id="turn-col" style="display: none;">
-                    <div class="flow-row street-row">
+                    <div class="flow-row">
+                        <span id="turn-context" class="context-inline" style="display:none;"></span>
                         <div class="flow-label">Turn</div>
                         <div class="tabs-container" id="turn-cards-tabs"></div>
                         <div class="add-card-btn" onclick="openPickCard('turn')" title="Añadir Turn card">+</div>
                     </div>
-                    <div class="flow-row" id="turn-actions-row" style="display:none;">
+                    <div class="flow-row" id="turn-actions-row" style="display:none; margin-top:2px; border-top: 1px dashed #eee; padding-top:5px;">
+                        <div class="tabs-container" id="turn-actions-tabs" style="margin-left: 43px;"></div>
+                        <div class="add-combo-btn" onclick="openComboModal('turnAction')">+</div>
                         <div class="auto-btn" onclick="autoFillPanel('turnAction')" title="Autodetectar y traer rango restante del Flop">A</div>
                         <div class="lock-btn" id="turnAction-lock-btn" onclick="toggleLock('turnAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="turnAction-note-btn" onclick="openNoteModal('turnAction')">N</div>
                         <div class="micro-btn" id="turnAction-img-btn" onclick="openImgModal('turnAction')">I</div>
                         <div class="add-node-btn" onclick="openActionModal('turnAction')">+nodo</div>
                     </div>
-                    <div class="flow-row" id="turn-actions-tabs-row" style="display:none;">
-                        <div class="tabs-container" id="turn-actions-tabs"></div>
-                        <div class="add-combo-btn" onclick="openComboModal('turnAction')">+</div>
-                    </div>
                     <div class="dev-area" id="turn-combos-container"></div>
                 </div>
                 <div class="workspace-col river-col" id="river-col" style="display: none;">
-                    <div class="flow-row street-row">
+                    <div class="flow-row">
+                        <span id="river-context" class="context-inline" style="display:none;"></span>
                         <div class="flow-label">River</div>
                         <div class="tabs-container" id="river-cards-tabs"></div>
                         <div class="add-card-btn" onclick="openPickCard('river')" title="Añadir River card">+</div>
                     </div>
-                    <div class="flow-row" id="river-actions-row" style="display:none;">
+                    <div class="flow-row" id="river-actions-row" style="display:none; margin-top:2px; border-top: 1px dashed #eee; padding-top:5px;">
+                        <div class="tabs-container" id="river-actions-tabs" style="margin-left: 43px;"></div>
+                        <div class="add-combo-btn" onclick="openComboModal('riverAction')">+</div>
                         <div class="auto-btn" onclick="autoFillPanel('riverAction')" title="Autodetectar y traer rango restante del Turn">A</div>
                         <div class="lock-btn" id="riverAction-lock-btn" onclick="toggleLock('riverAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="riverAction-note-btn" onclick="openNoteModal('riverAction')">N</div>
                         <div class="micro-btn" id="riverAction-img-btn" onclick="openImgModal('riverAction')">I</div>
                         <div class="add-node-btn" onclick="openActionModal('riverAction')">+nodo</div>
-                    </div>
-                    <div class="flow-row" id="river-actions-tabs-row" style="display:none;">
-                        <div class="tabs-container" id="river-actions-tabs"></div>
-                        <div class="add-combo-btn" onclick="openComboModal('riverAction')">+</div>
                     </div>
                     <div class="dev-area" id="river-combos-container"></div>
                 </div>
