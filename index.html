@@ -1792,6 +1792,7 @@
             else { document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); } 
             commit(); 
         }
+        
         function selectTurnAction(i) { 
             aTA=i; aRC=-1; aRA=-1; 
             let act=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[i]; 
