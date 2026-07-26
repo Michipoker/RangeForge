@@ -2332,33 +2332,33 @@
             
             const excluded = getUsedSiblingsCombos(type);
             
-                let sourcePool = [];
-                if (type === 'flop') {
-                    const preRange = getActivePreflopRange();
-                    if (preRange.length > 0) {
-                        preRange.forEach(key => {
-                            const r1 = key[0], r2 = key[1];
-                            const isPair = r1 === r2;
-                            const g = isPair ? 'p' : key[2];
-                            suitCombos(r1+r2).forEach(sc => {
-                                if (g === 's' && sc.g !== 's') return;
-                                if (g === 'o' && sc.g !== 'o') return;
-                                if (g === 'p' && sc.g !== 'p') return;
-                                sourcePool.push(sc.id);
-                            });
+            let sourcePool = [];
+            if (type === 'flop') {
+                const preRange = getActivePreflopRange();
+                if (preRange.length > 0) {
+                    preRange.forEach(key => {
+                        const r1 = key[0], r2 = key[1];
+                        const isPair = r1 === r2;
+                        const g = isPair ? 'p' : key[2];
+                        suitCombos(r1+r2).forEach(sc => {
+                            if (g === 's' && sc.g !== 's') return;
+                            if (g === 'o' && sc.g !== 'o') return;
+                            if (g === 'p' && sc.g !== 'p') return;
+                            sourcePool.push(sc.id);
                         });
-                    } else {
-                        for (let i = 0; i < RANKS.length; i++) {
-                            for (let j = i; j < RANKS.length; j++) {
-                                sourcePool.push(...suitCombos(RANKS[i] + RANKS[j]).map(sc => sc.id));
-                            }
+                    });
+                } else {
+                    for (let i = 0; i < RANKS.length; i++) {
+                        for (let j = i; j < RANKS.length; j++) {
+                            sourcePool.push(...suitCombos(RANKS[i] + RANKS[j]).map(sc => sc.id));
                         }
                     }
-                } else if (type === 'turnAction') {
-                    sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
-                } else if (type === 'riverAction') {
-                    sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]);
                 }
+            } else if (type === 'turnAction') {
+                sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
+            } else if (type === 'riverAction') {
+                sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]);
+            }
 
             const boardSet = new Set(board);
             const result = {};
@@ -2810,22 +2810,22 @@
                             });
                         });
                     } else {
+                    if (type === 'flop') {
                         for (let i = 0; i < RANKS.length; i++) {
                             for (let j = i; j < RANKS.length; j++) {
                                 sourcePool.push(...suitCombos(RANKS[i] + RANKS[j]).map(sc => sc.id));
                             }
                         }
+                    } else if (type === 'turnAction') {
+                        sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
+                    } else if (type === 'riverAction') {
+                        sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]);
                     }
-                } else if (type === 'turnAction') {
-                    sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
-                } else if (type === 'riverAction') {
-                    sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]);
                 }
 
                 const boardSet = new Set(board);
                 const validIds = [];
                 sourcePool.forEach(id => {
-                    if (!id || id.length < 4) return;
                     const c1 = id.slice(0,2).toLowerCase();
                     const c2 = id.slice(2,4).toLowerCase();
                     if (boardSet.has(c1) || boardSet.has(c2)) return;
