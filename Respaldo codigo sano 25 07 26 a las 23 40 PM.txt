@@ -2592,19 +2592,17 @@
                 else if (BLUFF_CATS.includes(c.id)) bluffCount += count;
             });
             
-            const brutoUniverse = getBrutoUniverse(type);
-            const relHitPct = totalSelectedInNode > 0 ? (hitCount / totalSelectedInNode * 100).toFixed(1) : '0.0';
-            const relBluffPct = totalSelectedInNode > 0 ? (bluffCount / totalSelectedInNode * 100).toFixed(1) : '0.0';
-            const brutoHitPct = brutoUniverse > 0 ? (hitCount / brutoUniverse * 100).toFixed(1) : '0.0';
-            const brutoBluffPct = brutoUniverse > 0 ? (bluffCount / brutoUniverse * 100).toFixed(1) : '0.0';
+            const universe = getUniverse(type);
+            const pctHit = universe > 0 ? (hitCount / universe * 100).toFixed(1) : '0.0';
+            const pctBluff = universe > 0 ? (bluffCount / universe * 100).toFixed(1) : '0.0';
             
             const orphanCount = getOrphanedIds(type).length;
-            let orphanSummaryHtml = orphanCount > 0 ? ' <span style="color: var(--bluff); font-weight: 600;">(' + orphanCount + ')</span>' : '';
+            let orphanSummaryHtml = orphanCount > 0 ? ' <span style="color: var(--bluff); font-weight: 600;">(' + orphanCount + ' sueltos)</span>' : '';
             
             let html = '<div class="range-summary">';
-            html += '<span class="hit-val">Hit <b>' + hitCount + '</b> <span class="pct-group"><b>R:</b> ' + relHitPct + '% | <b>B:</b> ' + brutoHitPct + '%</span></span>';
-            html += '<span class="bluff-val">Bluff <b>' + bluffCount + '</b> <span class="pct-group"><b>R:</b> ' + relBluffPct + '% | <b>B:</b> ' + brutoBluffPct + '%</span></span>';
-            html += '<span class="universe-val">Univ: ' + totalSelectedInNode + ' / ' + brutoUniverse + orphanSummaryHtml + '</span>';
+            html += '<span class="hit-val">Hit <b>' + hitCount + '</b> <span class="pct-group">(' + pctHit + '%)</span></span>';
+            html += '<span class="bluff-val">Bluff <b>' + bluffCount + '</b> <span class="pct-group">(' + pctBluff + '%)</span></span>';
+            html += '<span class="universe-val">Univ: ' + totalSelectedInNode + ' / ' + universe + orphanSummaryHtml + '</span>';
             html += '</div>';
             
             const orphanCounts = {};
