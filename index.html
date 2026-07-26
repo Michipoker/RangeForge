@@ -2211,7 +2211,8 @@
             const h1 = RANK_VAL[hr[0]], h2 = RANK_VAL[hr[1]];
             if (h1 > topRank && h2 > topRank) return 'overcards';
 
-            if (street === 3 || street === 4) {
+            // CORRECCIÓN: El BDFD solo existe en el Flop (street === 3)
+            if (street === 3) {
                 for (const suit of SUITS) {
                     const total = allCards.filter(c => c[1] === suit).length;
                     if (total === 3) {
