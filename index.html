@@ -1063,8 +1063,9 @@
         </div>
         <div id="workspace">
             <div id="empty-state"><p>Selecciona una textura</p></div>
-                 <div id="editor">
+            <div id="editor">
                 <div class="workspace-col" id="flop-col">
+                    <div class="flow-row" style="visibility: hidden; height: 26px; margin-bottom: 8px;"></div>
                     <div class="flow-row">
                         <div class="flow-label">Flop</div>
                         <div class="auto-btn" onclick="autoFillPanel('flop')" title="Autodetectar todo desde el board">A</div>
@@ -1074,7 +1075,7 @@
                         <div class="add-node-btn" onclick="openActionModal('flop')">+nodo</div>
                     </div>
                     <div class="flow-row">
-                        <div style="width: 34px; flex-shrink: 0;"></div> <!-- Espacio para alinear con la etiqueta -->
+                        <div class="flow-label"></div>
                         <div class="tabs-container" id="flop-tabs"></div>
                         <div class="add-combo-btn" onclick="openComboModal('flop')">+</div>
                     </div>
@@ -1087,7 +1088,7 @@
                         <div class="add-card-btn" onclick="openPickCard('turn')" title="Añadir Turn card">+</div>
                     </div>
                     <div class="flow-row" id="turn-actions-row" style="display:none;">
-                        <div style="width: 34px; flex-shrink: 0;"></div>
+                        <div class="flow-label"></div>
                         <div class="auto-btn" onclick="autoFillPanel('turnAction')" title="Autodetectar y traer rango restante del Flop">A</div>
                         <div class="lock-btn" id="turnAction-lock-btn" onclick="toggleLock('turnAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="turnAction-note-btn" onclick="openNoteModal('turnAction')">N</div>
@@ -1095,7 +1096,7 @@
                         <div class="add-node-btn" onclick="openActionModal('turnAction')">+nodo</div>
                     </div>
                     <div class="flow-row" id="turn-actions-tabs-row" style="display:none;">
-                        <div style="width: 34px; flex-shrink: 0;"></div>
+                        <div class="flow-label"></div>
                         <div class="tabs-container" id="turn-actions-tabs"></div>
                         <div class="add-combo-btn" onclick="openComboModal('turnAction')">+</div>
                     </div>
@@ -1108,7 +1109,7 @@
                         <div class="add-card-btn" onclick="openPickCard('river')" title="Añadir River card">+</div>
                     </div>
                     <div class="flow-row" id="river-actions-row" style="display:none;">
-                        <div style="width: 34px; flex-shrink: 0;"></div>
+                        <div class="flow-label"></div>
                         <div class="auto-btn" onclick="autoFillPanel('riverAction')" title="Autodetectar y traer rango restante del Turn">A</div>
                         <div class="lock-btn" id="riverAction-lock-btn" onclick="toggleLock('riverAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="riverAction-note-btn" onclick="openNoteModal('riverAction')">N</div>
@@ -1116,7 +1117,7 @@
                         <div class="add-node-btn" onclick="openActionModal('riverAction')">+nodo</div>
                     </div>
                     <div class="flow-row" id="river-actions-tabs-row" style="display:none;">
-                        <div style="width: 34px; flex-shrink: 0;"></div>
+                        <div class="flow-label"></div>
                         <div class="tabs-container" id="river-actions-tabs"></div>
                         <div class="add-combo-btn" onclick="openComboModal('riverAction')">+</div>
                     </div>
