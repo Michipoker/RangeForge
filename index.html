@@ -1827,6 +1827,18 @@
             document.getElementById('river-actions-tabs').innerHTML=h; 
         }
 
+        function selectRiverCard(i) { 
+            aRC=i; aRA=-1; 
+            let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[i]; 
+            if(!card.riverActions) card.riverActions=[]; 
+            document.getElementById('river-actions-row').style.display='flex'; 
+            renderRiverCardsTabs(); 
+            renderRiverActionsTabs(); 
+            if(card.riverActions.length>0) selectRiverAction(0); 
+            else { document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); } 
+            commit(); 
+        }
+
         function selectRiverAction(i) { aRA=i; let act=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions[i]; renderCombosUI('river-combos-container', act.combos, 'riverAction'); updateMicroButtons('riverAction', act); renderRiverActionsTabs(); commit(); }
         function delRiverCard(i) { if(!confirm('¿Borrar River?')) return; data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards.splice(i,1); aRC=-1; hideRiverUI(); commit(); let c=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards; if(c.length>0) selectRiverCard(0); else renderRiverCardsTabs(); }
         function delRiverAction(i) { if(!confirm('¿Borrar?')) return; data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions.splice(i,1); aRA=-1; commit(); let a=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions; if(a.length>0) selectRiverAction(0); else { document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); renderRiverActionsTabs(); } }
