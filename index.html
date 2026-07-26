@@ -1813,12 +1813,16 @@
             if(aRC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC]; 
             if(!card.riverActions) card.riverActions=[]; 
-            let h=''; 
+            const turnPool = new Set(getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]));
             const hasOrphans = getOrphanedIds('riverAction').length > 0;
+            let h=''; 
             card.riverActions.forEach((a,i)=>{ 
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'riverAction');
-                const warn = hasOrphans ? ' <span class="orphan-warning-tab" title="Se sacaron combos del Turn. Revisa tus jugadas y pulsa ↻ para reasignar.">⚠</span>' : '';
+                const actionPool = getAllSelectedFromNode(a);
+                // Avisa si esta pestaña tiene combos que ya no existen en el Turn
+                const hasInvalids = actionPool.some(id => !turnPool.has(id));
+                let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Turn. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aRA?'active':'') + '" onclick="selectRiverAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'riverAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delRiverAction(' + i + ')">×</span></div>'; 
             }); 
             document.getElementById('river-actions-tabs').innerHTML=h; 
