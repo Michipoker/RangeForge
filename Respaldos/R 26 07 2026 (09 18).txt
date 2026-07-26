@@ -1359,18 +1359,25 @@
         }
 
         window.onload = () => { 
-            try { 
-                const s = localStorage.getItem(DB_KEY); 
-                if(s) { 
-                    data = JSON.parse(s); 
-                    if (!data.spots || !Array.isArray(data.spots)) data.spots = [];
-                    if (!data.library || !Array.isArray(data.library)) data.library = [];
+            const s = localStorage.getItem(DB_KEY); 
+            if(s) try { 
+                data = JSON.parse(s); 
+                if (!data.spots || !Array.isArray(data.spots)) data.spots = [];
+                if (!data.library || !Array.isArray(data.library)) data.library = [];
+                // Migrate old flat library to new tree structure
+                if (data.library.length > 0 && data.library[0] && data.library[0].category === undefined) {
+                    let oldLib = data.library;
+                    data.library = [{ category: "General", ranges: [] }];
+                    oldLib.forEach(item => {
+                        if (item && item.name) {
+                            data.library[0].ranges.push({ name: item.name, value: item.value || "" });
+                        }
+                    });
                 }
             } catch(e){ 
-                console.error("Error cargando datos, iniciando limpio:", e);
                 data = { spots: [], library: [] };
             } 
-            renderSidebar(); 
+            renderSidebar(); checkMigration(); 
         };
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
         function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
