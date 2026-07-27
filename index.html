@@ -1027,6 +1027,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
             font-size: 8px;
             font-weight: 600;
             cursor: pointer;
@@ -1475,6 +1476,14 @@
             return 'w-10';
         }
 
+        function getWeightClass(weight) {
+            if (weight >= 100) return 'w-100';
+            if (weight >= 75) return 'w-75';
+            if (weight >= 50) return 'w-50';
+            if (weight >= 25) return 'w-25';
+            return 'w-10';
+        }
+
         function renderRangeGrid() {
             let html = '<div id="rm-grid">';
             RANKS.forEach((r1, i) => {
@@ -1488,11 +1497,17 @@
                     const weight = tempPreflopRange[key] || 0;
                     
                     let weightClass = '';
+                    let cellText = label;
+                    
                     if (weight > 0) {
                         weightClass = getWeightClass(weight);
+                        // Si tiene un peso parcial (menos de 100), mostramos el % en lugar de la mano
+                        if (weight < 100) {
+                            cellText = `${weight}%`;
+                        }
                     }
                     
-                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
+                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${cellText}</div>`;
                 });
             });
             html += '</div>';
@@ -1518,7 +1533,7 @@
             const totalCombos = countCombosInRange(tempPreflopRange);
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
-        }   
+        }  
 
         function countCombosInRange(rangeObj) {
             let count = 0;
