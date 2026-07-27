@@ -1463,7 +1463,19 @@
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
             
-            const totalCombos = countCombosInRange(tempPreflopRange);
+        function countCombosInRange(rangeObj) {
+            let count = 0;
+            for (let key in rangeObj) {
+                const weight = rangeObj[key] || 0;
+                if (weight === 0) continue;
+                const multiplier = weight / 100;
+                const r1 = key[0], r2 = key[1];
+                const isPair = r1 === r2;
+                if (isPair) count += 6 * multiplier;
+                else count += (key[2] === 's' ? 4 : 12) * multiplier;
+            }
+            return count; 
+        }
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
         }
@@ -1535,105 +1547,158 @@
                 renderRangeGrid();
                 return;
             }
-            const tokens = text.split(',');
-            tokens.forEach(t => {
-                t = t.trim();
-                if (t.length < 2) return;
-                if (t.includes('-')) {
-                    const parts = t.split('-');
-                    if (parts.length === 2) {
-                        const a = parts[0].trim();
-                        const b = parts[1].trim();
-                        if (a.length === 2 && a[0] === a[1] && b.length === 2 && b[0] === b[1]) {
-                            const r1 = a[0], r2 = b[0];
-                            const i1 = RANKS.indexOf(r1);
-                            const i2 = RANKS.indexOf(r2);
-                            const min = Math.min(i1, i2), max = Math.max(i1, i2);
-                            for (let i = min; i <= max; i++) {
-                                newRange[RANKS[i] + RANKS[i] + 'p'] = 100;
-                            }
-                        } else if (a.length >= 3 && b.length >= 3) {
-                            const r1 = a[0], r2 = b[0];
-                            const suffix = a[a.length-1];
-                            if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
-                                const c1 = a[1];
-                                const c2 = b[1];
-                                const i1 = RANKS.indexOf(c1);
-                                const i2 = RANKS.indexOf(c2);
-                                if (i1 !== -1 && i2 !== -1) {
-                                    const min = Math.min(i1, i2), max = Math.max(i1, i2);
-                                    const g = suffix === 'S' ? 's' : 'o';
-                                    for (let i = min; i <= max; i++) {
-                                        if (RANKS[i] !== r1) {
-                                            newRange[r1 + RANKS[i] + g] = 100;
+
+            // Función auxiliar para procesar texto plano y asignarle un peso
+            function processText(txt, weight) {
+                const tokens = txt.split(',');
+                tokens.forEach(t => {
+                    t = t.trim();
+                    if (t.length < 2) return;
+                    if (t.includes('-')) {
+                        const parts = t.split('-');
+                        if (parts.length === 2) {
+                            const a = parts[0].trim();
+                            const b = parts[1].trim();
+                            if (a.length === 2 && a[0] === a[1] && b.length === 2 && b[0] === b[1]) {
+                                const r1 = a[0], r2 = b[0];
+                                const i1 = RANKS.indexOf(r1);
+                                const i2 = RANKS.indexOf(r2);
+                                const min = Math.min(i1, i2), max = Math.max(i1, i2);
+                                for (let i = min; i <= max; i++) {
+                                    newRange[RANKS[i] + RANKS[i] + 'p'] = weight;
+                                }
+                            } else if (a.length >= 3 && b.length >= 3) {
+                                const r1 = a[0], r2 = b[0];
+                                const suffix = a[a.length-1];
+                                if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
+                                    const c1 = a[1];
+                                    const c2 = b[1];
+                                    const i1 = RANKS.indexOf(c1);
+                                    const i2 = RANKS.indexOf(c2);
+                                    if (i1 !== -1 && i2 !== -1) {
+                                        const min = Math.min(i1, i2), max = Math.max(i1, i2);
+                                        const g = suffix === 'S' ? 's' : 'o';
+                                        for (let i = min; i <= max; i++) {
+                                            if (RANKS[i] !== r1) {
+                                                newRange[r1 + RANKS[i] + g] = weight;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                } else {
-                    const r1 = t[0], r2 = t[1];
-                    if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
-                    const isPair = r1 === r2;
-                    if (isPair) {
-                        newRange[r1 + r2 + 'p'] = 100;
                     } else {
-                        const suffix = t.length > 2 ? t[2] : 's'; 
-                        if (suffix.toUpperCase() === 'O') {
-                            newRange[r1 + r2 + 'o'] = 100;
+                        const r1 = t[0], r2 = t[1];
+                        if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
+                        const isPair = r1 === r2;
+                        if (isPair) {
+                            newRange[r1 + r2 + 'p'] = weight;
                         } else {
-                            newRange[r1 + r2 + 's'] = 100;
+                            const suffix = t.length > 2 ? t[2] : 's'; 
+                            if (suffix.toUpperCase() === 'O') {
+                                newRange[r1 + r2 + 'o'] = weight;
+                            } else {
+                                newRange[r1 + r2 + 's'] = weight;
+                            }
                         }
                     }
+                });
+            }
+
+            // Extraer bloques de peso estilo Flopzilla: [40] ... [/40]
+            const weightRegex = /\[(\d+)\]([\s\S]*?)\[\/\d*\]/g;
+            let match;
+            let lastIndex = 0;
+            let remainingText = '';
+
+            while ((match = weightRegex.exec(text)) !== null) {
+                if (match.index > lastIndex) {
+                    remainingText += text.substring(lastIndex, match.index) + ',';
                 }
-            });
+                const weight = parseInt(match[1]);
+                const content = match[2];
+                processText(content, weight);
+                lastIndex = weightRegex.lastIndex;
+            }
+            
+            if (lastIndex < text.length) {
+                remainingText += text.substring(lastIndex);
+            }
+            
+            if (remainingText.trim()) {
+                processText(remainingText, 100);
+            }
+
             tempPreflopRange = newRange;
             renderRangeGrid();
         }
 
         function generateRangeString(rangeObj) {
-            const rangeSet = new Set(Object.keys(rangeObj).filter(k => rangeObj[k] > 0));
-            let parts = [];
-            let pStart = -1;
-            for (let i = 0; i < 13; i++) {
-                const r = RANKS[i];
-                if (rangeSet.has(r + r + 'p')) {
-                    if (pStart === -1) pStart = i;
-                } else {
-                    if (pStart !== -1) {
-                        if (i - 1 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
-                        else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[i-1] + RANKS[i-1]);
-                        pStart = -1;
-                    }
+            const byWeight = {};
+            for (let key in rangeObj) {
+                const w = rangeObj[key];
+                if (w > 0) {
+                    if (!byWeight[w]) byWeight[w] = [];
+                    byWeight[w].push(key);
                 }
             }
-            if (pStart !== -1) {
-                if (12 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
-                else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[12] + RANKS[12]);
-            }
-            ['s', 'o'].forEach(g => {
+
+            let finalParts = [];
+
+            for (let weight in byWeight) {
+                const keys = byWeight[weight];
+                const rangeSet = new Set(keys);
+                let parts = [];
+                
+                let pStart = -1;
                 for (let i = 0; i < 13; i++) {
-                    let sStart = -1;
-                    for (let j = i + 1; j < 13; j++) {
-                        const key = RANKS[i] + RANKS[j] + g;
-                        if (rangeSet.has(key)) {
-                            if (sStart === -1) sStart = j;
-                        } else {
-                            if (sStart !== -1) {
-                                if (j - 1 === sStart) parts.push(RANKS[i] + RANKS[sStart] + g);
-                                else parts.push(RANKS[i] + RANKS[sStart] + g + '-' + RANKS[i] + RANKS[j-1] + g);
-                                sStart = -1;
-                            }
+                    const r = RANKS[i];
+                    if (rangeSet.has(r + r + 'p')) {
+                        if (pStart === -1) pStart = i;
+                    } else {
+                        if (pStart !== -1) {
+                            if (i - 1 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
+                            else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[i-1] + RANKS[i-1]);
+                            pStart = -1;
                         }
                     }
-                    if (sStart !== -1) {
-                        if (12 === sStart) parts.push(RANKS[i] + RANKS[sStart] + g);
-                        else parts.push(RANKS[i] + RANKS[sStart] + g + '-' + RANKS[i] + RANKS[12] + g);
-                    }
                 }
-            });
-            return parts.join(',');
+                if (pStart !== -1) {
+                    if (12 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
+                    else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[12] + RANKS[12]);
+                }
+
+                ['s', 'o'].forEach(g => {
+                    for (let i = 0; i < 13; i++) {
+                        let sStart = -1;
+                        for (let j = i + 1; j < 13; j++) {
+                            const key = RANKS[i] + RANKS[j] + g;
+                            if (rangeSet.has(key)) {
+                                if (sStart === -1) sStart = j;
+                            } else {
+                                if (sStart !== -1) {
+                                    if (j - 1 === sStart) parts.push(RANKS[i] + RANKS[sStart] + g);
+                                    else parts.push(RANKS[i] + RANKS[sStart] + g + '-' + RANKS[i] + RANKS[j-1] + g);
+                                    sStart = -1;
+                                }
+                            }
+                        }
+                        if (sStart !== -1) {
+                            if (12 === sStart) parts.push(RANKS[i] + RANKS[sStart] + g);
+                            else parts.push(RANKS[i] + RANKS[sStart] + g + '-' + RANKS[i] + RANKS[12] + g);
+                        }
+                    }
+                });
+
+                let str = parts.join(',');
+                if (parseInt(weight) === 100) {
+                    finalParts.push(str);
+                } else {
+                    finalParts.push(`[${weight}] ${str} [/${weight}]`);
+                }
+            }
+
+            return finalParts.join(', ');
         }
 
         function updateRangeInputText() {
@@ -1760,7 +1825,7 @@
             }
         }
 
-         function getTabPct(node, type) {
+        function getTabPct(node, type) {
             if (!node) return '0.0';
             const universe = getUniverse(type);
             if (universe === 0) return '0.0';
@@ -2396,8 +2461,11 @@
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
                 const preKeys = new Set(Object.keys(preRange));
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
+                if (Object.keys(preRange).length > 0) {
+                    Object.keys(preRange).forEach(key => {
+                        const weight = preRange[key];
+                        if (!weight || weight === 0) return;
+                        const multiplier = weight / 100;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2405,15 +2473,10 @@
                             if (g === 's' && sc.g !== 's') return;
                             if (g === 'o' && sc.g !== 'o') return;
                             if (g === 'p' && sc.g !== 'p') return;
-                            sourcePool.push(sc.id);
+                            // Simulamos el peso: si es 40%, hay 40% de probabilidad de que entre al sourcePool
+                            if (Math.random() < multiplier) sourcePool.push(sc.id);
                         });
                     });
-                } else {
-                    for (let i = 0; i < RANKS.length; i++) {
-                        for (let j = i; j < RANKS.length; j++) {
-                            sourcePool.push(...suitCombos(RANKS[i] + RANKS[j]).map(sc => sc.id));
-                        }
-                    }
                 }
             } else if (type === 'turnAction') {
                 sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
@@ -2491,8 +2554,11 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
+                if (Object.keys(preRange).length > 0) {
+                    Object.keys(preRange).forEach(key => {
+                        const weight = preRange[key];
+                        if (!weight || weight === 0) return;
+                        const multiplier = weight / 100;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2500,15 +2566,9 @@
                             if (g === 's' && sc.g !== 's') return;
                             if (g === 'o' && sc.g !== 'o') return;
                             if (g === 'p' && sc.g !== 'p') return;
-                            sourcePool.push(sc.id);
+                            if (Math.random() < multiplier) sourcePool.push(sc.id);
                         });
                     });
-                } else {
-                    for (let i = 0; i < RANKS.length; i++) {
-                        for (let j = i; j < RANKS.length; j++) {
-                            sourcePool.push(...suitCombos(RANKS[i] + RANKS[j]).map(sc => sc.id));
-                        }
-                    }
                 }
             } else if (type === 'turnAction') {
                 sourcePool = getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]);
@@ -2559,10 +2619,14 @@
             const boardSet = new Set(board);
 
             let count = 0;
-            const preRange = getActivePreflopRange();
+            const preRange = getActivePreflopRange(); 
             
-            if (preRange.length > 0) {
-                preRange.forEach(key => {
+            const preKeys = Object.keys(preRange);
+            if (preKeys.length > 0) {
+                preKeys.forEach(key => {
+                    const weight = preRange[key];
+                    if (!weight || weight === 0) return;
+                    const multiplier = weight / 100;
                     const r1 = key[0], r2 = key[1];
                     const isPair = r1 === r2;
                     const g = isPair ? 'p' : key[2];
@@ -2573,7 +2637,10 @@
 
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
-                        if (!boardSet.has(c1) && !boardSet.has(c2)) count++;
+                        if (!boardSet.has(c1) && !boardSet.has(c2)) {
+                            // Sumamos la fracción exacta del combo según el peso
+                            count += (isPair ? 6 : (g === 's' ? 4 : 12)) * multiplier;
+                        }
                     });
                 });
             } else {
