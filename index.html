@@ -1408,7 +1408,16 @@
         function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
         function addSpot() { const n=document.getElementById('spot-input').value.trim(); if(!n) return; data.spots.push({name:n, textures:[], preflopRange: []}); document.getElementById('spot-input').value=''; commit(); }
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
-        function delTexture(i) { if(confirm('¿Borrar textura?')){ data.spots[aS].textures.splice(i,1); if(aT===i){aT=-1; clearAll();} else if(aT>i){aT--;} commit(); } }
+        function delTexture(spotIdx, i) { 
+            if(confirm('¿Borrar textura?')){ 
+                data.spots[spotIdx].textures.splice(i,1); 
+                if (aS === spotIdx) {
+                    if(aT===i){aT=-1; clearAll();} 
+                    else if(aT>i){aT--;} 
+                }
+                commit(); 
+            } 
+        }
         function addTexture() { const n=prompt("Nombre de la textura:"); if(!n) return; data.spots[aS].textures.push({name:n, board:'', flopNodes:[]}); commit(); loadTexture(data.spots[aS].textures.length-1); }
         function loadTexture(i) { aS = aS===-1?0:aS; aT=i; aF=-1; let t=data.spots[aS].textures[i]; document.getElementById('empty-state').style.display='none'; document.getElementById('editor').style.display='flex'; document.getElementById('header-breadcrumb').style.display='flex'; document.getElementById('spotHeader').innerText=data.spots[aS].name; document.getElementById('textureHeader').value=t.name; renderBoard(); renderFlopTabs(); if(t.flopNodes.length>0) selectFlop(0); else clearWorkspace(); }
         
@@ -1417,11 +1426,13 @@
             let html = ''; 
             if(!data.spots) data.spots = [];
             data.spots.forEach((s, i) => { 
-                const hasRange = s.preflopRange && s.preflopRange.length > 0;
+                // Arreglamos la verificación del rango para que funcione con el nuevo sistema de pesos
+                const hasRange = s.preflopRange && Object.keys(s.preflopRange).length > 0;
                 html += `<div class="spot-item"><div class="spot-name"><span>${s.name}</span><div class="spot-actions"><div class="micro-btn ${hasRange?'has-data':''}" onclick="event.stopPropagation(); openRangeModal(${i})" title="Rango preflop">R</div><span class="del-btn" onclick="event.stopPropagation(); delSpot(${i})">×</span></div></div>`; 
                 s.textures.forEach((t, j) => { 
                     let ac = (i === aS && j === aT) ? 'active' : ''; 
-                    html += `<div class="texture-item ${ac}" onclick="aS=${i}; loadTexture(${j})"><span>${t.name}</span><span class="del-btn" onclick="event.stopPropagation(); delTexture(${j})">×</span></div>`; 
+                    // Conectamos el botón X con la nueva función delTexture
+                    html += `<div class="texture-item ${ac}" onclick="aS=${i}; loadTexture(${j})"><span>${t.name}</span><span class="del-btn" onclick="event.stopPropagation(); delTexture(${i}, ${j})">×</span></div>`; 
                 }); 
                 html += `<div class="add-texture" onclick="aS=${i}; addTexture()">+ añadir textura</div></div>`; 
             }); 
