@@ -1039,18 +1039,20 @@
         .rm-cell:hover { background: var(--bg-hover); color: var(--text-secondary); }
         .rm-cell.active { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-border); box-shadow: inset 0 0 0 1px var(--accent-border); }
         .rm-cell .rm-weight-label { 
-            font-size: 8px; 
+            font-size: 7px; 
             position: absolute; 
             top: 1px; 
             right: 1px; 
-            background: rgba(255, 255, 255, 0.9); 
-            color: #dc2626; 
-            padding: 1px 3px; 
-            border-radius: 3px; 
+            background: #ffffff; 
+            color: #b91c1c; 
+            padding: 0 2px; 
+            border-radius: 2px; 
             font-weight: 800; 
             line-height: 1;
             border: 1px solid rgba(0,0,0,0.1);
         }
+        /* Acomodamos la celda para que el nombre de la mano se vaya abajo y el % arriba */
+        .rm-cell { position: relative; overflow: hidden; align-items: flex-end; padding-bottom: 2px; }
         .rm-cell { position: relative; overflow: hidden; }
         .rm-cell { position: relative; overflow: hidden; }
         .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
