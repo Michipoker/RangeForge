@@ -1509,7 +1509,7 @@
                 if (isPair) count += 6 * multiplier;
                 else count += (key[2] === 's' ? 4 : 12) * multiplier;
             }
-            return count.toFixed(1); // Devolvemos con 1 decimal por los pesos
+            return count; // Sin .toFixed aquí, eso era lo que rompía el botón R
         }
 
         function rmCellDown(e, key) {
@@ -1820,8 +1820,17 @@
 
         function getActivePreflopRange() {
             if (aS === -1 || !data.spots[aS]) return {};
-            if (!data.spots[aS].preflopRange) data.spots[aS].preflopRange = {};
-            return data.spots[aS].preflopRange;
+            let pr = data.spots[aS].preflopRange;
+            // Si encuentra un rango viejo (array), lo convierte a objeto vacío
+            if (Array.isArray(pr)) {
+                data.spots[aS].preflopRange = {};
+                return {};
+            }
+            if (!pr) {
+                data.spots[aS].preflopRange = {};
+                return {};
+            }
+            return pr;
         }
 
         function getUniverse(type) {
@@ -2642,8 +2651,8 @@
             const preKeys = Object.keys(preRange);
             if (preKeys.length > 0) {
                 preKeys.forEach(key => {
-                    const weight = preRange[key];
-                    if (!weight || weight === 0) return;
+                    const weight = parseFloat(preRange[key]);
+                    if (isNaN(weight) || weight === 0) return;
                     const multiplier = weight / 100;
                     const r1 = key[0], r2 = key[1];
                     const isPair = r1 === r2;
@@ -2656,7 +2665,6 @@
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
                         if (!boardSet.has(c1) && !boardSet.has(c2)) {
-                            // Sumamos la fracción exacta del combo según el peso
                             count += (isPair ? 6 : (g === 's' ? 4 : 12)) * multiplier;
                         }
                     });
