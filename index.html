@@ -1462,12 +1462,9 @@
                     
                     if (weight > 0) {
                         if (weight === 100) {
-                            // 100% es azul fuerte
                             styleStr = `style="background: #c7d2fe; color: #3730a3; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8;"`;
                         } else {
-                            // Pesos parciales: Amarillo con opacidad dinámica
-                            // Un peso de 20 dará un amarillo muy claro, un 80 dará un amarillo fuerte
-                            const alpha = Math.max(0.25, weight / 100); // Mínimo 25% de opacidad para que se vea
+                            const alpha = Math.max(0.25, weight / 100);
                             styleStr = `style="background: rgba(252, 211, 77, ${alpha}); color: #78350f; font-weight: 700; border: 1px solid #f59e0b;"`;
                             labelExtra = `<span class="rm-weight-label">${weight}%</span>`;
                         }
@@ -1499,7 +1496,7 @@
         }
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
-        }
+        
 
         function countCombosInRange(rangeObj) {
             let count = 0;
