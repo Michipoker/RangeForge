@@ -1545,6 +1545,65 @@
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
         }
 
+        function renderRangeGrid() {
+            let html = '<div id="rm-grid">';
+            RANKS.forEach((r1, i) => {
+                RANKS.forEach((r2, j) => {
+                    let hand, type, label;
+                    if (i === j) { hand = r1+r2; type = 'p'; label = hand; }
+                    else if (i < j) { hand = r1+r2; type = 's'; label = hand+'s'; }
+                    else { hand = r2+r1; type = 'o'; label = hand+'o'; }
+                    
+                    const key = hand + type;
+                    const weight = tempPreflopRange[key] || 0;
+                    
+                    let weightClass = '';
+                    if (weight > 0) {
+                        weightClass = getWeightClass(weight);
+                    }
+                    
+                    // La celda SOLO muestra el nombre de la mano
+                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
+                });
+            });
+            html += '</div>';
+            document.getElementById('rm-grid').outerHTML = html;
+            
+            // --- LISTA DINÁMICA A LA DERECHA ---
+            let legendHtml = '<div style="font-weight:700; margin-bottom:8px; font-size:12px; text-align:center; border-bottom: 1px solid var(--border); padding-bottom: 5px;">Pesos Asignados</div>';
+            
+            // Agrupamos las manos por su peso exacto
+            const byWeight = {};
+            for (let key in tempPreflopRange) {
+                const w = tempPreflopRange[key];
+                if (w > 0) {
+                    if (!byWeight[w]) byWeight[w] = [];
+                    byWeight[w].push(key);
+                }
+            }
+            
+            // Ordenamos de mayor a menor peso
+            const sortedWeights = Object.keys(byWeight).map(Number).sort((a, b) => b - a);
+            
+            if (sortedWeights.length === 0) {
+                legendHtml += '<div style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 10px;">Usa clic derecho para asignar pesos</div>';
+            } else {
+                sortedWeights.forEach(w => {
+                    const wClass = getWeightClass(w);
+                    legendHtml += `<div style="display:flex; align-items:center; gap:6px; margin-bottom: 6px;">
+                        <div class="rm-cell ${wClass}" style="width:36px; height:20px; cursor:default; display:inline-flex; align-items:center; justify-content:center; border-radius:3px; font-size: 9px;">${w}%</div>
+                        <span style="font-size: 11px; color: var(--text-secondary); line-height: 1.2;">${byWeight[w].join(', ')}</span>
+                    </div>`;
+                });
+            }
+            
+            document.getElementById('rm-weight-legend').innerHTML = legendHtml;
+            
+            const totalCombos = countCombosInRange(tempPreflopRange);
+            const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
+            document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
+        }
+
         function getWeightClass(weight) {
             if (weight >= 100) return 'w-100';
             if (weight >= 75) return 'w-75';
@@ -1606,16 +1665,18 @@
 
         function countCombosInRange(rangeObj) {
             let count = 0;
+            if (!rangeObj || typeof rangeObj !== 'object' || Array.isArray(rangeObj)) return 0;
             for (let key in rangeObj) {
-                const weight = rangeObj[key] || 0;
-                if (weight === 0) continue;
+                const weight = parseFloat(rangeObj[key]);
+                if (isNaN(weight) || weight === 0) continue;
                 const multiplier = weight / 100;
+                if (key.length < 2 || !RANKS.includes(key[0]) || !RANKS.includes(key[1])) continue;
                 const r1 = key[0], r2 = key[1];
                 const isPair = r1 === r2;
                 if (isPair) count += 6 * multiplier;
                 else count += (key[2] === 's' ? 4 : 12) * multiplier;
             }
-            return count; 
+            return count;
         }
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
