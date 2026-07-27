@@ -1055,11 +1055,16 @@
         /* Acomodamos la celda para que el nombre de la mano se vaya abajo y el % arriba */
         .rm-cell { position: relative; overflow: hidden; }
                 /* Colores pasteles para los pesos */
-        .rm-cell.w-100 { background: #c7d2fe; color: #3730a3; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8; }
-        .rm-cell.w-75 { background: #bbf7d0; color: #166534; font-weight: 700; box-shadow: inset 0 0 0 1px #4ade80; }
-        .rm-cell.w-50 { background: #fef9c3; color: #854d0e; font-weight: 700; box-shadow: inset 0 0 0 1px #facc15; }
-        .rm-cell.w-25 { background: #fed7aa; color: #9a3412; font-weight: 700; box-shadow: inset 0 0 0 1px #fb923c; }
-        .rm-cell.w-10 { background: #fecaca; color: #991b1b; font-weight: 700; box-shadow: inset 0 0 0 1px #f87171; }
+        .rm-cell.w-100 { background: #c7d2fe; color: #312e81; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8; }
+        .rm-cell.w-80 { background: #bfdbfe; color: #1e3a8a; font-weight: 700; box-shadow: inset 0 0 0 1px #60a5fa; }
+        .rm-cell.w-70 { background: #a5f3fc; color: #155e75; font-weight: 700; box-shadow: inset 0 0 0 1px #22d3ee; }
+        .rm-cell.w-60 { background: #bbf7d0; color: #14532d; font-weight: 700; box-shadow: inset 0 0 0 1px #4ade80; }
+        .rm-cell.w-50 { background: #d9f99d; color: #365314; font-weight: 700; box-shadow: inset 0 0 0 1px #a3e635; }
+        .rm-cell.w-40 { background: #fef08a; color: #713f12; font-weight: 700; box-shadow: inset 0 0 0 1px #facc15; }
+        .rm-cell.w-30 { background: #fed7aa; color: #7c2d12; font-weight: 700; box-shadow: inset 0 0 0 1px #fb923c; }
+        .rm-cell.w-20 { background: #fecaca; color: #7f1d1d; font-weight: 700; box-shadow: inset 0 0 0 1px #f87171; }
+        .rm-cell.w-10 { background: #fbcfe8; color: #831843; font-weight: 700; box-shadow: inset 0 0 0 1px #f472b6; }
+        .rm-cell.w-0 { background: #f5d0fe; color: #701a75; font-weight: 700; box-shadow: inset 0 0 0 1px #e879f9; }
         .rm-cell { position: relative; overflow: hidden; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
 
@@ -1469,11 +1474,75 @@
         }
 
         function getWeightClass(weight) {
-            if (weight >= 100) return 'w-100';
-            if (weight >= 75) return 'w-75';
+            if (weight >= 90) return 'w-100';
+            if (weight >= 80) return 'w-80';
+            if (weight >= 70) return 'w-70';
+            if (weight >= 60) return 'w-60';
             if (weight >= 50) return 'w-50';
-            if (weight >= 25) return 'w-25';
-            return 'w-10';
+            if (weight >= 40) return 'w-40';
+            if (weight >= 30) return 'w-30';
+            if (weight >= 20) return 'w-20';
+            if (weight >= 10) return 'w-10';
+            return 'w-0';
+        }
+
+        function renderRangeGrid() {
+            let html = '<div id="rm-grid">';
+            RANKS.forEach((r1, i) => {
+                RANKS.forEach((r2, j) => {
+                    let hand, type, label;
+                    if (i === j) { hand = r1+r2; type = 'p'; label = hand; }
+                    else if (i < j) { hand = r1+r2; type = 's'; label = hand+'s'; }
+                    else { hand = r2+r1; type = 'o'; label = hand+'o'; }
+                    
+                    const key = hand + type;
+                    const weight = tempPreflopRange[key] || 0;
+                    
+                    let weightClass = '';
+                    if (weight > 0) {
+                        weightClass = getWeightClass(weight);
+                    }
+                    
+                    // La celda SOLO muestra el nombre de la mano
+                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
+                });
+            });
+            html += '</div>';
+            document.getElementById('rm-grid').outerHTML = html;
+            
+            // --- LISTA DINÁMICA A LA DERECHA ---
+            let legendHtml = '<div style="font-weight:700; margin-bottom:8px; font-size:12px; text-align:center; border-bottom: 1px solid var(--border); padding-bottom: 5px;">Pesos Asignados</div>';
+            
+            // Agrupamos las manos por su peso exacto
+            const byWeight = {};
+            for (let key in tempPreflopRange) {
+                const w = tempPreflopRange[key];
+                if (w > 0) {
+                    if (!byWeight[w]) byWeight[w] = [];
+                    byWeight[w].push(key);
+                }
+            }
+            
+            // Ordenamos de mayor a menor peso
+            const sortedWeights = Object.keys(byWeight).map(Number).sort((a, b) => b - a);
+            
+            if (sortedWeights.length === 0) {
+                legendHtml += '<div style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 10px;">Usa clic derecho para asignar pesos</div>';
+            } else {
+                sortedWeights.forEach(w => {
+                    const wClass = getWeightClass(w);
+                    legendHtml += `<div style="display:flex; align-items:center; gap:6px; margin-bottom: 6px;">
+                        <div class="rm-cell ${wClass}" style="width:36px; height:20px; cursor:default; display:inline-flex; align-items:center; justify-content:center; border-radius:3px; font-size: 9px;">${w}%</div>
+                        <span style="font-size: 11px; color: var(--text-secondary); line-height: 1.2;">${byWeight[w].join(', ')}</span>
+                    </div>`;
+                });
+            }
+            
+            document.getElementById('rm-weight-legend').innerHTML = legendHtml;
+            
+            const totalCombos = countCombosInRange(tempPreflopRange);
+            const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
+            document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
         }
 
         function getWeightClass(weight) {
