@@ -1038,11 +1038,6 @@
         }
         .rm-cell:hover { background: var(--bg-hover); color: var(--text-secondary); }
         .rm-cell.active { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-border); box-shadow: inset 0 0 0 1px var(--accent-border); }
-        .rm-cell.weight-100 { background: #c7d2fe; color: #3730a3; font-weight: 700; }
-        .rm-cell.weight-75 { background: #d6d9fb; color: #4338ca; }
-        .rm-cell.weight-50 { background: #e0e1fd; color: #6366f1; }
-        .rm-cell.weight-25 { background: #ebecfe; color: #818cf8; }
-        .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
 
         /* Scrollbar */
@@ -1421,14 +1416,13 @@
         let rangeSpotIdx = -1;
         let rmDragModeAdd = false;
         let rmMouseDown = false;
-        let tempPreflopRange = {}; 
+        let tempPreflopRange = []; 
         let selectedLibCat = -1;
 
         function openRangeModal(idx) {
             rangeSpotIdx = idx;
-            if (!data.spots[idx].preflopRange) data.spots[idx].preflopRange = {};
-            // Clonamos el objeto de pesos
-            tempPreflopRange = JSON.parse(JSON.stringify(data.spots[idx].preflopRange));
+            if (!data.spots[idx].preflopRange) data.spots[idx].preflopRange = [];
+            tempPreflopRange = [...data.spots[idx].preflopRange];
             selectedLibCat = -1;
             renderLibrary();
             updateRangeInputText();
@@ -1437,6 +1431,7 @@
         }
 
         function renderRangeGrid() {
+            const rangeSet = new Set(tempPreflopRange);
             let html = '<div id="rm-grid">';
             RANKS.forEach((r1, i) => {
                 RANKS.forEach((r2, j) => {
@@ -1446,26 +1441,15 @@
                     else { hand = r2+r1; type = 'o'; label = hand+'o'; }
                     
                     const key = hand + type;
-                    const weight = tempPreflopRange[key] || 0;
-                    
-                    let weightClass = '';
-                    if (weight > 0) {
-                        if (weight >= 100) weightClass = 'weight-100';
-                        else if (weight >= 75) weightClass = 'weight-75';
-                        else if (weight >= 50) weightClass = 'weight-50';
-                        else weightClass = 'weight-25';
-                    }
-                    
-                    // Clic izquierdo (agregar 100%), Clic derecho (preguntar peso)
-                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}${weight > 0 && weight < 100 ? '<span class="rm-weight-label">'+weight+'%</span>' : ''}</div>`;
+                    const active = rangeSet.has(key);
+                    html += `<div class="rm-cell ${active?'active':''}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
                 });
             });
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
             
             const totalCombos = countCombosInRange(tempPreflopRange);
-            const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
-            document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
+            document.getElementById('rm-info').textContent = `${tempPreflopRange.length} manos (${totalCombos} combos)`;
         }
 
         function countCombosInRange(rangeArr) {
@@ -1480,46 +1464,21 @@
         }
 
         function rmCellDown(e, key) {
-            if (e.button === 2) return; // Ignora el clic derecho aquí, lo maneja rmCellRightClick
             rmMouseDown = true;
-            // Si ya está al 100%, lo quitamos (0%). Si no, lo ponemos al 100%.
-            const currentWeight = tempPreflopRange[key] || 0;
-            if (currentWeight === 100) {
-                rmDragModeAdd = false;
-            } else {
-                rmDragModeAdd = true;
-            }
-            rmApplyAction(key, 100);
-                    function rmCellRightClick(e, key) {
-            e.preventDefault();
-            let currentWeight = tempPreflopRange[key] || 0;
-            let input = prompt(`Introduce el peso para ${key} (1-100):`, currentWeight || '50');
-            if (input === null) return; // Cancelaron
-            let w = parseInt(input);
-            if (isNaN(w) || w < 0) w = 0;
-            if (w > 100) w = 100;
-            
-            if (w === 0) {
-                delete tempPreflopRange[key];
-            } else {
-                tempPreflopRange[key] = w;
-            }
-            renderRangeGrid();
-            updateRangeInputText();
-        }
+            const set = new Set(tempPreflopRange);
+            rmDragModeAdd = !set.has(key);
+            rmApplyAction(key);
             e.preventDefault();
         }
-
         function rmCellOver(e, key) { if (rmMouseDown) rmApplyAction(key); }
         function rmCellUp(e) { rmMouseDown = false; }
         document.addEventListener('mouseup', function() { rmMouseDown = false; });
 
-        function rmApplyAction(key, weight = 100) {
-            if (rmDragModeAdd) {
-                tempPreflopRange[key] = weight;
-            } else {
-                delete tempPreflopRange[key];
-            }
+        function rmApplyAction(key) {
+            const set = new Set(tempPreflopRange);
+            if (rmDragModeAdd && !set.has(key)) set.add(key);
+            else if (!rmDragModeAdd && set.has(key)) set.delete(key);
+            tempPreflopRange = Array.from(set);
             renderRangeGrid();
             updateRangeInputText();
         }
@@ -1653,12 +1612,7 @@
         }
 
         function applyRangeToSpot() {
-            // Filtramos los que tienen 0% por si acaso
-            let cleanRange = {};
-            for (let k in tempPreflopRange) {
-                if (tempPreflopRange[k] > 0) cleanRange[k] = tempPreflopRange[k];
-            }
-            data.spots[rangeSpotIdx].preflopRange = cleanRange;
+            data.spots[rangeSpotIdx].preflopRange = tempPreflopRange;
             commit();
             closeModal('range');
         }
@@ -1741,9 +1695,8 @@
         // =======================================
 
         function getActivePreflopRange() {
-            if (aS === -1 || !data.spots[aS]) return {};
-            if (!data.spots[aS].preflopRange) data.spots[aS].preflopRange = {};
-            return data.spots[aS].preflopRange;
+            if (aS === -1 || !data.spots[aS]) return [];
+            return data.spots[aS].preflopRange || [];
         }
 
         function getUniverse(type) {
