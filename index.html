@@ -1038,10 +1038,19 @@
         }
         .rm-cell:hover { background: var(--bg-hover); color: var(--text-secondary); }
         .rm-cell.active { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-border); box-shadow: inset 0 0 0 1px var(--accent-border); }
-        .rm-cell.weight-100 { background: #c7d2fe; color: #3730a3; font-weight: 700; }
-        .rm-cell.weight-75 { background: #d6d9fb; color: #4338ca; }
-        .rm-cell.weight-50 { background: #e0e1fd; color: #6366f1; }
-        .rm-cell.weight-25 { background: #ebecfe; color: #818cf8; }
+        .rm-cell .rm-weight-label { 
+            font-size: 8px; 
+            color: inherit; 
+            margin-left: 2px; 
+            font-weight: 800; 
+            position: absolute; 
+            top: 1px; 
+            right: 2px; 
+            background: rgba(255,255,255,0.8); 
+            padding: 0 2px; 
+            border-radius: 2px; 
+        }
+        .rm-cell { position: relative; overflow: hidden; }
         .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
 
@@ -1448,20 +1457,32 @@
                     const key = hand + type;
                     const weight = tempPreflopRange[key] || 0;
                     
-                    let weightClass = '';
+                    let styleStr = '';
+                    let labelExtra = '';
+                    
                     if (weight > 0) {
-                        if (weight >= 100) weightClass = 'weight-100';
-                        else if (weight >= 75) weightClass = 'weight-75';
-                        else if (weight >= 50) weightClass = 'weight-50';
-                        else weightClass = 'weight-25';
+                        if (weight === 100) {
+                            // 100% es azul fuerte
+                            styleStr = `style="background: #c7d2fe; color: #3730a3; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8;"`;
+                        } else {
+                            // Pesos parciales: Amarillo con opacidad dinámica
+                            // Un peso de 20 dará un amarillo muy claro, un 80 dará un amarillo fuerte
+                            const alpha = Math.max(0.25, weight / 100); // Mínimo 25% de opacidad para que se vea
+                            styleStr = `style="background: rgba(252, 211, 77, ${alpha}); color: #78350f; font-weight: 700; border: 1px solid #f59e0b;"`;
+                            labelExtra = `<span class="rm-weight-label">${weight}%</span>`;
+                        }
                     }
                     
-                    // Clic izquierdo (agregar 100%), Clic derecho (preguntar peso)
-                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}${weight > 0 && weight < 100 ? '<span class="rm-weight-label">'+weight+'%</span>' : ''}</div>`;
+                    html += `<div class="rm-cell" ${styleStr} data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}${labelExtra}</div>`;
                 });
             });
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
+            
+            const totalCombos = countCombosInRange(tempPreflopRange);
+            const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
+            document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
+        }
             
         function countCombosInRange(rangeObj) {
             let count = 0;
@@ -2889,8 +2910,8 @@
                     let rangeKey = hand + grp; 
                     
                     let disabled = (cmActiveTab === 's' && grp !== 's') || 
-                                   (cmActiveTab === 'o' && grp !== 'o') || 
-                                   (cmActiveTab === 'p' && grp !== 'p');
+                                (cmActiveTab === 'o' && grp !== 'o') || 
+                                (cmActiveTab === 'p' && grp !== 'p');
                     
                     let classes = [cls];
                     if (disabled) classes.push('cm-tab-disabled');
