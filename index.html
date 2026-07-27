@@ -1468,15 +1468,18 @@
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
         }
 
-        function countCombosInRange(rangeArr) {
+        function countCombosInRange(rangeObj) {
             let count = 0;
-            rangeArr.forEach(key => {
+            for (let key in rangeObj) {
+                const weight = rangeObj[key] || 0;
+                if (weight === 0) continue;
+                const multiplier = weight / 100;
                 const r1 = key[0], r2 = key[1];
                 const isPair = r1 === r2;
-                if (isPair) count += 6;
-                else count += (key[2] === 's' ? 4 : 12);
-            });
-            return count;
+                if (isPair) count += 6 * multiplier;
+                else count += (key[2] === 's' ? 4 : 12) * multiplier;
+            }
+            return count.toFixed(1); // Devolvemos con 1 decimal por los pesos
         }
 
         function rmCellDown(e, key) {
@@ -1526,34 +1529,30 @@
 
         function parseRangeInput() {
             const text = document.getElementById('rm-input').value.toUpperCase();
-            const rangeSet = new Set();
+            const newRange = {};
             if (!text.trim()) {
-                tempPreflopRange = [];
+                tempPreflopRange = newRange;
                 renderRangeGrid();
                 return;
             }
-            
             const tokens = text.split(',');
             tokens.forEach(t => {
                 t = t.trim();
                 if (t.length < 2) return;
-                
                 if (t.includes('-')) {
                     const parts = t.split('-');
                     if (parts.length === 2) {
                         const a = parts[0].trim();
                         const b = parts[1].trim();
-                        
                         if (a.length === 2 && a[0] === a[1] && b.length === 2 && b[0] === b[1]) {
                             const r1 = a[0], r2 = b[0];
                             const i1 = RANKS.indexOf(r1);
                             const i2 = RANKS.indexOf(r2);
                             const min = Math.min(i1, i2), max = Math.max(i1, i2);
                             for (let i = min; i <= max; i++) {
-                                rangeSet.add(RANKS[i] + RANKS[i] + 'p');
+                                newRange[RANKS[i] + RANKS[i] + 'p'] = 100;
                             }
-                        }
-                        else if (a.length >= 3 && b.length >= 3) {
+                        } else if (a.length >= 3 && b.length >= 3) {
                             const r1 = a[0], r2 = b[0];
                             const suffix = a[a.length-1];
                             if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
@@ -1566,7 +1565,7 @@
                                     const g = suffix === 'S' ? 's' : 'o';
                                     for (let i = min; i <= max; i++) {
                                         if (RANKS[i] !== r1) {
-                                            rangeSet.add(r1 + RANKS[i] + g);
+                                            newRange[r1 + RANKS[i] + g] = 100;
                                         }
                                     }
                                 }
@@ -1578,26 +1577,24 @@
                     if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
                     const isPair = r1 === r2;
                     if (isPair) {
-                        rangeSet.add(r1 + r2 + 'p');
+                        newRange[r1 + r2 + 'p'] = 100;
                     } else {
                         const suffix = t.length > 2 ? t[2] : 's'; 
                         if (suffix.toUpperCase() === 'O') {
-                            rangeSet.add(r1 + r2 + 'o');
+                            newRange[r1 + r2 + 'o'] = 100;
                         } else {
-                            rangeSet.add(r1 + r2 + 's');
+                            newRange[r1 + r2 + 's'] = 100;
                         }
                     }
                 }
             });
-            
-            tempPreflopRange = Array.from(rangeSet);
+            tempPreflopRange = newRange;
             renderRangeGrid();
         }
 
-        function generateRangeString(rangeArr) {
-            const rangeSet = new Set(rangeArr);
+        function generateRangeString(rangeObj) {
+            const rangeSet = new Set(Object.keys(rangeObj).filter(k => rangeObj[k] > 0));
             let parts = [];
-            
             let pStart = -1;
             for (let i = 0; i < 13; i++) {
                 const r = RANKS[i];
@@ -1615,7 +1612,6 @@
                 if (12 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
                 else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[12] + RANKS[12]);
             }
-
             ['s', 'o'].forEach(g => {
                 for (let i = 0; i < 13; i++) {
                     let sStart = -1;
@@ -1637,7 +1633,6 @@
                     }
                 }
             });
-            
             return parts.join(',');
         }
 
@@ -2400,6 +2395,7 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
+                const preKeys = new Set(Object.keys(preRange));
                 if (preRange.length > 0) {
                     preRange.forEach(key => {
                         const r1 = key[0], r2 = key[1];
@@ -2831,7 +2827,7 @@
                     
                     let classes = [cls];
                     if (disabled) classes.push('cm-tab-disabled');
-                    else if (preRange.length > 0 && !rangeSet.has(rangeKey)) classes.push('deleted');
+                    else if (preKeys.size > 0 && !preKeys.has(rangeKey)) classes.push('deleted');
                     
                     let clickAttrs = '';
                     if (!disabled && !(preRange.length > 0 && !rangeSet.has(rangeKey))) {
@@ -2862,8 +2858,9 @@
                 let sourcePool = [];
                 if (type === 'flop') {
                     const preRange = getActivePreflopRange();
-                    if (preRange.length > 0) {
-                        preRange.forEach(key => {
+                    const preKeys = Object.keys(preRange);
+                        if (preKeys.length > 0) {
+                        preKeys.forEach(key => {
                             const r1 = key[0], r2 = key[1];
                             const isPair = r1 === r2;
                             const g = isPair ? 'p' : key[2];
