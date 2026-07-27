@@ -1487,7 +1487,7 @@
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
         }   
-        
+
         function countCombosInRange(rangeObj) {
             let count = 0;
             for (let key in rangeObj) {
@@ -2685,7 +2685,8 @@
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
                         if (!boardSet.has(c1) && !boardSet.has(c2)) {
-                            count += (isPair ? 6 : (g === 's' ? 4 : 12)) * multiplier;
+                            // Sumamos 1 combo por cada vez que el bucle se ejecuta, multiplicado por el peso
+                            count += 1 * multiplier;
                         }
                     });
                 });
