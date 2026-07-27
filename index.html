@@ -1052,10 +1052,14 @@
             border: 1px solid rgba(0,0,0,0.1);
         }
         /* Acomodamos la celda para que el nombre de la mano se vaya abajo y el % arriba */
-        .rm-cell { position: relative; overflow: hidden; align-items: flex-end; padding-bottom: 2px; }
         .rm-cell { position: relative; overflow: hidden; }
+                /* Colores pasteles para los pesos */
+        .rm-cell.w-100 { background: #c7d2fe; color: #3730a3; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8; }
+        .rm-cell.w-75 { background: #bbf7d0; color: #166534; font-weight: 700; box-shadow: inset 0 0 0 1px #4ade80; }
+        .rm-cell.w-50 { background: #fef9c3; color: #854d0e; font-weight: 700; box-shadow: inset 0 0 0 1px #facc15; }
+        .rm-cell.w-25 { background: #fed7aa; color: #9a3412; font-weight: 700; box-shadow: inset 0 0 0 1px #fb923c; }
+        .rm-cell.w-10 { background: #fecaca; color: #991b1b; font-weight: 700; box-shadow: inset 0 0 0 1px #f87171; }
         .rm-cell { position: relative; overflow: hidden; }
-        .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
 
         /* Scrollbar */
@@ -1213,7 +1217,10 @@
                 </div>
                 <div id="rm-main">
                     <input type="text" id="rm-input" placeholder="Ej: AA-44, AKs-A2s, T9s..." oninput="parseRangeInput()" style="width:100%; margin-bottom:10px; padding:8px; font-size:12px; border:1px solid #e0e0e0; border-radius:4px; font-family:'Inter', sans-serif;">
-                    <div id="rm-grid"></div>
+                    <div style="display: flex; gap: 15px; justify-content: center; align-items: flex-start;">
+                        <div id="rm-grid"></div>
+                        <div id="rm-weight-legend" style="font-size: 11px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 5px; min-width: 80px;"></div>
+                    </div>
                 </div>
             </div>
             <div class="modal-actions" style="margin-top:15px; justify-content: space-between;">
@@ -1460,6 +1467,14 @@
             document.getElementById('modal-range').style.display = 'flex';
         }
 
+        function getWeightClass(weight) {
+            if (weight >= 100) return 'w-100';
+            if (weight >= 75) return 'w-75';
+            if (weight >= 50) return 'w-50';
+            if (weight >= 25) return 'w-25';
+            return 'w-10';
+        }
+
         function renderRangeGrid() {
             let html = '<div id="rm-grid">';
             RANKS.forEach((r1, i) => {
@@ -1472,29 +1487,33 @@
                     const key = hand + type;
                     const weight = tempPreflopRange[key] || 0;
                     
-                    let styleStr = '';
-                    let labelExtra = '';
-                    
+                    let weightClass = '';
                     if (weight > 0) {
-                        if (weight === 100) {
-                            styleStr = `style="background: #c7d2fe; color: #3730a3; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8;"`;
-                        } else {
-                            // Colores dinámicos de amarillo según el peso
-                            let bgColor = '#fef9c3'; // 1-24% (Muy claro)
-                            if (weight >= 75) bgColor = '#facc15'; // 75-99% (Fuerte)
-                            else if (weight >= 50) bgColor = '#fde047'; // 50-74% (Medio)
-                            else if (weight >= 25) bgColor = '#fef08a'; // 25-49% (Claro)
-                            
-                            styleStr = `style="background: ${bgColor}; color: #7c2d12; font-weight: 700; border: 1px solid #f59e0b;"`;
-                            labelExtra = `<span class="rm-weight-label">${weight}%</span>`;
-                        }
+                        weightClass = getWeightClass(weight);
                     }
                     
-                    html += `<div class="rm-cell" ${styleStr} data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}${labelExtra}</div>`;
+                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
                 });
             });
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
+            
+            // Dibujar la leyenda a la derecha
+            let legendHtml = '<div style="font-weight:700; margin-bottom:4px; font-size:12px; text-align:center;">Pesos</div>';
+            const allWeights = [
+                {class: 'w-100', label: '100%'},
+                {class: 'w-75', label: '75-99%'},
+                {class: 'w-50', label: '50-74%'},
+                {class: 'w-25', label: '25-49%'},
+                {class: 'w-10', label: '1-24%'}
+            ];
+            allWeights.forEach(w => {
+                legendHtml += `<div style="display:flex; align-items:center; gap:6px;">
+                    <div class="rm-cell ${w.class}" style="width:18px; height:18px; cursor:default; display:inline-block; border-radius:3px;"></div>
+                    <span>${w.label}</span>
+                </div>`;
+            });
+            document.getElementById('rm-weight-legend').innerHTML = legendHtml;
             
             const totalCombos = countCombosInRange(tempPreflopRange);
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
