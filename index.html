@@ -1040,16 +1040,18 @@
         .rm-cell.active { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-border); box-shadow: inset 0 0 0 1px var(--accent-border); }
         .rm-cell .rm-weight-label { 
             font-size: 8px; 
-            color: inherit; 
-            margin-left: 2px; 
-            font-weight: 800; 
             position: absolute; 
             top: 1px; 
-            right: 2px; 
-            background: rgba(255,255,255,0.8); 
-            padding: 0 2px; 
-            border-radius: 2px; 
+            right: 1px; 
+            background: rgba(255, 255, 255, 0.9); 
+            color: #dc2626; 
+            padding: 1px 3px; 
+            border-radius: 3px; 
+            font-weight: 800; 
+            line-height: 1;
+            border: 1px solid rgba(0,0,0,0.1);
         }
+        .rm-cell { position: relative; overflow: hidden; }
         .rm-cell { position: relative; overflow: hidden; }
         .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
@@ -1464,8 +1466,13 @@
                         if (weight === 100) {
                             styleStr = `style="background: #c7d2fe; color: #3730a3; font-weight: 700; box-shadow: inset 0 0 0 1px #818cf8;"`;
                         } else {
-                            const alpha = Math.max(0.25, weight / 100);
-                            styleStr = `style="background: rgba(252, 211, 77, ${alpha}); color: #78350f; font-weight: 700; border: 1px solid #f59e0b;"`;
+                            // Colores dinámicos de amarillo según el peso
+                            let bgColor = '#fef9c3'; // 1-24% (Muy claro)
+                            if (weight >= 75) bgColor = '#facc15'; // 75-99% (Fuerte)
+                            else if (weight >= 50) bgColor = '#fde047'; // 50-74% (Medio)
+                            else if (weight >= 25) bgColor = '#fef08a'; // 25-49% (Claro)
+                            
+                            styleStr = `style="background: ${bgColor}; color: #7c2d12; font-weight: 700; border: 1px solid #f59e0b;"`;
                             labelExtra = `<span class="rm-weight-label">${weight}%</span>`;
                         }
                     }
@@ -1479,8 +1486,8 @@
             const totalCombos = countCombosInRange(tempPreflopRange);
             const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
             document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos.toFixed(1)} combos)`;
-        }
-            
+        }   
+        
         function countCombosInRange(rangeObj) {
             let count = 0;
             for (let key in rangeObj) {
@@ -1731,14 +1738,24 @@
         }
 
         function applyRangeToSpot() {
-            // Filtramos los que tienen 0% por si acaso
             let cleanRange = {};
             for (let k in tempPreflopRange) {
-                if (tempPreflopRange[k] > 0) cleanRange[k] = tempPreflopRange[k];
+                let w = parseFloat(tempPreflopRange[k]);
+                if (!isNaN(w) && w > 0) {
+                    cleanRange[k] = w;
+                }
             }
             data.spots[rangeSpotIdx].preflopRange = cleanRange;
             commit();
             closeModal('range');
+            // Forzamos el render del Flop si es el spot activo para que actualice el universo
+            if (rangeSpotIdx === aS) {
+                renderBoard();
+                renderFlopTabs();
+                if (data.spots[aS].textures[aT] && data.spots[aS].textures[aT].flopNodes.length > 0) {
+                    selectFlop(aF === -1 ? 0 : aF);
+                }
+            }
         }
 
         // --- Librería de Rangos (Estructura de Árbol) ---
@@ -1821,16 +1838,19 @@
         function getActivePreflopRange() {
             if (aS === -1 || !data.spots[aS]) return {};
             let pr = data.spots[aS].preflopRange;
-            // Si encuentra un rango viejo (array), lo convierte a objeto vacío
-            if (Array.isArray(pr)) {
+            if (!pr || Array.isArray(pr) || typeof pr !== 'object') {
                 data.spots[aS].preflopRange = {};
                 return {};
             }
-            if (!pr) {
-                data.spots[aS].preflopRange = {};
-                return {};
+            let cleanPR = {};
+            for(let k in pr) {
+                if (typeof k === 'string' && k.length >= 2 && RANKS.includes(k[0]) && RANKS.includes(k[1])) {
+                    let w = parseFloat(pr[k]);
+                    if (!isNaN(w) && w > 0) cleanPR[k] = w;
+                }
             }
-            return pr;
+            data.spots[aS].preflopRange = cleanPR; // Sanitiza permanentemente
+            return cleanPR;
         }
 
         function getUniverse(type) {
