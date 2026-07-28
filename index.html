@@ -1489,7 +1489,7 @@
 
         function getColorForWeight(w) {
             if (w >= 100) return '#c7d2fe'; // Indigo pastel (100%)
-            const w10 = Math.ceil(w / 10) * 10; 
+            const w10 = Math.round(w / 10) * 10; // Redondea matemáticamente: 33.3 -> 30, 66.6 -> 70
             const colors = {
                 10: '#fecaca', // Red pastel
                 20: '#fecdd3', // Rose pastel
@@ -1501,7 +1501,7 @@
                 80: '#a5f3fc', // Cyan pastel
                 90: '#bfdbfe'  // Blue pastel
             };
-            return colors[w10] || '#fecaca';
+            return colors[w10] || colors[10];
         }
 
         function renderRangeGrid() {
@@ -1616,16 +1616,19 @@
                 return;
             }
 
-            const weightRegex = /\[(\d+)\]([^\[]+)\[\/\1\]/g;
+            // Regex actualizado: \d+(?:\.\d+)? significa "números con opcionales decimales"
+            const weightRegex = /\[(\d+(?:\.\d+)?)\]([^\[]+)\[\/\1\]/g;
             
+            // 1. Procesar texto FUERA de los corchetes (peso 100%)
             const outsideText = text.replace(weightRegex, '|').split('|');
             outsideText.forEach(part => {
                 processRangeTokens(part, 100, rangeDict);
             });
 
-            const matches = [...text.matchAll(/\[(\d+)\]([^\[]+)\[\/\1\]/g)];
+            // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
+            const matches = [...text.matchAll(/\[(\d+(?:\.\d+)?)\]([^\[]+)\[\/\1\]/g)];
             matches.forEach(match => {
-                const weight = parseInt(match[1]);
+                const weight = parseFloat(match[1]); // parseFloat en lugar de parseInt para decimales
                 const innerText = match[2];
                 processRangeTokens(innerText, weight, rangeDict);
             });
