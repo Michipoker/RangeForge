@@ -1449,7 +1449,8 @@
             let html = ''; 
             if(!data.spots) data.spots = [];
             data.spots.forEach((s, i) => { 
-                const hasRange = s.preflopRange && s.preflopRange.length > 0;
+                // Aquí validamos si el objeto tiene datos
+                const hasRange = s.preflopRange && Object.keys(s.preflopRange).length > 0;
                 html += `<div class="spot-item"><div class="spot-name"><span>${s.name}</span><div class="spot-actions"><div class="micro-btn ${hasRange?'has-data':''}" onclick="event.stopPropagation(); openRangeModal(${i})" title="Rango preflop">R</div><span class="del-btn" onclick="event.stopPropagation(); delSpot(${i})">×</span></div></div>`; 
                 s.textures.forEach((t, j) => { 
                     let ac = (i === aS && j === aT) ? 'active' : ''; 
@@ -1871,6 +1872,9 @@
             const isLocked = getNodeByType(type) && getNodeByType(type).locked;
             combosArr.sort((a,b) => a.sort - b.sort);
             
+            // Función mágica para limpiar decimales (ej: 2.099999 -> 2.1, o 3.00 -> 3)
+            const fmt = (n) => parseFloat(n.toFixed(2));
+            
             let hitCount = 0, bluffCount = 0, totalSelectedInNode = 0;
             combosArr.forEach(c => {
                 const count = getComboCountForCombo(c);
@@ -1905,12 +1909,12 @@
                 }
             } catch(e) { console.error("Error calculating orphans:", e); }
 
-            let orphanSummaryHtml = orphanTotalCount > 0 ? ' <span style="color: var(--bluff); font-weight: 600;">(' + orphanTotalCount.toFixed(1) + ' sueltos)</span>' : '';
+            let orphanSummaryHtml = orphanTotalCount > 0 ? ' <span style="color: var(--bluff); font-weight: 600;">(' + fmt(orphanTotalCount) + ' sueltos)</span>' : '';
             
             let html = '<div class="range-summary">';
-            html += '<span class="hit-val">Hit <b>' + hitCount.toFixed(1) + '</b> <span class="pct-group">(' + pctHit + '%)</span></span>';
-            html += '<span class="bluff-val">Bluff <b>' + bluffCount.toFixed(1) + '</b> <span class="pct-group">(' + pctBluff + '%)</span></span>';
-            html += '<span class="universe-val">Univ: ' + totalSelectedInNode.toFixed(1) + ' / ' + universe.toFixed(1) + orphanSummaryHtml + '</span>';
+            html += '<span class="hit-val">Hit <b>' + fmt(hitCount) + '</b> <span class="pct-group">(' + pctHit + '%)</span></span>';
+            html += '<span class="bluff-val">Bluff <b>' + fmt(bluffCount) + '</b> <span class="pct-group">(' + pctBluff + '%)</span></span>';
+            html += '<span class="universe-val">Univ: ' + fmt(totalSelectedInNode) + ' / ' + fmt(universe) + orphanSummaryHtml + '</span>';
             html += '</div>';
             
             combosArr.forEach((c,i) => {
@@ -1920,13 +1924,13 @@
                 html += '<div class="combo-row">';
                 html += '<div class="combo-name">';
                 html += '<span class="combo-toggle ' + (isExp?'open':'') + '" ' + (isLocked?'style="cursor:default;pointer-events:none;"':'onclick="event.stopPropagation();toggleExpand('+i+',\''+type+'\',\''+containerId+'\')"' ) + '>' + (isExp?'▼':'▶') + '</span>';
-                if (count > 0) html += '<span style="font-size:8px;color:#aaa;font-weight:400">' + count.toFixed(1) + '</span> ';
+                if (count > 0) html += '<span style="font-size:8px;color:#aaa;font-weight:400">' + fmt(count) + '</span> ';
                 html += c.name;
                 if(!isLocked) {
                     const orphanCountForCat = orphanCounts[c.id] || 0;
                     if (orphanCountForCat > 0) {
-                        const msg = type === 'flop' ? orphanCountForCat.toFixed(1) + ' combo(s) en el aire. Pulsa ↻ para traerlos.' : orphanCountForCat.toFixed(1) + ' combo(s) sueltos de la calle anterior. Pulsa ↻ para traerlos.';
-                        html += '<span class="orphan-warning" title="' + msg + '">&#9888; ' + orphanCountForCat.toFixed(1) + '</span>';
+                        const msg = type === 'flop' ? fmt(orphanCountForCat) + ' combo(s) en el aire. Pulsa ↻ para traerlos.' : fmt(orphanCountForCat) + ' combo(s) sueltos de la calle anterior. Pulsa ↻ para traerlos.';
+                        html += '<span class="orphan-warning" title="' + msg + '">&#9888; ' + fmt(orphanCountForCat) + '</span>';
                     }
                     html += '<span class="combo-auto-single" onclick="autoFillSingleCategory(\'' + type + '\', ' + i + ')" title="Autodetectar solo esta jugada">&#8635;</span>';
                     html += '<span class="combo-del" onclick="deleteCombo(\'' + containerId + '\', ' + i + ', \'' + type + '\')">×</span>';
