@@ -196,24 +196,31 @@
         #header-breadcrumb {
             display: none;
             align-items: center;
-            gap: 6px;
-            margin-left: 12px;
+            gap: 8px;
             font-size: 12px;
             flex-shrink: 0;
+            height: 100%;
         }
         .header-tag {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
             white-space: nowrap;
-            font-size: 12px;
+            font-size: 20px;
             letter-spacing: 0.01em;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px 12px;
+            background-color: #FFF396;
+            display: inline-flex;
+            align-items: center;
         }
-        .header-sep { color: var(--text-faint); font-weight: 300; }
+        .header-sep { color: var(--text-muted); font-weight: 300; font-size: 20px; }
         .header-input {
             border: none;
             background: transparent;
-            font-size: 12px;
-            color: var(--text-secondary);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
             padding: 0;
             outline: none;
             width: auto;
@@ -279,13 +286,15 @@
             gap: 4px;
         }
         .flow-label {
-            font-size: 10px;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--text-muted);
-            margin-right: 8px;
-            width: 34px;
+            color: #000000;
+            margin-right: 12px;
+            min-width: 60px;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
         }
 
         .tabs-container { display: flex; align-items: center; flex: 1; flex-wrap: wrap; }
@@ -1029,6 +1038,11 @@
         }
         .rm-cell:hover { background: var(--bg-hover); color: var(--text-secondary); }
         .rm-cell.active { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-border); box-shadow: inset 0 0 0 1px var(--accent-border); }
+        .rm-cell.weight-100 { background: #c7d2fe; color: #3730a3; font-weight: 700; }
+        .rm-cell.weight-75 { background: #d6d9fb; color: #4338ca; }
+        .rm-cell.weight-50 { background: #e0e1fd; color: #6366f1; }
+        .rm-cell.weight-25 { background: #ebecfe; color: #818cf8; }
+        .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
 
         /* Scrollbar */
@@ -1059,9 +1073,6 @@
                 <span id="spotHeader" class="header-tag"></span>
                 <span class="header-sep">/</span>
                 <input type="text" id="textureHeader" class="header-input" oninput="saveTexts()">
-                <span class="header-sep">/</span>
-                <div id="boardExample" class="board-display"></div>
-                <div class="add-card-btn" onclick="openPickCard('board')" title="Añadir/Editar Flop">F</div>
             </div>
         </div>
         <div id="workspace">
@@ -1070,49 +1081,57 @@
                 <div class="workspace-col" id="flop-col">
                     <div class="flow-row">
                         <div class="flow-label">Flop</div>
-                        <div class="tabs-container" id="flop-tabs"></div>
-                        <div class="add-combo-btn" onclick="openComboModal('flop')">+</div>
+                        <div id="boardExample" class="board-display"></div>
+                        <div class="add-card-btn" onclick="openPickCard('board')" title="Añadir/Editar Flop">+</div>
+                    </div>
+                    <div class="flow-row">
                         <div class="auto-btn" onclick="autoFillPanel('flop')" title="Autodetectar todo desde el board">A</div>
                         <div class="lock-btn" id="flop-lock-btn" onclick="toggleLock('flop')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="flop-note-btn" onclick="openNoteModal('flop')">N</div>
                         <div class="micro-btn" id="flop-img-btn" onclick="openImgModal('flop')">I</div>
                         <div class="add-node-btn" onclick="openActionModal('flop')">+nodo</div>
                     </div>
+                    <div class="flow-row">
+                        <div class="tabs-container" id="flop-tabs"></div>
+                        <div class="add-combo-btn" onclick="openComboModal('flop')">+</div>
+                    </div>
                     <div class="dev-area" id="flop-combos-container"></div>
                 </div>
                 <div class="workspace-col turn-col" id="turn-col" style="display: none;">
                     <div class="flow-row">
-                        <span id="turn-context" class="context-inline" style="display:none;"></span>
                         <div class="flow-label">Turn</div>
                         <div class="tabs-container" id="turn-cards-tabs"></div>
                         <div class="add-card-btn" onclick="openPickCard('turn')" title="Añadir Turn card">+</div>
                     </div>
-                    <div class="flow-row" id="turn-actions-row" style="display:none; margin-top:2px; border-top: 1px dashed #eee; padding-top:5px;">
-                        <div class="tabs-container" id="turn-actions-tabs" style="margin-left: 43px;"></div>
-                        <div class="add-combo-btn" onclick="openComboModal('turnAction')">+</div>
+                    <div class="flow-row" id="turn-actions-row" style="display:none;">
                         <div class="auto-btn" onclick="autoFillPanel('turnAction')" title="Autodetectar y traer rango restante del Flop">A</div>
                         <div class="lock-btn" id="turnAction-lock-btn" onclick="toggleLock('turnAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="turnAction-note-btn" onclick="openNoteModal('turnAction')">N</div>
                         <div class="micro-btn" id="turnAction-img-btn" onclick="openImgModal('turnAction')">I</div>
                         <div class="add-node-btn" onclick="openActionModal('turnAction')">+nodo</div>
                     </div>
+                    <div class="flow-row" id="turn-actions-tabs-row" style="display:none;">
+                        <div class="tabs-container" id="turn-actions-tabs"></div>
+                        <div class="add-combo-btn" onclick="openComboModal('turnAction')">+</div>
+                    </div>
                     <div class="dev-area" id="turn-combos-container"></div>
                 </div>
                 <div class="workspace-col river-col" id="river-col" style="display: none;">
                     <div class="flow-row">
-                        <span id="river-context" class="context-inline" style="display:none;"></span>
                         <div class="flow-label">River</div>
                         <div class="tabs-container" id="river-cards-tabs"></div>
                         <div class="add-card-btn" onclick="openPickCard('river')" title="Añadir River card">+</div>
                     </div>
-                    <div class="flow-row" id="river-actions-row" style="display:none; margin-top:2px; border-top: 1px dashed #eee; padding-top:5px;">
-                        <div class="tabs-container" id="river-actions-tabs" style="margin-left: 43px;"></div>
-                        <div class="add-combo-btn" onclick="openComboModal('riverAction')">+</div>
+                    <div class="flow-row" id="river-actions-row" style="display:none;">
                         <div class="auto-btn" onclick="autoFillPanel('riverAction')" title="Autodetectar y traer rango restante del Turn">A</div>
                         <div class="lock-btn" id="riverAction-lock-btn" onclick="toggleLock('riverAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="riverAction-note-btn" onclick="openNoteModal('riverAction')">N</div>
                         <div class="micro-btn" id="riverAction-img-btn" onclick="openImgModal('riverAction')">I</div>
                         <div class="add-node-btn" onclick="openActionModal('riverAction')">+nodo</div>
+                    </div>
+                    <div class="flow-row" id="river-actions-tabs-row" style="display:none;">
+                        <div class="tabs-container" id="river-actions-tabs"></div>
+                        <div class="add-combo-btn" onclick="openComboModal('riverAction')">+</div>
                     </div>
                     <div class="dev-area" id="river-combos-container"></div>
                 </div>
@@ -1402,13 +1421,14 @@
         let rangeSpotIdx = -1;
         let rmDragModeAdd = false;
         let rmMouseDown = false;
-        let tempPreflopRange = []; 
+        let tempPreflopRange = {}; 
         let selectedLibCat = -1;
 
         function openRangeModal(idx) {
             rangeSpotIdx = idx;
-            if (!data.spots[idx].preflopRange) data.spots[idx].preflopRange = [];
-            tempPreflopRange = [...data.spots[idx].preflopRange];
+            if (!data.spots[idx].preflopRange) data.spots[idx].preflopRange = {};
+            // Clonamos el objeto de pesos
+            tempPreflopRange = JSON.parse(JSON.stringify(data.spots[idx].preflopRange));
             selectedLibCat = -1;
             renderLibrary();
             updateRangeInputText();
@@ -1417,7 +1437,6 @@
         }
 
         function renderRangeGrid() {
-            const rangeSet = new Set(tempPreflopRange);
             let html = '<div id="rm-grid">';
             RANKS.forEach((r1, i) => {
                 RANKS.forEach((r2, j) => {
@@ -1427,78 +1446,113 @@
                     else { hand = r2+r1; type = 'o'; label = hand+'o'; }
                     
                     const key = hand + type;
-                    const active = rangeSet.has(key);
-                    html += `<div class="rm-cell ${active?'active':''}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
+                    const weight = tempPreflopRange[key] || 0;
+                    
+                    let weightClass = '';
+                    if (weight > 0) {
+                        if (weight >= 100) weightClass = 'weight-100';
+                        else if (weight >= 75) weightClass = 'weight-75';
+                        else if (weight >= 50) weightClass = 'weight-50';
+                        else weightClass = 'weight-25';
+                    }
+                    
+                    // Clic izquierdo (agregar 100%), Clic derecho (preguntar peso)
+                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}${weight > 0 && weight < 100 ? '<span class="rm-weight-label">'+weight+'%</span>' : ''}</div>`;
                 });
             });
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
             
             const totalCombos = countCombosInRange(tempPreflopRange);
-            document.getElementById('rm-info').textContent = `${tempPreflopRange.length} manos (${totalCombos} combos)`;
+            const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
+            document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
         }
 
-        function countCombosInRange(rangeArr) {
+        function countCombosInRange(rangeObj) {
             let count = 0;
-            rangeArr.forEach(key => {
+            for (let key in rangeObj) {
+                const weight = rangeObj[key] || 0;
+                if (weight === 0) continue;
+                const multiplier = weight / 100;
                 const r1 = key[0], r2 = key[1];
                 const isPair = r1 === r2;
-                if (isPair) count += 6;
-                else count += (key[2] === 's' ? 4 : 12);
-            });
-            return count;
+                if (isPair) count += 6 * multiplier;
+                else count += (key[2] === 's' ? 4 : 12) * multiplier;
+            }
+            return count.toFixed(1); // Devolvemos con 1 decimal por los pesos
         }
 
         function rmCellDown(e, key) {
+            if (e.button === 2) return; // Ignora el clic derecho aquí, lo maneja rmCellRightClick
             rmMouseDown = true;
-            const set = new Set(tempPreflopRange);
-            rmDragModeAdd = !set.has(key);
-            rmApplyAction(key);
+            // Si ya está al 100%, lo quitamos (0%). Si no, lo ponemos al 100%.
+            const currentWeight = tempPreflopRange[key] || 0;
+            if (currentWeight === 100) {
+                rmDragModeAdd = false;
+            } else {
+                rmDragModeAdd = true;
+            }
+            rmApplyAction(key, 100);
+                    function rmCellRightClick(e, key) {
+            e.preventDefault();
+            let currentWeight = tempPreflopRange[key] || 0;
+            let input = prompt(`Introduce el peso para ${key} (1-100):`, currentWeight || '50');
+            if (input === null) return; // Cancelaron
+            let w = parseInt(input);
+            if (isNaN(w) || w < 0) w = 0;
+            if (w > 100) w = 100;
+            
+            if (w === 0) {
+                delete tempPreflopRange[key];
+            } else {
+                tempPreflopRange[key] = w;
+            }
+            renderRangeGrid();
+            updateRangeInputText();
+        }
             e.preventDefault();
         }
+
         function rmCellOver(e, key) { if (rmMouseDown) rmApplyAction(key); }
         function rmCellUp(e) { rmMouseDown = false; }
         document.addEventListener('mouseup', function() { rmMouseDown = false; });
 
-        function rmApplyAction(key) {
-            const set = new Set(tempPreflopRange);
-            if (rmDragModeAdd && !set.has(key)) set.add(key);
-            else if (!rmDragModeAdd && set.has(key)) set.delete(key);
-            tempPreflopRange = Array.from(set);
+        function rmApplyAction(key, weight = 100) {
+            if (rmDragModeAdd) {
+                tempPreflopRange[key] = weight;
+            } else {
+                delete tempPreflopRange[key];
+            }
             renderRangeGrid();
             updateRangeInputText();
         }
 
         function parseRangeInput() {
             const text = document.getElementById('rm-input').value.toUpperCase();
-            const rangeSet = new Set();
+            const newRange = {};
             if (!text.trim()) {
-                tempPreflopRange = [];
+                tempPreflopRange = newRange;
                 renderRangeGrid();
                 return;
             }
-            
             const tokens = text.split(',');
             tokens.forEach(t => {
                 t = t.trim();
                 if (t.length < 2) return;
-                
                 if (t.includes('-')) {
                     const parts = t.split('-');
                     if (parts.length === 2) {
                         const a = parts[0].trim();
                         const b = parts[1].trim();
-                        
                         if (a.length === 2 && a[0] === a[1] && b.length === 2 && b[0] === b[1]) {
                             const r1 = a[0], r2 = b[0];
                             const i1 = RANKS.indexOf(r1);
                             const i2 = RANKS.indexOf(r2);
                             const min = Math.min(i1, i2), max = Math.max(i1, i2);
                             for (let i = min; i <= max; i++) {
-                                rangeSet.add(RANKS[i] + RANKS[i] + 'p');
+                                newRange[RANKS[i] + RANKS[i] + 'p'] = 100;
                             }
-                        }
-                        else if (a.length >= 3 && b.length >= 3) {
+                        } else if (a.length >= 3 && b.length >= 3) {
                             const r1 = a[0], r2 = b[0];
                             const suffix = a[a.length-1];
                             if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
@@ -1511,7 +1565,7 @@
                                     const g = suffix === 'S' ? 's' : 'o';
                                     for (let i = min; i <= max; i++) {
                                         if (RANKS[i] !== r1) {
-                                            rangeSet.add(r1 + RANKS[i] + g);
+                                            newRange[r1 + RANKS[i] + g] = 100;
                                         }
                                     }
                                 }
@@ -1523,26 +1577,24 @@
                     if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
                     const isPair = r1 === r2;
                     if (isPair) {
-                        rangeSet.add(r1 + r2 + 'p');
+                        newRange[r1 + r2 + 'p'] = 100;
                     } else {
                         const suffix = t.length > 2 ? t[2] : 's'; 
                         if (suffix.toUpperCase() === 'O') {
-                            rangeSet.add(r1 + r2 + 'o');
+                            newRange[r1 + r2 + 'o'] = 100;
                         } else {
-                            rangeSet.add(r1 + r2 + 's');
+                            newRange[r1 + r2 + 's'] = 100;
                         }
                     }
                 }
             });
-            
-            tempPreflopRange = Array.from(rangeSet);
+            tempPreflopRange = newRange;
             renderRangeGrid();
         }
 
-        function generateRangeString(rangeArr) {
-            const rangeSet = new Set(rangeArr);
+        function generateRangeString(rangeObj) {
+            const rangeSet = new Set(Object.keys(rangeObj).filter(k => rangeObj[k] > 0));
             let parts = [];
-            
             let pStart = -1;
             for (let i = 0; i < 13; i++) {
                 const r = RANKS[i];
@@ -1560,7 +1612,6 @@
                 if (12 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
                 else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[12] + RANKS[12]);
             }
-
             ['s', 'o'].forEach(g => {
                 for (let i = 0; i < 13; i++) {
                     let sStart = -1;
@@ -1582,7 +1633,6 @@
                     }
                 }
             });
-            
             return parts.join(',');
         }
 
@@ -1598,7 +1648,12 @@
         }
 
         function applyRangeToSpot() {
-            data.spots[rangeSpotIdx].preflopRange = tempPreflopRange;
+            // Filtramos los que tienen 0% por si acaso
+            let cleanRange = {};
+            for (let k in tempPreflopRange) {
+                if (tempPreflopRange[k] > 0) cleanRange[k] = tempPreflopRange[k];
+            }
+            data.spots[rangeSpotIdx].preflopRange = cleanRange;
             commit();
             closeModal('range');
         }
@@ -1681,8 +1736,9 @@
         // =======================================
 
         function getActivePreflopRange() {
-            if (aS === -1 || !data.spots[aS]) return [];
-            return data.spots[aS].preflopRange || [];
+            if (aS === -1 || !data.spots[aS]) return {};
+            if (!data.spots[aS].preflopRange) data.spots[aS].preflopRange = {};
+            return data.spots[aS].preflopRange;
         }
 
         function getUniverse(type) {
@@ -1754,12 +1810,16 @@
             if(aTC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC]; 
             if(!card.turnActions) card.turnActions=[]; 
-            let h=''; 
+            const flopPool = new Set(getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF]));
             const hasOrphans = getOrphanedIds('turnAction').length > 0;
+            let h=''; 
             card.turnActions.forEach((a,i)=>{ 
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'turnAction');
-                const warn = hasOrphans ? ' <span class="orphan-warning-tab" title="Se sacaron combos del Flop. Revisa tus jugadas y pulsa ↻ para reasignar.">⚠</span>' : '';
+                const actionPool = getAllSelectedFromNode(a);
+                // Avisa si esta pestaña tiene combos que ya no existen en el Flop
+                const hasInvalids = actionPool.some(id => !flopPool.has(id));
+                let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Flop. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aTA?'active':'') + '" onclick="selectTurnAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'turnAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delTurnAction(' + i + ')">×</span></div>'; 
             }); 
             document.getElementById('turn-actions-tabs').innerHTML=h; 
@@ -1770,6 +1830,7 @@
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[i]; 
             if(!card.turnActions) card.turnActions=[]; 
             document.getElementById('turn-actions-row').style.display='flex'; 
+            document.getElementById('turn-actions-tabs-row').style.display='flex'; 
             document.getElementById('river-col').style.display='none'; 
             renderTurnCardsTabs(); 
             renderTurnActionsTabs(); 
@@ -1777,6 +1838,7 @@
             else { document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); } 
             commit(); 
         }
+
         function selectTurnAction(i) { 
             aTA=i; aRC=-1; aRA=-1; 
             let act=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[i]; 
@@ -1809,12 +1871,16 @@
             if(aRC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC]; 
             if(!card.riverActions) card.riverActions=[]; 
-            let h=''; 
+            const turnPool = new Set(getAllSelectedFromNode(data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]));
             const hasOrphans = getOrphanedIds('riverAction').length > 0;
+            let h=''; 
             card.riverActions.forEach((a,i)=>{ 
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'riverAction');
-                const warn = hasOrphans ? ' <span class="orphan-warning-tab" title="Se sacaron combos del Turn. Revisa tus jugadas y pulsa ↻ para reasignar.">⚠</span>' : '';
+                const actionPool = getAllSelectedFromNode(a);
+                // Avisa si esta pestaña tiene combos que ya no existen en el Turn
+                const hasInvalids = actionPool.some(id => !turnPool.has(id));
+                let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Turn. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aRA?'active':'') + '" onclick="selectRiverAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'riverAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delRiverAction(' + i + ')">×</span></div>'; 
             }); 
             document.getElementById('river-actions-tabs').innerHTML=h; 
@@ -1825,6 +1891,7 @@
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[i]; 
             if(!card.riverActions) card.riverActions=[]; 
             document.getElementById('river-actions-row').style.display='flex'; 
+            document.getElementById('river-actions-tabs-row').style.display='flex'; 
             renderRiverCardsTabs(); 
             renderRiverActionsTabs(); 
             if(card.riverActions.length>0) selectRiverAction(0); 
@@ -1835,8 +1902,8 @@
         function selectRiverAction(i) { aRA=i; let act=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions[i]; renderCombosUI('river-combos-container', act.combos, 'riverAction'); updateMicroButtons('riverAction', act); renderRiverActionsTabs(); commit(); }
         function delRiverCard(i) { if(!confirm('¿Borrar River?')) return; data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards.splice(i,1); aRC=-1; hideRiverUI(); commit(); let c=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards; if(c.length>0) selectRiverCard(0); else renderRiverCardsTabs(); }
         function delRiverAction(i) { if(!confirm('¿Borrar?')) return; data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions.splice(i,1); aRA=-1; commit(); let a=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC].riverActions; if(a.length>0) selectRiverAction(0); else { document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); renderRiverActionsTabs(); } }
-        function hideTurnUI() { document.getElementById('turn-actions-row').style.display='none'; document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); }
-        function hideRiverUI() { document.getElementById('river-actions-row').style.display='none'; document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); }
+        function hideTurnUI() { document.getElementById('turn-actions-row').style.display='none'; document.getElementById('turn-actions-tabs-row').style.display='none'; document.getElementById('turn-combos-container').innerHTML=''; updateMicroButtons('turnAction', null); hideRiverUI(); }
+        function hideRiverUI() { document.getElementById('river-actions-row').style.display='none'; document.getElementById('river-actions-tabs-row').style.display='none'; document.getElementById('river-combos-container').innerHTML=''; updateMicroButtons('riverAction', null); }
         function clearWorkspace() { document.getElementById('flop-combos-container').innerHTML=''; document.getElementById('flop-tabs').innerHTML=''; document.getElementById('turn-col').style.display='none'; document.getElementById('river-col').style.display='none'; updateMicroButtons('flop', null); hideTurnUI(); }
         function clearAll() { document.getElementById('editor').style.display='none'; document.getElementById('header-breadcrumb').style.display='none'; document.getElementById('empty-state').style.display='block'; clearWorkspace(); }
         function getBoardCards() { if (aS===-1||aT===-1) return []; const b = data.spots[aS].textures[aT].board || ''; return (b.match(/[KQJTA2-9][dhsc]/gi) || []).map(c => c.toLowerCase()); }
@@ -2328,6 +2395,7 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
+                const preKeys = new Set(Object.keys(preRange));
                 if (preRange.length > 0) {
                     preRange.forEach(key => {
                         const r1 = key[0], r2 = key[1];
@@ -2759,7 +2827,7 @@
                     
                     let classes = [cls];
                     if (disabled) classes.push('cm-tab-disabled');
-                    else if (preRange.length > 0 && !rangeSet.has(rangeKey)) classes.push('deleted');
+                    else if (preKeys.size > 0 && !preKeys.has(rangeKey)) classes.push('deleted');
                     
                     let clickAttrs = '';
                     if (!disabled && !(preRange.length > 0 && !rangeSet.has(rangeKey))) {
@@ -2790,8 +2858,9 @@
                 let sourcePool = [];
                 if (type === 'flop') {
                     const preRange = getActivePreflopRange();
-                    if (preRange.length > 0) {
-                        preRange.forEach(key => {
+                    const preKeys = Object.keys(preRange);
+                        if (preKeys.length > 0) {
+                        preKeys.forEach(key => {
                             const r1 = key[0], r2 = key[1];
                             const isPair = r1 === r2;
                             const g = isPair ? 'p' : key[2];
