@@ -1847,6 +1847,25 @@
             }
         }
 
+        function getTabPct(node, type) {
+            if (!node) return '0.0';
+            const universe = getUniverse(type);
+            if (universe === 0) return '0.0';
+            const total = getComboCountFromNode(node);
+            return (total / universe * 100).toFixed(1);
+        }
+
+                function rmCellDown(e, key) {
+            rmMouseDown = true;
+            const set = new Set(Object.keys(tempPreflopRange));
+            rmDragModeAdd = !set.has(key);
+            rmApplyAction(key);
+            e.preventDefault();
+        }
+        function rmCellOver(e, key) { if (rmMouseDown) rmApplyAction(key); }
+        function rmCellUp(e) { rmMouseDown = false; }
+        document.addEventListener('mouseup', function() { rmMouseDown = false; });
+
         function renderCombosUI(containerId, combosArr, type) {
             if(!combosArr) return;
             const isLocked = getNodeByType(type) && getNodeByType(type).locked;
