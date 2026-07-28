@@ -1366,12 +1366,16 @@
             try { 
                 data = JSON.parse(v3raw); 
                 if(!data.library || !Array.isArray(data.library)) data.library = [];
+                if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
+                // Limpiamos preflopRange corruptos en migración
+                data.spots.forEach(spot => {
+                    if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                });
                 localStorage.setItem(DB_KEY, JSON.stringify(data)); 
                 document.getElementById('migrate-area').innerHTML = ''; 
                 clearAll(); renderSidebar(); 
             } catch(e) { alert('Error: ' + e.message); }
         }
-
         window.onload = () => { 
             try { 
                 const s = localStorage.getItem(DB_KEY); 
@@ -1379,6 +1383,10 @@
                     data = JSON.parse(s); 
                     if (!data.spots || !Array.isArray(data.spots)) data.spots = [];
                     if (!data.library || !Array.isArray(data.library)) data.library = [];
+                    // Limpiamos preflopRange corruptos en todos los spots existentes
+                    data.spots.forEach(spot => {
+                        if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                    });
                 }
             } catch(e){ 
                 console.error("Error cargando datos, iniciando limpio:", e);
@@ -1388,7 +1396,27 @@
         };
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
         function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
-        function importData(event) { let file = event.target.files[0]; if(!file) return; let reader = new FileReader(); reader.onload = function(e) { try { if(confirm("¿Reemplazar información actual?")) { data = JSON.parse(e.target.result); if(!data.library || !Array.isArray(data.library)) data.library = []; commit(true); clearAll(); renderSidebar(); } } catch(err) { alert("Error: Archivo no válido."); } }; reader.readAsText(file); event.target.value = ''; }
+        function importData(event) { 
+            let file = event.target.files[0]; 
+            if(!file) return; 
+            let reader = new FileReader(); 
+            reader.onload = function(e) { 
+                try { 
+                    if(confirm("¿Reemplazar información actual?")) { 
+                        data = JSON.parse(e.target.result); 
+                        if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
+                        if(!data.library || !Array.isArray(data.library)) data.library = [];
+                        // Limpiamos preflopRange corruptos al importar
+                        data.spots.forEach(spot => {
+                            if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                        });
+                        commit(true); clearAll(); renderSidebar(); 
+                    } 
+                } catch(err) { alert("Error: Archivo no válido."); } 
+            }; 
+            reader.readAsText(file); 
+            event.target.value = ''; 
+        }
         function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
         function addSpot() { const n=document.getElementById('spot-input').value.trim(); if(!n) return; data.spots.push({name:n, textures:[], preflopRange: []}); document.getElementById('spot-input').value=''; commit(); }
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
@@ -1421,7 +1449,10 @@
 
         function openRangeModal(idx) {
             rangeSpotIdx = idx;
-            if (!data.spots[idx].preflopRange) data.spots[idx].preflopRange = [];
+            // Forzamos que sea un arreglo si no lo es
+            if (!Array.isArray(data.spots[idx].preflopRange)) {
+                data.spots[idx].preflopRange = [];
+            }
             tempPreflopRange = [...data.spots[idx].preflopRange];
             selectedLibCat = -1;
             renderLibrary();
@@ -1696,7 +1727,8 @@
 
         function getActivePreflopRange() {
             if (aS === -1 || !data.spots[aS]) return [];
-            return data.spots[aS].preflopRange || [];
+            // Devuelve un arreglo vacío si no es un arreglo válido
+            return Array.isArray(data.spots[aS].preflopRange) ? data.spots[aS].preflopRange : [];
         }
 
         function getUniverse(type) {
