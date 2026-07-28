@@ -1368,15 +1368,21 @@
                 data = JSON.parse(v3raw); 
                 if(!data.library || !Array.isArray(data.library)) data.library = [];
                 if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
-                // Limpiamos preflopRange corruptos en migración
                 data.spots.forEach(spot => {
-                    if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                    if (Array.isArray(spot.preflopRange)) {
+                        const newObj = {};
+                        spot.preflopRange.forEach(key => newObj[key] = 100);
+                        spot.preflopRange = newObj;
+                    } else if (typeof spot.preflopRange !== 'object' || spot.preflopRange === null) {
+                        spot.preflopRange = {};
+                    }
                 });
                 localStorage.setItem(DB_KEY, JSON.stringify(data)); 
                 document.getElementById('migrate-area').innerHTML = ''; 
                 clearAll(); renderSidebar(); 
             } catch(e) { alert('Error: ' + e.message); }
         }
+
         window.onload = () => { 
             try { 
                 const s = localStorage.getItem(DB_KEY); 
@@ -1384,9 +1390,14 @@
                     data = JSON.parse(s); 
                     if (!data.spots || !Array.isArray(data.spots)) data.spots = [];
                     if (!data.library || !Array.isArray(data.library)) data.library = [];
-                    // Limpiamos preflopRange corruptos en todos los spots existentes
                     data.spots.forEach(spot => {
-                        if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                        if (Array.isArray(spot.preflopRange)) {
+                            const newObj = {};
+                            spot.preflopRange.forEach(key => newObj[key] = 100);
+                            spot.preflopRange = newObj;
+                        } else if (typeof spot.preflopRange !== 'object' || spot.preflopRange === null) {
+                            spot.preflopRange = {};
+                        }
                     });
                 }
             } catch(e){ 
@@ -1395,8 +1406,11 @@
             } 
             renderSidebar(); 
         };
+
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
+        
         function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
+        
         function importData(event) { 
             let file = event.target.files[0]; 
             if(!file) return; 
@@ -1407,9 +1421,14 @@
                         data = JSON.parse(e.target.result); 
                         if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
                         if(!data.library || !Array.isArray(data.library)) data.library = [];
-                        // Limpiamos preflopRange corruptos al importar
                         data.spots.forEach(spot => {
-                            if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                            if (Array.isArray(spot.preflopRange)) {
+                                const newObj = {};
+                                spot.preflopRange.forEach(key => newObj[key] = 100);
+                                spot.preflopRange = newObj;
+                            } else if (typeof spot.preflopRange !== 'object' || spot.preflopRange === null) {
+                                spot.preflopRange = {};
+                            }
                         });
                         commit(true); clearAll(); renderSidebar(); 
                     } 
@@ -1450,20 +1469,17 @@
 
         function openRangeModal(idx) {
             rangeSpotIdx = idx;
-            // Forzamos que sea un arreglo si no lo es
-            if (!Array.isArray(data.spots[idx].preflopRange)) {
-                data.spots[idx].preflopRange = [];
+            if (typeof data.spots[idx].preflopRange !== 'object' || Array.isArray(data.spots[idx].preflopRange) || data.spots[idx].preflopRange === null) {
+                data.spots[idx].preflopRange = {};
             }
-            tempPreflopRange = [...data.spots[idx].preflopRange];
+            tempPreflopRange = {...data.spots[idx].preflopRange};
             selectedLibCat = -1;
             renderLibrary();
             updateRangeInputText();
             renderRangeGrid();
             document.getElementById('modal-range').style.display = 'flex';
         }
-
         function renderRangeGrid() {
-            const rangeSet = new Set(tempPreflopRange);
             let html = '<div id="rm-grid">';
             RANKS.forEach((r1, i) => {
                 RANKS.forEach((r2, j) => {
@@ -1473,58 +1489,80 @@
                     else { hand = r2+r1; type = 'o'; label = hand+'o'; }
                     
                     const key = hand + type;
-                    const active = rangeSet.has(key);
-                    html += `<div class="rm-cell ${active?'active':''}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
+                    const weight = tempPreflopRange[key] || 0;
+                    const active = weight > 0;
+                    
+                    // Mostrar el texto del peso si es menor a 100
+                    let weightLabel = (active && weight < 100) ? `<br><span style="font-size:7px; font-weight:700;">${weight}%</span>` : '';
+                    
+                    html += `<div class="rm-cell ${active?'active':''}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)">${label}${weightLabel}</div>`;
                 });
             });
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
             
             const totalCombos = countCombosInRange(tempPreflopRange);
-            document.getElementById('rm-info').textContent = `${tempPreflopRange.length} manos (${totalCombos} combos)`;
+            const handCount = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
+            document.getElementById('rm-info').textContent = `${handCount} manos (${totalCombos} combos)`;
         }
 
-        function countCombosInRange(rangeArr) {
+        function countCombosInRange(rangeDict) {
             let count = 0;
-            rangeArr.forEach(key => {
+            for (const key in rangeDict) {
+                const weight = rangeDict[key];
+                if (weight === 0) continue;
                 const r1 = key[0], r2 = key[1];
                 const isPair = r1 === r2;
-                if (isPair) count += 6;
-                else count += (key[2] === 's' ? 4 : 12);
-            });
-            return count;
+                let baseCombos = isPair ? 6 : (key[2] === 's' ? 4 : 12);
+                // El peso convierte los combos en fracciones
+                count += baseCombos * (weight / 100);
+            }
+            return count.toFixed(1);
         }
-
-        function rmCellDown(e, key) {
-            rmMouseDown = true;
-            const set = new Set(tempPreflopRange);
-            rmDragModeAdd = !set.has(key);
-            rmApplyAction(key);
-            e.preventDefault();
-        }
-        function rmCellOver(e, key) { if (rmMouseDown) rmApplyAction(key); }
-        function rmCellUp(e) { rmMouseDown = false; }
-        document.addEventListener('mouseup', function() { rmMouseDown = false; });
 
         function rmApplyAction(key) {
-            const set = new Set(tempPreflopRange);
-            if (rmDragModeAdd && !set.has(key)) set.add(key);
-            else if (!rmDragModeAdd && set.has(key)) set.delete(key);
-            tempPreflopRange = Array.from(set);
+            if (rmDragModeAdd) {
+                tempPreflopRange[key] = 100; // Al hacer click, pone 100% por defecto
+            } else {
+                delete tempPreflopRange[key]; // Al borrar, quita la mano
+            }
             renderRangeGrid();
             updateRangeInputText();
         }
 
         function parseRangeInput() {
             const text = document.getElementById('rm-input').value.toUpperCase();
-            const rangeSet = new Set();
+            const rangeDict = {}; 
+
             if (!text.trim()) {
-                tempPreflopRange = [];
+                tempPreflopRange = {};
                 renderRangeGrid();
                 return;
             }
+
+            // Regex para encontrar bloques de peso [70]...[/70]
+            const weightRegex = /\[(\d+)\]([^\[]+)\[\/\1\]/g;
             
-            const tokens = text.split(',');
+            // 1. Procesar texto FUERA de los corchetes (peso 100%)
+            const outsideText = text.replace(weightRegex, '|').split('|');
+            outsideText.forEach(part => {
+                processRangeTokens(part, 100, rangeDict);
+            });
+
+            // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
+            const matches = [...text.matchAll(/\[(\d+)\]([^\[]+)\[\/\1\]/g)];
+            matches.forEach(match => {
+                const weight = parseInt(match[1]);
+                const innerText = match[2];
+                processRangeTokens(innerText, weight, rangeDict);
+            });
+
+            tempPreflopRange = rangeDict;
+            renderRangeGrid();
+        }
+
+        function processRangeTokens(tokenStr, weight, rangeDict) {
+            const tokens = tokenStr.split(',');
             tokens.forEach(t => {
                 t = t.trim();
                 if (t.length < 2) return;
@@ -1535,18 +1573,20 @@
                         const a = parts[0].trim();
                         const b = parts[1].trim();
                         
+                        // Rango de Pares: AA-88
                         if (a.length === 2 && a[0] === a[1] && b.length === 2 && b[0] === b[1]) {
                             const r1 = a[0], r2 = b[0];
                             const i1 = RANKS.indexOf(r1);
                             const i2 = RANKS.indexOf(r2);
                             const min = Math.min(i1, i2), max = Math.max(i1, i2);
                             for (let i = min; i <= max; i++) {
-                                rangeSet.add(RANKS[i] + RANKS[i] + 'p');
+                                rangeDict[RANKS[i] + RANKS[i] + 'p'] = weight;
                             }
                         }
+                        // Rango Suited/Offsuit: AKs-A8s
                         else if (a.length >= 3 && b.length >= 3) {
                             const r1 = a[0], r2 = b[0];
-                            const suffix = a[a.length-1];
+                            const suffix = a[a.length-1].toUpperCase();
                             if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
                                 const c1 = a[1];
                                 const c2 = b[1];
@@ -1557,7 +1597,7 @@
                                     const g = suffix === 'S' ? 's' : 'o';
                                     for (let i = min; i <= max; i++) {
                                         if (RANKS[i] !== r1) {
-                                            rangeSet.add(r1 + RANKS[i] + g);
+                                            rangeDict[r1 + RANKS[i] + g] = weight;
                                         }
                                     }
                                 }
@@ -1565,30 +1605,53 @@
                         }
                     }
                 } else {
+                    // Mano individual: AA o AJs
                     const r1 = t[0], r2 = t[1];
                     if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
                     const isPair = r1 === r2;
                     if (isPair) {
-                        rangeSet.add(r1 + r2 + 'p');
+                        rangeDict[r1 + r2 + 'p'] = weight;
                     } else {
-                        const suffix = t.length > 2 ? t[2] : 's'; 
-                        if (suffix.toUpperCase() === 'O') {
-                            rangeSet.add(r1 + r2 + 'o');
+                        const suffix = t.length > 2 ? t[2].toUpperCase() : 'S'; 
+                        if (suffix === 'O') {
+                            rangeDict[r1 + r2 + 'o'] = weight;
                         } else {
-                            rangeSet.add(r1 + r2 + 's');
+                            rangeDict[r1 + r2 + 's'] = weight;
                         }
                     }
                 }
             });
-            
-            tempPreflopRange = Array.from(rangeSet);
-            renderRangeGrid();
         }
 
-        function generateRangeString(rangeArr) {
-            const rangeSet = new Set(rangeArr);
+        function generateRangeString(rangeDict) {
+            const byWeight = {};
+            for (const key in rangeDict) {
+                const w = rangeDict[key];
+                if (w > 0) {
+                    if (!byWeight[w]) byWeight[w] = [];
+                    byWeight[w].push(key);
+                }
+            }
+
+            let parts = [];
+            // Los de 100% van primero, sin corchetes
+            if (byWeight[100]) {
+                parts.push(processGroupToText(byWeight[100]));
+            }
+            // Los demás pesos van con corchetes [70]...[/70]
+            for (const w in byWeight) {
+                if (w !== '100') {
+                    parts.push(`[${w}]${processGroupToText(byWeight[w])}[/${w}]`);
+                }
+            }
+            return parts.join(',');
+        }
+
+        function processGroupToText(keys) {
+            const rangeSet = new Set(keys);
             let parts = [];
             
+            // Agrupar Pares
             let pStart = -1;
             for (let i = 0; i < 13; i++) {
                 const r = RANKS[i];
@@ -1607,6 +1670,7 @@
                 else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[12] + RANKS[12]);
             }
 
+            // Agrupar Suited y Offsuit
             ['s', 'o'].forEach(g => {
                 for (let i = 0; i < 13; i++) {
                     let sStart = -1;
@@ -1628,7 +1692,6 @@
                     }
                 }
             });
-            
             return parts.join(',');
         }
 
@@ -1727,9 +1790,8 @@
         // =======================================
 
         function getActivePreflopRange() {
-            if (aS === -1 || !data.spots[aS]) return [];
-            // Devuelve un arreglo vacío si no es un arreglo válido
-            return Array.isArray(data.spots[aS].preflopRange) ? data.spots[aS].preflopRange : [];
+            if (aS === -1 || !data.spots[aS]) return {};
+            return (typeof data.spots[aS].preflopRange === 'object' && !Array.isArray(data.spots[aS].preflopRange)) ? data.spots[aS].preflopRange : {};
         }
 
         function getUniverse(type) {
@@ -2386,8 +2448,9 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
+                const preKeys = Object.keys(preRange);
+                if (preKeys.length > 0) {
+                    preKeys.forEach(key => {
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2481,8 +2544,9 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
+                const preKeys = Object.keys(preRange);
+                if (preKeys.length > 0) {
+                    preKeys.forEach(key => {
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2550,9 +2614,12 @@
 
             let count = 0;
             const preRange = getActivePreflopRange();
+            const preKeys = Object.keys(preRange);
             
-            if (preRange.length > 0) {
-                preRange.forEach(key => {
+            if (preKeys.length > 0) {
+                preKeys.forEach(key => {
+                    const weight = preRange[key];
+                    if (weight === 0) return;
                     const r1 = key[0], r2 = key[1];
                     const isPair = r1 === r2;
                     const g = isPair ? 'p' : key[2];
@@ -2563,7 +2630,7 @@
 
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
-                        if (!boardSet.has(c1) && !boardSet.has(c2)) count++;
+                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100); // Acumula fracciones
                     });
                 });
             } else {
@@ -2580,7 +2647,7 @@
             return count;
         }
 
-	        function getOrphanedIds(type) {
+        function getOrphanedIds(type) {
             try {
                 let sourcePool = [];
                 let parentBoard = [];
@@ -2588,8 +2655,11 @@
                 if (type === 'flop') {
                     parentBoard = getActiveBoard('flop');
                     const preRange = getActivePreflopRange();
-                    if (preRange.length === 0) return [];
-                    preRange.forEach(key => {
+                    const preKeys = Object.keys(preRange);
+                    if (preKeys.length === 0) return [];
+                    preKeys.forEach(key => {
+                        const weight = preRange[key];
+                        if(weight === 0) return;
                         if(!key || key.length < 2) return;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
@@ -2605,13 +2675,13 @@
                     parentBoard = getActiveBoard('turnAction');
                     if (aF === -1) return [];
                     const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
-                    if (!flopNode) return []; // Aquí quité el bloqueo para que avise siempre
+                    if (!flopNode) return []; 
                     sourcePool = getAllSelectedFromNode(flopNode);
                 } else if (type === 'riverAction') {
                     parentBoard = getActiveBoard('riverAction');
                     if (aF === -1 || aTC === -1 || aTA === -1) return [];
                     const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
-                    if (!turnNode) return []; // Aquí también
+                    if (!turnNode) return []; 
                     sourcePool = getAllSelectedFromNode(turnNode);
                 }
 

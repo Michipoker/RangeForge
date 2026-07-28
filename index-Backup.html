@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rangeforge</title>
+    <link rel="icon" type="image/png" href="RF logo (only square).png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ══════════════════════════════════════════
@@ -1038,11 +1039,6 @@
         }
         .rm-cell:hover { background: var(--bg-hover); color: var(--text-secondary); }
         .rm-cell.active { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-border); box-shadow: inset 0 0 0 1px var(--accent-border); }
-        .rm-cell.weight-100 { background: #c7d2fe; color: #3730a3; font-weight: 700; }
-        .rm-cell.weight-75 { background: #d6d9fb; color: #4338ca; }
-        .rm-cell.weight-50 { background: #e0e1fd; color: #6366f1; }
-        .rm-cell.weight-25 { background: #ebecfe; color: #818cf8; }
-        .rm-cell .rm-weight-label { font-size: 7px; color: inherit; margin-left: 2px; }
         .rm-info { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-weight: 500; }
 
         /* Scrollbar */
@@ -1371,12 +1367,16 @@
             try { 
                 data = JSON.parse(v3raw); 
                 if(!data.library || !Array.isArray(data.library)) data.library = [];
+                if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
+                // Limpiamos preflopRange corruptos en migración
+                data.spots.forEach(spot => {
+                    if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                });
                 localStorage.setItem(DB_KEY, JSON.stringify(data)); 
                 document.getElementById('migrate-area').innerHTML = ''; 
                 clearAll(); renderSidebar(); 
             } catch(e) { alert('Error: ' + e.message); }
         }
-
         window.onload = () => { 
             try { 
                 const s = localStorage.getItem(DB_KEY); 
@@ -1384,6 +1384,10 @@
                     data = JSON.parse(s); 
                     if (!data.spots || !Array.isArray(data.spots)) data.spots = [];
                     if (!data.library || !Array.isArray(data.library)) data.library = [];
+                    // Limpiamos preflopRange corruptos en todos los spots existentes
+                    data.spots.forEach(spot => {
+                        if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                    });
                 }
             } catch(e){ 
                 console.error("Error cargando datos, iniciando limpio:", e);
@@ -1393,7 +1397,27 @@
         };
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
         function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
-        function importData(event) { let file = event.target.files[0]; if(!file) return; let reader = new FileReader(); reader.onload = function(e) { try { if(confirm("¿Reemplazar información actual?")) { data = JSON.parse(e.target.result); if(!data.library || !Array.isArray(data.library)) data.library = []; commit(true); clearAll(); renderSidebar(); } } catch(err) { alert("Error: Archivo no válido."); } }; reader.readAsText(file); event.target.value = ''; }
+        function importData(event) { 
+            let file = event.target.files[0]; 
+            if(!file) return; 
+            let reader = new FileReader(); 
+            reader.onload = function(e) { 
+                try { 
+                    if(confirm("¿Reemplazar información actual?")) { 
+                        data = JSON.parse(e.target.result); 
+                        if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
+                        if(!data.library || !Array.isArray(data.library)) data.library = [];
+                        // Limpiamos preflopRange corruptos al importar
+                        data.spots.forEach(spot => {
+                            if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                        });
+                        commit(true); clearAll(); renderSidebar(); 
+                    } 
+                } catch(err) { alert("Error: Archivo no válido."); } 
+            }; 
+            reader.readAsText(file); 
+            event.target.value = ''; 
+        }
         function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
         function addSpot() { const n=document.getElementById('spot-input').value.trim(); if(!n) return; data.spots.push({name:n, textures:[], preflopRange: []}); document.getElementById('spot-input').value=''; commit(); }
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
@@ -1421,14 +1445,16 @@
         let rangeSpotIdx = -1;
         let rmDragModeAdd = false;
         let rmMouseDown = false;
-        let tempPreflopRange = {}; 
+        let tempPreflopRange = []; 
         let selectedLibCat = -1;
 
         function openRangeModal(idx) {
             rangeSpotIdx = idx;
-            if (!data.spots[idx].preflopRange) data.spots[idx].preflopRange = {};
-            // Clonamos el objeto de pesos
-            tempPreflopRange = JSON.parse(JSON.stringify(data.spots[idx].preflopRange));
+            // Forzamos que sea un arreglo si no lo es
+            if (!Array.isArray(data.spots[idx].preflopRange)) {
+                data.spots[idx].preflopRange = [];
+            }
+            tempPreflopRange = [...data.spots[idx].preflopRange];
             selectedLibCat = -1;
             renderLibrary();
             updateRangeInputText();
@@ -1437,6 +1463,7 @@
         }
 
         function renderRangeGrid() {
+            const rangeSet = new Set(tempPreflopRange);
             let html = '<div id="rm-grid">';
             RANKS.forEach((r1, i) => {
                 RANKS.forEach((r2, j) => {
@@ -1446,113 +1473,78 @@
                     else { hand = r2+r1; type = 'o'; label = hand+'o'; }
                     
                     const key = hand + type;
-                    const weight = tempPreflopRange[key] || 0;
-                    
-                    let weightClass = '';
-                    if (weight > 0) {
-                        if (weight >= 100) weightClass = 'weight-100';
-                        else if (weight >= 75) weightClass = 'weight-75';
-                        else if (weight >= 50) weightClass = 'weight-50';
-                        else weightClass = 'weight-25';
-                    }
-                    
-                    // Clic izquierdo (agregar 100%), Clic derecho (preguntar peso)
-                    html += `<div class="rm-cell ${weightClass}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" oncontextmenu="event.preventDefault();rmCellRightClick(event,'${key}')" onmouseup="rmCellUp(event)">${label}${weight > 0 && weight < 100 ? '<span class="rm-weight-label">'+weight+'%</span>' : ''}</div>`;
+                    const active = rangeSet.has(key);
+                    html += `<div class="rm-cell ${active?'active':''}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
                 });
             });
             html += '</div>';
             document.getElementById('rm-grid').outerHTML = html;
             
             const totalCombos = countCombosInRange(tempPreflopRange);
-            const totalHands = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
-            document.getElementById('rm-info').textContent = `${totalHands} manos (${totalCombos} combos)`;
+            document.getElementById('rm-info').textContent = `${tempPreflopRange.length} manos (${totalCombos} combos)`;
         }
 
-        function countCombosInRange(rangeObj) {
+        function countCombosInRange(rangeArr) {
             let count = 0;
-            for (let key in rangeObj) {
-                const weight = rangeObj[key] || 0;
-                if (weight === 0) continue;
-                const multiplier = weight / 100;
+            rangeArr.forEach(key => {
                 const r1 = key[0], r2 = key[1];
                 const isPair = r1 === r2;
-                if (isPair) count += 6 * multiplier;
-                else count += (key[2] === 's' ? 4 : 12) * multiplier;
-            }
-            return count.toFixed(1); // Devolvemos con 1 decimal por los pesos
+                if (isPair) count += 6;
+                else count += (key[2] === 's' ? 4 : 12);
+            });
+            return count;
         }
 
         function rmCellDown(e, key) {
-            if (e.button === 2) return; // Ignora el clic derecho aquí, lo maneja rmCellRightClick
             rmMouseDown = true;
-            // Si ya está al 100%, lo quitamos (0%). Si no, lo ponemos al 100%.
-            const currentWeight = tempPreflopRange[key] || 0;
-            if (currentWeight === 100) {
-                rmDragModeAdd = false;
-            } else {
-                rmDragModeAdd = true;
-            }
-            rmApplyAction(key, 100);
-                    function rmCellRightClick(e, key) {
-            e.preventDefault();
-            let currentWeight = tempPreflopRange[key] || 0;
-            let input = prompt(`Introduce el peso para ${key} (1-100):`, currentWeight || '50');
-            if (input === null) return; // Cancelaron
-            let w = parseInt(input);
-            if (isNaN(w) || w < 0) w = 0;
-            if (w > 100) w = 100;
-            
-            if (w === 0) {
-                delete tempPreflopRange[key];
-            } else {
-                tempPreflopRange[key] = w;
-            }
-            renderRangeGrid();
-            updateRangeInputText();
-        }
+            const set = new Set(tempPreflopRange);
+            rmDragModeAdd = !set.has(key);
+            rmApplyAction(key);
             e.preventDefault();
         }
-
         function rmCellOver(e, key) { if (rmMouseDown) rmApplyAction(key); }
         function rmCellUp(e) { rmMouseDown = false; }
         document.addEventListener('mouseup', function() { rmMouseDown = false; });
 
-        function rmApplyAction(key, weight = 100) {
-            if (rmDragModeAdd) {
-                tempPreflopRange[key] = weight;
-            } else {
-                delete tempPreflopRange[key];
-            }
+        function rmApplyAction(key) {
+            const set = new Set(tempPreflopRange);
+            if (rmDragModeAdd && !set.has(key)) set.add(key);
+            else if (!rmDragModeAdd && set.has(key)) set.delete(key);
+            tempPreflopRange = Array.from(set);
             renderRangeGrid();
             updateRangeInputText();
         }
 
         function parseRangeInput() {
             const text = document.getElementById('rm-input').value.toUpperCase();
-            const newRange = {};
+            const rangeSet = new Set();
             if (!text.trim()) {
-                tempPreflopRange = newRange;
+                tempPreflopRange = [];
                 renderRangeGrid();
                 return;
             }
+            
             const tokens = text.split(',');
             tokens.forEach(t => {
                 t = t.trim();
                 if (t.length < 2) return;
+                
                 if (t.includes('-')) {
                     const parts = t.split('-');
                     if (parts.length === 2) {
                         const a = parts[0].trim();
                         const b = parts[1].trim();
+                        
                         if (a.length === 2 && a[0] === a[1] && b.length === 2 && b[0] === b[1]) {
                             const r1 = a[0], r2 = b[0];
                             const i1 = RANKS.indexOf(r1);
                             const i2 = RANKS.indexOf(r2);
                             const min = Math.min(i1, i2), max = Math.max(i1, i2);
                             for (let i = min; i <= max; i++) {
-                                newRange[RANKS[i] + RANKS[i] + 'p'] = 100;
+                                rangeSet.add(RANKS[i] + RANKS[i] + 'p');
                             }
-                        } else if (a.length >= 3 && b.length >= 3) {
+                        }
+                        else if (a.length >= 3 && b.length >= 3) {
                             const r1 = a[0], r2 = b[0];
                             const suffix = a[a.length-1];
                             if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
@@ -1565,7 +1557,7 @@
                                     const g = suffix === 'S' ? 's' : 'o';
                                     for (let i = min; i <= max; i++) {
                                         if (RANKS[i] !== r1) {
-                                            newRange[r1 + RANKS[i] + g] = 100;
+                                            rangeSet.add(r1 + RANKS[i] + g);
                                         }
                                     }
                                 }
@@ -1577,24 +1569,26 @@
                     if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
                     const isPair = r1 === r2;
                     if (isPair) {
-                        newRange[r1 + r2 + 'p'] = 100;
+                        rangeSet.add(r1 + r2 + 'p');
                     } else {
                         const suffix = t.length > 2 ? t[2] : 's'; 
                         if (suffix.toUpperCase() === 'O') {
-                            newRange[r1 + r2 + 'o'] = 100;
+                            rangeSet.add(r1 + r2 + 'o');
                         } else {
-                            newRange[r1 + r2 + 's'] = 100;
+                            rangeSet.add(r1 + r2 + 's');
                         }
                     }
                 }
             });
-            tempPreflopRange = newRange;
+            
+            tempPreflopRange = Array.from(rangeSet);
             renderRangeGrid();
         }
 
-        function generateRangeString(rangeObj) {
-            const rangeSet = new Set(Object.keys(rangeObj).filter(k => rangeObj[k] > 0));
+        function generateRangeString(rangeArr) {
+            const rangeSet = new Set(rangeArr);
             let parts = [];
+            
             let pStart = -1;
             for (let i = 0; i < 13; i++) {
                 const r = RANKS[i];
@@ -1612,6 +1606,7 @@
                 if (12 === pStart) parts.push(RANKS[pStart] + RANKS[pStart]);
                 else parts.push(RANKS[pStart] + RANKS[pStart] + '-' + RANKS[12] + RANKS[12]);
             }
+
             ['s', 'o'].forEach(g => {
                 for (let i = 0; i < 13; i++) {
                     let sStart = -1;
@@ -1633,6 +1628,7 @@
                     }
                 }
             });
+            
             return parts.join(',');
         }
 
@@ -1648,12 +1644,7 @@
         }
 
         function applyRangeToSpot() {
-            // Filtramos los que tienen 0% por si acaso
-            let cleanRange = {};
-            for (let k in tempPreflopRange) {
-                if (tempPreflopRange[k] > 0) cleanRange[k] = tempPreflopRange[k];
-            }
-            data.spots[rangeSpotIdx].preflopRange = cleanRange;
+            data.spots[rangeSpotIdx].preflopRange = tempPreflopRange;
             commit();
             closeModal('range');
         }
@@ -1736,9 +1727,9 @@
         // =======================================
 
         function getActivePreflopRange() {
-            if (aS === -1 || !data.spots[aS]) return {};
-            if (!data.spots[aS].preflopRange) data.spots[aS].preflopRange = {};
-            return data.spots[aS].preflopRange;
+            if (aS === -1 || !data.spots[aS]) return [];
+            // Devuelve un arreglo vacío si no es un arreglo válido
+            return Array.isArray(data.spots[aS].preflopRange) ? data.spots[aS].preflopRange : [];
         }
 
         function getUniverse(type) {
@@ -2395,7 +2386,6 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-                const preKeys = new Set(Object.keys(preRange));
                 if (preRange.length > 0) {
                     preRange.forEach(key => {
                         const r1 = key[0], r2 = key[1];
@@ -2827,7 +2817,7 @@
                     
                     let classes = [cls];
                     if (disabled) classes.push('cm-tab-disabled');
-                    else if (preKeys.size > 0 && !preKeys.has(rangeKey)) classes.push('deleted');
+                    else if (preRange.length > 0 && !rangeSet.has(rangeKey)) classes.push('deleted');
                     
                     let clickAttrs = '';
                     if (!disabled && !(preRange.length > 0 && !rangeSet.has(rangeKey))) {
@@ -2858,9 +2848,8 @@
                 let sourcePool = [];
                 if (type === 'flop') {
                     const preRange = getActivePreflopRange();
-                    const preKeys = Object.keys(preRange);
-                        if (preKeys.length > 0) {
-                        preKeys.forEach(key => {
+                    if (preRange.length > 0) {
+                        preRange.forEach(key => {
                             const r1 = key[0], r2 = key[1];
                             const isPair = r1 === r2;
                             const g = isPair ? 'p' : key[2];
