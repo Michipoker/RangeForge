@@ -1750,7 +1750,6 @@
                 return;
             }
 
-            // Función auxiliar para procesar texto plano y asignarle un peso
             function processText(txt, weight) {
                 const tokens = txt.split(',');
                 tokens.forEach(t => {
@@ -1896,6 +1895,7 @@
                 if (parseInt(weight) === 100) {
                     finalParts.push(str);
                 } else {
+                    // Formato exacto Flopzilla: [55] AQo, AJo [/55]
                     finalParts.push(`[${weight}] ${str} [/${weight}]`);
                 }
             }
