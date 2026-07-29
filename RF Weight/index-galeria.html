@@ -531,15 +531,15 @@
         .context-inline { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
         /* Modals */
-        #modal-img .modal-overlay {
-            background: rgba(245, 245, 245, 0.8); /* Fondo claro y limpio */
+        #modal-img {
+            background: rgba(245, 245, 245, 0.8) !important; /* Fondo claro forzado */
             backdrop-filter: blur(4px);
         }
-        #modal-img .modal-box {
+        #modal-img > .modal-box {
             width: 95vw; max-width: 1200px; height: 95vh;
             display: flex; flex-direction: column;
             padding: 24px;
-            background: #ffffff;
+            background: #ffffff !important; /* Fondo blanco forzado */
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
@@ -590,7 +590,7 @@
         
         .rp-gto-matrix {
             flex: 1; display: flex; justify-content: center; align-items: center;
-            min-height: 350px; 
+            min-height: 400px; /* MÁS GRANDE */
             background: var(--bg-surface-warm);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
@@ -599,11 +599,11 @@
         }
         
         /* MATRIZ 50% MÁS GRANDE */
-        .gto-grid { display: grid; grid-template-columns: 20px repeat(13, 1fr); grid-template-rows: 20px repeat(13, 1fr); gap: 3px; width: 100%; max-width: 550px; aspect-ratio: 1; }
-        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .gto-grid { display: grid; grid-template-columns: 24px repeat(13, 1fr); grid-template-rows: 24px repeat(13, 1fr); gap: 4px; width: 100%; max-width: 600px; aspect-ratio: 1; }
+        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-muted); font-weight: 600; }
         .gto-cell {
             display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: 600; border-radius: 3px;
+            font-size: 11px; font-weight: 600; border-radius: 3px;
             color: var(--text-primary); cursor: help; transition: transform 0.1s;
             border: 1px solid transparent;
         }
@@ -627,12 +627,6 @@
         .rp-text:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 3px rgba(99,102,241,0.05); }
         .rp-text::placeholder { color: var(--text-faint); }
 
-        .slots-container::-webkit-scrollbar { width: 8px; }
-        .slots-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .slots-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-        .slots-container::-webkit-scrollbar-thumb:hover { background: #aaa; }
-
-        /* Scrollbar blanca para la galería */
         .slots-container::-webkit-scrollbar { width: 8px; }
         .slots-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .slots-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
@@ -3889,67 +3883,84 @@
             return '#d6d3d1';
         }
 
+        function normalizeHand(h) {
+            if (!h) return null;
+            h = h.toUpperCase();
+            h = h.replace(/[^AKQJT2-9HDCS]/g, ''); // Limpia cualquier caracter raro
+            
+            // Formato AKs, AKo, AA
+            if (h.length === 3 && ['S','O'].includes(h[2]) && h[0] !== h[1]) return h;
+            if (h.length === 2 && h[0] === h[1] && 'AKQJT2-9'.includes(h[0])) return h;
+            
+            // Formato AhKd, AsKh
+            if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
+                const r1 = h[0], r2 = h[2];
+                const s1 = h[1], s2 = h[3];
+                if ('AKQJT2-9'.includes(r1) && 'AKQJT2-9'.includes(r2)) {
+                    if (r1 === r2) return r1 + r2;
+                    return r1 + r2 + (s1 === s2 ? 's' : 'o');
+                }
+            }
+            return null;
+        }
+
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
             const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-            if (lines.length === 0) return data;
 
-            let actions = []; // Array de {name, index}
+            let actions = [];
 
-            // 1. Buscar encabezados
+            // 1. Buscar la fila de encabezados para saber qué acciones existen
             for (let i = 0; i < Math.min(5, lines.length); i++) {
                 const lowerLine = lines[i].toLowerCase();
-                if (lowerLine.includes('hand') && (lowerLine.includes('call') || lowerLine.includes('raise') || lowerLine.includes('fold'))) {
+                if (lowerLine.includes('hand') || lowerLine.includes('combo')) {
                     const tokens = lowerLine.split(/\s+/);
-                    tokens.forEach((t, idx) => {
-                        if (t.match(/(raise|bet|call|check|fold|donk)/)) {
-                            actions.push({ name: t, index: idx });
+                    tokens.forEach(t => {
+                        const cleanT = t.replace(/[^a-z0-9]/g, '');
+                        if (cleanT.match(/(raise|bet|call|check|fold|donk)/)) {
+                            actions.push(cleanT);
                         }
                     });
-                    break; // Encabezado encontrado
+                    if (actions.length > 0) break;
                 }
             }
 
-            // 2. Procesar líneas de datos
+            // 2. Procesar líneas de datos buscando los números que suman 100
             for (let line of lines) {
                 const tokens = line.split(/\s+/);
                 const hand = normalizeHand(tokens[0]);
-                if (!hand) continue; // Si no es una mano válida, saltamos
+                if (!hand) continue;
 
-                if (actions.length > 0) {
-                    // Modo con encabezados detectados
-                    let handData = {};
-                    let isValid = true;
-                    actions.forEach(act => {
-                        let val = parseFloat(tokens[act.index]);
-                        if (isNaN(val)) isValid = false;
-                        else handData[act.name] = val;
-                    });
-                    if (isValid) data[hand] = handData;
-                } else {
-                    // Fallback: Buscar 3 o 4 números seguidos que sumen ~100
-                    let nums = [];
-                    for(let i=1; i<tokens.length; i++) {
-                        let n = parseFloat(tokens[i].replace('%', ''));
-                        if (!isNaN(n)) nums.push(n);
-                    }
-                    for(let i=0; i<nums.length; i++) {
-                        if (nums[i] <= 100) {
-                            let seq = [nums[i]];
-                            for(let j=i+1; j<nums.length; j++) {
-                                let sum = seq.reduce((a,b)=>a+b,0);
-                                if (Math.abs(sum - 100) < 0.1) {
-                                    let genActions = {};
-                                    const keys = ['raise', 'call', 'fold'];
-                                    seq.forEach((v, k) => genActions[keys[k] || `act${k}`] = v);
-                                    data[hand] = genActions;
-                                    break;
-                                }
-                                seq.push(nums[j]);
+                // Extrae TODOS los números de la línea
+                const nums = (line.match(/\d+(\.\d+)?/g) || []).map(Number);
+                
+                let bestSeq = [];
+                
+                // Busca una secuencia de números que sume exactamente 100 (con 0.5 de margen)
+                for (let i = 0; i < nums.length; i++) {
+                    let sum = 0;
+                    for (let j = i; j < nums.length; j++) {
+                        sum += nums[j];
+                        if (sum > 100.5) break; // Si se pasa, cancela
+                        if (Math.abs(sum - 100) <= 0.5) {
+                            const seq = nums.slice(i, j + 1);
+                            // Prefiere secuencias más largas (ej: 33.3, 33.3, 33.4 en vez de un solo 100)
+                            if (seq.length > bestSeq.length) {
+                                bestSeq = seq;
                             }
                         }
                     }
+                }
+
+                // Si encontró frecuencias válidas
+                if (bestSeq.length > 0) {
+                    let handData = {};
+                    bestSeq.forEach((val, idx) => {
+                        const actName = actions[idx] || (idx === 0 ? 'raise' : (idx === 1 ? 'call' : 'fold'));
+                        handData[actName] = val;
+                    });
+                    data[hand] = handData;
                 }
             }
             return data;
