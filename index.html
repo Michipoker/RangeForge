@@ -1616,8 +1616,8 @@
                 return;
             }
 
-            // Regex actualizado: \d+(?:\.\d+)? significa "números con opcionales decimales"
-            const weightRegex = /\[(\d+(?:\.\d+)?)\]([^\[]+)\[\/\1\]/g;
+            // Regex simplificada: lee cualquier número de dígitos con o sin decimales
+            const weightRegex = /\[([\d\.]+)\]([^\[]+)\[\/\1\]/g;
             
             // 1. Procesar texto FUERA de los corchetes (peso 100%)
             const outsideText = text.replace(weightRegex, '|').split('|');
@@ -1626,12 +1626,13 @@
             });
 
             // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
-            const matches = [...text.matchAll(/\[(\d+(?:\.\d+)?)\]([^\[]+)\[\/\1\]/g)];
-            matches.forEach(match => {
-                const weight = parseFloat(match[1]); // parseFloat en lugar de parseInt para decimales
+            // Usamos un bucle clásico para máxima compatibilidad
+            let match;
+            while ((match = weightRegex.exec(text)) !== null) {
+                const weight = parseFloat(match[1]); // parseFloat para decimales
                 const innerText = match[2];
                 processRangeTokens(innerText, weight, rangeDict);
-            });
+            }
 
             tempPreflopRange = rangeDict;
             renderRangeGrid();
