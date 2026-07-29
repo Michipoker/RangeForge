@@ -531,6 +531,79 @@
         .context-inline { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
         /* Modals */
+        #modal-img .modal-box {
+            width: 95vw; max-width: 1000px; height: 90vh;
+            display: flex; flex-direction: column;
+            padding: 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+        }
+        .img-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-shrink: 0; }
+        .img-modal-title { font-size: 14px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; }
+        .slots-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding-right: 8px; }
+        
+        .slot-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--bg-surface-warm);
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+        }
+        .slot-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-light);
+            font-size: 11px; font-weight: 600; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .slot-del-btn { color: var(--text-faint); cursor: pointer; font-size: 11px; transition: color var(--transition); }
+        .slot-del-btn:hover { color: var(--bluff); }
+        
+        .slot-panels { display: flex; gap: 12px; padding: 12px; }
+        .range-panel { flex: 1; display: flex; flex-direction: column; gap: 8px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 10px; }
+        .rp-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .rp-body { display: flex; gap: 10px; height: 100%; }
+        .rp-img-area {
+            flex: 0 0 45%;
+            min-height: 180px;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all var(--transition);
+            position: relative; overflow: hidden;
+            background: var(--bg-surface-warm);
+        }
+        .rp-img-area:hover { border-color: var(--accent-border); background: var(--accent-light); }
+        .rp-img-preview { max-width: 100%; max-height: 300px; object-fit: contain; border-radius: var(--radius-sm); }
+        .rp-img-ph { color: var(--text-faint); font-size: 11px; font-style: italic; pointer-events: none; }
+        .rp-img-del {
+            position: absolute; top: 4px; right: 4px;
+            background: rgba(255,255,255,0.9); color: var(--bluff);
+            border-radius: 50%; width: 18px; height: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; cursor: pointer;
+            box-shadow: var(--shadow-sm); transition: all var(--transition);
+        }
+        .rp-img-del:hover { background: var(--bluff); color: white; }
+        
+        .rp-text {
+            flex: 1;
+            min-height: 180px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: var(--text-secondary);
+            resize: none;
+            outline: none;
+            background: var(--bg-surface-warm);
+            transition: all var(--transition);
+            line-height: 1.5;
+        }
+        .rp-text:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 3px rgba(99,102,241,0.05); }
+        .rp-text::placeholder { color: var(--text-faint); }
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1248,14 +1321,14 @@
     </div>
     <div id="modal-img" class="modal-overlay">
         <div class="modal-box">
-            <img id="img-preview" class="img-preview" style="display:none;" src="" alt="Preview">
-            <input type="file" id="img-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            <div class="modal-actions" style="justify-content: center; margin-top: 15px;">
-                <button class="modal-btn" id="btn-cambiar-img" onclick="document.getElementById('img-file-input').click()" style="display:none; background:transparent; color:#ccc; border-color:#ccc;">Cambiar</button>
-                <button class="modal-btn danger" id="btn-borrar-img" onclick="deleteImage()" style="display:none;">Borrar</button>
-                <button class="modal-btn primary" id="btn-subir-img" onclick="document.getElementById('img-file-input').click()">Subir Imagen</button>
-                <button class="modal-btn" onclick="closeModal('img')" style="background:transparent; color:#ccc; border-color:#ccc;">Cerrar</button>
+            <div class="img-modal-header">
+                <div class="img-modal-title">Galería de Rangos</div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="modal-btn primary" onclick="addImageSlot()">+ Agregar Slot</button>
+                    <button class="modal-btn" onclick="closeModal('img')">Cerrar</button>
+                </div>
             </div>
+            <div id="img-slots-container" class="slots-container"></div>
         </div>
     </div>
 
@@ -1489,7 +1562,7 @@
 
         function getColorForWeight(w) {
             if (w >= 100) return '#c7d2fe'; // Indigo pastel (100%)
-            const w10 = Math.ceil(w / 10) * 10; 
+            const w10 = Math.round(w / 10) * 10; // Redondea matemáticamente: 33.3 -> 30, 66.6 -> 70
             const colors = {
                 10: '#fecaca', // Red pastel
                 20: '#fecdd3', // Rose pastel
@@ -1501,7 +1574,7 @@
                 80: '#a5f3fc', // Cyan pastel
                 90: '#bfdbfe'  // Blue pastel
             };
-            return colors[w10] || '#fecaca';
+            return colors[w10] || colors[10];
         }
 
         function renderRangeGrid() {
@@ -1559,9 +1632,11 @@
                 const sortedWeights = Array.from(activeWeights).sort((a, b) => b - a);
                 sortedWeights.forEach(w => {
                     const bg = getColorForWeight(w);
+                    // AQUÍ USAMOS Math.floor(w) PARA REDONDEAR VISUALMENTE (66.6667 -> 66)
+                    const displayW = Math.floor(w);
                     legendHtml += `<div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border); padding:4px 8px; border-radius:4px; box-shadow: var(--shadow-xs);">
                                 <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
-                                <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${w}%</span>
+                                <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${displayW}%</span>
                             </div>`;
                 });
             }
@@ -1616,19 +1691,23 @@
                 return;
             }
 
-            const weightRegex = /\[(\d+)\]([^\[]+)\[\/\1\]/g;
+            // Regex simplificada: lee cualquier número de dígitos con o sin decimales
+            const weightRegex = /\[([\d\.]+)\]([^\[]+)\[\/\1\]/g;
             
+            // 1. Procesar texto FUERA de los corchetes (peso 100%)
             const outsideText = text.replace(weightRegex, '|').split('|');
             outsideText.forEach(part => {
                 processRangeTokens(part, 100, rangeDict);
             });
 
-            const matches = [...text.matchAll(/\[(\d+)\]([^\[]+)\[\/\1\]/g)];
-            matches.forEach(match => {
-                const weight = parseInt(match[1]);
+            // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
+            // Usamos un bucle clásico para máxima compatibilidad
+            let match;
+            while ((match = weightRegex.exec(text)) !== null) {
+                const weight = parseFloat(match[1]); // parseFloat para decimales
                 const innerText = match[2];
                 processRangeTokens(innerText, weight, rangeDict);
-            });
+            }
 
             tempPreflopRange = rangeDict;
             renderRangeGrid();
@@ -3649,7 +3728,16 @@
                 
                 if (tNode) {
                     if(tNode.generalNote && tNode.generalNote.trim()!=="") nb.classList.add('has-data'); 
-                    if(tNode.imageData) ib.classList.add('has-data'); 
+                    
+                    // Nueva lógica para detectar imágenes en los slots
+                    if(tNode.imageSlots && tNode.imageSlots.length > 0) {
+                        const hasImgData = tNode.imageSlots.some(s => s.hero.img || s.villain.img || s.hero.text || s.villain.text);
+                        if(hasImgData) ib.classList.add('has-data'); 
+                    } else if (tNode.imageData) {
+                        // Compatibilidad con datos muy viejos
+                        ib.classList.add('has-data'); 
+                    }
+                    
                     if(tNode.locked) {
                         lb.classList.add('locked');
                         lb.innerHTML = lockSvgClosed;
@@ -3658,6 +3746,7 @@
                 }
             }); 
         }
+        
         function openNoteModal(type) { 
             currentEditType=type; 
             let node=getNodeByType(type); 
@@ -3673,97 +3762,153 @@
             commit();
             closeModal('nota');
         }
-        function openImgModal(type) { 
-            currentEditType=type; 
-            let node=getNodeByType(type); 
-            let p=document.getElementById('img-preview'); 
-            if(node.imageData){
-                p.src=node.imageData;p.style.display='block';
-                document.getElementById('btn-subir-img').style.display= node.locked ? 'none' : 'inline-block';
-                document.getElementById('btn-cambiar-img').style.display= node.locked ? 'none' : 'inline-block';
-                document.getElementById('btn-borrar-img').style.display= node.locked ? 'none' : 'inline-block';
-            } else { 
-                p.style.display='none';
-                document.getElementById('btn-subir-img').style.display= node.locked ? 'none' : 'inline-block';
-                document.getElementById('btn-cambiar-img').style.display='none';
-                document.getElementById('btn-borrar-img').style.display='none';
-            } 
-            document.getElementById('modal-img').style.display='flex'; 
-        }
-        function processImageFile(file) {
-            try {
-                let node = getNodeByType(currentEditType);
-                if (!node || node.locked) { alert('Desbloquea el nodo para subir imágenes.'); return; }
-                if (!file) { alert('No se recibió archivo.'); return; }
-                if (file.size > 15 * 1024 * 1024) {
-                    alert('Imagen demasiado grande (' + (file.size/1024/1024).toFixed(1) + 'MB). Maximo 15MB. Reducila antes de subirla.');
-                    return;
+                function getImgNode() {
+            let node = getNodeByType(currentEditType);
+            if (!node) return null;
+            
+            // Migración de dato viejo al nuevo formato de Slots
+            if (!node.imageSlots) {
+                if (node.imageData) {
+                    node.imageSlots = [{ id: Date.now().toString(), hero: { img: node.imageData, text: '' }, villain: { img: '', text: '' } }];
+                    delete node.imageData;
+                } else {
+                    node.imageSlots = [];
                 }
-                const reader = new FileReader();
-                reader.onload = function(e) {
+            }
+            return node;
+        }
+
+        function openImgModal(type) { 
+            currentEditType = type; 
+            let node = getImgNode(); 
+            renderImgSlots();
+            document.getElementById('modal-img').style.display = 'flex'; 
+        }
+
+        function renderImgSlots() {
+            const node = getImgNode();
+            const container = document.getElementById('img-slots-container');
+            if (!container) return;
+            
+            if (node.imageSlots.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--text-faint); margin-top:40px; font-size:12px;">No hay slots.<br>Haz clic en "+ Agregar Slot" para comparar rangos.</div>';
+                return;
+            }
+
+            container.innerHTML = node.imageSlots.map((slot, idx) => {
+                const heroImg = slot.hero.img ? `<img src="${slot.hero.img}" class="rp-img-preview"><div class="rp-img-del" onclick="event.stopPropagation(); deleteSlotImage('${slot.id}', 'hero')" title="Borrar">×</div>` : `<span class="rp-img-ph">Subir Hero</span>`;
+                const vilImg = slot.villain.img ? `<img src="${slot.villain.img}" class="rp-img-preview"><div class="rp-img-del" onclick="event.stopPropagation(); deleteSlotImage('${slot.id}', 'villain')" title="Borrar">×</div>` : `<span class="rp-img-ph">Subir Villain</span>`;
+                
+                return `
+                <div class="slot-card">
+                    <div class="slot-header">
+                        <span>Slot ${idx + 1}</span>
+                        <span class="slot-del-btn" onclick="deleteImageSlot('${slot.id}')">Eliminar Slot ×</span>
+                    </div>
+                    <div class="slot-panels">
+                        <div class="range-panel">
+                            <div class="rp-title">Hero Range</div>
+                            <div class="rp-body">
+                                <div class="rp-img-area" onclick="document.getElementById('file-${slot.id}-hero').click()">
+                                    ${heroImg}
+                                </div>
+                                <input type="file" id="file-${slot.id}-hero" accept="image/*" style="display:none" onchange="handleSlotImageUpload(event, '${slot.id}', 'hero')">
+                                <textarea class="rp-text" placeholder="Notas del Hero..." oninput="updateSlotText('${slot.id}', 'hero', this.value)">${slot.hero.text}</textarea>
+                            </div>
+                        </div>
+                        <div class="range-panel">
+                            <div class="rp-title">Villain Range</div>
+                            <div class="rp-body">
+                                <div class="rp-img-area" onclick="document.getElementById('file-${slot.id}-villain').click()">
+                                    ${vilImg}
+                                </div>
+                                <input type="file" id="file-${slot.id}-villain" accept="image/*" style="display:none" onchange="handleSlotImageUpload(event, '${slot.id}', 'villain')">
+                                <textarea class="rp-text" placeholder="Notas del Villain..." oninput="updateSlotText('${slot.id}', 'villain', this.value)">${slot.villain.text}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function addImageSlot() {
+            const node = getImgNode();
+            node.imageSlots.push({ id: Date.now().toString(), hero: { img: '', text: '' }, villain: { img: '', text: '' } });
+            renderImgSlots();
+            updateMicroButtons(currentEditType, node);
+            commit();
+        }
+
+        function deleteImageSlot(id) {
+            const node = getImgNode();
+            node.imageSlots = node.imageSlots.filter(s => s.id !== id);
+            renderImgSlots();
+            updateMicroButtons(currentEditType, node);
+            commit();
+        }
+
+        function updateSlotText(id, who, val) {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === id);
+            if (slot) {
+                slot[who].text = val;
+                commit();
+            }
+        }
+
+        function deleteSlotImage(id, who) {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === id);
+            if (slot) {
+                slot[who].img = '';
+                renderImgSlots();
+                updateMicroButtons(currentEditType, node);
+                commit();
+            }
+        }
+
+        function handleSlotImageUpload(event, slotId, who) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
                     try {
-                        const img = new Image();
-                        img.onload = function() {
-                            try {
-                                const canvas = document.createElement('canvas');
-                                const maxWidth = 1200;
-                                const maxHeight = 1200;
-                                let w = img.width, h = img.height;
-                                if (w > maxWidth) { h *= maxWidth / w; w = maxWidth; }
-                                if (h > maxHeight) { w *= maxHeight / h; h = maxHeight; }
-                                w = Math.round(w); h = Math.round(h);
-                                canvas.width = w;
-                                canvas.height = h;
-                                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                                
-                                if (!node) { alert('Error: no hay nodo activo.'); return; }
-                                let dataUrl = canvas.toDataURL('image/jpeg', 0.65);
-                                if (dataUrl.length > 3 * 1024 * 1024) {
-                                    dataUrl = canvas.toDataURL('image/jpeg', 0.4);
-                                }
-                                if (dataUrl.length > 3 * 1024 * 1024) {
-                                    const sw = Math.round(w * 0.6), sh = Math.round(h * 0.6);
-                                    canvas.width = sw; canvas.height = sh;
-                                    canvas.getContext('2d').drawImage(img, 0, 0, sw, sh);
-                                    dataUrl = canvas.toDataURL('image/jpeg', 0.4);
-                                }
-                                node.imageData = dataUrl;
-                                updateMicroButtons(currentEditType, node);
-                                try { 
-                                    commit(); 
-                                } catch(e) { 
-                                    delete node.imageData;
-                                    updateMicroButtons(currentEditType, node);
-                                    alert('No se pudo guardar la imagen. El almacenamiento del navegador esta lleno.\n\nSolucion: borra imagenes viejas o exporta la DB y limpia el navegador.\n\nError: ' + e.message);
-                                    return;
-                                }
-                                openImgModal(currentEditType);
-                            } catch(err) { alert('Error al procesar imagen: ' + err.message); }
-                        };
-                        img.onerror = function() { alert('Error: no se pudo cargar la imagen.'); };
-                        img.src = e.target.result;
-                    } catch(err) { alert('Error al crear imagen: ' + err.message); }
+                        const canvas = document.createElement('canvas');
+                        const maxWidth = 800; // Un poco más grande para la galería
+                        let w = img.width, h = img.height;
+                        if (w > maxWidth) { h *= maxWidth / w; w = maxWidth; }
+                        w = Math.round(w); h = Math.round(h);
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        
+                        let dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        if (dataUrl.length > 2 * 1024 * 1024) dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+                        
+                        const node = getImgNode();
+                        const slot = node.imageSlots.find(s => s.id === slotId);
+                        if (slot) {
+                            slot[who].img = dataUrl;
+                            renderImgSlots();
+                            updateMicroButtons(currentEditType, node);
+                            try { 
+                                commit(); 
+                            } catch(e) { 
+                                slot[who].img = '';
+                                renderImgSlots();
+                                alert('No se pudo guardar la imagen. El almacenamiento del navegador esta lleno.');
+                            }
+                        }
+                    } catch(err) { alert('Error al procesar imagen: ' + err.message); }
                 };
-                reader.onerror = function() { alert('Error al leer el archivo.'); };
-                reader.readAsDataURL(file);
-            } catch(err) { alert('Error en processImageFile: ' + err.message); }
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
         }
-        function handleImageUpload(event) {
-            try {
-                const f=event.target.files[0];
-                if(!f){ return; }
-                processImageFile(f);
-                event.target.value='';
-            } catch(err) { alert('Error en handleImageUpload: ' + err.message); }
-        }
-        function deleteImage() { 
-            let node=getNodeByType(currentEditType); 
-            if (node.locked) return;
-            delete node.imageData; 
-            updateMicroButtons(currentEditType,node); 
-            commit(); 
-            openImgModal(currentEditType); 
-        }
+
         document.addEventListener('paste', function(event) {
             let items = (event.clipboardData || event.originalEvent.clipboardData).items;
             let imgFile = null;
