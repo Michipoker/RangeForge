@@ -3845,11 +3845,19 @@
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
-            // Regex robusta: encuentra la mano y los valores de r, c, f
-            const regex = /([AKQJT2-9]{2}[so]?)\s*(?:[:{ ]+)[^r]*r\s*:\s*([\d.]+)[^c]*c\s*:\s*([\d.]+)[^f]*f\s*:\s*([\d.]+)/gi;
+            
+            // Regex súper flexible: Encuentra la mano y luego 3 números (separados por cualquier cosa que no sea número)
+            const regex = /([AKQJT2-9]{2}[so]?)\D*?([\d.]+)\D+([\d.]+)\D+([\d.]+)/gi;
             let match;
             while ((match = regex.exec(text)) !== null) {
-                data[match[1]] = { r: parseFloat(match[2]), c: parseFloat(match[3]), f: parseFloat(match[4]) };
+                const hand = match[1];
+                const r = parseFloat(match[2]);
+                const c = parseFloat(match[3]);
+                const f = parseFloat(match[4]);
+                // Validar que sean porcentajes lógicos
+                if (r + c + f <= 100.1) { 
+                    data[hand] = { r, c, f };
+                }
             }
             return data;
         }
