@@ -531,8 +531,9 @@
         .context-inline { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
         /* Modals */
-                #modal-img .modal-overlay {
-            background: rgba(28,25,23,0.5);
+        #modal-img .modal-overlay {
+            background: rgba(245, 245, 245, 0.8); /* Fondo claro y limpio */
+            backdrop-filter: blur(4px);
         }
         #modal-img .modal-box {
             width: 95vw; max-width: 1200px; height: 95vh;
@@ -567,10 +568,13 @@
         
         .slot-panels { display: flex; gap: 16px; padding: 16px; }
         .range-panel { flex: 1; display: flex; flex-direction: column; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 12px; }
+        .rp-header { display: flex; justify-content: space-between; align-items: center; }
         .rp-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .clear-gto-btn { font-size: 9px; color: var(--bluff); background: var(--bluff-bg); border: 1px solid #fca5a5; padding: 3px 6px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.15s; }
+        .clear-gto-btn:hover { background: #fee2e2; }
         
         .rp-gto-input {
-            width: 100%; height: 80px;
+            width: 100%; height: 70px;
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
             background: var(--bg-surface-warm);
@@ -594,11 +598,12 @@
             overflow: auto;
         }
         
-        .gto-grid { display: grid; grid-template-columns: 20px repeat(13, 1fr); grid-template-rows: 20px repeat(13, 1fr); gap: 2px; width: 100%; max-width: 400px; aspect-ratio: 1; }
-        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted); font-weight: 600; }
+        /* MATRIZ 50% MÁS GRANDE */
+        .gto-grid { display: grid; grid-template-columns: 20px repeat(13, 1fr); grid-template-rows: 20px repeat(13, 1fr); gap: 3px; width: 100%; max-width: 550px; aspect-ratio: 1; }
+        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted); font-weight: 600; }
         .gto-cell {
             display: flex; align-items: center; justify-content: center;
-            font-size: 8px; font-weight: 600; border-radius: 3px;
+            font-size: 10px; font-weight: 600; border-radius: 3px;
             color: var(--text-primary); cursor: help; transition: transform 0.1s;
             border: 1px solid transparent;
         }
@@ -3820,14 +3825,20 @@
                     </div>
                     <div class="slot-panels">
                         <div class="range-panel">
-                            <div class="rp-title">Hero Range</div>
-                            <textarea class="rp-gto-input" placeholder="Pega aquí el texto de GTO+ (ej: AA:{r:31.1,c:68.8,f:0})" oninput="updateSlotGto('${slot.id}', 'hero', this.value)">${slot.hero?.gto || ''}</textarea>
+                            <div class="rp-header">
+                                <div class="rp-title">Hero Range</div>
+                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'hero')">Borrar texto</button>
+                            </div>
+                            <textarea class="rp-gto-input" placeholder="Pega aquí la tabla de GTO+ (incluye los encabezados)" oninput="updateSlotGto('${slot.id}', 'hero', this.value)">${slot.hero?.gto || ''}</textarea>
                             <div class="rp-gto-matrix" id="mat-${slot.id}-hero"></div>
                             <textarea class="rp-text" placeholder="Notas del Hero..." oninput="updateSlotText('${slot.id}', 'hero', this.value)">${slot.hero?.text || ''}</textarea>
                         </div>
                         <div class="range-panel">
-                            <div class="rp-title">Villain Range</div>
-                            <textarea class="rp-gto-input" placeholder="Pega aquí el texto de GTO+..." oninput="updateSlotGto('${slot.id}', 'villain', this.value)">${slot.villain?.gto || ''}</textarea>
+                            <div class="rp-header">
+                                <div class="rp-title">Villain Range</div>
+                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'villain')">Borrar texto</button>
+                            </div>
+                            <textarea class="rp-gto-input" placeholder="Pega aquí la tabla de GTO+ (incluye los encabezados)" oninput="updateSlotGto('${slot.id}', 'villain', this.value)">${slot.villain?.gto || ''}</textarea>
                             <div class="rp-gto-matrix" id="mat-${slot.id}-villain"></div>
                             <textarea class="rp-text" placeholder="Notas del Villain..." oninput="updateSlotText('${slot.id}', 'villain', this.value)">${slot.villain?.text || ''}</textarea>
                         </div>
@@ -3835,28 +3846,110 @@
                 </div>`;
             }).join('');
 
-            // Dibujar matrices existentes
             node.imageSlots.forEach(slot => {
                 drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto));
                 drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto));
             });
         }
 
+        function clearSlotGto(id, who) {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === id);
+            if (slot) {
+                if(!slot[who]) slot[who] = {};
+                slot[who].gto = '';
+                renderImgSlots();
+                updateMicroButtons(currentEditType, node);
+                commit();
+            }
+        }
+
+        function normalizeHand(h) {
+            if (!h) return null;
+            h = h.toUpperCase();
+            // Si ya es formato AKs, AKo, AA
+            if (h.length === 3 && ['S','O'].includes(h[2]) && h[0] !== h[1]) return h;
+            if (h.length === 2 && h[0] === h[1]) return h;
+            // Si es formato AhKd, AsKh
+            if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
+                const r1 = h[0], r2 = h[2];
+                const s1 = h[1], s2 = h[3];
+                if (r1 === r2) return r1 + r2;
+                return r1 + r2 + (s1 === s2 ? 's' : 'o');
+            }
+            return null;
+        }
+
+        function getColorForAction(act) {
+            act = act.toLowerCase();
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca'; // Rojo pastel
+            if (act.includes('call')) return '#bfdbfe'; // Azul pastel
+            if (act.includes('check')) return '#bbf7d0'; // Verde pastel
+            if (act.includes('fold')) return '#e7e5e4'; // Gris claro
+            return '#d6d3d1';
+        }
+
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
-            
-            // Regex súper flexible: Encuentra la mano y luego 3 números (separados por cualquier cosa que no sea número)
-            const regex = /([AKQJT2-9]{2}[so]?)\D*?([\d.]+)\D+([\d.]+)\D+([\d.]+)/gi;
-            let match;
-            while ((match = regex.exec(text)) !== null) {
-                const hand = match[1];
-                const r = parseFloat(match[2]);
-                const c = parseFloat(match[3]);
-                const f = parseFloat(match[4]);
-                // Validar que sean porcentajes lógicos
-                if (r + c + f <= 100.1) { 
-                    data[hand] = { r, c, f };
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            if (lines.length === 0) return data;
+
+            let actions = []; // Array de {name, index}
+
+            // 1. Buscar encabezados
+            for (let i = 0; i < Math.min(5, lines.length); i++) {
+                const lowerLine = lines[i].toLowerCase();
+                if (lowerLine.includes('hand') && (lowerLine.includes('call') || lowerLine.includes('raise') || lowerLine.includes('fold'))) {
+                    const tokens = lowerLine.split(/\s+/);
+                    tokens.forEach((t, idx) => {
+                        if (t.match(/(raise|bet|call|check|fold|donk)/)) {
+                            actions.push({ name: t, index: idx });
+                        }
+                    });
+                    break; // Encabezado encontrado
+                }
+            }
+
+            // 2. Procesar líneas de datos
+            for (let line of lines) {
+                const tokens = line.split(/\s+/);
+                const hand = normalizeHand(tokens[0]);
+                if (!hand) continue; // Si no es una mano válida, saltamos
+
+                if (actions.length > 0) {
+                    // Modo con encabezados detectados
+                    let handData = {};
+                    let isValid = true;
+                    actions.forEach(act => {
+                        let val = parseFloat(tokens[act.index]);
+                        if (isNaN(val)) isValid = false;
+                        else handData[act.name] = val;
+                    });
+                    if (isValid) data[hand] = handData;
+                } else {
+                    // Fallback: Buscar 3 o 4 números seguidos que sumen ~100
+                    let nums = [];
+                    for(let i=1; i<tokens.length; i++) {
+                        let n = parseFloat(tokens[i].replace('%', ''));
+                        if (!isNaN(n)) nums.push(n);
+                    }
+                    for(let i=0; i<nums.length; i++) {
+                        if (nums[i] <= 100) {
+                            let seq = [nums[i]];
+                            for(let j=i+1; j<nums.length; j++) {
+                                let sum = seq.reduce((a,b)=>a+b,0);
+                                if (Math.abs(sum - 100) < 0.1) {
+                                    let genActions = {};
+                                    const keys = ['raise', 'call', 'fold'];
+                                    seq.forEach((v, k) => genActions[keys[k] || `act${k}`] = v);
+                                    data[hand] = genActions;
+                                    break;
+                                }
+                                seq.push(nums[j]);
+                            }
+                        }
+                    }
                 }
             }
             return data;
@@ -3870,11 +3963,6 @@
             const ranks = ['A','K','Q','J','T','9','8','7','6','5','4','3','2'];
             const grid = document.createElement('div');
             grid.className = 'gto-grid';
-            
-            // Colores Pasteel
-            const RAISE = '#fecaca'; // Rojo pastel
-            const CALL = '#bfdbfe';  // Azul pastel
-            const FOLD = '#e7e5e4';  // Gris piedra claro
             
             grid.appendChild(document.createElement('div'));
             ranks.forEach(r => {
@@ -3903,11 +3991,21 @@
                     const d = data[hand];
                     if (d) {
                         let stops = [], pos = 0;
-                        if (d.r > 0) { stops.push(`${RAISE} ${pos}%`); pos += d.r; stops.push(`${RAISE} ${pos}%`); }
-                        if (d.c > 0) { stops.push(`${CALL} ${pos}%`); pos += d.c; stops.push(`${CALL} ${pos}%`); }
-                        if (d.f > 0) { stops.push(`${FOLD} ${pos}%`); pos += d.f; stops.push(`${FOLD} ${pos}%`); }
+                        let tooltip = `<b>${hand}</b>`;
+                        
+                        Object.keys(d).forEach(act => {
+                            const val = d[act];
+                            if (val > 0) {
+                                const color = getColorForAction(act);
+                                stops.push(`${color} ${pos}%`);
+                                pos += val;
+                                stops.push(`${color} ${pos}%`);
+                                tooltip += `<br>${act}: ${val.toFixed(1)}%`;
+                            }
+                        });
+                        
                         cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
-                        cell.title = `${hand}\nRaise: ${d.r.toFixed(1)}%\nCall: ${d.c.toFixed(1)}%\nFold: ${d.f.toFixed(1)}%`;
+                        cell.title = tooltip;
                     } else {
                         cell.style.background = '#f5f5f4';
                         cell.style.color = '#d6d3d1';
