@@ -1559,9 +1559,11 @@
                 const sortedWeights = Array.from(activeWeights).sort((a, b) => b - a);
                 sortedWeights.forEach(w => {
                     const bg = getColorForWeight(w);
+                    // AQUÍ USAMOS Math.floor(w) PARA REDONDEAR VISUALMENTE (66.6667 -> 66)
+                    const displayW = Math.floor(w);
                     legendHtml += `<div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border); padding:4px 8px; border-radius:4px; box-shadow: var(--shadow-xs);">
                                 <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
-                                <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${w}%</span>
+                                <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${displayW}%</span>
                             </div>`;
                 });
             }
