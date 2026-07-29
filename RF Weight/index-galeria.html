@@ -3860,45 +3860,14 @@
 
         function normalizeHand(h) {
             if (!h) return null;
-            h = h.toUpperCase();
-            // Si ya es formato AKs, AKo, AA
-            if (h.length === 3 && ['S','O'].includes(h[2]) && h[0] !== h[1]) return h;
-            if (h.length === 2 && h[0] === h[1]) return h;
-            // Si es formato AhKd, AsKh
-            if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
-                const r1 = h[0], r2 = h[2];
-                const s1 = h[1], s2 = h[3];
-                if (r1 === r2) return r1 + r2;
-                return r1 + r2 + (s1 === s2 ? 's' : 'o');
-            }
-            return null;
-        }
-
-        function getColorForAction(act) {
-            act = act.toLowerCase();
-            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca'; // Rojo pastel
-            if (act.includes('call')) return '#bfdbfe'; // Azul pastel
-            if (act.includes('check')) return '#bbf7d0'; // Verde pastel
-            if (act.includes('fold')) return '#e7e5e4'; // Gris claro
-            return '#d6d3d1';
-        }
-
-        function normalizeHand(h) {
-            if (!h) return null;
-            h = h.toUpperCase();
-            h = h.replace(/[^AKQJT2-9HDCS]/g, ''); // Limpia cualquier caracter raro
-            
-            // Formato AKs, AKo, AA
-            if (h.length === 3 && ['S','O'].includes(h[2]) && h[0] !== h[1]) return h;
+            h = h.toUpperCase().replace(/[^AKQJT2-9HDCS]/g, ''); 
+            if (h.length === 3 && ['S','O'].includes(h[2]) && h[0] !== h[1] && 'AKQJT2-9'.includes(h[0])) return h;
             if (h.length === 2 && h[0] === h[1] && 'AKQJT2-9'.includes(h[0])) return h;
-            
-            // Formato AhKd, AsKh
             if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
                 const r1 = h[0], r2 = h[2];
-                const s1 = h[1], s2 = h[3];
                 if ('AKQJT2-9'.includes(r1) && 'AKQJT2-9'.includes(r2)) {
                     if (r1 === r2) return r1 + r2;
-                    return r1 + r2 + (s1 === s2 ? 's' : 'o');
+                    return r1 + r2 + (h[1] === h[3] ? 's' : 'o');
                 }
             }
             return null;
@@ -3907,63 +3876,74 @@
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
-            const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            if (lines.length === 0) return data;
 
-            let actions = [];
+            let actionCols = {};
+            let dataStartLine = 0;
+            let headerFound = false;
 
-            // 1. Buscar la fila de encabezados para saber qué acciones existen
-            for (let i = 0; i < Math.min(5, lines.length); i++) {
-                const lowerLine = lines[i].toLowerCase();
-                if (lowerLine.includes('hand') || lowerLine.includes('combo')) {
-                    const tokens = lowerLine.split(/\s+/);
-                    tokens.forEach(t => {
-                        const cleanT = t.replace(/[^a-z0-9]/g, '');
-                        if (cleanT.match(/(raise|bet|call|check|fold|donk)/)) {
-                            actions.push(cleanT);
-                        }
+            // 1. Buscar la fila de encabezados
+            for (let i = 0; i < Math.min(10, lines.length); i++) {
+                let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
+                cols = cols.map(c => c.trim().toLowerCase());
+                
+                if (cols.some(c => c.includes('hand') || c.includes('combo'))) {
+                    cols.forEach((c, idx) => {
+                        if (c.includes('raise') || c.includes('bet') || c.includes('donk') || c.includes('3b') || c.includes('4b')) actionCols['raise'] = idx;
+                        else if (c.includes('call')) actionCols['call'] = idx;
+                        else if (c.includes('check')) actionCols['check'] = idx;
+                        else if (c.includes('fold')) actionCols['fold'] = idx;
                     });
-                    if (actions.length > 0) break;
+                    if (Object.keys(actionCols).length > 0) {
+                        headerFound = true;
+                        dataStartLine = i + 1;
+                        break;
+                    }
                 }
             }
 
-            // 2. Procesar líneas de datos buscando los números que suman 100
-            for (let line of lines) {
-                const tokens = line.split(/\s+/);
-                const hand = normalizeHand(tokens[0]);
+            if (!headerFound) {
+                actionCols = { 'raise': 1, 'call': 2, 'fold': 3 }; 
+                dataStartLine = 0;
+            }
+
+            // 2. Leer las filas de datos
+            for (let i = dataStartLine; i < lines.length; i++) {
+                let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
+                cols = cols.map(c => c.trim());
+                
+                const hand = normalizeHand(cols[0]);
                 if (!hand) continue;
 
-                // Extrae TODOS los números de la línea
-                const nums = (line.match(/\d+(\.\d+)?/g) || []).map(Number);
-                
-                let bestSeq = [];
-                
-                // Busca una secuencia de números que sume exactamente 100 (con 0.5 de margen)
-                for (let i = 0; i < nums.length; i++) {
-                    let sum = 0;
-                    for (let j = i; j < nums.length; j++) {
-                        sum += nums[j];
-                        if (sum > 100.5) break; // Si se pasa, cancela
-                        if (Math.abs(sum - 100) <= 0.5) {
-                            const seq = nums.slice(i, j + 1);
-                            // Prefiere secuencias más largas (ej: 33.3, 33.3, 33.4 en vez de un solo 100)
-                            if (seq.length > bestSeq.length) {
-                                bestSeq = seq;
-                            }
+                let handData = {};
+                for (const act in actionCols) {
+                    const colIdx = actionCols[act];
+                    if (colIdx < cols.length) {
+                        let val = parseFloat(cols[colIdx].replace('%', '').replace(',', '.'));
+                        if (!isNaN(val)) {
+                            handData[act] = val;
+                        } else {
+                            handData[act] = 0;
                         }
                     }
                 }
-
-                // Si encontró frecuencias válidas
-                if (bestSeq.length > 0) {
-                    let handData = {};
-                    bestSeq.forEach((val, idx) => {
-                        const actName = actions[idx] || (idx === 0 ? 'raise' : (idx === 1 ? 'call' : 'fold'));
-                        handData[actName] = val;
-                    });
+                
+                if (Object.keys(handData).length > 0) {
                     data[hand] = handData;
                 }
             }
             return data;
+        }
+
+        function getColorForAction(act) {
+            act = act.toLowerCase();
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca';
+            if (act.includes('call')) return '#bfdbfe';
+            if (act.includes('check')) return '#bbf7d0';
+            if (act.includes('fold')) return '#e7e5e4';
+            return '#d6d3d1';
         }
 
         function drawGtoMatrix(containerId, data) {
