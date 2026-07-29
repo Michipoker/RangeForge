@@ -3859,83 +3859,86 @@
         }
 
         function normalizeHand(h) {
-            if (!h) return null;
-            h = h.toUpperCase().replace(/[^AKQJT2-9HDCS]/g, ''); 
-            if (h.length === 3 && ['S','O'].includes(h[2]) && h[0] !== h[1] && 'AKQJT2-9'.includes(h[0])) return h;
-            if (h.length === 2 && h[0] === h[1] && 'AKQJT2-9'.includes(h[0])) return h;
-            if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
-                const r1 = h[0], r2 = h[2];
-                if ('AKQJT2-9'.includes(r1) && 'AKQJT2-9'.includes(r2)) {
-                    if (r1 === r2) return r1 + r2;
-                    return r1 + r2 + (h[1] === h[3] ? 's' : 'o');
-                }
-            }
-            return null;
+    if (!h) return null;
+    h = h.toUpperCase().replace(/[^AKQJT2-9HDCSO]/g, '');
+    if (h.length === 3 && (h[2] === 'S' || h[2] === 'O') && h[0] !== h[1] && RANKS.includes(h[0]) && RANKS.includes(h[1])) {
+        return h[0] + h[1] + h[2].toLowerCase();
+    }
+    if (h.length === 2 && h[0] === h[1] && RANKS.includes(h[0])) {
+        return h;
+    }
+    if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
+        const r1 = h[0], r2 = h[2];
+        if (RANKS.includes(r1) && RANKS.includes(r2)) {
+            if (r1 === r2) return r1 + r2;
+            return r1 + r2 + (h[1] === h[3] ? 's' : 'o');
+        }
+    }
+    return null;
+}
+
+function parseGtoData(text) {
+    const data = {};
+    if (!text) return data;
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+    if (lines.length === 0) return data;
+
+    let actionCols = {};
+    let totalCol = -1;
+    let usingCombos = false;
+    let dataStartLine = 0;
+    let headerFound = false;
+
+    for (let i = 0; i < Math.min(10, lines.length); i++) {
+        let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
+        cols = cols.map(c => c.trim().toLowerCase());
+
+        if (cols.some(c => c.includes('hand') || c.includes('combo'))) {
+            // Preferimos la sección "Combos": es la única que queda perfectamente
+            // alineada con las filas de datos. Si no existe, caemos a "Percentage".
+            let comboMarker = cols.findIndex(c => c.includes('combo'));
+            let pctMarker = cols.findIndex(c => c.includes('percentage') || c === '%' || c.includes('porcentaje'));
+            let startAfter = comboMarker !== -1 ? comboMarker : pctMarker;
+            if (comboMarker !== -1) { usingCombos = true; totalCol = comboMarker; }
+
+            cols.forEach((c, idx) => {
+                if (startAfter !== -1 && idx <= startAfter) return;
+                if (actionCols['raise'] === undefined && (c.includes('raise') || c.includes('bet') || c.includes('donk') || c.includes('3b') || c.includes('4b'))) actionCols['raise'] = idx;
+                else if (actionCols['call'] === undefined && c.includes('call')) actionCols['call'] = idx;
+                else if (actionCols['check'] === undefined && c.includes('check')) actionCols['check'] = idx;
+                else if (actionCols['fold'] === undefined && c.includes('fold')) actionCols['fold'] = idx;
+            });
+            if (Object.keys(actionCols).length > 0) { headerFound = true; dataStartLine = i + 1; break; }
+        }
+    }
+    if (!headerFound) { actionCols = { 'raise': 1, 'call': 2, 'fold': 3 }; dataStartLine = 0; }
+
+    for (let i = dataStartLine; i < lines.length; i++) {
+        let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
+        cols = cols.map(c => c.trim());
+        const hand = normalizeHand(cols[0]);
+        if (!hand) continue;
+
+        let raw = {};
+        for (const act in actionCols) {
+            const colIdx = actionCols[act];
+            const val = colIdx < cols.length ? parseFloat(String(cols[colIdx]).replace('%','').replace(',','.')) : NaN;
+            raw[act] = isNaN(val) ? 0 : val;
         }
 
-        function parseGtoData(text) {
-            const data = {};
-            if (!text) return data;
-            
-            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-            if (lines.length === 0) return data;
+        let handData;
+        if (usingCombos && totalCol !== -1 && totalCol < cols.length) {
+            const total = parseFloat(String(cols[totalCol]).replace(',', '.'));
+            if (total > 0) {
+                handData = {};
+                for (const act in raw) handData[act] = Math.round(raw[act] / total * 1000) / 10;
+            } else { handData = raw; }
+        } else { handData = raw; }
 
-            let actionCols = {};
-            let dataStartLine = 0;
-            let headerFound = false;
-
-            // 1. Buscar la fila de encabezados
-            for (let i = 0; i < Math.min(10, lines.length); i++) {
-                let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
-                cols = cols.map(c => c.trim().toLowerCase());
-                
-                if (cols.some(c => c.includes('hand') || c.includes('combo'))) {
-                    cols.forEach((c, idx) => {
-                        if (c.includes('raise') || c.includes('bet') || c.includes('donk') || c.includes('3b') || c.includes('4b')) actionCols['raise'] = idx;
-                        else if (c.includes('call')) actionCols['call'] = idx;
-                        else if (c.includes('check')) actionCols['check'] = idx;
-                        else if (c.includes('fold')) actionCols['fold'] = idx;
-                    });
-                    if (Object.keys(actionCols).length > 0) {
-                        headerFound = true;
-                        dataStartLine = i + 1;
-                        break;
-                    }
-                }
-            }
-
-            if (!headerFound) {
-                actionCols = { 'raise': 1, 'call': 2, 'fold': 3 }; 
-                dataStartLine = 0;
-            }
-
-            // 2. Leer las filas de datos
-            for (let i = dataStartLine; i < lines.length; i++) {
-                let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
-                cols = cols.map(c => c.trim());
-                
-                const hand = normalizeHand(cols[0]);
-                if (!hand) continue;
-
-                let handData = {};
-                for (const act in actionCols) {
-                    const colIdx = actionCols[act];
-                    if (colIdx < cols.length) {
-                        let val = parseFloat(cols[colIdx].replace('%', '').replace(',', '.'));
-                        if (!isNaN(val)) {
-                            handData[act] = val;
-                        } else {
-                            handData[act] = 0;
-                        }
-                    }
-                }
-                
-                if (Object.keys(handData).length > 0) {
-                    data[hand] = handData;
-                }
-            }
-            return data;
-        }
+        if (Object.keys(handData).length > 0) data[hand] = handData;
+    }
+    return data;
+}
 
         function getColorForAction(act) {
             act = act.toLowerCase();
