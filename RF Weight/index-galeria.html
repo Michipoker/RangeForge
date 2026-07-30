@@ -4096,7 +4096,7 @@ function parseGtoData(text) {
 }
 
 
-        function getColorForAction(act) {
+function getColorForAction(act) {
             act = act.toLowerCase();
             if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca';
             if (act.includes('call')) return '#bfdbfe';
@@ -4105,16 +4105,16 @@ function parseGtoData(text) {
             return '#d6d3d1';
         }
 
-        console.table(
+        function drawGtoMatrix(containerId, data) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+                    console.table(
     ['AA', 'AKs', 'AKo', 'QQ', '72o'].map(hand => ({
         hand,
         ...data[hand]
     }))
 );
 
-        function drawGtoMatrix(containerId, data) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
             container.innerHTML = '';
             
             const ranks = ['A','K','Q','J','T','9','8','7','6','5','4','3','2'];
