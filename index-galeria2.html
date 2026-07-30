@@ -554,6 +554,20 @@
         .img-panel-interactions { flex: 1; display: flex; flex-direction: column; gap: 8px; font-size: 11px; color: var(--text-secondary); }
         .img-empty-interaction { color: var(--text-faint); font-style: italic; text-align: center; margin-top: 20px; font-size: 11px; }
         
+        .interactions-group { margin-bottom: 16px; }
+        .interactions-group-title { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .act-btns-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+        .act-btn { font-size: 10px; padding: 5px 8px; border: 1px solid var(--border); background: var(--bg-surface); border-radius: 4px; cursor: pointer; transition: all 0.15s; color: var(--text-secondary); font-weight: 600; text-transform: capitalize; }
+        .act-btn:hover { border-color: var(--text-muted); background: var(--bg-hover); }
+        .act-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .act-btn.active:hover { background: #4338ca; }
+        
+        /* Estilos para el resaltado en la matriz */
+        .gto-cell.dim { opacity: 0.15; filter: grayscale(1); }
+        .gto-cell.highlight { box-shadow: 0 0 0 2px var(--text-primary); z-index: 3; transform: scale(1.05); }
+        .clear-highlight-btn { width: 100%; font-size: 10px; padding: 6px; border: 1px solid #fca5a5; color: var(--bluff); background: var(--bluff-bg); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.15s; margin-top: 10px; }
+        .clear-highlight-btn:hover { background: #fee2e2; }
+
         .img-slots-area { flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; }
         .slots-container { display: flex; flex-direction: column; gap: 12px; flex: 1; } 
         
@@ -3842,6 +3856,8 @@
         }
 
         let activeSlotId = null;
+        let activeHeroAction = null;
+        let activeVillainAction = null;
 
         function renderImgSlots() {
             const node = getImgNode();
@@ -3886,9 +3902,11 @@
                 </div>`;
             }).join('');
 
+            // AQUÍ ESTÁ LA MAGIA DEL PASO 4
             node.imageSlots.forEach(slot => {
-                drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto));
-                drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto));
+                const isAct = slot.id === activeSlotId;
+                drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto), isAct ? activeHeroAction : null);
+                drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto), isAct ? activeVillainAction : null);
             });
             
             updateInteractionPanel();
@@ -3896,7 +3914,36 @@
 
         function setActiveSlot(id) {
             activeSlotId = id;
+            activeHeroAction = null; // Limpiar resaltado al cambiar de slot
+            activeVillainAction = null;
             renderImgSlots();
+        }
+
+                function setHeroAction(act) {
+            activeHeroAction = activeHeroAction === act ? null : act;
+            renderActiveMatrices();
+            updateInteractionPanel();
+        }
+
+        function setVillainAction(act) {
+            activeVillainAction = activeVillainAction === act ? null : act;
+            renderActiveMatrices();
+            updateInteractionPanel();
+        }
+
+        function clearHighlights() {
+            activeHeroAction = null;
+            activeVillainAction = null;
+            renderImgSlots();
+        }
+
+        function renderActiveMatrices() {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === activeSlotId);
+            if (slot) {
+                drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto), activeHeroAction);
+                drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto), activeVillainAction);
+            }
         }
 
         function updateInteractionPanel() {
@@ -3913,10 +3960,54 @@
                 return;
             }
             document.getElementById('activeSlotNum').textContent = idx + 1;
-            // Aquí puedes agregar los botones de interacción en el futuro
-            document.getElementById('interactionsContent').innerHTML = `
-                <div style="color: var(--text-muted);">Interacciones para el Slot ${idx + 1} se construirán aquí.</div>
-            `;
+            
+            const slot = node.imageSlots[idx];
+            const heroData = parseGtoData(slot.hero?.gto);
+            const villainData = parseGtoData(slot.villain?.gto);
+            
+            // Extraer acciones únicas de Hero
+            const heroActs = new Set();
+            Object.values(heroData).forEach(d => Object.keys(d).forEach(k => heroActs.add(k)));
+            
+            // Extraer acciones únicas de Villain
+            const villainActs = new Set();
+            Object.values(villainData).forEach(d => Object.keys(d).forEach(k => villainActs.add(k)));
+            
+            let html = '';
+            
+            // Sección Hero
+            html += '<div class="interactions-group">';
+            html += '<div class="interactions-group-title">Resaltar Hero</div>';
+            if (heroActs.size > 0) {
+                html += '<div class="act-btns-wrap">';
+                Array.from(heroActs).forEach(act => {
+                    html += `<button class="act-btn ${activeHeroAction === act ? 'active' : ''}" onclick="setHeroAction('${act}')">${act}</button>`;
+                });
+                html += '</div>';
+            } else {
+                html += '<div style="color:var(--text-faint); font-size:11px; font-style:italic;">Pega el rango de Hero.</div>';
+            }
+            html += '</div>';
+            
+            // Sección Villain
+            html += '<div class="interactions-group">';
+            html += '<div class="interactions-group-title">Resaltar Villain</div>';
+            if (villainActs.size > 0) {
+                html += '<div class="act-btns-wrap">';
+                Array.from(villainActs).forEach(act => {
+                    html += `<button class="act-btn ${activeVillainAction === act ? 'active' : ''}" onclick="setVillainAction('${act}')">${act}</button>`;
+                });
+                html += '</div>';
+            } else {
+                html += '<div style="color:var(--text-faint); font-size:11px; font-style:italic;">Pega el rango de Villain.</div>';
+            }
+            html += '</div>';
+            
+            if (activeHeroAction || activeVillainAction) {
+                html += `<button class="clear-highlight-btn" onclick="clearHighlights()">Limpiar resaltado</button>`;
+            }
+            
+            document.getElementById('interactionsContent').innerHTML = html;
         }
 
         function clearSlotGto(id, who) {
@@ -4149,16 +4240,9 @@ function parseGtoData(text) {
             return '#d6d3d1';
         }
 
-        function drawGtoMatrix(containerId, data) {
+        function drawGtoMatrix(containerId, data, highlightAction = null) {
             const container = document.getElementById(containerId);
             if (!container) return;
-                    console.table(
-    ['AA', 'AKs', 'AKo', 'QQ', '72o'].map(hand => ({
-        hand,
-        ...data[hand]
-    }))
-);
-
             container.innerHTML = '';
             
             const ranks = ['A','K','Q','J','T','9','8','7','6','5','4','3','2'];
@@ -4207,10 +4291,20 @@ function parseGtoData(text) {
                         
                         cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
                         cell.title = tooltip;
+                        
+                        // LÓGICA DE RESALTADO
+                        if (highlightAction) {
+                            if (d[highlightAction] > 0) {
+                                cell.classList.add('highlight');
+                            } else {
+                                cell.classList.add('dim');
+                            }
+                        }
                     } else {
                         cell.style.background = '#f5f5f4';
                         cell.style.color = '#d6d3d1';
                         cell.title = `${hand}\nFuera de rango`;
+                        if (highlightAction) cell.classList.add('dim');
                     }
                     grid.appendChild(cell);
                 });
@@ -4253,7 +4347,11 @@ function parseGtoData(text) {
             if (slot) {
                 if(!slot[who]) slot[who] = { gto: '', text: '' };
                 slot[who].gto = val;
-                drawGtoMatrix(`mat-${id}-${who}`, parseGtoData(val));
+                drawGtoMatrix(`mat-${id}-${who}`, parseGtoData(val), who === 'hero' ? activeHeroAction : activeVillainAction);
+                
+                // AQUÍ ESTÁ LA MAGIA DEL PASO 5
+                if (id === activeSlotId) updateInteractionPanel(); 
+                
                 updateMicroButtons(currentEditType, node);
                 commit();
             }
