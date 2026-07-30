@@ -4240,6 +4240,15 @@ function parseGtoData(text) {
             return '#d6d3d1';
         }
 
+        function getIntenseColor(act) {
+            act = act.toLowerCase();
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#ef4444'; // Rojo intenso
+            if (act.includes('call')) return '#3b82f6'; // Azul intenso
+            if (act.includes('check')) return '#10b981'; // Verde intenso
+            if (act.includes('fold')) return '#8b5cf6'; // Morado intenso
+            return '#6b7280'; // Gris oscuro
+        }
+
         function drawGtoMatrix(containerId, data, highlightAction = null) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -4278,10 +4287,25 @@ function parseGtoData(text) {
                         let stops = [], pos = 0;
                         let tooltip = hand;
                         
+                        const hasHighlightAction = highlightAction && d[highlightAction] > 0;
+                        
                         Object.keys(d).forEach(act => {
                             const val = d[act];
                             if (val > 0) {
-                                const color = getColorForAction(act);
+                                let color;
+                                // Si estamos resaltando y esta NO es la acción objetivo, la pintamos de gris claro
+                                if (highlightAction && act !== highlightAction) {
+                                    color = '#e5e7eb'; // Gris claro
+                                } 
+                                // Si es la acción objetivo, usamos el color intenso
+                                else if (highlightAction && act === highlightAction) {
+                                    color = getIntenseColor(act);
+                                } 
+                                // Si no hay resaltado, usamos el color pastel normal
+                                else {
+                                    color = getColorForAction(act);
+                                }
+                                
                                 stops.push(`${color} ${pos}%`);
                                 pos += val;
                                 stops.push(`${color} ${pos}%`);
@@ -4292,11 +4316,14 @@ function parseGtoData(text) {
                         cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
                         cell.title = tooltip;
                         
-                        // LÓGICA DE RESALTADO
+                        // LÓGICA DE OPACIDAD
                         if (highlightAction) {
-                            if (d[highlightAction] > 0) {
-                                cell.classList.add('highlight');
+                            if (hasHighlightAction) {
+                                // Si la celda tiene la acción, la dejamos nítida y con letra blanca
+                                cell.style.color = '#ffffff';
+                                cell.style.fontWeight = '700';
                             } else {
+                                // Si la celda NO tiene la acción, la atenuamos fuertemente
                                 cell.classList.add('dim');
                             }
                         }
