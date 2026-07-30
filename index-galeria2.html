@@ -504,8 +504,8 @@
         }
         .combo-note:focus { background: var(--bg-surface); border-color: var(--border); }
         .combo-note:empty:before { content: attr(data-placeholder); color: var(--text-faint); }
-	
-	.orphan-warning { display: inline-flex; align-items: center; gap: 2px; color: #92400e; background: var(--warn-bg); border: 1px solid #fcd34d; padding: 1px 4px; border-radius: var(--radius-sm); font-size: 9px; font-weight: 700; cursor: help; margin-left: 4px; transition: all var(--transition); }
+        
+        .orphan-warning { display: inline-flex; align-items: center; gap: 2px; color: #92400e; background: var(--warn-bg); border: 1px solid #fcd34d; padding: 1px 4px; border-radius: var(--radius-sm); font-size: 9px; font-weight: 700; cursor: help; margin-left: 4px; transition: all var(--transition); }
         .orphan-warning:hover { background: #fef3c7; border-color: var(--warn); }
         .combo-auto-single {
             font-size: 10px;
@@ -1136,7 +1136,7 @@
         .cm-mcell.na:hover { border-color: var(--border); transform: none; box-shadow: none; }
         .cm-mcell.na.sel { opacity: 0.35; }
 
-	.cm-grid-sm { display: inline-grid; gap: 2px; grid-template-columns: repeat(13, 28px); }
+        .cm-grid-sm { display: inline-grid; gap: 2px; grid-template-columns: repeat(13, 28px); }
         .cm-grid-sm.cm-gs { grid-template-columns: repeat(13, 24px); }
         .cm-grid-sm.cm-go { grid-template-columns: repeat(13, 24px); }
         .cm-grid-sm.cm-gp { grid-template-columns: repeat(13, 24px); }
@@ -1197,7 +1197,7 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
-</style>
+    </style>
 </head>
 <body>
     <div id="sidebar">
@@ -1469,6 +1469,7 @@
             }
             return out;
         }
+        
         function getDeadCards() {
             const dead = new Set();
             const addFromText = (txt) => {
@@ -1494,17 +1495,21 @@
             }
             return dead;
         }
+        
         function getHands(c) { if (!c.hands) c.hands = []; return c.hands; }
+        
         function findOrCreateHand(c, hand) {
             let h = getHands(c).find(x => x.hand === hand);
             if (!h) { h = { hand, selected: [] }; c.hands.push(h); }
             return h;
         }
+        
         function getAllSelected(c) {
             const all = [];
             getHands(c).forEach(h => (h.selected||[]).forEach(sid => all.push(sid)));
             return all;
         }
+        
         function getAllSelectedFromNode(node) {
             const all = [];
             if (!node || !node.combos) return all;
@@ -1515,6 +1520,7 @@
             });
             return all;
         }
+        
         function removeCombo(c, sid) {
             getHands(c).forEach(h => {
                 const i = h.selected.indexOf(sid);
@@ -1522,6 +1528,7 @@
             });
             c.hands = c.hands.filter(h => h.selected && h.selected.length > 0);
         }
+        
         function checkMigration() {
             const v3raw = localStorage.getItem(DB_V3);
             const v4raw = localStorage.getItem(DB_KEY);
@@ -1534,6 +1541,7 @@
                 area.innerHTML = ''; 
             }
         }
+        
         function migrateFromV3() {
             const v3raw = localStorage.getItem(DB_V3); if (!v3raw) return;
             if (!confirm('¿Migrar data de V3.0.2 a V4.0.0?\n\nTu data V3 no se borra.')) return;
@@ -1582,7 +1590,13 @@
 
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
         
-        function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
+        function exportData() { 
+            let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); 
+            let a = document.createElement("a"); 
+            a.href = URL.createObjectURL(blob); 
+            a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; 
+            a.click(); 
+        }
         
         function importData(event) { 
             let file = event.target.files[0]; 
@@ -1610,25 +1624,38 @@
             reader.readAsText(file); 
             event.target.value = ''; 
         }
+        
         function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
+        
         function addSpot() { 
             const n=document.getElementById('spot-input').value.trim(); 
             if(!n) return; 
-            data.spots.push({name:n, textures:[], preflopRange: {}}); // Aquí está el fix: {} en lugar de []
+            data.spots.push({name:n, textures:[], preflopRange: {}}); 
             document.getElementById('spot-input').value=''; 
             commit(); 
         }
+        
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
+        
         function delTexture(i) { if(confirm('¿Borrar textura?')){ data.spots[aS].textures.splice(i,1); if(aT===i){aT=-1; clearAll();} else if(aT>i){aT--;} commit(); } }
+        
         function addTexture() { const n=prompt("Nombre de la textura:"); if(!n) return; data.spots[aS].textures.push({name:n, board:'', flopNodes:[]}); commit(); loadTexture(data.spots[aS].textures.length-1); }
-        function loadTexture(i) { aS = aS===-1?0:aS; aT=i; aF=-1; let t=data.spots[aS].textures[i]; document.getElementById('empty-state').style.display='none'; document.getElementById('editor').style.display='flex'; document.getElementById('header-breadcrumb').style.display='flex'; document.getElementById('spotHeader').innerText=data.spots[aS].name; document.getElementById('textureHeader').value=t.name; renderBoard(); renderFlopTabs(); if(t.flopNodes.length>0) selectFlop(0); else clearWorkspace(); }
+        
+        function loadTexture(i) { 
+            aS = aS===-1?0:aS; aT=i; aF=-1; let t=data.spots[aS].textures[i]; 
+            document.getElementById('empty-state').style.display='none'; 
+            document.getElementById('editor').style.display='flex'; 
+            document.getElementById('header-breadcrumb').style.display='flex'; 
+            document.getElementById('spotHeader').innerText=data.spots[aS].name; 
+            document.getElementById('textureHeader').value=t.name; 
+            renderBoard(); renderFlopTabs(); if(t.flopNodes.length>0) selectFlop(0); else clearWorkspace(); 
+        }
         
         function renderSidebar() { 
             const l = document.getElementById('spotsList'); 
             let html = ''; 
             if(!data.spots) data.spots = [];
             data.spots.forEach((s, i) => { 
-                // Aquí validamos si el objeto tiene datos
                 const hasRange = s.preflopRange && Object.keys(s.preflopRange).length > 0;
                 html += `<div class="spot-item"><div class="spot-name"><span>${s.name}</span><div class="spot-actions"><div class="micro-btn ${hasRange?'has-data':''}" onclick="event.stopPropagation(); openRangeModal(${i})" title="Rango preflop">R</div><span class="del-btn" onclick="event.stopPropagation(); delSpot(${i})">×</span></div></div>`; 
                 s.textures.forEach((t, j) => { 
@@ -1640,7 +1667,7 @@
             l.innerHTML = html; 
         }
 
-                // --- Lógica Rango Preflop (Flopzilla) ---
+        // --- Lógica Rango Preflop (Flopzilla) ---
         let rangeSpotIdx = -1;
         let rmDragModeAdd = false;
         let rmMouseDown = false;
@@ -1697,7 +1724,6 @@
                     let styleAttr = '';
                     if (active) {
                         const bg = getColorForWeight(weight);
-                        // Letra oscura para que resalte sobre el color pastel
                         styleAttr = `style="background-color:${bg}; color: var(--text-primary); border-color:${bg}; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"`;
                     }
                     
@@ -1732,7 +1758,6 @@
                 const sortedWeights = Array.from(activeWeights).sort((a, b) => b - a);
                 sortedWeights.forEach(w => {
                     const bg = getColorForWeight(w);
-                    // AQUÍ USAMOS Math.floor(w) PARA REDONDEAR VISUALMENTE (66.6667 -> 66)
                     const displayW = Math.floor(w);
                     legendHtml += `<div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border); padding:4px 8px; border-radius:4px; box-shadow: var(--shadow-xs);">
                                 <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
@@ -1773,9 +1798,9 @@
 
         function rmApplyAction(key) {
             if (rmDragModeAdd) {
-                tempPreflopRange[key] = 100; // Al hacer click, pone 100% por defecto
+                tempPreflopRange[key] = 100;
             } else {
-                delete tempPreflopRange[key]; // Al borrar, quita la mano
+                delete tempPreflopRange[key];
             }
             renderRangeGrid();
             updateRangeInputText();
@@ -1791,20 +1816,16 @@
                 return;
             }
 
-            // Regex simplificada: lee cualquier número de dígitos con o sin decimales
             const weightRegex = /\[([\d\.]+)\]([^\[]+)\[\/\1\]/g;
             
-            // 1. Procesar texto FUERA de los corchetes (peso 100%)
             const outsideText = text.replace(weightRegex, '|').split('|');
             outsideText.forEach(part => {
                 processRangeTokens(part, 100, rangeDict);
             });
 
-            // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
-            // Usamos un bucle clásico para máxima compatibilidad
             let match;
             while ((match = weightRegex.exec(text)) !== null) {
-                const weight = parseFloat(match[1]); // parseFloat para decimales
+                const weight = parseFloat(match[1]);
                 const innerText = match[2];
                 processRangeTokens(innerText, weight, rangeDict);
             }
@@ -2061,7 +2082,7 @@
                     if (boardSet) {
                         const c1 = id.slice(0,2).toLowerCase();
                         const c2 = id.slice(2,4).toLowerCase();
-                        if (boardSet.has(c1) || boardSet.has(c2)) return; // Si la combo choca con el board, no la cuenta
+                        if (boardSet.has(c1) || boardSet.has(c2)) return;
                     }
                     count += getComboWeight(id);
                 });
@@ -2086,14 +2107,14 @@
                     if (aS === -1 || aT === -1 || aF === -1) return 0;
                     const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
                     const turnBoard = getActiveBoard('turnAction'); 
-                    const boardSet = new Set(turnBoard); // Board incluye el Turn
-                    return getComboCountFromNode(flopNode, boardSet); // Filtra combos muertos
+                    const boardSet = new Set(turnBoard);
+                    return getComboCountFromNode(flopNode, boardSet);
                 } else if (type === 'riverAction') {
                     if (aS === -1 || aT === -1 || aF === -1 || aTC === -1 || aTA === -1) return 0;
                     const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
                     const riverBoard = getActiveBoard('riverAction');
-                    const boardSet = new Set(riverBoard); // Board incluye el River
-                    return getComboCountFromNode(turnNode, boardSet); // Filtra combos muertos
+                    const boardSet = new Set(riverBoard);
+                    return getComboCountFromNode(turnNode, boardSet);
                 }
                 return 0;
             } catch(e) {
@@ -2278,7 +2299,6 @@
             document.getElementById('turn-cards-tabs').innerHTML=h; 
         }
         
-
         function renderTurnActionsTabs() { 
             if(aTC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC]; 
@@ -2290,7 +2310,6 @@
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'turnAction');
                 const actionPool = getAllSelectedFromNode(a);
-                // Avisa si esta pestaña tiene combos que ya no existen en el Flop
                 const hasInvalids = actionPool.some(id => !flopPool.has(id));
                 let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Flop. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aTA?'active':'') + '" onclick="selectTurnAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'turnAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delTurnAction(' + i + ')">×</span></div>'; 
@@ -2339,7 +2358,6 @@
             document.getElementById('river-cards-tabs').innerHTML=h; 
         }
         
-
         function renderRiverActionsTabs() { 
             if(aRC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC]; 
@@ -2351,7 +2369,6 @@
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'riverAction');
                 const actionPool = getAllSelectedFromNode(a);
-                // Avisa si esta pestaña tiene combos que ya no existen en el Turn
                 const hasInvalids = actionPool.some(id => !turnPool.has(id));
                 let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Turn. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aRA?'active':'') + '" onclick="selectRiverAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'riverAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delRiverAction(' + i + ')">×</span></div>'; 
@@ -2438,7 +2455,6 @@
                     }
                 }
                 
-                // LÍMITE AJUSTADO A 6 AQUÍ
                 const limits = { board: 5, turn: 6, river: 6 };
                 document.getElementById('pc-info').textContent = currentCount + '/' + limits[pcTarget];
                 document.getElementById('pc-actions').innerHTML = `<button class="modal-btn" onclick="closeModal('pickcard')">Cerrar</button>`;
@@ -2514,6 +2530,7 @@
         }
 
         function miniCardHtml(card) { const m = String(card).match(/^([KQJTA2-9])([dhsc])$/i); if (!m) return card; return `<span class="mc c${m[2].toLowerCase()}"><span class="mc-rank">${m[1].toUpperCase()}</span></span>`; }
+        
         function openActionModal(t) { 
             if((t==='flop'&&aT===-1)||(t==='turnAction'&&aTC===-1)||(t==='riverAction'&&aRC===-1)) return; 
             mTarget=t;  
@@ -2523,9 +2540,13 @@
             document.getElementById('modal-input').value=''; 
             setTimeout(()=>document.getElementById('modal-input').focus(), 50); 
         }
+        
         function openCardModal(t) { if((t==='turn'&&aF===-1)||(t==='river'&&aTA===-1)) return; mTarget=t+'Card'; document.getElementById('quick-list-container').style.display='none'; document.getElementById('modal-input').placeholder='Ej: 2h, Jd, As...'; document.getElementById('modal-nodo').style.display='flex'; document.getElementById('modal-input').value=''; setTimeout(()=>document.getElementById('modal-input').focus(), 50); }
+        
         function selectQuick(n) { document.getElementById('modal-input').value=n; confirmModal(); }
+        
         function closeModal(id) { document.getElementById('modal-'+id).style.display='none'; }
+        
         function confirmModal() { 
             let n=document.getElementById('modal-input').value.trim(); 
             if(!n) return; 
@@ -2537,7 +2558,6 @@
                 } else if (mTarget === 'turnCard') { 
                     let node = data.spots[aS].textures[aT].flopNodes[aF]; 
                     if(!node.turnCards) node.turnCards = []; 
-                    // LÍMITE AJUSTADO A 6 AQUÍ
                     if (node.turnCards.length >= 6) { alert("Máximo 6 Turn Cards."); closeModal('nodo'); return; } 
                     node.turnCards.push({ name: n, turnActions: [] }); 
                     selectTurnCard(node.turnCards.length - 1); 
@@ -2551,7 +2571,6 @@
                     if (aF === -1 || aTC === -1 || aTA === -1) { alert('Selecciona una acción de Turn primero.'); closeModal('nodo'); return; }
                     let act = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]; 
                     if(!act.riverCards) act.riverCards = []; 
-                    // LÍMITE AJUSTADO A 6 AQUÍ
                     if (act.riverCards.length >= 6) { alert("Máximo 6 River Cards."); closeModal('nodo'); return; } 
                     act.riverCards.push({ name: n, riverActions: [] }); 
                     selectRiverCard(act.riverCards.length - 1); 
@@ -2582,8 +2601,7 @@
         
         function isNodeLocked(type) { const n = getNodeByType(type); return n && n.locked; }
 
-
-	function renameNode(type, index) {
+        function renameNode(type, index) {
             let node = null;
             if (type === 'flop') node = data.spots[aS].textures[aT].flopNodes[index];
             else if (type === 'turnAction') node = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[index];
@@ -2603,8 +2621,6 @@
                 else if (type === 'riverCard') { renderRiverCardsTabs(); }
             }
         }
-
-
 
         function toggleLock(type) {
             const node = getNodeByType(type);
@@ -2775,7 +2791,6 @@
             const h1 = RANK_VAL[hr[0]], h2 = RANK_VAL[hr[1]];
             if (h1 > topRank && h2 > topRank) return 'overcards';
 
-            // CORRECCIÓN: El BDFD solo existe en el Flop (street === 3)
             if (street === 3) {
                 for (const suit of SUITS) {
                     const total = allCards.filter(c => c[1] === suit).length;
@@ -2868,28 +2883,11 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-
-        function getColorForWeight(w) {
-            if (w >= 100) return '#c7d2fe'; // Indigo pastel (100%)
-            const w10 = Math.ceil(w / 10) * 10; 
-            const colors = {
-                10: '#fecaca', // Red pastel
-                20: '#fecdd3', // Rose pastel
-                30: '#fed7aa', // Orange pastel
-                40: '#fde68a', // Amber/Yellow pastel
-                50: '#d9f99d', // Lime pastel
-                60: '#bbf7d0', // Green pastel
-                70: '#a7f3d0', // Emerald pastel
-                80: '#a5f3fc', // Cyan pastel
-                90: '#bfdbfe'  // Blue pastel
-            };
-            return colors[w10] || '#fecaca';
-        }
                 const preKeys = Object.keys(preRange);
                 if (preKeys.length > 0) {
                     preKeys.forEach(key => {
                         const weight = preRange[key];
-                        if (weight === 0) return; // Ignoramos las manos con 0% de peso
+                        if (weight === 0) return;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2987,7 +2985,7 @@
                 if (preKeys.length > 0) {
                     preKeys.forEach(key => {
                         const weight = preRange[key];
-                        if (weight === 0) return; // Ignoramos las manos con 0% de peso
+                        if (weight === 0) return;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -3071,7 +3069,7 @@
 
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
-                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100); // Acumula fracciones
+                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100);
                     });
                 });
             } else {
@@ -3226,7 +3224,6 @@
         function cmRenderGrid() {
             let ghtml = '';
             const preRange = getActivePreflopRange();
-            // El fix está aquí abajo: Object.keys(preRange) en lugar de solo preRange
             const rangeSet = new Set(Object.keys(preRange)); 
             
             RANKS.forEach((rr, i) => {
@@ -3249,8 +3246,7 @@
                     
                     let clickAttrs = '';
                     if (!disabled && !(Object.keys(preRange).length > 0 && !rangeSet.has(rangeKey))) {
-                        clickAttrs = `onmousedown="cmCellMouseDown(event, '${hand}', '${grp}')" onmouseover="cmCellMouseOver(event, '${hand}', '${grp}')" onmouseup="cmCellMouseUp(event, '${hand}', '${grp}')"`;
-                    }
+                        clickAttrs = `onmousedown="cmCellMouseDown(event, '${hand}', '${grp}')" onmouseover="cmCellMouseOver(event, '${hand}', '${grp}')" onmouseup="cmCellMouseUp(event, '${hand}', '${grp}')"`;                    }
                     
                     ghtml += `<div class="cm-cell ${classes.join(' ')}" data-hand="${hand}" data-grp="${grp}" data-key="${selKey}" ${clickAttrs} title="${grp==='s'?'Suited':grp==='o'?'Offsuit':'Pares'} ${hand}">${hand}</div>`;
                 });
@@ -3931,7 +3927,6 @@
                 </div>`;
             }).join('');
 
-            // AQUÍ ESTÁ LA MAGIA DEL PASO 4
             node.imageSlots.forEach(slot => {
                 const isAct = slot.id === activeSlotId;
                 const heroData = parseGtoData(slot.hero?.gto);
@@ -3947,12 +3942,12 @@
 
         function setActiveSlot(id) {
             activeSlotId = id;
-            activeHeroAction = null; // Limpiar resaltado al cambiar de slot
+            activeHeroAction = null;
             activeVillainAction = null;
             renderImgSlots();
         }
 
-                function setHeroAction(act) {
+        function setHeroAction(act) {
             activeHeroAction = activeHeroAction === act ? null : act;
             renderActiveMatrices();
             updateInteractionPanel();
@@ -3998,17 +3993,14 @@
             const heroData = parseGtoData(slot.hero?.gto);
             const villainData = parseGtoData(slot.villain?.gto);
             
-            // Extraer acciones únicas de Hero
             const heroActs = new Set();
             Object.values(heroData).forEach(d => Object.keys(getGtoActions(d)).forEach(k => heroActs.add(k)));
             
-            // Extraer acciones únicas de Villain
             const villainActs = new Set();
             Object.values(villainData).forEach(d => Object.keys(getGtoActions(d)).forEach(k => villainActs.add(k)));
             
             let html = '';
             
-            // Sección Hero
             html += '<div class="interactions-group">';
             html += '<div class="interactions-group-title">Resaltar Hero</div>';
             if (heroActs.size > 0) {
@@ -4022,7 +4014,6 @@
             }
             html += '</div>';
             
-            // Sección Villain
             html += '<div class="interactions-group">';
             html += '<div class="interactions-group-title">Resaltar Villain</div>';
             if (villainActs.size > 0) {
@@ -4074,7 +4065,6 @@
             return null;
         }
 
-        // --- Funciones internas para ordenar el texto como Excel ---
         function separarConComillas(linea, separador) {
             const resultado = [];
             let valor = '';
@@ -4116,292 +4106,343 @@
             return linea.trim().split(/\s+/);
         }
 
-/*
-  REEMPLAZO COMPLETO DE numeroGto Y parseGtoData
-  Requiere que ya existan normalizeHand(), obtenerSeparador() y dividirLinea().
+        function numeroGto(valor) {
+            let texto = String(valor ?? '').trim().replace(/[%\s]/g, '');
+            if (!texto) return NaN;
 
-  Esta versión también acepta encabezados aplanados como:
-  Hand Equity Combos (total) Raise 15 Call Fold Percentage Raise 15 Call Fold EV
-*/
+            const coma = texto.lastIndexOf(',');
+            const punto = texto.lastIndexOf('.');
 
-/*
-  REEMPLAZO COMPLETO DE numeroGto Y parseGtoData
-  Requiere normalizeHand(), obtenerSeparador() y dividirLinea().
-
-  Importante: conserva solamente las filas resumen (AA, AKs, AKo).
-  Ignora las combinaciones concretas (AhAc, AdAs, etc.), porque estas no deben
-  sobrescribir los porcentajes totales de la matriz 13 x 13.
-*/
-
-function numeroGto(valor) {
-    let texto = String(valor ?? '').trim().replace(/[%\s]/g, '');
-    if (!texto) return NaN;
-
-    const coma = texto.lastIndexOf(',');
-    const punto = texto.lastIndexOf('.');
-
-    if (coma !== -1 && punto !== -1) {
-        texto = coma > punto
-            ? texto.replace(/\./g, '').replace(',', '.')
-            : texto.replace(/,/g, '');
-    } else if (coma !== -1) {
-        texto = texto.replace(',', '.');
-    }
-
-    return Number(texto);
-}
-
-function accionGto(etiqueta) {
-    const texto = String(etiqueta ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
-    // Conservamos el tamaño (p. ej. "raise 15"), para que varias apuestas
-    // de un mismo reporte no se mezclen en una sola métrica.
-    return /\b(?:raise|bet|donk|call|check|fold)\b/.test(texto) ? texto : null;
-}
-
-function esManoResumen(valor) {
-    const mano = String(valor ?? '').trim();
-    // AA, KK, ..., 22, AKs, AKo, etc. No acepta AhAc, AdAs, etc.
-    return /^(?:([AKQJT2-9])\1|[AKQJT2-9]{2}[so])$/i.test(mano);
-}
-
-function columnasDeAccion(encabezados, inicio, fin = encabezados.length) {
-    const columnas = {};
-    for (let i = Math.max(0, inicio); i < fin; i++) {
-        const accion = accionGto(encabezados[i]);
-        if (accion && columnas[accion] === undefined) columnas[accion] = i;
-    }
-    return columnas;
-}
-
-function getGtoActions(dato) {
-    // Compatibilidad con las tablas que se guardaron antes de añadir EQ/EV.
-    return dato && dato.actions ? dato.actions : (dato || {});
-}
-
-function getGtoActionNames(data) {
-    const acciones = new Set();
-    Object.values(data || {}).forEach(dato => {
-        Object.keys(getGtoActions(dato)).forEach(accion => acciones.add(accion));
-    });
-    return Array.from(acciones);
-}
-
-function parseGtoData(text) {
-    const data = {};
-    if (!text) return data;
-
-    const lineas = String(text)
-        .replace(/\r/g, '')
-        .split('\n')
-        .map(linea => linea.trim())
-        .filter(Boolean);
-
-    if (lineas.length < 2) return data;
-
-    const separador = obtenerSeparador(lineas);
-    const matriz = lineas.map(linea => dividirLinea(linea, separador));
-
-    const indiceEncabezado = lineas.findIndex(linea => {
-        const encabezado = linea.toLowerCase();
-        return /\bhand\b/.test(encabezado) &&
-            /raise|call|fold|check|bet|donk/.test(encabezado);
-    });
-
-    if (indiceEncabezado === -1) {
-        console.warn('[GTO] No se encontró la fila de encabezados.');
-        return data;
-    }
-
-    const encabezados = matriz[indiceEncabezado].map(celda => celda.toLowerCase());
-    const indiceHand = Math.max(0, encabezados.findIndex(celda => celda.includes('hand')));
-    const inicioPorcentajes = encabezados.findIndex(celda =>
-        /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
-    );
-    const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(celda) && /total/.test(celda));
-    const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
-    const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
-    const acciones = Object.keys(columnasFrecuencia);
-
-    if (inicioPorcentajes < 0 || !acciones.length) {
-        console.warn('[GTO] No se identificaron las acciones después de Percentage.');
-        return data;
-    }
-
-    // Esta es la corrección clave: no incluir AhAc, AdAs, etc.
-    const filasDeManos = matriz
-        .slice(indiceEncabezado + 1)
-        .filter(cols => esManoResumen(cols[indiceHand]));
-
-    const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
-    const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && cellaIncluye(celda, 'total'));
-    const columnasCombos = indiceCombos >= 0
-        ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes)
-        : {};
-    const columnasEv = indiceEvTotal >= 0
-        ? columnasDeAccion(encabezados, indiceEvTotal + 1)
-        : {};
-
-    for (const cols of filasDeManos) {
-        const hand = normalizeHand(cols[indiceHand]);
-        const accionesMano = {};
-        const actionCombos = {};
-        const actionEv = {};
-        let suma = 0;
-
-        for (const accion of acciones) {
-            const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
-            accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
-            suma += accionesMano[accion];
-
-            const combosAccion = numeroGto(cols[columnasCombos[accion]]);
-            if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
-
-            const evAccion = numeroGto(cols[columnasEv[accion]]);
-            if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
-        }
-
-        if (Math.abs(suma - 100) <= 0.15) {
-            const equity = numeroGto(cols[indiceEquity]);
-            const combos = numeroGto(cols[indiceCombos]);
-            const evTotal = numeroGto(cols[indiceEvTotal]);
-            data[hand] = {
-                actions: accionesMano,
-                equity: Number.isFinite(equity) ? equity : null,
-                combos: Number.isFinite(combos) ? combos : null,
-                actionCombos,
-                ev: {
-                    total: Number.isFinite(evTotal) ? evTotal : null,
-                    actions: actionEv
-                }
-            };
-        }
-    }
-
-    console.info(`[GTO] ${Object.keys(data).length} manos resumen leídas.`);
-    return data;
-}
-
-function cellaIncluye(celda, texto) {
-    return String(celda ?? '').toLowerCase().includes(texto);
-}
-
-function numeroVisible(valor, decimales = 1) {
-    return Number.isFinite(valor) ? valor.toFixed(decimales) : '—';
-}
-
-function nombreAccionGto(accion) {
-    return String(accion).replace(/\b\w/g, letra => letra.toUpperCase());
-}
-
-function pesoAccionGto(dato, accion) {
-    const combos = Number.isFinite(dato?.combos) ? dato.combos : 0;
-    const frecuencia = Number(getGtoActions(dato)[accion]) || 0;
-    // La columna Percentage es la estrategia. En GTO+ los combos mostrados
-    // por acción pueden ser una cuenta distinta y no siempre equivalen a
-    // combos totales × frecuencia (p. ej. cuando hay ponderaciones internas).
-    return combos * frecuencia / 100;
-}
-
-function calcularMetricasGto(data) {
-    const filas = Object.values(data || {}).filter(dato =>
-        Number.isFinite(dato?.equity) && Number.isFinite(dato?.combos) && dato.combos > 0
-    );
-    if (!filas.length) return null;
-
-    const totalCombos = filas.reduce((total, dato) => total + dato.combos, 0);
-    const equity = filas.reduce((total, dato) => total + dato.equity * dato.combos, 0) / totalCombos;
-    const filasConEv = filas.filter(dato => Number.isFinite(dato?.ev?.total));
-    const ev = filasConEv.length
-        ? filasConEv.reduce((total, dato) => total + dato.ev.total * dato.combos, 0) /
-            filasConEv.reduce((total, dato) => total + dato.combos, 0)
-        : null;
-
-    const buckets = [
-        { label: '0–20', min: 0, max: 20, combos: 0 },
-        { label: '20–40', min: 20, max: 40, combos: 0 },
-        { label: '40–60', min: 40, max: 60, combos: 0 },
-        { label: '60–80', min: 60, max: 80, combos: 0 },
-        { label: '80–100', min: 80, max: 100.0001, combos: 0 }
-    ];
-    filas.forEach(dato => {
-        const bucket = buckets.find((item, index) => dato.equity >= item.min && (dato.equity < item.max || (index === buckets.length - 1 && dato.equity <= 100)));
-        if (bucket) bucket.combos += dato.combos;
-    });
-
-    const acciones = getGtoActionNames(data).map(accion => {
-        let combos = 0, equityTotal = 0, evTotal = 0, combosConEv = 0;
-        filas.forEach(dato => {
-            const peso = pesoAccionGto(dato, accion);
-            if (peso <= 0) return;
-            combos += peso;
-            equityTotal += dato.equity * peso;
-            const evAccion = dato.ev?.actions?.[accion];
-            if (Number.isFinite(evAccion)) {
-                evTotal += evAccion * peso;
-                combosConEv += peso;
+            if (coma !== -1 && punto !== -1) {
+                texto = coma > punto
+                    ? texto.replace(/\./g, '').replace(',', '.')
+                    : texto.replace(/,/g, '');
+            } else if (coma !== -1) {
+                texto = texto.replace(',', '.');
             }
-        });
-        return {
-            name: accion,
-            combos,
-            frequency: totalCombos > 0 ? combos / totalCombos * 100 : 0,
-            equity: combos > 0 ? equityTotal / combos : null,
-            ev: combosConEv > 0 ? evTotal / combosConEv : null
-        };
-    }).filter(accion => accion.combos > 0);
 
-    return { totalCombos, equity, ev, buckets, acciones };
-}
+            return Number(texto);
+        }
 
-function renderGtoAnalysis(data) {
-    const metricas = calcularMetricasGto(data);
-    if (!metricas) return '<div class="gto-analysis-empty">Pega un reporte GTO+ con Equity y Combos para ver el análisis.</div>';
+        function accionGto(etiqueta) {
+            const texto = String(etiqueta ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+            return /\b(?:raise|bet|donk|call|check|fold)\b/.test(texto) ? texto : null;
+        }
 
-    const buckets = metricas.buckets.map(bucket => `
-        <div class="gto-bucket" title="${numeroVisible(bucket.combos, 2)} combos · ${numeroVisible(metricas.totalCombos ? bucket.combos / metricas.totalCombos * 100 : 0, 1)}% del rango">
-            <span class="gto-bucket-label">${bucket.label}%</span>
-            <span class="gto-bucket-value">${numeroVisible(bucket.combos, 2)}</span>
-        </div>`).join('');
-    const acciones = metricas.acciones.map(accion => `
-        <tr>
-            <td class="gto-action-name">${nombreAccionGto(accion.name)}</td>
-            <td>${numeroVisible(accion.combos, 2)}</td>
-            <td>${numeroVisible(accion.frequency)}%</td>
-            <td>${numeroVisible(accion.equity)}%</td>
-            <td>${numeroVisible(accion.ev, 2)}</td>
-        </tr>`).join('');
+        function esManoResumen(valor) {
+            const mano = String(valor ?? '').trim();
+            return /^(?:([AKQJT2-9])\1|[AKQJT2-9]{2}[so])$/i.test(mano);
+        }
 
-    return `
-        <div class="gto-kpis">
-            <div class="gto-kpi"><span class="gto-kpi-label">Combos</span><span class="gto-kpi-value">${numeroVisible(metricas.totalCombos, 2)}</span></div>
-            <div class="gto-kpi"><span class="gto-kpi-label">EQ rango</span><span class="gto-kpi-value">${numeroVisible(metricas.equity)}%</span></div>
-            <div class="gto-kpi"><span class="gto-kpi-label">EV rango</span><span class="gto-kpi-value">${numeroVisible(metricas.ev, 2)}</span></div>
-        </div>
-        <div class="gto-section-label">EQ buckets · combos</div>
-        <div class="gto-buckets">${buckets}</div>
-        <div class="gto-section-label">EQ y EV por acción</div>
-        <table class="gto-action-table">
-            <thead><tr><th>Acción</th><th>Combos</th><th>Mix</th><th>EQ</th><th>EV</th></tr></thead>
-            <tbody>${acciones}</tbody>
-        </table>`;
-}
+        function esComboEspecifico(valor) {
+            const mano = String(valor ?? '').trim();
+            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
+        }
+
+        function columnasDeAccion(encabezados, inicio, fin = encabezados.length) {
+            const columnas = {};
+            for (let i = Math.max(0, inicio); i < fin; i++) {
+                const accion = accionGto(encabezados[i]);
+                if (accion && columnas[accion] === undefined) columnas[accion] = i;
+            }
+            return columnas;
+        }
+
+        function getGtoActions(dato) {
+            return dato && dato.actions ? dato.actions : (dato || {});
+        }
+
+        function getGtoActionNames(data) {
+            const acciones = new Set();
+            Object.values(data || {}).forEach(dato => {
+                Object.keys(getGtoActions(dato)).forEach(accion => acciones.add(accion));
+            });
+            return Array.from(acciones);
+        }
+
+        function parseGtoData(text) {
+            const data = {};
+            if (!text) return data;
+
+            const lineas = String(text)
+                .replace(/\r/g, '')
+                .split('\n')
+                .map(linea => linea.trim())
+                .filter(Boolean);
+
+            if (lineas.length < 2) return data;
+
+            const separador = obtenerSeparador(lineas);
+            const matriz = lineas.map(linea => dividirLinea(linea, separador));
+
+            const indiceEncabezado = lineas.findIndex(linea => {
+                const encabezado = linea.toLowerCase();
+                return /\bhand\b/.test(encabezado) &&
+                    /raise|call|fold|check|bet|donk/.test(encabezado);
+            });
+
+            if (indiceEncabezado === -1) return data;
+
+            const encabezados = matriz[indiceEncabezado].map(celda => celda.toLowerCase());
+            const indiceHand = Math.max(0, encabezados.findIndex(celda => celda.includes('hand')));
+            const inicioPorcentajes = encabezados.findIndex(celda =>
+                /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
+            );
+            
+            const isNotActionCol = (celda) => !/(raise|call|check|fold|bet|donk)/.test(String(celda).toLowerCase());
+            const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
+            const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && isNotActionCol(celda));
+            const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(String(celda).toLowerCase()) && isNotActionCol(celda));
+
+            const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
+            const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
+            const acciones = Object.keys(columnasFrecuencia);
+
+            if (inicioPorcentajes < 0 || !acciones.length) return data;
+
+            const todasLasFilas = matriz
+                .slice(indiceEncabezado + 1)
+                .filter(cols => esManoResumen(cols[indiceHand]) || esComboEspecifico(cols[indiceHand]));
+
+            const tieneCombosEspecificos = todasLasFilas.some(cols => esComboEspecifico(cols[indiceHand]));
+            const filasAProcesar = tieneCombosEspecificos 
+                ? todasLasFilas.filter(cols => esComboEspecifico(cols[indiceHand]))
+                : todasLasFilas.filter(cols => esManoResumen(cols[indiceHand]));
+
+            const columnasCombos = indiceCombos >= 0
+                ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes >= 0 ? inicioPorcentajes : (indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length))
+                : {};
+            const columnasEv = indiceEvTotal >= 0
+                ? columnasDeAccion(encabezados, indiceEvTotal + 1)
+                : {};
+
+            if (tieneCombosEspecificos) {
+                const grupos = {};
+                for (const cols of filasAProcesar) {
+                    const specificHand = cols[indiceHand];
+                    const summaryHand = normalizeHand(specificHand);
+                    if (!grupos[summaryHand]) {
+                        grupos[summaryHand] = { totalCombos: 0, actions: {}, actionCombos: {}, ev: { total: 0, actions: {} }, equitySum: 0, evTotalSum: 0 };
+                    }
+                    const grupo = grupos[summaryHand];
+                    let combos = numeroGto(cols[indiceCombos]);
+                    const numCombos = Number.isFinite(combos) ? combos : 1;
+                    grupo.totalCombos += numCombos;
+                    let eq = numeroGto(cols[indiceEquity]);
+                    if (Number.isFinite(eq)) {
+                        if (eq <= 1) eq *= 100;
+                        grupo.equitySum += eq * numCombos;
+                    }
+                    let evTot = numeroGto(cols[indiceEvTotal]);
+                    if (Number.isFinite(evTot)) {
+                        grupo.evTotalSum += evTot * numCombos;
+                    }
+                    for (const accion of acciones) {
+                        const freq = numeroGto(cols[columnasFrecuencia[accion]]);
+                        const fVal = Number.isFinite(freq) ? freq : 0;
+                        grupo.actions[accion] = (grupo.actions[accion] || 0) + (fVal * numCombos);
+                        const cAct = numeroGto(cols[columnasCombos[accion]]);
+                        if (Number.isFinite(cAct)) grupo.actionCombos[accion] = (grupo.actionCombos[accion] || 0) + cAct;
+                        const eAct = numeroGto(cols[columnasEv[accion]]);
+                        if (Number.isFinite(eAct)) grupo.ev.actions[accion] = (grupo.ev.actions[accion] || 0) + eAct;
+                    }
+                }
+                for (const hand in grupos) {
+                    const g = grupos[hand];
+                    if (g.totalCombos > 0) {
+                        for (const accion in g.actions) g.actions[accion] /= g.totalCombos;
+                    }
+                    data[hand] = {
+                        actions: g.actions,
+                        equity: g.totalCombos > 0 ? g.equitySum / g.totalCombos : null,
+                        combos: g.totalCombos,
+                        actionCombos: g.actionCombos,
+                        ev: {
+                            total: g.totalCombos > 0 ? g.evTotalSum / g.totalCombos : null,
+                            actions: g.ev.actions
+                        }
+                    };
+                }
+            } else {
+                for (const cols of filasAProcesar) {
+                    const hand = normalizeHand(cols[indiceHand]);
+                    const accionesMano = {};
+                    const actionCombos = {};
+                    const actionEv = {};
+                    let suma = 0;
+
+                    for (const accion of acciones) {
+                        const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
+                        accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
+                        suma += accionesMano[accion];
+
+                        const combosAccion = numeroGto(cols[columnasCombos[accion]]);
+                        if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
+
+                        const evAccion = numeroGto(cols[columnasEv[accion]]);
+                        if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
+                    }
+
+                    if (Math.abs(suma - 100) <= 0.15) {
+                        const equity = numeroGto(cols[indiceEquity]);
+                        const combos = numeroGto(cols[indiceCombos]);
+                        const evTotal = numeroGto(cols[indiceEvTotal]);
+                        data[hand] = {
+                            actions: accionesMano,
+                            equity: Number.isFinite(equity) ? equity : null,
+                            combos: Number.isFinite(combos) ? combos : null,
+                            actionCombos,
+                            ev: {
+                                total: Number.isFinite(evTotal) ? evTotal : null,
+                                actions: actionEv
+                            }
+                        };
+                    }
+                }
+            }
+            return data;
+        }
+
+        function cellaIncluye(celda, texto) {
+            return String(celda ?? '').toLowerCase().includes(texto);
+        }
+
+        function numeroVisible(valor, decimales = 1) {
+            return Number.isFinite(valor) ? valor.toFixed(decimales) : '—';
+        }
+
+        function nombreAccionGto(accion) {
+            return String(accion).replace(/\b\w/g, letra => letra.toUpperCase());
+        }
+
+        function pesoAccionGto(dato, accion) {
+            const combos = Number.isFinite(dato?.combos) ? Number(dato.combos) : 0;
+            const frecuencia = Number(getGtoActions(dato)[accion]) || 0;
+            return combos * frecuencia / 100;
+        }
+
+        function calcularMetricasGto(data) {
+            const filas = Object.values(data || {}).filter(dato =>
+                Number.isFinite(dato?.combos) && Number(dato.combos) > 0
+            );
+            if (!filas.length) return null;
+
+            const totalCombos = filas.reduce((total, dato) => total + (Number(dato.combos) || 0), 0);
+            let eqSum = 0, eqCombos = 0;
+            let evSum = 0, evCombos = 0;
+            filas.forEach(dato => {
+                const c = Number(dato.combos) || 0;
+                let eq = Number(dato.equity);
+                if (Number.isFinite(eq)) {
+                    if (eq <= 1) eq *= 100;
+                    eqSum += eq * c;
+                    eqCombos += c;
+                }
+                let ev = Number(dato?.ev?.total);
+                if (Number.isFinite(ev)) {
+                    evSum += ev * c;
+                    evCombos += c;
+                }
+            });
+
+            const equity = eqCombos > 0 ? eqSum / eqCombos : null;
+            const ev = evCombos > 0 ? evSum / evCombos : null;
+
+            const buckets = [
+                { label: '0–20', min: 0, max: 20, combos: 0 },
+                { label: '20–40', min: 20, max: 40, combos: 0 },
+                { label: '40–60', min: 40, max: 60, combos: 0 },
+                { label: '60–80', min: 60, max: 80, combos: 0 },
+                { label: '80–100', min: 80, max: 100.0001, combos: 0 }
+            ];
+            filas.forEach(dato => {
+                let eq = Number(dato.equity);
+                if (!Number.isFinite(eq)) eq = 0;
+                if (eq <= 1) eq *= 100;
+                if (eq < 0) eq = 0;
+                if (eq > 100) eq = 100;
+                const bucket = buckets.find((item, index) => eq >= item.min && (eq < item.max || index === buckets.length - 1));
+                if (bucket) bucket.combos += (Number(dato.combos) || 0);
+            });
+
+            const acciones = getGtoActionNames(data).map(accion => {
+                let combos = 0, equityTotal = 0, evTotal = 0, combosConEv = 0;
+                filas.forEach(dato => {
+                    const peso = pesoAccionGto(dato, accion);
+                    if (peso <= 0) return;
+                    combos += peso;
+                    let eq = Number(dato.equity);
+                    if (Number.isFinite(eq)) {
+                        if (eq <= 1) eq *= 100;
+                        equityTotal += eq * peso;
+                    }
+                    const evAccion = dato?.ev?.actions?.[accion];
+                    if (Number.isFinite(evAccion)) {
+                        evTotal += evAccion * peso;
+                        combosConEv += peso;
+                    }
+                });
+                return {
+                    name: accion,
+                    combos,
+                    frequency: totalCombos > 0 ? (combos / totalCombos) * 100 : 0,
+                    equity: combos > 0 ? equityTotal / combos : null,
+                    ev: combosConEv > 0 ? evTotal / combosConEv : null
+                };
+            }).filter(accion => accion.combos > 0);
+
+            return { totalCombos, equity, ev, buckets, acciones };
+        }
+
+        function renderGtoAnalysis(data) {
+            const metricas = calcularMetricasGto(data);
+            if (!metricas) return '<div class="gto-analysis-empty">Pega un reporte GTO+ con Equity y Combos para ver el análisis.</div>';
+
+            const buckets = metricas.buckets.map(bucket => `
+                <div class="gto-bucket" title="${numeroVisible(bucket.combos, 2)} combos · ${numeroVisible(metricas.totalCombos ? bucket.combos / metricas.totalCombos * 100 : 0, 1)}% del rango">
+                    <span class="gto-bucket-label">${bucket.label}%</span>
+                    <span class="gto-bucket-value">${numeroVisible(bucket.combos, 2)}</span>
+                </div>`).join('');
+            const acciones = metricas.acciones.map(accion => `
+                <tr>
+                    <td class="gto-action-name">${nombreAccionGto(accion.name)}</td>
+                    <td>${numeroVisible(accion.combos, 2)}</td>
+                    <td>${numeroVisible(accion.frequency)}%</td>
+                    <td>${numeroVisible(accion.equity)}%</td>
+                    <td>${numeroVisible(accion.ev, 2)}</td>
+                </tr>`).join('');
+
+            return `
+                <div class="gto-kpis">
+                    <div class="gto-kpi"><span class="gto-kpi-label">Combos</span><span class="gto-kpi-value">${numeroVisible(metricas.totalCombos, 2)}</span></div>
+                    <div class="gto-kpi"><span class="gto-kpi-label">EQ rango</span><span class="gto-kpi-value">${numeroVisible(metricas.equity)}%</span></div>
+                    <div class="gto-kpi"><span class="gto-kpi-label">EV rango</span><span class="gto-kpi-value">${numeroVisible(metricas.ev, 2)}</span></div>
+                </div>
+                <div class="gto-section-label">EQ buckets · combos</div>
+                <div class="gto-buckets">${buckets}</div>
+                <div class="gto-section-label">EQ y EV por acción</div>
+                <table class="gto-action-table">
+                    <thead><tr><th>Acción</th><th>Combos</th><th>Mix</th><th>EQ</th><th>EV</th></tr></thead>
+                    <tbody>${acciones}</tbody>
+                </table>`;
+        }
 
         function getColorForAction(act) {
             act = act.toLowerCase();
-            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca'; // Rojo pastel
-            if (act.includes('call')) return '#bfdbfe'; // Azul pastel
-            if (act.includes('check')) return '#bbf7d0'; // Verde pastel
-            if (act.includes('fold')) return '#e9d5ff'; // Morado pastel (Antes era gris, confundía)
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca';
+            if (act.includes('call')) return '#bfdbfe';
+            if (act.includes('check')) return '#bbf7d0';
+            if (act.includes('fold')) return '#e9d5ff';
             return '#d6d3d1';
         }
 
         function getIntenseColor(act) {
             act = act.toLowerCase();
-            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#ef4444'; // Rojo intenso
-            if (act.includes('call')) return '#3b82f6'; // Azul intenso
-            if (act.includes('check')) return '#10b981'; // Verde intenso
-            if (act.includes('fold')) return '#8b5cf6'; // Morado intenso
-            return '#6b7280'; // Gris oscuro
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#ef4444';
+            if (act.includes('call')) return '#3b82f6';
+            if (act.includes('check')) return '#10b981';
+            if (act.includes('fold')) return '#8b5cf6';
+            return '#6b7280';
         }
 
         function drawGtoMatrix(containerId, data, highlightAction = null) {
@@ -4452,16 +4493,11 @@ function renderGtoAnalysis(data) {
                             const val = acciones[act];
                             if (val > 0) {
                                 let color;
-                                // Si estamos resaltando y esta NO es la acción objetivo, la pintamos de gris claro
                                 if (highlightAction && act !== highlightAction) {
-                                    color = '#e5e7eb'; // Gris claro
-                                } 
-                                // Si es la acción objetivo, usamos el color intenso
-                                else if (highlightAction && act === highlightAction) {
+                                    color = '#e5e7eb';
+                                } else if (highlightAction && act === highlightAction) {
                                     color = getIntenseColor(act);
-                                } 
-                                // Si no hay resaltado, usamos el color pastel normal
-                                else {
+                                } else {
                                     color = getColorForAction(act);
                                 }
                                 
@@ -4476,14 +4512,10 @@ function renderGtoAnalysis(data) {
                         cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
                         cell.title = tooltip;
                         
-                        // LÓGICA DE OPACIDAD
                         if (highlightAction) {
                             if (hasHighlightAction) {
-                                // Si la celda tiene la acción, la dejamos nítida y con letra blanca
-                                cell.style.color = '#ffffff';
-                                cell.style.fontWeight = '700';
+                                cell.style.fontWeight = '800';
                             } else {
-                                // Si la celda NO tiene la acción, la atenuamos fuertemente
                                 cell.classList.add('dim');
                             }
                         }
@@ -4503,7 +4535,7 @@ function renderGtoAnalysis(data) {
             const node = getImgNode();
             const newSlot = { id: Date.now().toString(), hero: { gto: '', text: '' }, villain: { gto: '', text: '' } };
             node.imageSlots.push(newSlot);
-            activeSlotId = newSlot.id; // Marcar como activo
+            activeSlotId = newSlot.id;
             renderImgSlots();
             updateMicroButtons(currentEditType, node);
             commit();
@@ -4512,7 +4544,7 @@ function renderGtoAnalysis(data) {
         function deleteImageSlot(id) {
             const node = getImgNode();
             node.imageSlots = node.imageSlots.filter(s => s.id !== id);
-            if (activeSlotId === id) activeSlotId = null; // Si borras el activo, se reinicia
+            if (activeSlotId === id) activeSlotId = null;
             renderImgSlots();
             updateMicroButtons(currentEditType, node);
             commit();
@@ -4539,7 +4571,6 @@ function renderGtoAnalysis(data) {
                 const analysis = document.getElementById(`analysis-${id}-${who}`);
                 if (analysis) analysis.innerHTML = renderGtoAnalysis(gtoData);
                 
-                // AQUÍ ESTÁ LA MAGIA DEL PASO 5
                 if (id === activeSlotId) updateInteractionPanel(); 
                 
                 updateMicroButtons(currentEditType, node);
@@ -4570,6 +4601,7 @@ function renderGtoAnalysis(data) {
             processImageFile(imgFile);
             event.preventDefault();
         });
+        
         document.addEventListener('keydown', function(e) {
             if (e.key === 'escape' && document.getElementById('card-modal').style.display === 'flex') closeCardModal();
         });
