@@ -636,6 +636,24 @@
             border: 1px solid transparent; overflow: hidden;
         }
         .gto-cell:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 0 1.5px var(--text-primary); }
+
+        /* GTO+ metrics — kept compact so the matrix remains the visual focus */
+        .gto-analysis { border-top: 1px solid var(--border-light); padding-top: 8px; display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
+        .gto-analysis-empty { color: var(--text-faint); font-size: 10px; text-align: center; padding: 3px 0; }
+        .gto-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .gto-kpi { min-width: 0; padding: 5px 6px; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
+        .gto-kpi-label { display: block; color: var(--text-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .gto-kpi-value { display: block; margin-top: 2px; color: var(--text-primary); font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .gto-section-label { color: var(--text-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+        .gto-buckets { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+        .gto-bucket { min-width: 0; padding: 4px 3px; background: var(--bg-surface-warm); border-radius: var(--radius-sm); text-align: center; }
+        .gto-bucket-label { display: block; color: var(--text-muted); font-size: 8px; white-space: nowrap; }
+        .gto-bucket-value { display: block; margin-top: 2px; color: var(--text-secondary); font-size: 9px; font-weight: 700; white-space: nowrap; }
+        .gto-action-table { width: 100%; border-collapse: collapse; font-size: 9px; color: var(--text-secondary); }
+        .gto-action-table th { color: var(--text-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; text-align: right; padding: 0 2px 3px; }
+        .gto-action-table th:first-child, .gto-action-table td:first-child { text-align: left; }
+        .gto-action-table td { border-top: 1px solid var(--border-light); padding: 3px 2px; text-align: right; white-space: nowrap; }
+        .gto-action-name { font-weight: 600; text-transform: capitalize; }
         
         .rp-text {
             width: 100%;
@@ -3887,6 +3905,7 @@
                             </div>
                             <textarea class="rp-gto-input" placeholder="Pega la tabla de GTO+ aquí..." oninput="updateSlotGto('${slot.id}', 'hero', this.value)">${slot.hero?.gto || ''}</textarea>
                             <div class="rp-gto-matrix" id="mat-${slot.id}-hero"></div>
+                            <div class="gto-analysis" id="analysis-${slot.id}-hero"></div>
                             <textarea class="rp-text" placeholder="Notas Hero..." oninput="updateSlotText('${slot.id}', 'hero', this.value)">${slot.hero?.text || ''}</textarea>
                         </div>
                         <div class="range-panel">
@@ -3896,6 +3915,7 @@
                             </div>
                             <textarea class="rp-gto-input" placeholder="Pega la tabla de GTO+ aquí..." oninput="updateSlotGto('${slot.id}', 'villain', this.value)">${slot.villain?.gto || ''}</textarea>
                             <div class="rp-gto-matrix" id="mat-${slot.id}-villain"></div>
+                            <div class="gto-analysis" id="analysis-${slot.id}-villain"></div>
                             <textarea class="rp-text" placeholder="Notas Villain..." oninput="updateSlotText('${slot.id}', 'villain', this.value)">${slot.villain?.text || ''}</textarea>
                         </div>
                     </div>
@@ -3905,8 +3925,12 @@
             // AQUÍ ESTÁ LA MAGIA DEL PASO 4
             node.imageSlots.forEach(slot => {
                 const isAct = slot.id === activeSlotId;
-                drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto), isAct ? activeHeroAction : null);
-                drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto), isAct ? activeVillainAction : null);
+                const heroData = parseGtoData(slot.hero?.gto);
+                const villainData = parseGtoData(slot.villain?.gto);
+                drawGtoMatrix(`mat-${slot.id}-hero`, heroData, isAct ? activeHeroAction : null);
+                drawGtoMatrix(`mat-${slot.id}-villain`, villainData, isAct ? activeVillainAction : null);
+                document.getElementById(`analysis-${slot.id}-hero`).innerHTML = renderGtoAnalysis(heroData);
+                document.getElementById(`analysis-${slot.id}-villain`).innerHTML = renderGtoAnalysis(villainData);
             });
             
             updateInteractionPanel();
@@ -3967,11 +3991,11 @@
             
             // Extraer acciones únicas de Hero
             const heroActs = new Set();
-            Object.values(heroData).forEach(d => Object.keys(d).forEach(k => heroActs.add(k)));
+            Object.values(heroData).forEach(d => Object.keys(getGtoActions(d)).forEach(k => heroActs.add(k)));
             
             // Extraer acciones únicas de Villain
             const villainActs = new Set();
-            Object.values(villainData).forEach(d => Object.keys(d).forEach(k => villainActs.add(k)));
+            Object.values(villainData).forEach(d => Object.keys(getGtoActions(d)).forEach(k => villainActs.add(k)));
             
             let html = '';
             
@@ -4119,12 +4143,10 @@ function numeroGto(valor) {
 }
 
 function accionGto(etiqueta) {
-    const texto = String(etiqueta).toLowerCase();
-    if (/raise|bet|donk/.test(texto)) return 'raise';
-    if (texto.includes('call')) return 'call';
-    if (texto.includes('check')) return 'check';
-    if (texto.includes('fold')) return 'fold';
-    return null;
+    const texto = String(etiqueta ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+    // Conservamos el tamaño (p. ej. "raise 15"), para que varias apuestas
+    // de un mismo reporte no se mezclen en una sola métrica.
+    return /\b(?:raise|bet|donk|call|check|fold)\b/.test(texto) ? texto : null;
 }
 
 function esManoResumen(valor) {
@@ -4133,18 +4155,26 @@ function esManoResumen(valor) {
     return /^(?:([AKQJT2-9])\1|[AKQJT2-9]{2}[so])$/i.test(mano);
 }
 
-function accionesDesdeEncabezado(texto) {
-    const encabezado = String(texto).toLowerCase();
-    const inicio = encabezado.search(/percentage|porcentaje|frequency|frecuencia|freq/);
-    const grupoPorcentajes = inicio >= 0 ? encabezado.slice(inicio) : encabezado;
-    const coincidencias = grupoPorcentajes.match(/raise|bet|donk|call|check|fold/g) || [];
-    const acciones = [];
-
-    for (const coincidencia of coincidencias) {
-        const accion = accionGto(coincidencia);
-        if (accion && !acciones.includes(accion)) acciones.push(accion);
+function columnasDeAccion(encabezados, inicio, fin = encabezados.length) {
+    const columnas = {};
+    for (let i = Math.max(0, inicio); i < fin; i++) {
+        const accion = accionGto(encabezados[i]);
+        if (accion && columnas[accion] === undefined) columnas[accion] = i;
     }
-    return acciones;
+    return columnas;
+}
+
+function getGtoActions(dato) {
+    // Compatibilidad con las tablas que se guardaron antes de añadir EQ/EV.
+    return dato && dato.actions ? dato.actions : (dato || {});
+}
+
+function getGtoActionNames(data) {
+    const acciones = new Set();
+    Object.values(data || {}).forEach(dato => {
+        Object.keys(getGtoActions(dato)).forEach(accion => acciones.add(accion));
+    });
+    return Array.from(acciones);
 }
 
 function parseGtoData(text) {
@@ -4173,12 +4203,17 @@ function parseGtoData(text) {
         return data;
     }
 
-    const encabezadoOriginal = lineas[indiceEncabezado];
     const encabezados = matriz[indiceEncabezado].map(celda => celda.toLowerCase());
     const indiceHand = Math.max(0, encabezados.findIndex(celda => celda.includes('hand')));
-    const acciones = accionesDesdeEncabezado(encabezadoOriginal);
+    const inicioPorcentajes = encabezados.findIndex(celda =>
+        /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
+    );
+    const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(celda) && /total/.test(celda));
+    const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
+    const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
+    const acciones = Object.keys(columnasFrecuencia);
 
-    if (!acciones.length) {
+    if (inicioPorcentajes < 0 || !acciones.length) {
         console.warn('[GTO] No se identificaron las acciones después de Percentage.');
         return data;
     }
@@ -4188,47 +4223,158 @@ function parseGtoData(text) {
         .slice(indiceEncabezado + 1)
         .filter(cols => esManoResumen(cols[indiceHand]));
 
-    const inicioPorcentajes = encabezados.findIndex(celda =>
-        /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
-    );
-
-    const columnasDirectas = {};
-    if (inicioPorcentajes >= 0) {
-        for (let i = inicioPorcentajes; i < encabezados.length; i++) {
-            const accion = accionGto(encabezados[i]);
-            if (accion && columnasDirectas[accion] === undefined) {
-                columnasDirectas[accion] = i;
-            }
-        }
-    }
-
-    const mapeoDirectoValido = acciones.every(accion =>
-        Number.isInteger(columnasDirectas[accion])
-    );
-
-    if (!mapeoDirectoValido) {
-        console.warn('[GTO] No se identificaron las columnas Percentage.');
-        return data;
-    }
+    const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
+    const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && cellaIncluye(celda, 'total'));
+    const columnasCombos = indiceCombos >= 0
+        ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes)
+        : {};
+    const columnasEv = indiceEvTotal >= 0
+        ? columnasDeAccion(encabezados, indiceEvTotal + 1)
+        : {};
 
     for (const cols of filasDeManos) {
         const hand = normalizeHand(cols[indiceHand]);
-        const handData = {};
+        const accionesMano = {};
+        const actionCombos = {};
+        const actionEv = {};
         let suma = 0;
 
         for (const accion of acciones) {
-            const valor = numeroGto(cols[columnasDirectas[accion]]);
-            handData[accion] = Number.isFinite(valor) ? valor : 0;
-            suma += handData[accion];
+            const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
+            accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
+            suma += accionesMano[accion];
+
+            const combosAccion = numeroGto(cols[columnasCombos[accion]]);
+            if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
+
+            const evAccion = numeroGto(cols[columnasEv[accion]]);
+            if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
         }
 
         if (Math.abs(suma - 100) <= 0.15) {
-            data[hand] = handData;
+            const equity = numeroGto(cols[indiceEquity]);
+            const combos = numeroGto(cols[indiceCombos]);
+            const evTotal = numeroGto(cols[indiceEvTotal]);
+            data[hand] = {
+                actions: accionesMano,
+                equity: Number.isFinite(equity) ? equity : null,
+                combos: Number.isFinite(combos) ? combos : null,
+                actionCombos,
+                ev: {
+                    total: Number.isFinite(evTotal) ? evTotal : null,
+                    actions: actionEv
+                }
+            };
         }
     }
 
     console.info(`[GTO] ${Object.keys(data).length} manos resumen leídas.`);
     return data;
+}
+
+function cellaIncluye(celda, texto) {
+    return String(celda ?? '').toLowerCase().includes(texto);
+}
+
+function numeroVisible(valor, decimales = 1) {
+    return Number.isFinite(valor) ? valor.toFixed(decimales) : '—';
+}
+
+function nombreAccionGto(accion) {
+    return String(accion).replace(/\b\w/g, letra => letra.toUpperCase());
+}
+
+function pesoAccionGto(dato, accion) {
+    const combos = Number.isFinite(dato?.combos) ? dato.combos : 0;
+    const frecuencia = Number(getGtoActions(dato)[accion]) || 0;
+    // La columna Percentage es la estrategia. En GTO+ los combos mostrados
+    // por acción pueden ser una cuenta distinta y no siempre equivalen a
+    // combos totales × frecuencia (p. ej. cuando hay ponderaciones internas).
+    return combos * frecuencia / 100;
+}
+
+function calcularMetricasGto(data) {
+    const filas = Object.values(data || {}).filter(dato =>
+        Number.isFinite(dato?.equity) && Number.isFinite(dato?.combos) && dato.combos > 0
+    );
+    if (!filas.length) return null;
+
+    const totalCombos = filas.reduce((total, dato) => total + dato.combos, 0);
+    const equity = filas.reduce((total, dato) => total + dato.equity * dato.combos, 0) / totalCombos;
+    const filasConEv = filas.filter(dato => Number.isFinite(dato?.ev?.total));
+    const ev = filasConEv.length
+        ? filasConEv.reduce((total, dato) => total + dato.ev.total * dato.combos, 0) /
+            filasConEv.reduce((total, dato) => total + dato.combos, 0)
+        : null;
+
+    const buckets = [
+        { label: '0–20', min: 0, max: 20, combos: 0 },
+        { label: '20–40', min: 20, max: 40, combos: 0 },
+        { label: '40–60', min: 40, max: 60, combos: 0 },
+        { label: '60–80', min: 60, max: 80, combos: 0 },
+        { label: '80–100', min: 80, max: 100.0001, combos: 0 }
+    ];
+    filas.forEach(dato => {
+        const bucket = buckets.find((item, index) => dato.equity >= item.min && (dato.equity < item.max || (index === buckets.length - 1 && dato.equity <= 100)));
+        if (bucket) bucket.combos += dato.combos;
+    });
+
+    const acciones = getGtoActionNames(data).map(accion => {
+        let combos = 0, equityTotal = 0, evTotal = 0, combosConEv = 0;
+        filas.forEach(dato => {
+            const peso = pesoAccionGto(dato, accion);
+            if (peso <= 0) return;
+            combos += peso;
+            equityTotal += dato.equity * peso;
+            const evAccion = dato.ev?.actions?.[accion];
+            if (Number.isFinite(evAccion)) {
+                evTotal += evAccion * peso;
+                combosConEv += peso;
+            }
+        });
+        return {
+            name: accion,
+            combos,
+            frequency: totalCombos > 0 ? combos / totalCombos * 100 : 0,
+            equity: combos > 0 ? equityTotal / combos : null,
+            ev: combosConEv > 0 ? evTotal / combosConEv : null
+        };
+    }).filter(accion => accion.combos > 0);
+
+    return { totalCombos, equity, ev, buckets, acciones };
+}
+
+function renderGtoAnalysis(data) {
+    const metricas = calcularMetricasGto(data);
+    if (!metricas) return '<div class="gto-analysis-empty">Pega un reporte GTO+ con Equity y Combos para ver el análisis.</div>';
+
+    const buckets = metricas.buckets.map(bucket => `
+        <div class="gto-bucket" title="${numeroVisible(bucket.combos, 2)} combos · ${numeroVisible(metricas.totalCombos ? bucket.combos / metricas.totalCombos * 100 : 0, 1)}% del rango">
+            <span class="gto-bucket-label">${bucket.label}%</span>
+            <span class="gto-bucket-value">${numeroVisible(bucket.combos, 2)}</span>
+        </div>`).join('');
+    const acciones = metricas.acciones.map(accion => `
+        <tr>
+            <td class="gto-action-name">${nombreAccionGto(accion.name)}</td>
+            <td>${numeroVisible(accion.combos, 2)}</td>
+            <td>${numeroVisible(accion.frequency)}%</td>
+            <td>${numeroVisible(accion.equity)}%</td>
+            <td>${numeroVisible(accion.ev, 2)}</td>
+        </tr>`).join('');
+
+    return `
+        <div class="gto-kpis">
+            <div class="gto-kpi"><span class="gto-kpi-label">Combos</span><span class="gto-kpi-value">${numeroVisible(metricas.totalCombos, 2)}</span></div>
+            <div class="gto-kpi"><span class="gto-kpi-label">EQ rango</span><span class="gto-kpi-value">${numeroVisible(metricas.equity)}%</span></div>
+            <div class="gto-kpi"><span class="gto-kpi-label">EV rango</span><span class="gto-kpi-value">${numeroVisible(metricas.ev, 2)}</span></div>
+        </div>
+        <div class="gto-section-label">EQ buckets · combos</div>
+        <div class="gto-buckets">${buckets}</div>
+        <div class="gto-section-label">EQ y EV por acción</div>
+        <table class="gto-action-table">
+            <thead><tr><th>Acción</th><th>Combos</th><th>Mix</th><th>EQ</th><th>EV</th></tr></thead>
+            <tbody>${acciones}</tbody>
+        </table>`;
 }
 
         function getColorForAction(act) {
@@ -4284,13 +4430,17 @@ function parseGtoData(text) {
                     
                     const d = data[hand];
                     if (d) {
+                        const acciones = getGtoActions(d);
                         let stops = [], pos = 0;
                         let tooltip = hand;
+                        if (Number.isFinite(d.equity)) tooltip += `\nEQ: ${d.equity.toFixed(2)}%`;
+                        if (Number.isFinite(d.combos)) tooltip += `\nCombos: ${d.combos.toFixed(3)}`;
+                        if (Number.isFinite(d.ev?.total)) tooltip += `\nEV: ${d.ev.total.toFixed(4)}`;
                         
-                        const hasHighlightAction = highlightAction && d[highlightAction] > 0;
+                        const hasHighlightAction = highlightAction && acciones[highlightAction] > 0;
                         
-                        Object.keys(d).forEach(act => {
-                            const val = d[act];
+                        Object.keys(acciones).forEach(act => {
+                            const val = acciones[act];
                             if (val > 0) {
                                 let color;
                                 // Si estamos resaltando y esta NO es la acción objetivo, la pintamos de gris claro
@@ -4310,6 +4460,7 @@ function parseGtoData(text) {
                                 pos += val;
                                 stops.push(`${color} ${pos}%`);
                                 tooltip += `\n${act}: ${val.toFixed(1)}%`;
+                                if (Number.isFinite(d.ev?.actions?.[act])) tooltip += ` · EV ${d.ev.actions[act].toFixed(4)}`;
                             }
                         });
                         
@@ -4374,7 +4525,10 @@ function parseGtoData(text) {
             if (slot) {
                 if(!slot[who]) slot[who] = { gto: '', text: '' };
                 slot[who].gto = val;
-                drawGtoMatrix(`mat-${id}-${who}`, parseGtoData(val), who === 'hero' ? activeHeroAction : activeVillainAction);
+                const gtoData = parseGtoData(val);
+                drawGtoMatrix(`mat-${id}-${who}`, gtoData, who === 'hero' ? activeHeroAction : activeVillainAction);
+                const analysis = document.getElementById(`analysis-${id}-${who}`);
+                if (analysis) analysis.innerHTML = renderGtoAnalysis(gtoData);
                 
                 // AQUÍ ESTÁ LA MAGIA DEL PASO 5
                 if (id === activeSlotId) updateInteractionPanel(); 
