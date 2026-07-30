@@ -4177,169 +4177,100 @@ function getGtoActionNames(data) {
     return Array.from(acciones);
 }
 
-        function esComboEspecifico(valor) {
-            const mano = String(valor ?? '').trim();
-            // Detecta formatos como AhKd, Kh9c, TcTh (letra+número+palo+palo)
-            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
+function parseGtoData(text) {
+    const data = {};
+    if (!text) return data;
+
+    const lineas = String(text)
+        .replace(/\r/g, '')
+        .split('\n')
+        .map(linea => linea.trim())
+        .filter(Boolean);
+
+    if (lineas.length < 2) return data;
+
+    const separador = obtenerSeparador(lineas);
+    const matriz = lineas.map(linea => dividirLinea(linea, separador));
+
+    const indiceEncabezado = lineas.findIndex(linea => {
+        const encabezado = linea.toLowerCase();
+        return /\bhand\b/.test(encabezado) &&
+            /raise|call|fold|check|bet|donk/.test(encabezado);
+    });
+
+    if (indiceEncabezado === -1) {
+        console.warn('[GTO] No se encontró la fila de encabezados.');
+        return data;
+    }
+
+    const encabezados = matriz[indiceEncabezado].map(celda => celda.toLowerCase());
+    const indiceHand = Math.max(0, encabezados.findIndex(celda => celda.includes('hand')));
+    const inicioPorcentajes = encabezados.findIndex(celda =>
+        /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
+    );
+    const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(celda) && /total/.test(celda));
+    const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
+    const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
+    const acciones = Object.keys(columnasFrecuencia);
+
+    if (inicioPorcentajes < 0 || !acciones.length) {
+        console.warn('[GTO] No se identificaron las acciones después de Percentage.');
+        return data;
+    }
+
+    // Esta es la corrección clave: no incluir AhAc, AdAs, etc.
+    const filasDeManos = matriz
+        .slice(indiceEncabezado + 1)
+        .filter(cols => esManoResumen(cols[indiceHand]));
+
+    const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
+    const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && cellaIncluye(celda, 'total'));
+    const columnasCombos = indiceCombos >= 0
+        ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes)
+        : {};
+    const columnasEv = indiceEvTotal >= 0
+        ? columnasDeAccion(encabezados, indiceEvTotal + 1)
+        : {};
+
+    for (const cols of filasDeManos) {
+        const hand = normalizeHand(cols[indiceHand]);
+        const accionesMano = {};
+        const actionCombos = {};
+        const actionEv = {};
+        let suma = 0;
+
+        for (const accion of acciones) {
+            const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
+            accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
+            suma += accionesMano[accion];
+
+            const combosAccion = numeroGto(cols[columnasCombos[accion]]);
+            if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
+
+            const evAccion = numeroGto(cols[columnasEv[accion]]);
+            if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
         }
 
-        function parseGtoData(text) {
-            const data = {};
-            if (!text) return data;
-
-            const lineas = String(text)
-                .replace(/\r/g, '')
-                .split('\n')
-                .map(linea => linea.trim())
-                .filter(Boolean);
-
-            if (lineas.length < 2) return data;
-
-            const separador = obtenerSeparador(lineas);
-            const matriz = lineas.map(linea => dividirLinea(linea, separador));
-
-            const indiceEncabezado = lineas.findIndex(linea => {
-                const encabezado = linea.toLowerCase();
-                return /\bhand\b/.test(encabezado) &&
-                    /raise|call|fold|check|bet|donk/.test(encabezado);
-            });
-
-            if (indiceEncabezado === -1) return data;
-
-            const encabezados = matriz[indiceEncabezado].map(celda => celda.toLowerCase());
-            const indiceHand = Math.max(0, encabezados.findIndex(celda => celda.includes('hand')));
-            const inicioPorcentajes = encabezados.findIndex(celda =>
-                /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
-            );
-            
-            const isNotActionCol = (celda) => !/(raise|call|check|fold|bet|donk)/.test(String(celda).toLowerCase());
-            
-            const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
-            const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && isNotActionCol(celda));
-            const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(String(celda).toLowerCase()) && isNotActionCol(celda));
-
-            const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
-            const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
-            const acciones = Object.keys(columnasFrecuencia);
-
-            if (inicioPorcentajes < 0 || !acciones.length) return data;
-
-            // Tomamos todas las filas que sean manos resumen o combos específicos
-            const todasLasFilas = matriz
-                .slice(indiceEncabezado + 1)
-                .filter(cols => esManoResumen(cols[indiceHand]) || esComboEspecifico(cols[indiceHand]));
-
-            // Si hay combos específicos en el reporte, los usamos para el cálculo e ignoramos las manos resumen
-            const tieneCombosEspecificos = todasLasFilas.some(cols => esComboEspecifico(cols[indiceHand]));
-            const filasAProcesar = tieneCombosEspecificos 
-                ? todasLasFilas.filter(cols => esComboEspecifico(cols[indiceHand]))
-                : todasLasFilas.filter(cols => esManoResumen(cols[indiceHand]));
-
-            const columnasCombos = indiceCombos >= 0
-                ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes >= 0 ? inicioPorcentajes : (indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length))
-                : {};
-            const columnasEv = indiceEvTotal >= 0
-                ? columnasDeAccion(encabezados, indiceEvTotal + 1)
-                : {};
-
-            // Si estamos procesando combos específicos, los agrupamos por su mano resumen (AA, AKs, etc.)
-            if (tieneCombosEspecificos) {
-                const grupos = {};
-                
-                for (const cols of filasAProcesar) {
-                    const specificHand = cols[indiceHand];
-                    const summaryHand = normalizeHand(specificHand); // Convierte AhKd -> AKo
-                    
-                    if (!grupos[summaryHand]) {
-                        grupos[summaryHand] = { totalCombos: 0, actions: {}, actionCombos: {}, ev: { total: 0, actions: {} }, equitySum: 0, evTotalSum: 0 };
-                    }
-                    
-                    const grupo = grupos[summaryHand];
-                    let combos = numeroGto(cols[indiceCombos]);
-                    const numCombos = Number.isFinite(combos) ? combos : 1; // Si no hay columna, asume 1 combo
-                    grupo.totalCombos += numCombos;
-                    
-                    let eq = numeroGto(cols[indiceEquity]);
-                    if (Number.isFinite(eq)) {
-                        if (eq <= 1) eq *= 100; // Arregla decimal 0.45 -> 45
-                        grupo.equitySum += eq * numCombos;
-                    }
-                    
-                    let evTot = numeroGto(cols[indiceEvTotal]);
-                    if (Number.isFinite(evTot)) {
-                        grupo.evTotalSum += evTot * numCombos;
-                    }
-
-                    for (const accion of acciones) {
-                        const freq = numeroGto(cols[columnasFrecuencia[accion]]);
-                        const fVal = Number.isFinite(freq) ? freq : 0;
-                        grupo.actions[accion] = (grupo.actions[accion] || 0) + (fVal * numCombos);
-                        
-                        const cAct = numeroGto(cols[columnasCombos[accion]]);
-                        if (Number.isFinite(cAct)) grupo.actionCombos[accion] = (grupo.actionCombos[accion] || 0) + cAct;
-                        
-                        const eAct = numeroGto(cols[columnasEv[accion]]);
-                        if (Number.isFinite(eAct)) grupo.ev.actions[accion] = (grupo.ev.actions[accion] || 0) + eAct;
-                    }
+        if (Math.abs(suma - 100) <= 0.15) {
+            const equity = numeroGto(cols[indiceEquity]);
+            const combos = numeroGto(cols[indiceCombos]);
+            const evTotal = numeroGto(cols[indiceEvTotal]);
+            data[hand] = {
+                actions: accionesMano,
+                equity: Number.isFinite(equity) ? equity : null,
+                combos: Number.isFinite(combos) ? combos : null,
+                actionCombos,
+                ev: {
+                    total: Number.isFinite(evTotal) ? evTotal : null,
+                    actions: actionEv
                 }
-
-                // Promediamos las frecuencias y EQ basándonos en el peso de cada combo
-                for (const hand in grupos) {
-                    const g = grupos[hand];
-                    if (g.totalCombos > 0) {
-                        for (const accion in g.actions) g.actions[accion] /= g.totalCombos;
-                    }
-                    data[hand] = {
-                        actions: g.actions,
-                        equity: g.totalCombos > 0 ? g.equitySum / g.totalCombos : null,
-                        combos: g.totalCombos,
-                        actionCombos: g.actionCombos,
-                        ev: {
-                            total: g.totalCombos > 0 ? g.evTotalSum / g.totalCombos : null,
-                            actions: g.ev.actions
-                        }
-                    };
-                }
-            } else {
-                // Modo normal: solo manos resumen (AA, AKs)
-                for (const cols of filasAProcesar) {
-                    const hand = normalizeHand(cols[indiceHand]);
-                    const accionesMano = {};
-                    const actionCombos = {};
-                    const actionEv = {};
-                    let suma = 0;
-
-                    for (const accion of acciones) {
-                        const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
-                        accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
-                        suma += accionesMano[accion];
-
-                        const combosAccion = numeroGto(cols[columnasCombos[accion]]);
-                        if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
-
-                        const evAccion = numeroGto(cols[columnasEv[accion]]);
-                        if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
-                    }
-
-                    if (Math.abs(suma - 100) <= 0.15) {
-                        const equity = numeroGto(cols[indiceEquity]);
-                        const combos = numeroGto(cols[indiceCombos]);
-                        const evTotal = numeroGto(cols[indiceEvTotal]);
-                        data[hand] = {
-                            actions: accionesMano,
-                            equity: Number.isFinite(equity) ? equity : null,
-                            combos: Number.isFinite(combos) ? combos : null,
-                            actionCombos,
-                            ev: {
-                                total: Number.isFinite(evTotal) ? evTotal : null,
-                                actions: actionEv
-                            }
-                        };
-                    }
-                }
-            }
-            return data;
+            };
         }
+    }
+
+    console.info(`[GTO] ${Object.keys(data).length} manos resumen leídas.`);
+    return data;
+}
 
 function cellaIncluye(celda, texto) {
     return String(celda ?? '').toLowerCase().includes(texto);
@@ -4499,20 +4430,29 @@ function renderGtoAnalysis(data) {
                     
                     const d = data[hand];
                     if (d) {
+                        const acciones = getGtoActions(d);
                         let stops = [], pos = 0;
                         let tooltip = hand;
+                        if (Number.isFinite(d.equity)) tooltip += `\nEQ: ${d.equity.toFixed(2)}%`;
+                        if (Number.isFinite(d.combos)) tooltip += `\nCombos: ${d.combos.toFixed(3)}`;
+                        if (Number.isFinite(d.ev?.total)) tooltip += `\nEV: ${d.ev.total.toFixed(4)}`;
                         
-                        const hasHighlightAction = highlightAction && d[highlightAction] > 0;
+                        const hasHighlightAction = highlightAction && acciones[highlightAction] > 0;
                         
-                        Object.keys(d).forEach(act => {
-                            const val = d[act];
+                        Object.keys(acciones).forEach(act => {
+                            const val = acciones[act];
                             if (val > 0) {
                                 let color;
+                                // Si estamos resaltando y esta NO es la acción objetivo, la pintamos de gris claro
                                 if (highlightAction && act !== highlightAction) {
                                     color = '#e5e7eb'; // Gris claro
-                                } else if (highlightAction && act === highlightAction) {
+                                } 
+                                // Si es la acción objetivo, usamos el color intenso
+                                else if (highlightAction && act === highlightAction) {
                                     color = getIntenseColor(act);
-                                } else {
+                                } 
+                                // Si no hay resaltado, usamos el color pastel normal
+                                else {
                                     color = getColorForAction(act);
                                 }
                                 
@@ -4520,16 +4460,21 @@ function renderGtoAnalysis(data) {
                                 pos += val;
                                 stops.push(`${color} ${pos}%`);
                                 tooltip += `\n${act}: ${val.toFixed(1)}%`;
+                                if (Number.isFinite(d.ev?.actions?.[act])) tooltip += ` · EV ${d.ev.actions[act].toFixed(4)}`;
                             }
                         });
                         
                         cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
                         cell.title = tooltip;
                         
+                        // LÓGICA DE OPACIDAD
                         if (highlightAction) {
                             if (hasHighlightAction) {
-                                cell.style.fontWeight = '800'; // Negrita para que resalte sobre el color intenso
+                                // Si la celda tiene la acción, la dejamos nítida y con letra blanca
+                                cell.style.color = '#ffffff';
+                                cell.style.fontWeight = '700';
                             } else {
+                                // Si la celda NO tiene la acción, la atenuamos fuertemente
                                 cell.classList.add('dim');
                             }
                         }
