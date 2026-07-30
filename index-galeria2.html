@@ -544,15 +544,18 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
         }
-        .img-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-shrink: 0; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; }
-        .img-modal-legend { display: flex; gap: 12px; font-size: 11px; color: var(--text-secondary); font-weight: 600; }
-        .leg-item { display: flex; align-items: center; gap: 5px; }
-        .leg-color { width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.1); }
         
         .img-modal-body { flex: 1; display: flex; gap: 16px; overflow: hidden; }
-        .img-interaction-panel { width: 250px; flex-shrink: 0; background: var(--bg-surface-warm); border-radius: var(--radius-md); padding: 12px; overflow-y: auto; display: flex; flex-direction: column; }
-        .img-slots-area { flex: 1; overflow-y: auto; padding-right: 4px; }
-        .slots-container { display: flex; flex-direction: column; gap: 16px; } 
+        
+        .img-interaction-panel { width: 240px; flex-shrink: 0; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 12px; overflow-y: auto; display: flex; flex-direction: column; }
+        .img-panel-header { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .img-panel-actions { display: flex; flex-direction: column; gap: 6px; }
+        .img-panel-separator { height: 1px; background: var(--border-light); margin: 16px 0; }
+        .img-panel-interactions { flex: 1; display: flex; flex-direction: column; gap: 8px; font-size: 11px; color: var(--text-secondary); }
+        .img-empty-interaction { color: var(--text-faint); font-style: italic; text-align: center; margin-top: 20px; font-size: 11px; }
+        
+        .img-slots-area { flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; }
+        .slots-container { display: flex; flex-direction: column; gap: 12px; flex: 1; } 
         
         .slot-card {
             border: 1px solid var(--border);
@@ -560,7 +563,10 @@
             background: var(--bg-surface-warm);
             overflow: hidden;
             box-shadow: var(--shadow-xs);
+            display: flex; flex-direction: column;
         }
+        .slot-card.active-slot { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+        
         .slot-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 8px 12px;
@@ -568,19 +574,20 @@
             border-bottom: 1px solid var(--border-light);
             font-size: 11px; font-weight: 700; color: var(--text-muted);
             text-transform: uppercase; letter-spacing: 0.05em;
+            cursor: pointer;
         }
-        .slot-del-btn { color: var(--text-faint); cursor: pointer; font-size: 11px; transition: color var(--transition); }
+        .slot-del-btn { color: var(--text-faint); cursor: pointer; font-size: 11px; transition: color var(--transition); background: none; border: none; }
         .slot-del-btn:hover { color: var(--bluff); }
         
-        .slot-panels { display: flex; gap: 12px; padding: 12px; }
-        .range-panel { flex: 1; display: flex; flex-direction: column; gap: 10px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 10px; }
-        .rp-header { display: flex; justify-content: space-between; align-items: center; }
+        .slot-panels { display: flex; gap: 12px; padding: 12px; flex: 1; min-height: 0; }
+        .range-panel { flex: 1; display: flex; flex-direction: column; gap: 8px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 10px; min-width: 0; }
+        .rp-header { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .rp-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
         .clear-gto-btn { font-size: 9px; color: var(--bluff); background: var(--bluff-bg); border: 1px solid #fca5a5; padding: 2px 5px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.15s; }
         .clear-gto-btn:hover { background: #fee2e2; }
         
         .rp-gto-input {
-            width: 100%; height: 60px;
+            width: 100%; height: 50px;
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
             background: var(--bg-surface-warm);
@@ -591,32 +598,34 @@
             resize: none;
             outline: none;
             transition: all var(--transition);
+            flex-shrink: 0;
         }
         .rp-gto-input:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 2px rgba(99,102,241,0.05); }
         
         .rp-gto-matrix {
             flex: 1; display: flex; justify-content: center; align-items: center;
-            min-height: 350px; 
+            min-height: 300px; 
             background: var(--bg-surface-warm);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
             padding: 8px;
-            overflow: auto;
+            overflow: hidden;
         }
         
-        .gto-grid { display: grid; grid-template-columns: 20px repeat(13, 1fr); grid-template-rows: 20px repeat(13, 1fr); gap: 3px; width: 100%; max-width: 500px; aspect-ratio: 1; }
-        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        /* MATRIZ EXPANDIDA AL 100% */
+        .gto-grid { display: grid; grid-template-columns: 16px repeat(13, 1fr); grid-template-rows: 16px repeat(13, 1fr); gap: 2px; width: 100%; height: 100%; aspect-ratio: 1; }
+        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted); font-weight: 600; }
         .gto-cell {
             display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: 600; border-radius: 3px;
+            font-size: 9px; font-weight: 600; border-radius: 2px;
             color: var(--text-primary); cursor: help; transition: transform 0.1s;
-            border: 1px solid transparent;
+            border: 1px solid transparent; overflow: hidden;
         }
         .gto-cell:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 0 1.5px var(--text-primary); }
         
         .rp-text {
             width: 100%;
-            min-height: 80px;
+            min-height: 60px;
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
             padding: 8px;
@@ -628,9 +637,14 @@
             background: var(--bg-surface-warm);
             transition: all var(--transition);
             line-height: 1.5;
+            flex-shrink: 0;
         }
         .rp-text:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 2px rgba(99,102,241,0.05); }
         .rp-text::placeholder { color: var(--text-faint); }
+
+        .img-modal-legend { display: flex; gap: 12px; font-size: 11px; color: var(--text-secondary); font-weight: 600; justify-content: flex-end; padding-top: 10px; flex-shrink: 0; }
+        .leg-item { display: flex; align-items: center; gap: 5px; }
+        .leg-color { width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.1); }
 
         .img-slots-area::-webkit-scrollbar { width: 8px; }
         .img-slots-area::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
@@ -1351,27 +1365,37 @@
             </div>
         </div>
     </div>
-   <div id="modal-img" class="modal-overlay">
+    <div id="modal-img" class="modal-overlay">
         <div class="modal-box">
-            <div class="img-modal-header">
-                <div style="display: flex; gap: 6px;">
-                    <button class="modal-btn primary" style="font-size: 10px; padding: 4px 10px;" onclick="addImageSlot()">+ Agregar Slot</button>
-                    <button class="modal-btn" style="font-size: 10px; padding: 4px 10px;" onclick="closeModal('img')">Cerrar</button>
-                </div>
-                <div class="img-modal-legend">
-                    <span class="leg-item"><span class="leg-color" style="background:#fecaca;"></span>Raise/Bet</span>
-                    <span class="leg-item"><span class="leg-color" style="background:#bfdbfe;"></span>Call</span>
-                    <span class="leg-item"><span class="leg-color" style="background:#bbf7d0;"></span>Check</span>
-                    <span class="leg-item"><span class="leg-color" style="background:#e9d5ff;"></span>Fold</span>
-                </div>
-            </div>
             <div class="img-modal-body">
                 <div class="img-interaction-panel">
-                    <div style="color: var(--text-muted); font-size: 11px; text-align: center; margin-top: 20px;">Panel de Interacciones<br>(Próximamente)</div>
+                    <div class="img-panel-header">
+                        <span>Acciones</span>
+                    </div>
+                    <div class="img-panel-actions">
+                        <button class="modal-btn primary" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="addImageSlot()">+ Agregar Slot</button>
+                        <button class="modal-btn" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="closeModal('img')">Cerrar</button>
+                    </div>
+                    
+                    <div class="img-panel-separator"></div>
+                    
+                    <div class="img-panel-header">
+                        <span>Interacciones (Slot <span id="activeSlotNum">-</span>)</span>
+                    </div>
+                    <div id="interactionsContent" class="img-panel-interactions">
+                        <div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>
+                    </div>
                 </div>
+                
                 <div class="img-slots-area">
                     <div id="img-slots-container" class="slots-container"></div>
                 </div>
+            </div>
+            <div class="img-modal-legend">
+                <span class="leg-item"><span class="leg-color" style="background:#fecaca;"></span>Raise/Bet</span>
+                <span class="leg-item"><span class="leg-color" style="background:#bfdbfe;"></span>Call</span>
+                <span class="leg-item"><span class="leg-color" style="background:#bbf7d0;"></span>Check</span>
+                <span class="leg-item"><span class="leg-color" style="background:#e9d5ff;"></span>Fold</span>
             </div>
         </div>
     </div>
@@ -3817,41 +3841,46 @@
             document.getElementById('modal-img').style.display = 'flex'; 
         }
 
+        let activeSlotId = null;
+
         function renderImgSlots() {
             const node = getImgNode();
             const container = document.getElementById('img-slots-container');
             if (!container) return;
             
             if (node.imageSlots.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:var(--text-faint); margin-top:40px; font-size:12px;">No hay slots.<br>Haz clic en "+ Agregar Slot" para comparar rangos.</div>';
+                container.innerHTML = '<div style="text-align:center; color:var(--text-faint); margin-top:40px; font-size:12px;">No hay slots.<br>Haz clic en "+ Agregar Slot" en el panel izquierdo.</div>';
+                document.getElementById('activeSlotNum').textContent = '-';
+                document.getElementById('interactionsContent').innerHTML = '<div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>';
                 return;
             }
 
             container.innerHTML = node.imageSlots.map((slot, idx) => {
+                const isActive = slot.id === activeSlotId ? 'active-slot' : '';
                 return `
-                <div class="slot-card">
+                <div class="slot-card ${isActive}" onclick="setActiveSlot('${slot.id}')">
                     <div class="slot-header">
-                        <span>Slot ${idx + 1}</span>
-                        <span class="slot-del-btn" onclick="deleteImageSlot('${slot.id}')">Eliminar Slot ×</span>
+                        <span>Slot ${idx + 1} ${isActive ? '(Activo)' : ''}</span>
+                        <button class="slot-del-btn" onclick="event.stopPropagation(); deleteImageSlot('${slot.id}')">Eliminar ×</button>
                     </div>
-                    <div class="slot-panels">
+                    <div class="slot-panels" onclick="event.stopPropagation();">
                         <div class="range-panel">
                             <div class="rp-header">
                                 <div class="rp-title">Hero Range</div>
-                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'hero')">Borrar texto</button>
+                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'hero')">Borrar</button>
                             </div>
-                            <textarea class="rp-gto-input" placeholder="Pega aquí la tabla de GTO+ (incluye los encabezados)" oninput="updateSlotGto('${slot.id}', 'hero', this.value)">${slot.hero?.gto || ''}</textarea>
+                            <textarea class="rp-gto-input" placeholder="Pega la tabla de GTO+ aquí..." oninput="updateSlotGto('${slot.id}', 'hero', this.value)">${slot.hero?.gto || ''}</textarea>
                             <div class="rp-gto-matrix" id="mat-${slot.id}-hero"></div>
-                            <textarea class="rp-text" placeholder="Notas del Hero..." oninput="updateSlotText('${slot.id}', 'hero', this.value)">${slot.hero?.text || ''}</textarea>
+                            <textarea class="rp-text" placeholder="Notas Hero..." oninput="updateSlotText('${slot.id}', 'hero', this.value)">${slot.hero?.text || ''}</textarea>
                         </div>
                         <div class="range-panel">
                             <div class="rp-header">
                                 <div class="rp-title">Villain Range</div>
-                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'villain')">Borrar texto</button>
+                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'villain')">Borrar</button>
                             </div>
-                            <textarea class="rp-gto-input" placeholder="Pega aquí la tabla de GTO+ (incluye los encabezados)" oninput="updateSlotGto('${slot.id}', 'villain', this.value)">${slot.villain?.gto || ''}</textarea>
+                            <textarea class="rp-gto-input" placeholder="Pega la tabla de GTO+ aquí..." oninput="updateSlotGto('${slot.id}', 'villain', this.value)">${slot.villain?.gto || ''}</textarea>
                             <div class="rp-gto-matrix" id="mat-${slot.id}-villain"></div>
-                            <textarea class="rp-text" placeholder="Notas del Villain..." oninput="updateSlotText('${slot.id}', 'villain', this.value)">${slot.villain?.text || ''}</textarea>
+                            <textarea class="rp-text" placeholder="Notas Villain..." oninput="updateSlotText('${slot.id}', 'villain', this.value)">${slot.villain?.text || ''}</textarea>
                         </div>
                     </div>
                 </div>`;
@@ -3861,6 +3890,33 @@
                 drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto));
                 drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto));
             });
+            
+            updateInteractionPanel();
+        }
+
+        function setActiveSlot(id) {
+            activeSlotId = id;
+            renderImgSlots();
+        }
+
+        function updateInteractionPanel() {
+            const node = getImgNode();
+            if (!activeSlotId) {
+                document.getElementById('activeSlotNum').textContent = '-';
+                document.getElementById('interactionsContent').innerHTML = '<div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>';
+                return;
+            }
+            const idx = node.imageSlots.findIndex(s => s.id === activeSlotId);
+            if (idx === -1) {
+                activeSlotId = null;
+                updateInteractionPanel();
+                return;
+            }
+            document.getElementById('activeSlotNum').textContent = idx + 1;
+            // Aquí puedes agregar los botones de interacción en el futuro
+            document.getElementById('interactionsContent').innerHTML = `
+                <div style="color: var(--text-muted);">Interacciones para el Slot ${idx + 1} se construirán aquí.</div>
+            `;
         }
 
         function clearSlotGto(id, who) {
@@ -4092,7 +4148,7 @@ function parseGtoData(text) {
             if (act.includes('fold')) return '#e9d5ff'; // Morado pastel (Antes era gris, confundía)
             return '#d6d3d1';
         }
-        
+
         function drawGtoMatrix(containerId, data) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -4164,7 +4220,9 @@ function parseGtoData(text) {
 
         function addImageSlot() {
             const node = getImgNode();
-            node.imageSlots.push({ id: Date.now().toString(), hero: { gto: '', text: '' }, villain: { gto: '', text: '' } });
+            const newSlot = { id: Date.now().toString(), hero: { gto: '', text: '' }, villain: { gto: '', text: '' } };
+            node.imageSlots.push(newSlot);
+            activeSlotId = newSlot.id; // Marcar como activo
             renderImgSlots();
             updateMicroButtons(currentEditType, node);
             commit();
@@ -4173,6 +4231,7 @@ function parseGtoData(text) {
         function deleteImageSlot(id) {
             const node = getImgNode();
             node.imageSlots = node.imageSlots.filter(s => s.id !== id);
+            if (activeSlotId === id) activeSlotId = null; // Si borras el activo, se reinicia
             renderImgSlots();
             updateMicroButtons(currentEditType, node);
             commit();
