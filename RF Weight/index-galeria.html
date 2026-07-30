@@ -3919,36 +3919,102 @@
             return linea.trim().split(/\s+/);
         }
 
-        function parseGtoData(text) {
-            const data = {};
-            if (!text) return data;
-            
-            // 1. Ordenar el texto como Excel internamente
-            const lineas = text.replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
-            if (lineas.length < 2) return data;
+function numeroGto(valor) {
+    let texto = String(valor ?? '').trim().replace(/[%\s]/g, '');
+    if (!texto) return NaN;
 
-            const separador = obtenerSeparador(lineas);
-            const matriz = lineas.map(linea => dividirLinea(linea, separador));
+    const coma = texto.lastIndexOf(',');
+    const punto = texto.lastIndexOf('.');
 
-            // 2. Buscar encabezados y mapear columnas
-            let actionCols = {};
-            let dataStartLine = 0;
+    if (coma !== -1 && punto !== -1) {
+        // El último separador se considera decimal.
+        texto = coma > punto
+            ? texto.replace(/\./g, '').replace(',', '.')
+            : texto.replace(/,/g, '');
+    } else if (coma !== -1) {
+        texto = texto.replace(',', '.');
+    }
 
-            for (let i = 0; i < Math.min(10, matriz.length); i++) {
-                const cols = matriz[i].map(c => c.toLowerCase());
-                if (cols.some(c => c.includes('hand') || c.includes('combo'))) {
-                    cols.forEach((c, idx) => {
-                        if (actionCols['raise'] === undefined && (c.includes('raise') || c.includes('bet') || c.includes('donk'))) actionCols['raise'] = idx;
-                        else if (actionCols['call'] === undefined && c.includes('call')) actionCols['call'] = idx;
-                        else if (actionCols['check'] === undefined && c.includes('check')) actionCols['check'] = idx;
-                        else if (actionCols['fold'] === undefined && c.includes('fold')) actionCols['fold'] = idx;
-                    });
-                    if (Object.keys(actionCols).length > 0) {
-                        dataStartLine = i + 1;
-                        break;
-                    }
-                }
-            }
+    return Number(texto);
+}
+
+function parseGtoData(text) {
+    const data = {};
+    if (!text) return data;
+
+    const lineas = text
+        .replace(/\r/g, '')
+        .split('\n')
+        .map(linea => linea.trim())
+        .filter(Boolean);
+
+    if (lineas.length < 2) return data;
+
+    const separador = obtenerSeparador(lineas);
+    const matriz = lineas.map(linea => dividirLinea(linea, separador));
+
+    // Encuentra la fila de encabezados.
+    const indiceEncabezado = matriz.findIndex(cols => {
+        const etiquetas = cols.map(c => c.toLowerCase());
+        return etiquetas.some(c => c.includes('hand')) &&
+                etiquetas.some(c => /percentage|raise|call|fold|bet|donk/.test(c));
+    });
+
+    if (indiceEncabezado === -1) {
+        console.warn('No se encontró la fila de encabezados de GTO.');
+        return data;
+    }
+
+    const encabezados = matriz[indiceEncabezado].map(c => c.toLowerCase());
+    const indiceHand = encabezados.findIndex(c => c.includes('hand'));
+
+    // Muy importante: comienza en “Percentage”, para no leer los combos.
+    const inicioPorcentajes = encabezados.findIndex(c =>
+        c.includes('percentage') || c.includes('frequency') || c.includes('freq')
+    );
+
+    const actionCols = {};
+    const desde = inicioPorcentajes >= 0 ? inicioPorcentajes : 0;
+
+    for (let i = desde; i < encabezados.length; i++) {
+        const etiqueta = encabezados[i];
+
+        if (actionCols.raise === undefined && /raise|bet|donk/.test(etiqueta)) {
+            actionCols.raise = i;
+        } else if (actionCols.call === undefined && etiqueta.includes('call')) {
+            actionCols.call = i;
+        } else if (actionCols.check === undefined && etiqueta.includes('check')) {
+            actionCols.check = i;
+        } else if (actionCols.fold === undefined && etiqueta.includes('fold')) {
+            actionCols.fold = i;
+        }
+    }
+
+    if (indiceHand === -1 || Object.keys(actionCols).length === 0) {
+        console.warn('No se pudieron identificar Hand o las columnas Percentage.');
+        return data;
+    }
+
+    for (let i = indiceEncabezado + 1; i < matriz.length; i++) {
+        const cols = matriz[i];
+        const hand = normalizeHand(cols[indiceHand]);
+
+        if (!hand) continue;
+
+        const handData = {};
+        let tieneValores = false;
+
+        for (const [accion, indice] of Object.entries(actionCols)) {
+            const valor = numeroGto(cols[indice]);
+            handData[accion] = Number.isFinite(valor) ? valor : 0;
+            tieneValores ||= Number.isFinite(valor);
+        }
+
+        if (tieneValores) data[hand] = handData;
+    }
+
+    return data;
+}
 
             // 3. Procesar filas de datos con las columnas ya alineadas
             for (let i = dataStartLine; i < matriz.length; i++) {
