@@ -4430,29 +4430,20 @@ function renderGtoAnalysis(data) {
                     
                     const d = data[hand];
                     if (d) {
-                        const acciones = getGtoActions(d);
                         let stops = [], pos = 0;
                         let tooltip = hand;
-                        if (Number.isFinite(d.equity)) tooltip += `\nEQ: ${d.equity.toFixed(2)}%`;
-                        if (Number.isFinite(d.combos)) tooltip += `\nCombos: ${d.combos.toFixed(3)}`;
-                        if (Number.isFinite(d.ev?.total)) tooltip += `\nEV: ${d.ev.total.toFixed(4)}`;
                         
-                        const hasHighlightAction = highlightAction && acciones[highlightAction] > 0;
+                        const hasHighlightAction = highlightAction && d[highlightAction] > 0;
                         
-                        Object.keys(acciones).forEach(act => {
-                            const val = acciones[act];
+                        Object.keys(d).forEach(act => {
+                            const val = d[act];
                             if (val > 0) {
                                 let color;
-                                // Si estamos resaltando y esta NO es la acción objetivo, la pintamos de gris claro
                                 if (highlightAction && act !== highlightAction) {
                                     color = '#e5e7eb'; // Gris claro
-                                } 
-                                // Si es la acción objetivo, usamos el color intenso
-                                else if (highlightAction && act === highlightAction) {
+                                } else if (highlightAction && act === highlightAction) {
                                     color = getIntenseColor(act);
-                                } 
-                                // Si no hay resaltado, usamos el color pastel normal
-                                else {
+                                } else {
                                     color = getColorForAction(act);
                                 }
                                 
@@ -4460,21 +4451,16 @@ function renderGtoAnalysis(data) {
                                 pos += val;
                                 stops.push(`${color} ${pos}%`);
                                 tooltip += `\n${act}: ${val.toFixed(1)}%`;
-                                if (Number.isFinite(d.ev?.actions?.[act])) tooltip += ` · EV ${d.ev.actions[act].toFixed(4)}`;
                             }
                         });
                         
                         cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
                         cell.title = tooltip;
                         
-                        // LÓGICA DE OPACIDAD
                         if (highlightAction) {
                             if (hasHighlightAction) {
-                                // Si la celda tiene la acción, la dejamos nítida y con letra blanca
-                                cell.style.color = '#ffffff';
-                                cell.style.fontWeight = '700';
+                                cell.style.fontWeight = '800'; // Negrita para que resalte sobre el color intenso
                             } else {
-                                // Si la celda NO tiene la acción, la atenuamos fuertemente
                                 cell.classList.add('dim');
                             }
                         }
