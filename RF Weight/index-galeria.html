@@ -3883,69 +3883,73 @@
             const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
             if (lines.length === 0) return data;
 
-            let actionCols = {};
-            let totalCol = -1;
-            let usingCombos = false;
-            let dataStartLine = 0;
-            let headerFound = false;
-
-            // 1. Buscar la fila de encabezados
+            // 1. Buscar el orden de las acciones en el encabezado
+            let actionsOrder = [];
             for (let i = 0; i < Math.min(10, lines.length); i++) {
-                let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
-                cols = cols.map(c => c.trim().toLowerCase());
-
-                if (cols.some(c => c.includes('hand') || c.includes('combo'))) {
-                    // Preferimos la sección "Combos": es la única que queda perfectamente
-                    // alineada con las filas de datos. Si no existe, caemos a "Percentage".
-                    let comboMarker = cols.findIndex(c => c.includes('combo'));
-                    let pctMarker = cols.findIndex(c => c.includes('percentage') || c === '%' || c.includes('porcentaje'));
-                    let startAfter = comboMarker !== -1 ? comboMarker : pctMarker;
-                    if (comboMarker !== -1) { usingCombos = true; totalCol = comboMarker; }
-
-                    cols.forEach((c, idx) => {
-                        if (startAfter !== -1 && idx <= startAfter) return;
-                        if (actionCols['raise'] === undefined && (c.includes('raise') || c.includes('bet') || c.includes('donk') || c.includes('3b') || c.includes('4b'))) actionCols['raise'] = idx;
-                        else if (actionCols['call'] === undefined && c.includes('call')) actionCols['call'] = idx;
-                        else if (actionCols['check'] === undefined && c.includes('check')) actionCols['check'] = idx;
-                        else if (actionCols['fold'] === undefined && c.includes('fold')) actionCols['fold'] = idx;
-                    });
-                    if (Object.keys(actionCols).length > 0) { headerFound = true; dataStartLine = i + 1; break; }
-                }
-            }
-            
-            if (!headerFound) { 
-                actionCols = { 'raise': 1, 'call': 2, 'fold': 3 }; 
-                dataStartLine = 0; 
-            }
-
-            // 2. Leer las filas de datos
-            for (let i = dataStartLine; i < lines.length; i++) {
-                let cols = lines[i].includes('\t') ? lines[i].split('\t') : lines[i].split(/\s+/);
-                cols = cols.map(c => c.trim());
-                const hand = normalizeHand(cols[0]);
-                if (!hand) continue;
-
-                let raw = {};
-                for (const act in actionCols) {
-                    const colIdx = actionCols[act];
-                    const val = colIdx < cols.length ? parseFloat(String(cols[colIdx]).replace('%','').replace(',','.')) : NaN;
-                    raw[act] = isNaN(val) ? 0 : val;
-                }
-
-                let handData;
-                if (usingCombos && totalCol !== -1 && totalCol < cols.length) {
-                    const total = parseFloat(String(cols[totalCol]).replace(',', '.'));
-                    if (total > 0) {
-                        handData = {};
-                        for (const act in raw) handData[act] = Math.round(raw[act] / total * 1000) / 10;
-                    } else { 
-                        handData = raw; 
+                let lowerLine = lines[i].toLowerCase();
+                if (lowerLine.includes('hand') || lowerLine.includes('combo')) {
+                    let matches = lowerLine.match(/(raise|bet|donk|3b|4b|call|check|fold)/g);
+                    if (matches) {
+                        actionsOrder = matches;
+                        break;
                     }
-                } else { 
-                    handData = raw; 
+                }
+            }
+            if (actionsOrder.length === 0) {
+                actionsOrder = ['raise', 'call', 'fold']; // Fallback
+            }
+
+            // 2. Procesar cada fila de datos
+            for (let line of lines) {
+                let tokens = line.split(/\s+/); // Divide por espacios
+                let hand = normalizeHand(tokens[0]);
+                if (!hand) continue; // Si el primer token no es una mano, salta la línea
+
+                let dataTokens = tokens.slice(1);
+                let pcts = [];
+
+                // Estrategia A: Buscar tokens que tengan el símbolo '%'
+                let pctTokens = dataTokens.filter(t => t.includes('%'));
+                if (pctTokens.length >= 2) {
+                    pcts = pctTokens.map(t => parseFloat(t.replace('%', '').replace(',', '.')));
+                    // Verificar que sumen ~100
+                    let sum = pcts.reduce((a, b) => a + b, 0);
+                    if (sum < 99 || sum > 101) pcts = []; // Si no suman 100, se descartan
                 }
 
-                if (Object.keys(handData).length > 0) data[hand] = handData;
+                // Estrategia B (si no había '%'): Busar secuencia de números que sumen 100
+                if (pcts.length === 0) {
+                    let nums = dataTokens.map(t => parseFloat(t.replace(',', '.').replace('%', ''))).filter(n => !isNaN(n));
+                    for (let i = 0; i < nums.length; i++) {
+                        if (nums[i] >= 0 && nums[i] <= 100) {
+                            let seq = [nums[i]];
+                            for (let j = i + 1; j < nums.length; j++) {
+                                if (nums[j] >= 0 && nums[j] <= 100) {
+                                    seq.push(nums[j]);
+                                    let sum = seq.reduce((a, b) => a + b, 0);
+                                    if (sum >= 99.5 && sum <= 100.5 && seq.length >= 2) {
+                                        pcts = seq;
+                                        break;
+                                    }
+                                    if (sum > 100.5) break;
+                                } else {
+                                    break;
+                                }
+                            }
+                            if (pcts.length >= 2) break;
+                        }
+                    }
+                }
+
+                // 3. Guardar los datos si encontró frecuencias válidas
+                if (pcts.length >= 2) {
+                    let handData = {};
+                    pcts.forEach((val, idx) => {
+                        let act = actionsOrder[idx] || (idx === 0 ? 'raise' : (idx === pcts.length - 1 ? 'fold' : 'call'));
+                        handData[act] = val;
+                    });
+                    data[hand] = handData;
+                }
             }
             return data;
         }
