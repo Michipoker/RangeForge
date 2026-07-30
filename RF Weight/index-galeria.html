@@ -4105,6 +4105,13 @@ function parseGtoData(text) {
             return '#d6d3d1';
         }
 
+        console.table(
+    ['AA', 'AKs', 'AKo', 'QQ', '72o'].map(hand => ({
+        hand,
+        ...data[hand]
+    }))
+);
+
         function drawGtoMatrix(containerId, data) {
             const container = document.getElementById(containerId);
             if (!container) return;
