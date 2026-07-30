@@ -4119,7 +4119,7 @@ function getColorForAction(act) {
                     const d = data[hand];
                     if (d) {
                         let stops = [], pos = 0;
-                        let tooltip = `<b>${hand}</b>`;
+                        let tooltip = hand;
                         
                         Object.keys(d).forEach(act => {
                             const val = d[act];
@@ -4128,7 +4128,7 @@ function getColorForAction(act) {
                                 stops.push(`${color} ${pos}%`);
                                 pos += val;
                                 stops.push(`${color} ${pos}%`);
-                                tooltip += `<br>${act}: ${val.toFixed(1)}%`;
+                                tooltip += `\n${act}: ${val.toFixed(1)}%`;
                             }
                         });
                         
