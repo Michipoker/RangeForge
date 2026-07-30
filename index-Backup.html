@@ -1368,15 +1368,21 @@
                 data = JSON.parse(v3raw); 
                 if(!data.library || !Array.isArray(data.library)) data.library = [];
                 if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
-                // Limpiamos preflopRange corruptos en migración
                 data.spots.forEach(spot => {
-                    if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                    if (Array.isArray(spot.preflopRange)) {
+                        const newObj = {};
+                        spot.preflopRange.forEach(key => newObj[key] = 100);
+                        spot.preflopRange = newObj;
+                    } else if (typeof spot.preflopRange !== 'object' || spot.preflopRange === null) {
+                        spot.preflopRange = {};
+                    }
                 });
                 localStorage.setItem(DB_KEY, JSON.stringify(data)); 
                 document.getElementById('migrate-area').innerHTML = ''; 
                 clearAll(); renderSidebar(); 
             } catch(e) { alert('Error: ' + e.message); }
         }
+
         window.onload = () => { 
             try { 
                 const s = localStorage.getItem(DB_KEY); 
@@ -1384,9 +1390,14 @@
                     data = JSON.parse(s); 
                     if (!data.spots || !Array.isArray(data.spots)) data.spots = [];
                     if (!data.library || !Array.isArray(data.library)) data.library = [];
-                    // Limpiamos preflopRange corruptos en todos los spots existentes
                     data.spots.forEach(spot => {
-                        if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                        if (Array.isArray(spot.preflopRange)) {
+                            const newObj = {};
+                            spot.preflopRange.forEach(key => newObj[key] = 100);
+                            spot.preflopRange = newObj;
+                        } else if (typeof spot.preflopRange !== 'object' || spot.preflopRange === null) {
+                            spot.preflopRange = {};
+                        }
                     });
                 }
             } catch(e){ 
@@ -1395,8 +1406,11 @@
             } 
             renderSidebar(); 
         };
+
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
+        
         function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
+        
         function importData(event) { 
             let file = event.target.files[0]; 
             if(!file) return; 
@@ -1407,9 +1421,14 @@
                         data = JSON.parse(e.target.result); 
                         if(!data.spots || !Array.isArray(data.spots)) data.spots = [];
                         if(!data.library || !Array.isArray(data.library)) data.library = [];
-                        // Limpiamos preflopRange corruptos al importar
                         data.spots.forEach(spot => {
-                            if (!Array.isArray(spot.preflopRange)) spot.preflopRange = [];
+                            if (Array.isArray(spot.preflopRange)) {
+                                const newObj = {};
+                                spot.preflopRange.forEach(key => newObj[key] = 100);
+                                spot.preflopRange = newObj;
+                            } else if (typeof spot.preflopRange !== 'object' || spot.preflopRange === null) {
+                                spot.preflopRange = {};
+                            }
                         });
                         commit(true); clearAll(); renderSidebar(); 
                     } 
@@ -1419,7 +1438,13 @@
             event.target.value = ''; 
         }
         function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
-        function addSpot() { const n=document.getElementById('spot-input').value.trim(); if(!n) return; data.spots.push({name:n, textures:[], preflopRange: []}); document.getElementById('spot-input').value=''; commit(); }
+        function addSpot() { 
+            const n=document.getElementById('spot-input').value.trim(); 
+            if(!n) return; 
+            data.spots.push({name:n, textures:[], preflopRange: {}}); // Aquí está el fix: {} en lugar de []
+            document.getElementById('spot-input').value=''; 
+            commit(); 
+        }
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
         function delTexture(i) { if(confirm('¿Borrar textura?')){ data.spots[aS].textures.splice(i,1); if(aT===i){aT=-1; clearAll();} else if(aT>i){aT--;} commit(); } }
         function addTexture() { const n=prompt("Nombre de la textura:"); if(!n) return; data.spots[aS].textures.push({name:n, board:'', flopNodes:[]}); commit(); loadTexture(data.spots[aS].textures.length-1); }
@@ -1430,7 +1455,8 @@
             let html = ''; 
             if(!data.spots) data.spots = [];
             data.spots.forEach((s, i) => { 
-                const hasRange = s.preflopRange && s.preflopRange.length > 0;
+                // Aquí validamos si el objeto tiene datos
+                const hasRange = s.preflopRange && Object.keys(s.preflopRange).length > 0;
                 html += `<div class="spot-item"><div class="spot-name"><span>${s.name}</span><div class="spot-actions"><div class="micro-btn ${hasRange?'has-data':''}" onclick="event.stopPropagation(); openRangeModal(${i})" title="Rango preflop">R</div><span class="del-btn" onclick="event.stopPropagation(); delSpot(${i})">×</span></div></div>`; 
                 s.textures.forEach((t, j) => { 
                     let ac = (i === aS && j === aT) ? 'active' : ''; 
@@ -1441,20 +1467,19 @@
             l.innerHTML = html; 
         }
 
-        // --- Lógica Rango Preflop (Flopzilla) ---
+                // --- Lógica Rango Preflop (Flopzilla) ---
         let rangeSpotIdx = -1;
         let rmDragModeAdd = false;
         let rmMouseDown = false;
-        let tempPreflopRange = []; 
+        let tempPreflopRange = {}; 
         let selectedLibCat = -1;
 
         function openRangeModal(idx) {
             rangeSpotIdx = idx;
-            // Forzamos que sea un arreglo si no lo es
-            if (!Array.isArray(data.spots[idx].preflopRange)) {
-                data.spots[idx].preflopRange = [];
+            if (typeof data.spots[idx].preflopRange !== 'object' || Array.isArray(data.spots[idx].preflopRange) || data.spots[idx].preflopRange === null) {
+                data.spots[idx].preflopRange = {};
             }
-            tempPreflopRange = [...data.spots[idx].preflopRange];
+            tempPreflopRange = {...data.spots[idx].preflopRange};
             selectedLibCat = -1;
             renderLibrary();
             updateRangeInputText();
@@ -1462,9 +1487,27 @@
             document.getElementById('modal-range').style.display = 'flex';
         }
 
+        function getColorForWeight(w) {
+            if (w >= 100) return '#c7d2fe'; // Indigo pastel (100%)
+            const w10 = Math.round(w / 10) * 10; // Redondea matemáticamente: 33.3 -> 30, 66.6 -> 70
+            const colors = {
+                10: '#fecaca', // Red pastel
+                20: '#fecdd3', // Rose pastel
+                30: '#fed7aa', // Orange pastel
+                40: '#fde68a', // Amber/Yellow pastel
+                50: '#d9f99d', // Lime pastel
+                60: '#bbf7d0', // Green pastel
+                70: '#a7f3d0', // Emerald pastel
+                80: '#a5f3fc', // Cyan pastel
+                90: '#bfdbfe'  // Blue pastel
+            };
+            return colors[w10] || colors[10];
+        }
+
         function renderRangeGrid() {
-            const rangeSet = new Set(tempPreflopRange);
-            let html = '<div id="rm-grid">';
+            let gridHtml = '';
+            const activeWeights = new Set();
+            
             RANKS.forEach((r1, i) => {
                 RANKS.forEach((r2, j) => {
                     let hand, type, label;
@@ -1473,31 +1516,80 @@
                     else { hand = r2+r1; type = 'o'; label = hand+'o'; }
                     
                     const key = hand + type;
-                    const active = rangeSet.has(key);
-                    html += `<div class="rm-cell ${active?'active':''}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)">${label}</div>`;
+                    const weight = tempPreflopRange[key] || 0;
+                    const active = weight > 0;
+                    
+                    if(active) activeWeights.add(weight);
+                    
+                    let styleAttr = '';
+                    if (active) {
+                        const bg = getColorForWeight(weight);
+                        // Letra oscura para que resalte sobre el color pastel
+                        styleAttr = `style="background-color:${bg}; color: var(--text-primary); border-color:${bg}; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"`;
+                    }
+                    
+                    gridHtml += `<div class="rm-cell" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)" ${styleAttr}>${label}</div>`;
                 });
             });
-            html += '</div>';
-            document.getElementById('rm-grid').outerHTML = html;
+            
+            const gridEl = document.getElementById('rm-grid');
+            gridEl.innerHTML = gridHtml;
+            
+            // --- Crear / Actualizar el panel derecho dinámico ---
+            let wrapper = document.getElementById('rm-grid-wrapper');
+            let legendEl = document.getElementById('rm-legend');
+            
+            if (!wrapper) {
+                wrapper = document.createElement('div');
+                wrapper.id = 'rm-grid-wrapper';
+                wrapper.style.cssText = 'display:flex; gap:24px; align-items: flex-start; justify-content:center; width:100%;';
+                gridEl.parentNode.insertBefore(wrapper, gridEl);
+                wrapper.appendChild(gridEl);
+            }
+            
+            if (!legendEl) {
+                legendEl = document.createElement('div');
+                legendEl.id = 'rm-legend';
+                legendEl.style.cssText = 'display:flex; flex-direction:column; gap:6px; padding-top: 12px; font-size:11px; font-weight:600; min-width: 60px;';
+                wrapper.appendChild(legendEl);
+            }
+            
+            let legendHtml = '';
+            if (activeWeights.size > 0) {
+                const sortedWeights = Array.from(activeWeights).sort((a, b) => b - a);
+                sortedWeights.forEach(w => {
+                    const bg = getColorForWeight(w);
+                    // AQUÍ USAMOS Math.floor(w) PARA REDONDEAR VISUALMENTE (66.6667 -> 66)
+                    const displayW = Math.floor(w);
+                    legendHtml += `<div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border); padding:4px 8px; border-radius:4px; box-shadow: var(--shadow-xs);">
+                                <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
+                                <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${displayW}%</span>
+                            </div>`;
+                });
+            }
+            legendEl.innerHTML = legendHtml;
             
             const totalCombos = countCombosInRange(tempPreflopRange);
-            document.getElementById('rm-info').textContent = `${tempPreflopRange.length} manos (${totalCombos} combos)`;
+            const handCount = Object.keys(tempPreflopRange).filter(k => tempPreflopRange[k] > 0).length;
+            document.getElementById('rm-info').textContent = `${handCount} manos (${totalCombos} combos)`;
         }
 
-        function countCombosInRange(rangeArr) {
+        function countCombosInRange(rangeDict) {
             let count = 0;
-            rangeArr.forEach(key => {
+            for (const key in rangeDict) {
+                const weight = rangeDict[key];
+                if (weight === 0) continue;
                 const r1 = key[0], r2 = key[1];
                 const isPair = r1 === r2;
-                if (isPair) count += 6;
-                else count += (key[2] === 's' ? 4 : 12);
-            });
-            return count;
+                let baseCombos = isPair ? 6 : (key[2] === 's' ? 4 : 12);
+                count += baseCombos * (weight / 100);
+            }
+            return count.toFixed(1);
         }
 
         function rmCellDown(e, key) {
             rmMouseDown = true;
-            const set = new Set(tempPreflopRange);
+            const set = new Set(Object.keys(tempPreflopRange));
             rmDragModeAdd = !set.has(key);
             rmApplyAction(key);
             e.preventDefault();
@@ -1507,24 +1599,49 @@
         document.addEventListener('mouseup', function() { rmMouseDown = false; });
 
         function rmApplyAction(key) {
-            const set = new Set(tempPreflopRange);
-            if (rmDragModeAdd && !set.has(key)) set.add(key);
-            else if (!rmDragModeAdd && set.has(key)) set.delete(key);
-            tempPreflopRange = Array.from(set);
+            if (rmDragModeAdd) {
+                tempPreflopRange[key] = 100; // Al hacer click, pone 100% por defecto
+            } else {
+                delete tempPreflopRange[key]; // Al borrar, quita la mano
+            }
             renderRangeGrid();
             updateRangeInputText();
         }
 
         function parseRangeInput() {
             const text = document.getElementById('rm-input').value.toUpperCase();
-            const rangeSet = new Set();
+            const rangeDict = {}; 
+
             if (!text.trim()) {
-                tempPreflopRange = [];
+                tempPreflopRange = {};
                 renderRangeGrid();
                 return;
             }
+
+            // Regex simplificada: lee cualquier número de dígitos con o sin decimales
+            const weightRegex = /\[([\d\.]+)\]([^\[]+)\[\/\1\]/g;
             
-            const tokens = text.split(',');
+            // 1. Procesar texto FUERA de los corchetes (peso 100%)
+            const outsideText = text.replace(weightRegex, '|').split('|');
+            outsideText.forEach(part => {
+                processRangeTokens(part, 100, rangeDict);
+            });
+
+            // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
+            // Usamos un bucle clásico para máxima compatibilidad
+            let match;
+            while ((match = weightRegex.exec(text)) !== null) {
+                const weight = parseFloat(match[1]); // parseFloat para decimales
+                const innerText = match[2];
+                processRangeTokens(innerText, weight, rangeDict);
+            }
+
+            tempPreflopRange = rangeDict;
+            renderRangeGrid();
+        }
+
+        function processRangeTokens(tokenStr, weight, rangeDict) {
+            const tokens = tokenStr.split(',');
             tokens.forEach(t => {
                 t = t.trim();
                 if (t.length < 2) return;
@@ -1541,12 +1658,12 @@
                             const i2 = RANKS.indexOf(r2);
                             const min = Math.min(i1, i2), max = Math.max(i1, i2);
                             for (let i = min; i <= max; i++) {
-                                rangeSet.add(RANKS[i] + RANKS[i] + 'p');
+                                rangeDict[RANKS[i] + RANKS[i] + 'p'] = weight;
                             }
                         }
                         else if (a.length >= 3 && b.length >= 3) {
                             const r1 = a[0], r2 = b[0];
-                            const suffix = a[a.length-1];
+                            const suffix = a[a.length-1].toUpperCase();
                             if (r1 === r2 && (suffix === 'S' || suffix === 'O')) {
                                 const c1 = a[1];
                                 const c2 = b[1];
@@ -1557,7 +1674,7 @@
                                     const g = suffix === 'S' ? 's' : 'o';
                                     for (let i = min; i <= max; i++) {
                                         if (RANKS[i] !== r1) {
-                                            rangeSet.add(r1 + RANKS[i] + g);
+                                            rangeDict[r1 + RANKS[i] + g] = weight;
                                         }
                                     }
                                 }
@@ -1569,24 +1686,43 @@
                     if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
                     const isPair = r1 === r2;
                     if (isPair) {
-                        rangeSet.add(r1 + r2 + 'p');
+                        rangeDict[r1 + r2 + 'p'] = weight;
                     } else {
-                        const suffix = t.length > 2 ? t[2] : 's'; 
-                        if (suffix.toUpperCase() === 'O') {
-                            rangeSet.add(r1 + r2 + 'o');
+                        const suffix = t.length > 2 ? t[2].toUpperCase() : 'S'; 
+                        if (suffix === 'O') {
+                            rangeDict[r1 + r2 + 'o'] = weight;
                         } else {
-                            rangeSet.add(r1 + r2 + 's');
+                            rangeDict[r1 + r2 + 's'] = weight;
                         }
                     }
                 }
             });
-            
-            tempPreflopRange = Array.from(rangeSet);
-            renderRangeGrid();
         }
 
-        function generateRangeString(rangeArr) {
-            const rangeSet = new Set(rangeArr);
+        function generateRangeString(rangeDict) {
+            const byWeight = {};
+            for (const key in rangeDict) {
+                const w = rangeDict[key];
+                if (w > 0) {
+                    if (!byWeight[w]) byWeight[w] = [];
+                    byWeight[w].push(key);
+                }
+            }
+
+            let parts = [];
+            if (byWeight[100]) {
+                parts.push(processGroupToText(byWeight[100]));
+            }
+            for (const w in byWeight) {
+                if (w !== '100') {
+                    parts.push(`[${w}]${processGroupToText(byWeight[w])}[/${w}]`);
+                }
+            }
+            return parts.join(',');
+        }
+
+        function processGroupToText(keys) {
+            const rangeSet = new Set(keys);
             let parts = [];
             
             let pStart = -1;
@@ -1628,7 +1764,6 @@
                     }
                 }
             });
-            
             return parts.join(',');
         }
 
@@ -1638,7 +1773,7 @@
         }
 
         function clearRange() {
-            tempPreflopRange = [];
+            tempPreflopRange = {};
             document.getElementById('rm-input').value = '';
             renderRangeGrid();
         }
@@ -1727,9 +1862,47 @@
         // =======================================
 
         function getActivePreflopRange() {
-            if (aS === -1 || !data.spots[aS]) return [];
-            // Devuelve un arreglo vacío si no es un arreglo válido
-            return Array.isArray(data.spots[aS].preflopRange) ? data.spots[aS].preflopRange : [];
+            if (aS === -1 || !data.spots[aS]) return {};
+            return (typeof data.spots[aS].preflopRange === 'object' && !Array.isArray(data.spots[aS].preflopRange)) ? data.spots[aS].preflopRange : {};
+        }
+
+        function getComboWeight(id) {
+            const preRange = getActivePreflopRange();
+            const preKeys = Object.keys(preRange);
+            if (preKeys.length === 0) return 1;
+
+            const r1 = id[0], r2 = id[2];
+            const handStr = r1 + r2;
+            const isPair = r1 === r2;
+            const g = isPair ? 'p' : (id[1] === id[3] ? 's' : 'o');
+            const key = handStr + g;
+
+            if (preRange[key] !== undefined) return preRange[key] / 100;
+            return 0;
+        }
+
+        function getComboCountForCombo(c, boardSet = null) {
+            let count = 0;
+            (c.hands||[]).forEach(h => {
+                (h.selected||[]).forEach(id => {
+                    if (boardSet) {
+                        const c1 = id.slice(0,2).toLowerCase();
+                        const c2 = id.slice(2,4).toLowerCase();
+                        if (boardSet.has(c1) || boardSet.has(c2)) return; // Si la combo choca con el board, no la cuenta
+                    }
+                    count += getComboWeight(id);
+                });
+            });
+            return count;
+        }
+
+        function getComboCountFromNode(node, boardSet = null) {
+            let count = 0;
+            if (!node || !node.combos) return count;
+            node.combos.forEach(c => {
+                count += getComboCountForCombo(c, boardSet);
+            });
+            return count;
         }
 
         function getUniverse(type) {
@@ -1739,11 +1912,15 @@
                 } else if (type === 'turnAction') {
                     if (aS === -1 || aT === -1 || aF === -1) return 0;
                     const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
-                    return getAllSelectedFromNode(flopNode).length;
+                    const turnBoard = getActiveBoard('turnAction'); 
+                    const boardSet = new Set(turnBoard); // Board incluye el Turn
+                    return getComboCountFromNode(flopNode, boardSet); // Filtra combos muertos
                 } else if (type === 'riverAction') {
                     if (aS === -1 || aT === -1 || aF === -1 || aTC === -1 || aTA === -1) return 0;
                     const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
-                    return getAllSelectedFromNode(turnNode).length;
+                    const riverBoard = getActiveBoard('riverAction');
+                    const boardSet = new Set(riverBoard); // Board incluye el River
+                    return getComboCountFromNode(turnNode, boardSet); // Filtra combos muertos
                 }
                 return 0;
             } catch(e) {
@@ -1751,12 +1928,144 @@
             }
         }
 
-         function getTabPct(node, type) {
+        function getTabPct(node, type) {
             if (!node) return '0.0';
             const universe = getUniverse(type);
             if (universe === 0) return '0.0';
-            const total = getAllSelectedFromNode(node).length;
+            const total = getComboCountFromNode(node);
             return (total / universe * 100).toFixed(1);
+        }
+
+        function getBrutoUniverse(type) {
+            if (aS === -1 || aT === -1) return 1326;
+            const tex = data.spots[aS].textures[aT];
+            if (!tex) return 1326;
+            const board = getActiveBoard(type) || [];
+            const boardSet = new Set(board);
+
+            let count = 0;
+            const preRange = getActivePreflopRange();
+            const preKeys = Object.keys(preRange);
+            
+            if (preKeys.length > 0) {
+                preKeys.forEach(key => {
+                    const weight = preRange[key];
+                    if (weight === 0) return;
+                    const r1 = key[0], r2 = key[1];
+                    const isPair = r1 === r2;
+                    const g = isPair ? 'p' : key[2];
+                    suitCombos(r1+r2).forEach(sc => {
+                        if (g === 's' && sc.g !== 's') return;
+                        if (g === 'o' && sc.g !== 'o') return;
+                        if (g === 'p' && sc.g !== 'p') return;
+
+                        const c1 = sc.id.slice(0,2).toLowerCase();
+                        const c2 = sc.id.slice(2,4).toLowerCase();
+                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100);
+                    });
+                });
+            } else {
+                for (let i = 0; i < RANKS.length; i++) {
+                    for (let j = i; j < RANKS.length; j++) {
+                        suitCombos(RANKS[i] + RANKS[j]).forEach(sc => {
+                            const c1 = sc.id.slice(0,2).toLowerCase();
+                            const c2 = sc.id.slice(2,4).toLowerCase();
+                            if (!boardSet.has(c1) && !boardSet.has(c2)) count++;
+                        });
+                    }
+                }
+            }
+            return count;
+        }
+
+        function renderCombosUI(containerId, combosArr, type) {
+            if(!combosArr) return;
+            const isLocked = getNodeByType(type) && getNodeByType(type).locked;
+            combosArr.sort((a,b) => a.sort - b.sort);
+            
+            const fmt = (n) => parseFloat(n.toFixed(2));
+            
+            let hitCount = 0, bluffCount = 0, totalSelectedInNode = 0;
+            combosArr.forEach(c => {
+                const count = getComboCountForCombo(c);
+                totalSelectedInNode += count;
+                if (HIT_CATS.includes(c.id)) hitCount += count;
+                else if (BLUFF_CATS.includes(c.id)) bluffCount += count;
+            });
+            
+            const universe = getUniverse(type);
+            const pctHit = universe > 0 ? (hitCount / universe * 100).toFixed(1) : '0.0';
+            const pctBluff = universe > 0 ? (bluffCount / universe * 100).toFixed(1) : '0.0';
+            
+            let orphanTotalCount = 0;
+            let orphanCounts = {};
+            try {
+                const orphans = getOrphanedIds(type);
+                if (orphans.length > 0) {
+                    const board = getActiveBoard(type);
+                    if (board) {
+                        const street = board.length;
+                        orphans.forEach(id => {
+                            if (!id || id.length < 4) return;
+                            const c1 = id.slice(0,2).toLowerCase();
+                            const c2 = id.slice(2,4).toLowerCase();
+                            const cat = bestCategory([c1, c2], board, street);
+                            const w = getComboWeight(id);
+                            if (!orphanCounts[cat]) orphanCounts[cat] = 0;
+                            orphanCounts[cat] += w;
+                            orphanTotalCount += w;
+                        });
+                    }
+                }
+            } catch(e) { console.error("Error calculating orphans:", e); }
+
+            let orphanSummaryHtml = orphanTotalCount > 0 ? ' <span style="color: var(--bluff); font-weight: 600;">(' + fmt(orphanTotalCount) + ' sueltos)</span>' : '';
+            
+            let html = '<div class="range-summary">';
+            html += '<span class="hit-val">Hit <b>' + fmt(hitCount) + '</b> <span class="pct-group">(' + pctHit + '%)</span></span>';
+            html += '<span class="bluff-val">Bluff <b>' + fmt(bluffCount) + '</b> <span class="pct-group">(' + pctBluff + '%)</span></span>';
+            html += '<span class="universe-val">Univ: ' + fmt(totalSelectedInNode) + ' / ' + fmt(universe) + orphanSummaryHtml + '</span>';
+            html += '</div>';
+            
+            combosArr.forEach((c,i) => {
+                const isExp = c.expanded;
+                const sel = getAllSelected(c);
+                const count = getComboCountForCombo(c);
+                html += '<div class="combo-row">';
+                html += '<div class="combo-name">';
+                html += '<span class="combo-toggle ' + (isExp?'open':'') + '" ' + (isLocked?'style="cursor:default;pointer-events:none;"':'onclick="event.stopPropagation();toggleExpand('+i+',\''+type+'\',\''+containerId+'\')"' ) + '>' + (isExp?'▼':'▶') + '</span>';
+                if (count > 0) html += '<span style="font-size:8px;color:#aaa;font-weight:400">' + fmt(count) + '</span> ';
+                html += c.name;
+                if(!isLocked) {
+                    const orphanCountForCat = orphanCounts[c.id] || 0;
+                    if (orphanCountForCat > 0) {
+                        const msg = type === 'flop' ? fmt(orphanCountForCat) + ' combo(s) en el aire. Pulsa ↻ para traerlos.' : fmt(orphanCountForCat) + ' combo(s) sueltos de la calle anterior. Pulsa ↻ para traerlos.';
+                        html += '<span class="orphan-warning" title="' + msg + '">&#9888; ' + fmt(orphanCountForCat) + '</span>';
+                    }
+                    html += '<span class="combo-auto-single" onclick="autoFillSingleCategory(\'' + type + '\', ' + i + ')" title="Autodetectar solo esta jugada">&#8635;</span>';
+                    html += '<span class="combo-del" onclick="deleteCombo(\'' + containerId + '\', ' + i + ', \'' + type + '\')">×</span>';
+                }
+                html += '</div>';
+                html += '<div class="combo-note" ' + (isLocked?'':'contenteditable="true"') + ' data-placeholder="..." ' + (isLocked?'':'oninput="updateComboNote('+i+',\''+type+'\')"') + ' ' + (isLocked?'':'onblur="try{this.innerHTML=colorCards(this.innerHTML)}catch(e){}"') + ' >' + (c.note||'') + '</div>';
+                html += '</div>';
+                if (isExp) {
+                    html += '<div class="combo-expand"><div class="cards-row">';
+                    sel.forEach(sid => {
+                        const s1 = sid[1], s2 = sid[3], r1 = sid[0], r2 = sid[2];
+                        html += '<div class="mini-combo sel" ' + (isLocked?'':'oncontextmenu="event.preventDefault();event.stopPropagation();removeCard('+i+',\''+sid+'\',\''+type+'\',\''+containerId+'\')"') + ' title="' + (isLocked?'Bloqueado':'Click der. para quitar') + '">';
+                        html += '<div class="mc c' + s1 + '"><span class="mc-rank">' + r1 + '</span></div>';
+                        html += '<div class="mc c' + s2 + '"><span class="mc-rank">' + r2 + '</span></div>';
+                        html += '</div>';
+                    });
+                    if(!isLocked) html += '<div class="add-card-inline" onclick="openCardModal2(' + i + ',\'' + type + '\',\'' + containerId + '\')">+</div>';
+                    html += '</div></div>';
+                }
+            });
+            document.getElementById(containerId).innerHTML = html;
+
+            if (type === 'flop') renderFlopTabs();
+            else if (type === 'turnAction') renderTurnActionsTabs();
+            else if (type === 'riverAction') renderRiverActionsTabs();
         }
 
         function renderFlopTabs() { 
@@ -2366,12 +2675,12 @@
                 if (aF === -1) return alert('Selecciona una pestaña de Flop primero.');
                 const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
                 if (!flopNode || !flopNode.locked) return alert('Debes bloquear el nodo del Flop (candado cerrado) para autodetectar en el Turn.');
-                if (getAllSelectedFromNode(flopNode).length === 0) return alert('La pestaña de Flop activa no tiene combos. No hay nada que autodetectar.');
+                if (getComboCountFromNode(flopNode) === 0) return alert('La pestaña de Flop activa no tiene combos. No hay nada que autodetectar.');
             } else if (type === 'riverAction') {
                 if (aTA === -1) return alert('Selecciona una pestaña de Turn primero.');
                 const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
                 if (!turnNode || !turnNode.locked) return alert('Debes bloquear el nodo del Turn (candado cerrado) para autodetectar en el River.');
-                if (getAllSelectedFromNode(turnNode).length === 0) return alert('La pestaña de Turn activa no tiene combos. No hay nada que autodetectar.');
+                if (getComboCountFromNode(turnNode) === 0) return alert('La pestaña de Turn activa no tiene combos. No hay nada que autodetectar.');
             }
 
             const node = getNodeByType(type);
@@ -2386,8 +2695,28 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
+
+        function getColorForWeight(w) {
+            if (w >= 100) return '#c7d2fe'; // Indigo pastel (100%)
+            const w10 = Math.ceil(w / 10) * 10; 
+            const colors = {
+                10: '#fecaca', // Red pastel
+                20: '#fecdd3', // Rose pastel
+                30: '#fed7aa', // Orange pastel
+                40: '#fde68a', // Amber/Yellow pastel
+                50: '#d9f99d', // Lime pastel
+                60: '#bbf7d0', // Green pastel
+                70: '#a7f3d0', // Emerald pastel
+                80: '#a5f3fc', // Cyan pastel
+                90: '#bfdbfe'  // Blue pastel
+            };
+            return colors[w10] || '#fecaca';
+        }
+                const preKeys = Object.keys(preRange);
+                if (preKeys.length > 0) {
+                    preKeys.forEach(key => {
+                        const weight = preRange[key];
+                        if (weight === 0) return; // Ignoramos las manos con 0% de peso
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2457,12 +2786,12 @@
                 if (aF === -1) return alert('Selecciona una pestaña de Flop primero.');
                 const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
                 if (!flopNode || !flopNode.locked) return alert('Debes bloquear el nodo del Flop (candado cerrado) para autodetectar en el Turn.');
-                if (getAllSelectedFromNode(flopNode).length === 0) return alert('La pestaña de Flop activa no tiene combos.');
+                if (getComboCountFromNode(flopNode) === 0) return alert('La pestaña de Flop activa no tiene combos.');
             } else if (type === 'riverAction') {
                 if (aTA === -1) return alert('Selecciona una pestaña de Turn primero.');
                 const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
                 if (!turnNode || !turnNode.locked) return alert('Debes bloquear el nodo del Turn (candado cerrado) para autodetectar en el River.');
-                if (getAllSelectedFromNode(turnNode).length === 0) return alert('La pestaña de Turn activa no tiene combos.');
+                if (getComboCountFromNode(turnNode) === 0) return alert('La pestaña de Turn activa no tiene combos.');
             }
 
             const node = getNodeByType(type);
@@ -2481,8 +2810,11 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-                if (preRange.length > 0) {
-                    preRange.forEach(key => {
+                const preKeys = Object.keys(preRange);
+                if (preKeys.length > 0) {
+                    preKeys.forEach(key => {
+                        const weight = preRange[key];
+                        if (weight === 0) return; // Ignoramos las manos con 0% de peso
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2550,9 +2882,12 @@
 
             let count = 0;
             const preRange = getActivePreflopRange();
+            const preKeys = Object.keys(preRange);
             
-            if (preRange.length > 0) {
-                preRange.forEach(key => {
+            if (preKeys.length > 0) {
+                preKeys.forEach(key => {
+                    const weight = preRange[key];
+                    if (weight === 0) return;
                     const r1 = key[0], r2 = key[1];
                     const isPair = r1 === r2;
                     const g = isPair ? 'p' : key[2];
@@ -2563,7 +2898,7 @@
 
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
-                        if (!boardSet.has(c1) && !boardSet.has(c2)) count++;
+                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100); // Acumula fracciones
                     });
                 });
             } else {
@@ -2580,7 +2915,7 @@
             return count;
         }
 
-	        function getOrphanedIds(type) {
+        function getOrphanedIds(type) {
             try {
                 let sourcePool = [];
                 let parentBoard = [];
@@ -2588,8 +2923,11 @@
                 if (type === 'flop') {
                     parentBoard = getActiveBoard('flop');
                     const preRange = getActivePreflopRange();
-                    if (preRange.length === 0) return [];
-                    preRange.forEach(key => {
+                    const preKeys = Object.keys(preRange);
+                    if (preKeys.length === 0) return [];
+                    preKeys.forEach(key => {
+                        const weight = preRange[key];
+                        if(weight === 0) return;
                         if(!key || key.length < 2) return;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
@@ -2605,13 +2943,13 @@
                     parentBoard = getActiveBoard('turnAction');
                     if (aF === -1) return [];
                     const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
-                    if (!flopNode) return []; // Aquí quité el bloqueo para que avise siempre
+                    if (!flopNode) return []; 
                     sourcePool = getAllSelectedFromNode(flopNode);
                 } else if (type === 'riverAction') {
                     parentBoard = getActiveBoard('riverAction');
                     if (aF === -1 || aTC === -1 || aTA === -1) return [];
                     const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
-                    if (!turnNode) return []; // Aquí también
+                    if (!turnNode) return []; 
                     sourcePool = getAllSelectedFromNode(turnNode);
                 }
 
@@ -2642,90 +2980,6 @@
             }
         }
 
-        function renderCombosUI(containerId, combosArr, type) {
-            if(!combosArr) return;
-            const isLocked = getNodeByType(type) && getNodeByType(type).locked;
-            combosArr.sort((a,b) => a.sort - b.sort);
-            
-            let hitCount = 0, bluffCount = 0, totalSelectedInNode = 0;
-            combosArr.forEach(c => {
-                const count = getAllSelected(c).length;
-                totalSelectedInNode += count;
-                if (HIT_CATS.includes(c.id)) hitCount += count;
-                else if (BLUFF_CATS.includes(c.id)) bluffCount += count;
-            });
-            
-            const universe = getUniverse(type);
-            const pctHit = universe > 0 ? (hitCount / universe * 100).toFixed(1) : '0.0';
-            const pctBluff = universe > 0 ? (bluffCount / universe * 100).toFixed(1) : '0.0';
-            
-            const orphanCount = getOrphanedIds(type).length;
-            let orphanSummaryHtml = orphanCount > 0 ? ' <span style="color: var(--bluff); font-weight: 600;">(' + orphanCount + ' sueltos)</span>' : '';
-            
-            let html = '<div class="range-summary">';
-            html += '<span class="hit-val">Hit <b>' + hitCount + '</b> <span class="pct-group">(' + pctHit + '%)</span></span>';
-            html += '<span class="bluff-val">Bluff <b>' + bluffCount + '</b> <span class="pct-group">(' + pctBluff + '%)</span></span>';
-            html += '<span class="universe-val">Univ: ' + totalSelectedInNode + ' / ' + universe + orphanSummaryHtml + '</span>';
-            html += '</div>';
-            
-            const orphanCounts = {};
-            try {
-                const orphans = getOrphanedIds(type);
-                if (orphans.length > 0) {
-                    const board = getActiveBoard(type);
-                    if (board) {
-                        const street = board.length;
-                        orphans.forEach(id => {
-                            if (!id || id.length < 4) return;
-                            const c1 = id.slice(0,2).toLowerCase();
-                            const c2 = id.slice(2,4).toLowerCase();
-                            const cat = bestCategory([c1, c2], board, street);
-                            if (!orphanCounts[cat]) orphanCounts[cat] = 0;
-                            orphanCounts[cat]++;
-                        });
-                    }
-                }
-            } catch(e) { console.error("Error calculating orphans:", e); }
-            
-            combosArr.forEach((c,i) => {
-                const isExp = c.expanded;
-                const sel = getAllSelected(c);
-                html += '<div class="combo-row">';
-                html += '<div class="combo-name">';
-                html += '<span class="combo-toggle ' + (isExp?'open':'') + '" ' + (isLocked?'style="cursor:default;pointer-events:none;"':'onclick="event.stopPropagation();toggleExpand('+i+',\''+type+'\',\''+containerId+'\')"' ) + '>' + (isExp?'▼':'▶') + '</span>';
-                if (sel.length > 0) html += '<span style="font-size:8px;color:#aaa;font-weight:400">' + sel.length + '</span> ';
-                html += c.name;
-                if(!isLocked) {
-                    const orphanCountForCat = orphanCounts[c.id] || 0;
-                    if (orphanCountForCat > 0) {
-                        const msg = type === 'flop' ? orphanCountForCat + ' combo(s) en el aire. Pulsa ↻ para traerlos.' : orphanCountForCat + ' combo(s) sueltos de la calle anterior. Pulsa ↻ para traerlos.';
-                        html += '<span class="orphan-warning" title="' + msg + '">&#9888; ' + orphanCountForCat + '</span>';
-                    }
-                    html += '<span class="combo-auto-single" onclick="autoFillSingleCategory(\'' + type + '\', ' + i + ')" title="Autodetectar solo esta jugada">&#8635;</span>';
-                    html += '<span class="combo-del" onclick="deleteCombo(\'' + containerId + '\', ' + i + ', \'' + type + '\')">×</span>';
-                }
-                html += '</div>';
-                html += '<div class="combo-note" ' + (isLocked?'':'contenteditable="true"') + ' data-placeholder="..." ' + (isLocked?'':'oninput="updateComboNote('+i+',\''+type+'\')"') + ' ' + (isLocked?'':'onblur="try{this.innerHTML=colorCards(this.innerHTML)}catch(e){}"') + ' >' + (c.note||'') + '</div>';
-                html += '</div>';
-                if (isExp) {
-                    html += '<div class="combo-expand"><div class="cards-row">';
-                    sel.forEach(sid => {
-                        const s1 = sid[1], s2 = sid[3], r1 = sid[0], r2 = sid[2];
-                        html += '<div class="mini-combo sel" ' + (isLocked?'':'oncontextmenu="event.preventDefault();event.stopPropagation();removeCard('+i+',\''+sid+'\',\''+type+'\',\''+containerId+'\')"') + ' title="' + (isLocked?'Bloqueado':'Click der. para quitar') + '">';
-                        html += '<div class="mc c' + s1 + '"><span class="mc-rank">' + r1 + '</span></div>';
-                        html += '<div class="mc c' + s2 + '"><span class="mc-rank">' + r2 + '</span></div>';
-                        html += '</div>';
-                    });
-                    if(!isLocked) html += '<div class="add-card-inline" onclick="openCardModal2(' + i + ',\'' + type + '\',\'' + containerId + '\')">+</div>';
-                    html += '</div></div>';
-                }
-            });
-            document.getElementById(containerId).innerHTML = html;
-
-            if (type === 'flop') renderFlopTabs();
-            else if (type === 'turnAction') renderTurnActionsTabs();
-            else if (type === 'riverAction') renderRiverActionsTabs();
-        }
         function toggleExpand(ci, type, cid) {
             if (isNodeLocked(type)) return;
             let node = getNodeByType(type);
@@ -2799,7 +3053,8 @@
         function cmRenderGrid() {
             let ghtml = '';
             const preRange = getActivePreflopRange();
-            const rangeSet = new Set(preRange);
+            // El fix está aquí abajo: Object.keys(preRange) en lugar de solo preRange
+            const rangeSet = new Set(Object.keys(preRange)); 
             
             RANKS.forEach((rr, i) => {
                 RANKS.forEach((cr, j) => {
@@ -2817,10 +3072,10 @@
                     
                     let classes = [cls];
                     if (disabled) classes.push('cm-tab-disabled');
-                    else if (preRange.length > 0 && !rangeSet.has(rangeKey)) classes.push('deleted');
+                    else if (Object.keys(preRange).length > 0 && !rangeSet.has(rangeKey)) classes.push('deleted');
                     
                     let clickAttrs = '';
-                    if (!disabled && !(preRange.length > 0 && !rangeSet.has(rangeKey))) {
+                    if (!disabled && !(Object.keys(preRange).length > 0 && !rangeSet.has(rangeKey))) {
                         clickAttrs = `onmousedown="cmCellMouseDown(event, '${hand}', '${grp}')" onmouseover="cmCellMouseOver(event, '${hand}', '${grp}')" onmouseup="cmCellMouseUp(event, '${hand}', '${grp}')"`;
                     }
                     
@@ -2848,8 +3103,9 @@
                 let sourcePool = [];
                 if (type === 'flop') {
                     const preRange = getActivePreflopRange();
-                    if (preRange.length > 0) {
-                        preRange.forEach(key => {
+                    const preKeys = Object.keys(preRange);
+                    if (preKeys.length > 0) {
+                        preKeys.forEach(key => {
                             const r1 = key[0], r2 = key[1];
                             const isPair = r1 === r2;
                             const g = isPair ? 'p' : key[2];
@@ -3365,6 +3621,7 @@
             document.getElementById('combo-check-list').innerHTML=html; 
             document.getElementById('modal-combos').style.display='flex'; 
         }
+
         function confirmAddCombos() { let cbs=document.querySelectorAll('#combo-check-list input[type="checkbox"]:checked'); let node=getNodeByType(currentEditType); cbs.forEach(cb=>{let m=COMBOS_MASTER.find(x=>x.id===cb.value);if(m) node.combos.push({id:m.id, name:m.name, sort:m.sort, note:""});}); let idMap = {'flop':'flop-combos-container', 'turnAction':'turn-combos-container', 'riverAction':'river-combos-container'}; renderCombosUI(idMap[currentEditType], node.combos, currentEditType); commit(); closeModal('combos'); }
         function deleteCombo(containerId, index, type) { if (isNodeLocked(type)) return; let node=getNodeByType(type); node.combos.splice(index,1); renderCombosUI(containerId, node.combos, type); commit(); }
 

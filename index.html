@@ -1881,21 +1881,26 @@
             return 0;
         }
 
-        function getComboCountForCombo(c) {
+        function getComboCountForCombo(c, boardSet = null) {
             let count = 0;
             (c.hands||[]).forEach(h => {
                 (h.selected||[]).forEach(id => {
+                    if (boardSet) {
+                        const c1 = id.slice(0,2).toLowerCase();
+                        const c2 = id.slice(2,4).toLowerCase();
+                        if (boardSet.has(c1) || boardSet.has(c2)) return; // Si la combo choca con el board, no la cuenta
+                    }
                     count += getComboWeight(id);
                 });
             });
             return count;
         }
 
-        function getComboCountFromNode(node) {
+        function getComboCountFromNode(node, boardSet = null) {
             let count = 0;
             if (!node || !node.combos) return count;
             node.combos.forEach(c => {
-                count += getComboCountForCombo(c);
+                count += getComboCountForCombo(c, boardSet);
             });
             return count;
         }
@@ -1907,11 +1912,15 @@
                 } else if (type === 'turnAction') {
                     if (aS === -1 || aT === -1 || aF === -1) return 0;
                     const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
-                    return getComboCountFromNode(flopNode);
+                    const turnBoard = getActiveBoard('turnAction'); 
+                    const boardSet = new Set(turnBoard); // Board incluye el Turn
+                    return getComboCountFromNode(flopNode, boardSet); // Filtra combos muertos
                 } else if (type === 'riverAction') {
                     if (aS === -1 || aT === -1 || aF === -1 || aTC === -1 || aTA === -1) return 0;
                     const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
-                    return getComboCountFromNode(turnNode);
+                    const riverBoard = getActiveBoard('riverAction');
+                    const boardSet = new Set(riverBoard); // Board incluye el River
+                    return getComboCountFromNode(turnNode, boardSet); // Filtra combos muertos
                 }
                 return 0;
             } catch(e) {
