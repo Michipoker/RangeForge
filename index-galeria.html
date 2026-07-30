@@ -4160,6 +4160,12 @@
             return Array.from(acciones);
         }
 
+        function esComboEspecifico(valor) {
+            const mano = String(valor ?? '').trim();
+            // Detecta formatos como AhKd, Kh9c, TcTh (letra+número+palo+palo)
+            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
+        }
+
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
@@ -4190,6 +4196,7 @@
             );
             
             const isNotActionCol = (celda) => !/(raise|call|check|fold|bet|donk)/.test(String(celda).toLowerCase());
+            
             const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
             const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && isNotActionCol(celda));
             const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(String(celda).toLowerCase()) && isNotActionCol(celda));
@@ -4200,10 +4207,12 @@
 
             if (inicioPorcentajes < 0 || !acciones.length) return data;
 
+            // Tomamos todas las filas que sean manos resumen o combos específicos
             const todasLasFilas = matriz
                 .slice(indiceEncabezado + 1)
                 .filter(cols => esManoResumen(cols[indiceHand]) || esComboEspecifico(cols[indiceHand]));
 
+            // Si hay combos específicos en el reporte, los usamos para el cálculo e ignoramos las manos resumen
             const tieneCombosEspecificos = todasLasFilas.some(cols => esComboEspecifico(cols[indiceHand]));
             const filasAProcesar = tieneCombosEspecificos 
                 ? todasLasFilas.filter(cols => esComboEspecifico(cols[indiceHand]))
@@ -4216,37 +4225,48 @@
                 ? columnasDeAccion(encabezados, indiceEvTotal + 1)
                 : {};
 
+            // Si estamos procesando combos específicos, los agrupamos por su mano resumen (AA, AKs, etc.)
             if (tieneCombosEspecificos) {
                 const grupos = {};
+                
                 for (const cols of filasAProcesar) {
                     const specificHand = cols[indiceHand];
-                    const summaryHand = normalizeHand(specificHand);
+                    const summaryHand = normalizeHand(specificHand); // Convierte AhKd -> AKo
+                    
                     if (!grupos[summaryHand]) {
                         grupos[summaryHand] = { totalCombos: 0, actions: {}, actionCombos: {}, ev: { total: 0, actions: {} }, equitySum: 0, evTotalSum: 0 };
                     }
+                    
                     const grupo = grupos[summaryHand];
                     let combos = numeroGto(cols[indiceCombos]);
-                    const numCombos = Number.isFinite(combos) ? combos : 1;
+                    const numCombos = Number.isFinite(combos) ? combos : 1; // Si no hay columna, asume 1 combo
                     grupo.totalCombos += numCombos;
+                    
                     let eq = numeroGto(cols[indiceEquity]);
                     if (Number.isFinite(eq)) {
-                        if (eq <= 1) eq *= 100;
+                        if (eq <= 1) eq *= 100; // Arregla decimal 0.45 -> 45
                         grupo.equitySum += eq * numCombos;
                     }
+                    
                     let evTot = numeroGto(cols[indiceEvTotal]);
                     if (Number.isFinite(evTot)) {
                         grupo.evTotalSum += evTot * numCombos;
                     }
+
                     for (const accion of acciones) {
                         const freq = numeroGto(cols[columnasFrecuencia[accion]]);
                         const fVal = Number.isFinite(freq) ? freq : 0;
                         grupo.actions[accion] = (grupo.actions[accion] || 0) + (fVal * numCombos);
+                        
                         const cAct = numeroGto(cols[columnasCombos[accion]]);
                         if (Number.isFinite(cAct)) grupo.actionCombos[accion] = (grupo.actionCombos[accion] || 0) + cAct;
+                        
                         const eAct = numeroGto(cols[columnasEv[accion]]);
                         if (Number.isFinite(eAct)) grupo.ev.actions[accion] = (grupo.ev.actions[accion] || 0) + eAct;
                     }
                 }
+
+                // Promediamos las frecuencias y EQ basándonos en el peso de cada combo
                 for (const hand in grupos) {
                     const g = grupos[hand];
                     if (g.totalCombos > 0) {
@@ -4264,6 +4284,7 @@
                     };
                 }
             } else {
+                // Modo normal: solo manos resumen (AA, AKs)
                 for (const cols of filasAProcesar) {
                     const hand = normalizeHand(cols[indiceHand]);
                     const accionesMano = {};
