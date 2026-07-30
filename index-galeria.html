@@ -4162,6 +4162,12 @@
 
         function esComboEspecifico(valor) {
             const mano = String(valor ?? '').trim();
+            // Detecta formatos como AhKd, Kh9c, TcTh (letra+número+palo+palo)
+            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
+        }
+
+        function esComboEspecifico(valor) {
+            const mano = String(valor ?? '').trim();
             return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
         }
 
@@ -4187,11 +4193,9 @@
             const inicioPorcentajes = encabezados.findIndex(c => /percentage|porcentaje|frequency|frecuencia|freq/.test(c));
             
             const isNotActionCol = (c) => !/(raise|call|check|fold|bet|donk)/.test(String(c).toLowerCase());
-            
-            // FIX: Detecta 'eq', 'equity' o 'equi'
-            const indiceEquity = encabezados.findIndex(c => /equity|equi|\beq\b/i.test(String(c)));
-            const indiceCombos = encabezados.findIndex(c => /combos/i.test(String(c)) && isNotActionCol(c));
-            const indiceEvTotal = encabezados.findIndex(c => /\bev\b/i.test(String(c)) && isNotActionCol(c));
+            const indiceEquity = encabezados.findIndex(c => cellaIncluye(c, 'equity'));
+            const indiceCombos = encabezados.findIndex(c => cellaIncluye(c, 'combos') && isNotActionCol(c));
+            const indiceEvTotal = encabezados.findIndex(c => /\bev\b/.test(c) && isNotActionCol(c));
 
             const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
             const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
@@ -4199,126 +4203,56 @@
 
             if (inicioPorcentajes < 0 || !acciones.length) return data;
 
-            // Tomamos todas las filas (manos generales y combos específicos)
-            const todasLasFilas = matriz
+            // SIMPLIFICACIÓN: Ignoramos los combos específicos (AhKd) y leemos SOLO las manos resumen (AKo)
+            const filasDeManos = matriz
                 .slice(indiceEncabezado + 1)
-                .filter(cols => esManoResumen(cols[indiceHand]) || esComboEspecifico(cols[indiceHand]));
-
-            // Si hay combos específicos, los usamos para el cálculo exacto
-            const tieneCombosEspecificos = todasLasFilas.some(cols => esComboEspecifico(cols[indiceHand]));
-            const filasAProcesar = tieneCombosEspecificos 
-                ? todasLasFilas.filter(cols => esComboEspecifico(cols[indiceHand]))
-                : todasLasFilas.filter(cols => esManoResumen(cols[indiceHand]));
+                .filter(cols => esManoResumen(cols[indiceHand]));
 
             const columnasCombos = indiceCombos >= 0
                 ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes >= 0 ? inicioPorcentajes : (indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length))
                 : {};
             const columnasEv = indiceEvTotal >= 0 ? columnasDeAccion(encabezados, indiceEvTotal + 1) : {};
 
-            if (tieneCombosEspecificos) {
-                // AGRUPAR COMBOS ESPECÍFICOS PARA MATRIZ Y BUCKETS EXACTOS
-                for (const cols of filasAProcesar) {
-                    const specificHand = cols[indiceHand];
-                    const summaryHand = normalizeHand(specificHand);
-                    if (!summaryHand) continue;
+            for (const cols of filasDeManos) {
+                const hand = normalizeHand(cols[indiceHand]);
+                if (!hand) continue;
 
-                    // Cada combo específico es exactamente 1 combo
-                    const numCombos = 1; 
-                    
-                    let eq = numeroGto(cols[indiceEquity]);
-                    if (!Number.isFinite(eq)) continue; // Si no tiene EQ, lo ignoramos
+                const accionesMano = {};
+                const actionCombos = {};
+                const actionEv = {};
+                let suma = 0;
 
-                    if (eq <= 1) eq *= 100; // Arregla decimal 0.45 -> 45
+                for (const accion of acciones) {
+                    const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
+                    accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
+                    suma += accionesMano[accion];
 
-                    if (!data[summaryHand]) {
-                        data[summaryHand] = {
-                            totalCombos: 0,
-                            equitySum: 0,
-                            actions: {},
-                            actionCombos: {},
-                            ev: { totalSum: 0, actions: {} }
-                        };
-                    }
-                    
-                    const g = data[summaryHand];
-                    g.totalCombos += numCombos;
-                    g.equitySum += eq * numCombos;
-                    
-                    let evTot = numeroGto(cols[indiceEvTotal]);
-                    if (Number.isFinite(evTot)) g.ev.totalSum += evTot * numCombos;
+                    const combosAccion = numeroGto(cols[columnasCombos[accion]]);
+                    if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
 
-                    for (const accion of acciones) {
-                        const freq = numeroGto(cols[columnasFrecuencia[accion]]);
-                        const fVal = Number.isFinite(freq) ? freq : 0;
-                        g.actions[accion] = (g.actions[accion] || 0) + (fVal * numCombos);
-                        
-                        const cAct = numeroGto(cols[columnasCombos[accion]]);
-                        if (Number.isFinite(cAct)) g.actionCombos[accion] = (g.actionCombos[accion] || 0) + cAct;
-                        
-                        const eAct = numeroGto(cols[columnasEv[accion]]);
-                        if (Number.isFinite(eAct)) g.ev.actions[accion] = (g.ev.actions[accion] || 0) + eAct;
-                    }
+                    const evAccion = numeroGto(cols[columnasEv[accion]]);
+                    if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
                 }
-                
-                // Promediar para la matriz visual
-                for (const hand in data) {
-                    const g = data[hand];
-                    if (g.totalCombos > 0) {
-                        for (const accion in g.actions) g.actions[accion] /= g.totalCombos;
-                    }
+
+                // Solo guardamos si las frecuencias suman ~100%
+                if (Math.abs(suma - 100) <= 0.15) {
+                    const equity = numeroGto(cols[indiceEquity]);
+                    let eqVal = Number.isFinite(equity) ? equity : null;
+                    if (eqVal !== null && eqVal <= 1) eqVal *= 100; // Arregla decimal 0.45 -> 45
+
+                    const combos = numeroGto(cols[indiceCombos]);
+                    const evTotal = numeroGto(cols[indiceEvTotal]);
+                    
                     data[hand] = {
-                        actions: g.actions,
-                        equity: g.totalCombos > 0 ? g.equitySum / g.totalCombos : null,
-                        combos: g.totalCombos,
-                        actionCombos: g.actionCombos,
+                        actions: accionesMano,
+                        equity: eqVal,
+                        combos: Number.isFinite(combos) ? combos : null,
+                        actionCombos,
                         ev: {
-                            total: g.totalCombos > 0 ? g.ev.totalSum / g.totalCombos : null,
-                            actions: g.ev.actions
+                            total: Number.isFinite(evTotal) ? evTotal : null,
+                            actions: actionEv
                         }
                     };
-                }
-            } else {
-                // MODO RESUMEN (si no hay combos específicos)
-                for (const cols of filasAProcesar) {
-                    const hand = normalizeHand(cols[indiceHand]);
-                    if (!hand) continue;
-
-                    const accionesMano = {};
-                    const actionCombos = {};
-                    const actionEv = {};
-                    let suma = 0;
-
-                    for (const accion of acciones) {
-                        const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
-                        accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
-                        suma += accionesMano[accion];
-
-                        const combosAccion = numeroGto(cols[columnasCombos[accion]]);
-                        if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
-
-                        const evAccion = numeroGto(cols[columnasEv[accion]]);
-                        if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
-                    }
-
-                    if (Math.abs(suma - 100) <= 0.15) {
-                        const equity = numeroGto(cols[indiceEquity]);
-                        let eqVal = Number.isFinite(equity) ? equity : null;
-                        if (eqVal !== null && eqVal <= 1) eqVal *= 100;
-
-                        const combos = numeroGto(cols[indiceCombos]);
-                        const evTotal = numeroGto(cols[indiceEvTotal]);
-                        
-                        data[hand] = {
-                            actions: accionesMano,
-                            equity: eqVal,
-                            combos: Number.isFinite(combos) ? combos : null,
-                            actionCombos,
-                            ev: {
-                                total: Number.isFinite(evTotal) ? evTotal : null,
-                                actions: actionEv
-                            }
-                        };
-                    }
                 }
             }
             return data;
@@ -4339,6 +4273,7 @@
         function pesoAccionGto(dato, accion) {
             const combos = Number.isFinite(dato?.combos) ? Number(dato.combos) : 0;
             const frecuencia = Number(getGtoActions(dato)[accion]) || 0;
+            // Combos totales de la mano * la frecuencia de la acción
             return combos * frecuencia / 100;
         }
 
@@ -4370,6 +4305,7 @@
             const equity = eqCombos > 0 ? eqSum / eqCombos : null;
             const ev = evCombos > 0 ? evSum / evCombos : null;
 
+            // LÍMITES ESTRICTOS: 0-19.99, 20-39.99, etc.
             const buckets = [
                 { label: '0–20', min: 0, max: 20, combos: 0 },
                 { label: '20–40', min: 20, max: 40, combos: 0 },
@@ -4380,7 +4316,7 @@
             
             filas.forEach(dato => {
                 let eq = Number(dato.equity);
-                if (!Number.isFinite(eq)) return;
+                if (!Number.isFinite(eq)) eq = 0;
                 if (eq <= 1) eq *= 100;
                 if (eq < 0) eq = 0;
                 if (eq > 100) eq = 100;
