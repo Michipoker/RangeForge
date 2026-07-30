@@ -3919,6 +3919,14 @@
             return linea.trim().split(/\s+/);
         }
 
+/*
+  REEMPLAZO COMPLETO DE numeroGto Y parseGtoData
+  Requiere que ya existan normalizeHand(), obtenerSeparador() y dividirLinea().
+
+  Esta versión también acepta encabezados aplanados como:
+  Hand Equity Combos (total) Raise 15 Call Fold Percentage Raise 15 Call Fold EV
+*/
+
 function numeroGto(valor) {
     let texto = String(valor ?? '').trim().replace(/[%\s]/g, '');
     if (!texto) return NaN;
@@ -3927,7 +3935,6 @@ function numeroGto(valor) {
     const punto = texto.lastIndexOf('.');
 
     if (coma !== -1 && punto !== -1) {
-        // El último separador se considera decimal.
         texto = coma > punto
             ? texto.replace(/\./g, '').replace(',', '.')
             : texto.replace(/,/g, '');
@@ -3938,11 +3945,68 @@ function numeroGto(valor) {
     return Number(texto);
 }
 
+function accionGto(etiqueta) {
+    const texto = String(etiqueta).toLowerCase();
+    if (/raise|bet|donk/.test(texto)) return 'raise';
+    if (texto.includes('call')) return 'call';
+    if (texto.includes('check')) return 'check';
+    if (texto.includes('fold')) return 'fold';
+    return null;
+}
+
+function moda(numeros) {
+    const conteo = new Map();
+    let resultado = 0;
+    let mayor = 0;
+
+    for (const numero of numeros) {
+        const veces = (conteo.get(numero) || 0) + 1;
+        conteo.set(numero, veces);
+        if (veces > mayor) {
+            mayor = veces;
+            resultado = numero;
+        }
+    }
+    return resultado;
+}
+
+function accionesDesdeEncabezado(texto) {
+    const encabezado = String(texto).toLowerCase();
+    const inicio = encabezado.search(/percentage|porcentaje|frequency|frecuencia|freq/);
+    const grupoPorcentajes = inicio >= 0 ? encabezado.slice(inicio) : encabezado;
+    const coincidencias = grupoPorcentajes.match(/raise|bet|donk|call|check|fold/g) || [];
+    const acciones = [];
+
+    for (const coincidencia of coincidencias) {
+        const accion = accionGto(coincidencia);
+        if (accion && !acciones.includes(accion)) acciones.push(accion);
+    }
+    return acciones;
+}
+
+// Si el encabezado se desarmó en palabras, busca el último grupo consecutivo
+// de valores que suma 100. Es el grupo Percentage de la fila de GTO.
+function grupoPorcentajesDeFila(cols, cantidad) {
+    let mejor = null;
+
+    for (let inicio = 0; inicio <= cols.length - cantidad; inicio++) {
+        const valores = cols.slice(inicio, inicio + cantidad).map(numeroGto);
+        if (!valores.every(Number.isFinite)) continue;
+
+        const suma = valores.reduce((total, valor) => total + valor, 0);
+        if (Math.abs(suma - 100) <= 0.15) {
+            // El grupo correcto está normalmente más a la derecha que Equity y Combos.
+            mejor = valores;
+        }
+    }
+    return mejor;
+}
+
 function parseGtoData(text) {
     const data = {};
     if (!text) return data;
 
-    const lineas = text
+    const lineas = String(text)
         .replace(/\r/g, '')
         .split('\n')
         .map(linea => linea.trim())
@@ -3953,68 +4017,84 @@ function parseGtoData(text) {
     const separador = obtenerSeparador(lineas);
     const matriz = lineas.map(linea => dividirLinea(linea, separador));
 
-    // Encuentra la fila de encabezados.
-    const indiceEncabezado = matriz.findIndex(cols => {
-        const etiquetas = cols.map(c => c.toLowerCase());
-        return etiquetas.some(c => c.includes('hand')) &&
-                etiquetas.some(c => /percentage|raise|call|fold|bet|donk/.test(c));
+    const indiceEncabezado = lineas.findIndex(linea => {
+        const encabezado = linea.toLowerCase();
+        return /\bhand\b/.test(encabezado) &&
+            /raise|call|fold|check|bet|donk/.test(encabezado);
     });
 
     if (indiceEncabezado === -1) {
-        console.warn('No se encontró la fila de encabezados de GTO.');
+        console.warn('[GTO] No se encontró la fila de encabezados.');
         return data;
     }
 
-    const encabezados = matriz[indiceEncabezado].map(c => c.toLowerCase());
-    const indiceHand = encabezados.findIndex(c => c.includes('hand'));
+    const encabezadoOriginal = lineas[indiceEncabezado];
+    const encabezados = matriz[indiceEncabezado].map(celda => celda.toLowerCase());
+    const indiceHand = Math.max(0, encabezados.findIndex(celda => celda.includes('hand')));
+    const acciones = accionesDesdeEncabezado(encabezadoOriginal);
 
-    // Muy importante: comienza en “Percentage”, para no leer los combos.
-    const inicioPorcentajes = encabezados.findIndex(c =>
-        c.includes('percentage') || c.includes('frequency') || c.includes('freq')
+    if (!acciones.length) {
+        console.warn('[GTO] No se identificaron las acciones después de Percentage.');
+        return data;
+    }
+
+    const filasDeManos = matriz
+        .slice(indiceEncabezado + 1)
+        .filter(cols => normalizeHand(cols[indiceHand]));
+
+    const anchoDatos = moda(filasDeManos.map(cols => cols.length));
+    const inicioPorcentajes = encabezados.findIndex(celda =>
+        /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
     );
 
-    const actionCols = {};
-    const desde = inicioPorcentajes >= 0 ? inicioPorcentajes : 0;
-
-    for (let i = desde; i < encabezados.length; i++) {
-        const etiqueta = encabezados[i];
-
-        if (actionCols.raise === undefined && /raise|bet|donk/.test(etiqueta)) {
-            actionCols.raise = i;
-        } else if (actionCols.call === undefined && etiqueta.includes('call')) {
-            actionCols.call = i;
-        } else if (actionCols.check === undefined && etiqueta.includes('check')) {
-            actionCols.check = i;
-        } else if (actionCols.fold === undefined && etiqueta.includes('fold')) {
-            actionCols.fold = i;
+    // Intenta primero el mapeo directo cuando el texto conserva columnas reales.
+    const columnasDirectas = {};
+    if (inicioPorcentajes >= 0) {
+        for (let i = inicioPorcentajes; i < encabezados.length; i++) {
+            const accion = accionGto(encabezados[i]);
+            if (accion && columnasDirectas[accion] === undefined) {
+                columnasDirectas[accion] = i;
+            }
         }
     }
 
-    if (indiceHand === -1 || Object.keys(actionCols).length === 0) {
-        console.warn('No se pudieron identificar Hand o las columnas Percentage.');
-        return data;
-    }
+    const mapeoDirectoValido = acciones.every(accion =>
+        Number.isInteger(columnasDirectas[accion]) && columnasDirectas[accion] < anchoDatos
+    );
 
-    for (let i = indiceEncabezado + 1; i < matriz.length; i++) {
-        const cols = matriz[i];
+    for (const cols of filasDeManos) {
         const hand = normalizeHand(cols[indiceHand]);
-
         if (!hand) continue;
 
-        const handData = {};
-        let tieneValores = false;
+        let valores = null;
 
-        for (const [accion, indice] of Object.entries(actionCols)) {
-            const valor = numeroGto(cols[indice]);
-            handData[accion] = Number.isFinite(valor) ? valor : 0;
-            tieneValores ||= Number.isFinite(valor);
+        if (mapeoDirectoValido) {
+            const directos = acciones.map(accion => numeroGto(cols[columnasDirectas[accion]]));
+            const suma = directos.reduce((total, valor) => total + (Number.isFinite(valor) ? valor : 0), 0);
+            if (directos.every(Number.isFinite) && Math.abs(suma - 100) <= 0.15) {
+                valores = directos;
+            }
         }
 
-        if (tieneValores) data[hand] = handData;
+        // Si los encabezados se fragmentaron, no usa sus índices: detecta la serie 100%.
+        if (!valores) valores = grupoPorcentajesDeFila(cols, acciones.length);
+        if (!valores) continue;
+
+        const handData = {};
+        acciones.forEach((accion, indice) => {
+            handData[accion] = valores[indice];
+        });
+        data[hand] = handData;
     }
+
+    console.info(
+        `[GTO] ${Object.keys(data).length} manos leídas; ` +
+        `${mapeoDirectoValido ? 'columnas directas' : 'encabezado aplanado'}.`
+    );
 
     return data;
 }
+
 
         function getColorForAction(act) {
             act = act.toLowerCase();
