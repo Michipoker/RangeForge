@@ -3927,6 +3927,15 @@
   Hand Equity Combos (total) Raise 15 Call Fold Percentage Raise 15 Call Fold EV
 */
 
+/*
+  REEMPLAZO COMPLETO DE numeroGto Y parseGtoData
+  Requiere normalizeHand(), obtenerSeparador() y dividirLinea().
+
+  Importante: conserva solamente las filas resumen (AA, AKs, AKo).
+  Ignora las combinaciones concretas (AhAc, AdAs, etc.), porque estas no deben
+  sobrescribir los porcentajes totales de la matriz 13 x 13.
+*/
+
 function numeroGto(valor) {
     let texto = String(valor ?? '').trim().replace(/[%\s]/g, '');
     if (!texto) return NaN;
@@ -3954,20 +3963,10 @@ function accionGto(etiqueta) {
     return null;
 }
 
-function moda(numeros) {
-    const conteo = new Map();
-    let resultado = 0;
-    let mayor = 0;
-
-    for (const numero of numeros) {
-        const veces = (conteo.get(numero) || 0) + 1;
-        conteo.set(numero, veces);
-        if (veces > mayor) {
-            mayor = veces;
-            resultado = numero;
-        }
-    }
-    return resultado;
+function esManoResumen(valor) {
+    const mano = String(valor ?? '').trim();
+    // AA, KK, ..., 22, AKs, AKo, etc. No acepta AhAc, AdAs, etc.
+    return /^(?:([AKQJT2-9])\1|[AKQJT2-9]{2}[so])$/i.test(mano);
 }
 
 function accionesDesdeEncabezado(texto) {
@@ -3982,24 +3981,6 @@ function accionesDesdeEncabezado(texto) {
         if (accion && !acciones.includes(accion)) acciones.push(accion);
     }
     return acciones;
-}
-
-// Si el encabezado se desarmó en palabras, busca el último grupo consecutivo
-// de valores que suma 100. Es el grupo Percentage de la fila de GTO.
-function grupoPorcentajesDeFila(cols, cantidad) {
-    let mejor = null;
-
-    for (let inicio = 0; inicio <= cols.length - cantidad; inicio++) {
-        const valores = cols.slice(inicio, inicio + cantidad).map(numeroGto);
-        if (!valores.every(Number.isFinite)) continue;
-
-        const suma = valores.reduce((total, valor) => total + valor, 0);
-        if (Math.abs(suma - 100) <= 0.15) {
-            // El grupo correcto está normalmente más a la derecha que Equity y Combos.
-            mejor = valores;
-        }
-    }
-    return mejor;
 }
 
 function parseGtoData(text) {
@@ -4038,16 +4019,15 @@ function parseGtoData(text) {
         return data;
     }
 
+    // Esta es la corrección clave: no incluir AhAc, AdAs, etc.
     const filasDeManos = matriz
         .slice(indiceEncabezado + 1)
-        .filter(cols => normalizeHand(cols[indiceHand]));
+        .filter(cols => esManoResumen(cols[indiceHand]));
 
-    const anchoDatos = moda(filasDeManos.map(cols => cols.length));
     const inicioPorcentajes = encabezados.findIndex(celda =>
         /percentage|porcentaje|frequency|frecuencia|freq/.test(celda)
     );
 
-    // Intenta primero el mapeo directo cuando el texto conserva columnas reales.
     const columnasDirectas = {};
     if (inicioPorcentajes >= 0) {
         for (let i = inicioPorcentajes; i < encabezados.length; i++) {
@@ -4059,42 +4039,33 @@ function parseGtoData(text) {
     }
 
     const mapeoDirectoValido = acciones.every(accion =>
-        Number.isInteger(columnasDirectas[accion]) && columnasDirectas[accion] < anchoDatos
+        Number.isInteger(columnasDirectas[accion])
     );
+
+    if (!mapeoDirectoValido) {
+        console.warn('[GTO] No se identificaron las columnas Percentage.');
+        return data;
+    }
 
     for (const cols of filasDeManos) {
         const hand = normalizeHand(cols[indiceHand]);
-        if (!hand) continue;
+        const handData = {};
+        let suma = 0;
 
-        let valores = null;
-
-        if (mapeoDirectoValido) {
-            const directos = acciones.map(accion => numeroGto(cols[columnasDirectas[accion]]));
-            const suma = directos.reduce((total, valor) => total + (Number.isFinite(valor) ? valor : 0), 0);
-            if (directos.every(Number.isFinite) && Math.abs(suma - 100) <= 0.15) {
-                valores = directos;
-            }
+        for (const accion of acciones) {
+            const valor = numeroGto(cols[columnasDirectas[accion]]);
+            handData[accion] = Number.isFinite(valor) ? valor : 0;
+            suma += handData[accion];
         }
 
-        // Si los encabezados se fragmentaron, no usa sus índices: detecta la serie 100%.
-        if (!valores) valores = grupoPorcentajesDeFila(cols, acciones.length);
-        if (!valores) continue;
-
-        const handData = {};
-        acciones.forEach((accion, indice) => {
-            handData[accion] = valores[indice];
-        });
-        data[hand] = handData;
+        if (Math.abs(suma - 100) <= 0.15) {
+            data[hand] = handData;
+        }
     }
 
-    console.info(
-        `[GTO] ${Object.keys(data).length} manos leídas; ` +
-        `${mapeoDirectoValido ? 'columnas directas' : 'encabezado aplanado'}.`
-    );
-
+    console.info(`[GTO] ${Object.keys(data).length} manos resumen leídas.`);
     return data;
 }
-
 
 function getColorForAction(act) {
             act = act.toLowerCase();
