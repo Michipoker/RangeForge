@@ -4166,6 +4166,11 @@
             return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
         }
 
+        function esComboEspecifico(valor) {
+            const mano = String(valor ?? '').trim();
+            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
+        }
+
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
@@ -4196,7 +4201,6 @@
             );
             
             const isNotActionCol = (celda) => !/(raise|call|check|fold|bet|donk)/.test(String(celda).toLowerCase());
-            
             const indiceEquity = encabezados.findIndex(celda => cellaIncluye(celda, 'equity'));
             const indiceCombos = encabezados.findIndex(celda => cellaIncluye(celda, 'combos') && isNotActionCol(celda));
             const indiceEvTotal = encabezados.findIndex(celda => /\bev\b/.test(String(celda).toLowerCase()) && isNotActionCol(celda));
@@ -4338,8 +4342,9 @@
 
         function pesoAccionGto(dato, accion) {
             const combos = Number.isFinite(dato?.combos) ? Number(dato.combos) : 0;
+            // Si la acción existe en la mano (frecuencia > 0), cuenta todos los combos de esa mano para la EQ
             const frecuencia = Number(getGtoActions(dato)[accion]) || 0;
-            return combos * frecuencia / 100;
+            return frecuencia > 0 ? combos : 0;
         }
 
         function calcularMetricasGto(data) {
@@ -4351,11 +4356,12 @@
             const totalCombos = filas.reduce((total, dato) => total + (Number(dato.combos) || 0), 0);
             let eqSum = 0, eqCombos = 0;
             let evSum = 0, evCombos = 0;
+            
             filas.forEach(dato => {
                 const c = Number(dato.combos) || 0;
                 let eq = Number(dato.equity);
                 if (Number.isFinite(eq)) {
-                    if (eq <= 1) eq *= 100;
+                    if (eq <= 1) eq *= 100; // Arregla decimal si vino 0.45
                     eqSum += eq * c;
                     eqCombos += c;
                 }
@@ -4369,6 +4375,7 @@
             const equity = eqCombos > 0 ? eqSum / eqCombos : null;
             const ev = evCombos > 0 ? evSum / evCombos : null;
 
+            // LÍMITES ESTRICTOS: 0-19.99, 20-39.99, etc. (soporta hasta 4 decimales sin redundancia)
             const buckets = [
                 { label: '0–20', min: 0, max: 20, combos: 0 },
                 { label: '20–40', min: 20, max: 40, combos: 0 },
@@ -4376,14 +4383,16 @@
                 { label: '60–80', min: 60, max: 80, combos: 0 },
                 { label: '80–100', min: 80, max: 100.0001, combos: 0 }
             ];
+            
             filas.forEach(dato => {
                 let eq = Number(dato.equity);
                 if (!Number.isFinite(eq)) eq = 0;
-                if (eq <= 1) eq *= 100;
+                if (eq <= 1) eq *= 100; // Arregla decimal si vino 0.45
                 if (eq < 0) eq = 0;
                 if (eq > 100) eq = 100;
-                const bucket = buckets.find((item, index) => eq >= item.min && (eq < item.max || index === buckets.length - 1));
-                if (bucket) bucket.combos += (Number(dato.combos) || 0);
+                
+                const bucket = buckets.find(b => eq >= b.min && eq < b.max) || buckets[buckets.length - 1];
+                bucket.combos += (Number(dato.combos) || 0);
             });
 
             const acciones = getGtoActionNames(data).map(accion => {
@@ -4392,11 +4401,13 @@
                     const peso = pesoAccionGto(dato, accion);
                     if (peso <= 0) return;
                     combos += peso;
+                    
                     let eq = Number(dato.equity);
                     if (Number.isFinite(eq)) {
                         if (eq <= 1) eq *= 100;
-                        equityTotal += eq * peso;
+                        equityTotal += eq * peso; // Aquí usa el peso entero (1 combo = 1 unidad)
                     }
+                    
                     const evAccion = dato?.ev?.actions?.[accion];
                     if (Number.isFinite(evAccion)) {
                         evTotal += evAccion * peso;
