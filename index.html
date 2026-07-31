@@ -1415,14 +1415,34 @@
     <div id="modal-img" class="modal-overlay">
         <div class="modal-box">
             <div class="img-modal-body">
-                <div class="img-interaction-panel">
-                    <div class="img-panel-header">
-                        <span>Acciones</span>
-                    </div>
-                    <div class="img-panel-actions">
-                        <button class="modal-btn primary" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="addImageSlot()">+ Agregar Slot</button>
-                        <button class="modal-btn" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="closeModal('img')">Cerrar</button>
-                    </div>
+<div class="img-interaction-panel">
+    <div class="img-panel-header">
+        <span>Acciones</span>
+    </div>
+    <div class="img-panel-actions">
+        <button class="modal-btn primary" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="addImageSlot()">+ Agregar Slot</button>
+        <button class="modal-btn" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="closeModal('img')">Cerrar</button>
+    </div>
+    
+    <div class="img-panel-separator"></div>
+    
+    <!-- NUEVO: Board Display -->
+    <div class="img-panel-header">
+        <span>Board Actual</span>
+    </div>
+    <div id="img-panel-board" style="margin-bottom: 12px; padding: 0 2px; flex-shrink: 0; display: flex; align-items: center; gap: 4px;">
+        <span style="color:var(--text-faint); font-size: 11px; font-style: italic;">Cargando...</span>
+    </div>
+    
+    <div class="img-panel-separator"></div>
+    
+    <div class="img-panel-header">
+        <span>Interacciones (Slot <span id="activeSlotNum">-</span>)</span>
+    </div>
+    <div id="interactionsContent" class="img-panel-interactions">
+        <div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>
+    </div>
+</div>
                     
                     <div class="img-panel-separator"></div>
                     
@@ -3863,21 +3883,24 @@
             }); 
         }
 
-        function openNoteModal(type) { 
-            currentEditType=type; 
-            let node=getNodeByType(type); 
-            document.getElementById('note-textarea').innerHTML=colorCards(node.generalNote||""); 
-            document.getElementById('note-textarea').contentEditable = node.locked ? 'false' : 'true';
-            document.getElementById('modal-nota').style.display='flex'; 
-        }
-        function saveGeneralNote() {
-            let node=getNodeByType(currentEditType);
-            if (node.locked) { closeModal('nota'); return; }
-            node.generalNote=document.getElementById('note-textarea').innerHTML;
-            updateMicroButtons(currentEditType, node);
-            commit();
-            closeModal('nota');
-        }
+ function openNoteModal(type) { 
+    currentEditType = type; 
+    let node = getNodeByType(type); 
+    if (!node) return alert('Selecciona o crea una pestaña de acción primero.'); // FIX: Evita error si no hay nodo
+    document.getElementById('note-textarea').innerHTML = colorCards(node.generalNote || ""); 
+    document.getElementById('note-textarea').contentEditable = node.locked ? 'false' : 'true';
+    document.getElementById('modal-nota').style.display = 'flex'; 
+}
+
+function saveGeneralNote() {
+    let node = getNodeByType(currentEditType);
+    if (!node) { closeModal('nota'); return; } // FIX: Validación extra
+    if (node.locked) { closeModal('nota'); return; }
+    node.generalNote = document.getElementById('note-textarea').innerHTML;
+    updateMicroButtons(currentEditType, node);
+    commit();
+    closeModal('nota');
+}
         
         function getImgNode() {
             let node = getNodeByType(currentEditType);
@@ -4546,15 +4569,20 @@
             container.appendChild(grid);
         }
 
-        function addImageSlot() {
-            const node = getImgNode();
-            const newSlot = { id: Date.now().toString(), hero: { gto: '', text: '' }, villain: { gto: '', text: '' } };
-            node.imageSlots.push(newSlot);
-            activeSlotId = newSlot.id;
-            renderImgSlots();
-            updateMicroButtons(currentEditType, node);
-            commit();
-        }
+function addImageSlot() {
+    const node = getImgNode();
+    const newSlot = { id: Date.now().toString(), hero: { gto: '', text: '' }, villain: { gto: '', text: '' } };
+    node.imageSlots.push(newSlot);
+    activeSlotId = newSlot.id;
+    
+    // FIX: Limpiar los filtros visuales heredados del slot anterior
+    activeHeroAction = null; 
+    activeVillainAction = null; 
+    
+    renderImgSlots();
+    updateMicroButtons(currentEditType, node);
+    commit();
+}
 
         function deleteImageSlot(id) {
             const node = getImgNode();
