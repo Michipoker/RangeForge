@@ -376,6 +376,21 @@
         .micro-btn:hover { color: var(--text-secondary); border-color: var(--border); }
         .micro-btn.has-data { color: var(--accent-text); border-color: var(--accent-border); border-style: solid; }
 
+        .micro-btn-gto {
+            font-size: 8px;
+            letter-spacing: 0.02em;
+            color: var(--text-faint);
+            cursor: pointer;
+            padding: 2px 5px;
+            border: 1px solid var(--border-light);
+            border-radius: 2px;
+            transition: all var(--transition);
+            background: var(--bg-surface);
+            font-weight: 600;
+        }
+        .micro-btn-gto:hover { color: var(--accent-text); border-color: var(--accent-border); }
+        .micro-btn-gto.has-data { color: var(--accent-text); border-color: var(--accent-border); border-style: solid; }
+
         .add-combo-btn {
             font-size: 11px;
             color: #92400e;
@@ -504,8 +519,8 @@
         }
         .combo-note:focus { background: var(--bg-surface); border-color: var(--border); }
         .combo-note:empty:before { content: attr(data-placeholder); color: var(--text-faint); }
-	
-	.orphan-warning { display: inline-flex; align-items: center; gap: 2px; color: #92400e; background: var(--warn-bg); border: 1px solid #fcd34d; padding: 1px 4px; border-radius: var(--radius-sm); font-size: 9px; font-weight: 700; cursor: help; margin-left: 4px; transition: all var(--transition); }
+        
+        .orphan-warning { display: inline-flex; align-items: center; gap: 2px; color: #92400e; background: var(--warn-bg); border: 1px solid #fcd34d; padding: 1px 4px; border-radius: var(--radius-sm); font-size: 9px; font-weight: 700; cursor: help; margin-left: 4px; transition: all var(--transition); }
         .orphan-warning:hover { background: #fef3c7; border-color: var(--warn); }
         .combo-auto-single {
             font-size: 10px;
@@ -531,6 +546,157 @@
         .context-inline { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
         /* Modals */
+        #modal-img {
+            background: rgba(245, 245, 245, 0.8) !important;
+            backdrop-filter: blur(4px);
+        }
+        #modal-img > .modal-box {
+            width: 95vw; max-width: 1400px; height: 95vh;
+            display: flex; flex-direction: column;
+            padding: 16px;
+            background: #ffffff !important;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .img-modal-body { flex: 1; display: flex; gap: 16px; overflow: hidden; min-height: 0; }
+        
+        .img-interaction-panel { width: 240px; flex-shrink: 0; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 12px; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
+        .img-panel-header { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .img-panel-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+        .img-panel-separator { height: 1px; background: var(--border-light); margin: 16px 0; flex-shrink: 0; }
+        .img-panel-interactions { flex: 1; display: flex; flex-direction: column; gap: 8px; font-size: 11px; color: var(--text-secondary); min-height: 0; }
+        .img-empty-interaction { color: var(--text-faint); font-style: italic; text-align: center; margin-top: 20px; font-size: 11px; }
+        
+        .interactions-group { margin-bottom: 16px; }
+        .interactions-group-title { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .act-btns-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+        .act-btn { font-size: 10px; padding: 5px 8px; border: 1px solid var(--border); background: var(--bg-surface); border-radius: 4px; cursor: pointer; transition: all 0.15s; color: var(--text-secondary); font-weight: 600; text-transform: capitalize; }
+        .act-btn:hover { border-color: var(--text-muted); background: var(--bg-hover); }
+        .act-btn.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .act-btn.active:hover { background: #4338ca; }
+        
+        /* Estilos para el resaltado en la matriz */
+        .gto-cell.dim { opacity: 0.2; filter: grayscale(1); }
+        .gto-cell.highlight { box-shadow: 0 0 0 2px var(--text-primary); z-index: 3; transform: scale(1.05); }
+        .clear-highlight-btn { width: 100%; font-size: 10px; padding: 6px; border: 1px solid #fca5a5; color: var(--bluff); background: var(--bluff-bg); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.15s; margin-top: 10px; }
+        .clear-highlight-btn:hover { background: #fee2e2; }
+
+        .img-slots-area { flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; min-height: 0; }
+        .slots-container { display: flex; flex-direction: column; gap: 12px; flex: 1; } 
+        
+        .slot-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--bg-surface-warm);
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+            display: flex; flex-direction: column;
+        }
+        .slot-card.active-slot { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+        
+        .slot-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-light);
+            font-size: 11px; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+        .slot-del-btn { color: var(--text-faint); cursor: pointer; font-size: 11px; transition: color var(--transition); background: none; border: none; }
+        .slot-del-btn:hover { color: var(--bluff); }
+        
+        .slot-panels { display: flex; gap: 12px; padding: 12px; flex: 1; min-height: 0; }
+        .range-panel { flex: 1; display: flex; flex-direction: column; gap: 8px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 10px; min-width: 0; }
+        .rp-header { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .rp-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .clear-gto-btn { font-size: 9px; color: var(--bluff); background: var(--bluff-bg); border: 1px solid #fca5a5; padding: 2px 5px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.15s; }
+        .clear-gto-btn:hover { background: #fee2e2; }
+        
+        .rp-gto-input {
+            width: 100%; height: 34px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            background: var(--bg-surface-warm);
+            padding: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            color: var(--text-secondary);
+            resize: vertical;
+            outline: none;
+            transition: all var(--transition);
+            flex-shrink: 0;
+        }
+        .rp-gto-input:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 2px rgba(99,102,241,0.05); }
+        
+        .rp-gto-matrix {
+            display: flex; justify-content: center; align-items: center;
+            background: var(--bg-surface-warm);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            overflow: hidden;
+        }
+        
+        /* Cuadrado real: height:auto deja que aspect-ratio mande (antes width Y height al 100% lo anulaban) */
+        .gto-grid { display: grid; grid-template-columns: 22px repeat(13, 1fr); grid-template-rows: 22px repeat(13, 1fr); gap: 2px; width: 100%; max-width: 400px; height: auto; aspect-ratio: 1; margin: 0 auto; }
+        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .gto-cell {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 600; border-radius: 3px;
+            color: var(--text-primary); cursor: help;
+            transition: transform 0.1s, opacity 0.15s, filter 0.15s, box-shadow 0.15s;
+            border: 1px solid transparent; overflow: hidden;
+        }
+        .gto-cell:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 0 1.5px var(--text-primary); }
+
+        /* GTO+ metrics — kept compact so the matrix remains the visual focus */
+        .gto-analysis { border-top: 1px solid var(--border-light); padding-top: 6px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+        .gto-analysis-empty { color: var(--text-faint); font-size: 10px; text-align: center; padding: 3px 0; }
+        .gto-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .gto-kpi { min-width: 0; padding: 5px 6px; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
+        .gto-kpi-label { display: block; color: var(--text-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .gto-kpi-value { display: block; margin-top: 2px; color: var(--text-primary); font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .gto-section-label { color: var(--text-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+        .gto-buckets { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+        .gto-bucket { min-width: 0; padding: 4px 3px; background: var(--bg-surface-warm); border-radius: var(--radius-sm); text-align: center; }
+        .gto-bucket-label { display: block; color: var(--text-muted); font-size: 8px; white-space: nowrap; }
+        .gto-bucket-value { display: block; margin-top: 2px; color: var(--text-secondary); font-size: 9px; font-weight: 700; white-space: nowrap; }
+        .gto-action-table { width: 100%; border-collapse: collapse; font-size: 9px; color: var(--text-secondary); }
+        .gto-action-table th { color: var(--text-muted); font-size: 8px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; text-align: right; padding: 0 2px 3px; }
+        .gto-action-table th:first-child, .gto-action-table td:first-child { text-align: left; }
+        .gto-action-table td { border-top: 1px solid var(--border-light); padding: 3px 2px; text-align: right; white-space: nowrap; }
+        .gto-action-name { font-weight: 600; text-transform: capitalize; }
+        
+        .rp-text {
+            width: 100%;
+            min-height: 36px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--text-secondary);
+            resize: vertical;
+            outline: none;
+            background: var(--bg-surface-warm);
+            transition: all var(--transition);
+            line-height: 1.5;
+            flex-shrink: 0;
+        }
+        .rp-text:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 2px rgba(99,102,241,0.05); }
+        .rp-text::placeholder { color: var(--text-faint); }
+
+        .img-modal-legend { display: flex; gap: 12px; font-size: 11px; color: var(--text-secondary); font-weight: 600; justify-content: flex-end; padding-top: 10px; flex-shrink: 0; }
+        .leg-item { display: flex; align-items: center; gap: 5px; }
+        .leg-color { width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.1); }
+
+        .img-slots-area::-webkit-scrollbar { width: 8px; }
+        .img-slots-area::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .img-slots-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .img-slots-area::-webkit-scrollbar-thumb:hover { background: #aaa; }
         .modal-overlay {
             display: none;
             position: fixed;
@@ -985,7 +1151,7 @@
         .cm-mcell.na:hover { border-color: var(--border); transform: none; box-shadow: none; }
         .cm-mcell.na.sel { opacity: 0.35; }
 
-	.cm-grid-sm { display: inline-grid; gap: 2px; grid-template-columns: repeat(13, 28px); }
+        .cm-grid-sm { display: inline-grid; gap: 2px; grid-template-columns: repeat(13, 28px); }
         .cm-grid-sm.cm-gs { grid-template-columns: repeat(13, 24px); }
         .cm-grid-sm.cm-go { grid-template-columns: repeat(13, 24px); }
         .cm-grid-sm.cm-gp { grid-template-columns: repeat(13, 24px); }
@@ -1046,7 +1212,7 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
-</style>
+    </style>
 </head>
 <body>
     <div id="sidebar">
@@ -1084,7 +1250,7 @@
                         <div class="auto-btn" onclick="autoFillPanel('flop')" title="Autodetectar todo desde el board">A</div>
                         <div class="lock-btn" id="flop-lock-btn" onclick="toggleLock('flop')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="flop-note-btn" onclick="openNoteModal('flop')">N</div>
-                        <div class="micro-btn" id="flop-img-btn" onclick="openImgModal('flop')">I</div>
+                        <div class="micro-btn-gto" id="flop-img-btn" onclick="openImgModal('flop')">GTO+</div>
                         <div class="add-node-btn" onclick="openActionModal('flop')">+nodo</div>
                     </div>
                     <div class="flow-row">
@@ -1103,7 +1269,7 @@
                         <div class="auto-btn" onclick="autoFillPanel('turnAction')" title="Autodetectar y traer rango restante del Flop">A</div>
                         <div class="lock-btn" id="turnAction-lock-btn" onclick="toggleLock('turnAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="turnAction-note-btn" onclick="openNoteModal('turnAction')">N</div>
-                        <div class="micro-btn" id="turnAction-img-btn" onclick="openImgModal('turnAction')">I</div>
+                        <div class="micro-btn-gto" id="turnAction-img-btn" onclick="openImgModal('turnAction')">GTO+</div>
                         <div class="add-node-btn" onclick="openActionModal('turnAction')">+nodo</div>
                     </div>
                     <div class="flow-row" id="turn-actions-tabs-row" style="display:none;">
@@ -1122,7 +1288,7 @@
                         <div class="auto-btn" onclick="autoFillPanel('riverAction')" title="Autodetectar y traer rango restante del Turn">A</div>
                         <div class="lock-btn" id="riverAction-lock-btn" onclick="toggleLock('riverAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="riverAction-note-btn" onclick="openNoteModal('riverAction')">N</div>
-                        <div class="micro-btn" id="riverAction-img-btn" onclick="openImgModal('riverAction')">I</div>
+                        <div class="micro-btn-gto" id="riverAction-img-btn" onclick="openImgModal('riverAction')">GTO+</div>
                         <div class="add-node-btn" onclick="openActionModal('riverAction')">+nodo</div>
                     </div>
                     <div class="flow-row" id="river-actions-tabs-row" style="display:none;">
@@ -1248,13 +1414,35 @@
     </div>
     <div id="modal-img" class="modal-overlay">
         <div class="modal-box">
-            <img id="img-preview" class="img-preview" style="display:none;" src="" alt="Preview">
-            <input type="file" id="img-file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            <div class="modal-actions" style="justify-content: center; margin-top: 15px;">
-                <button class="modal-btn" id="btn-cambiar-img" onclick="document.getElementById('img-file-input').click()" style="display:none; background:transparent; color:#ccc; border-color:#ccc;">Cambiar</button>
-                <button class="modal-btn danger" id="btn-borrar-img" onclick="deleteImage()" style="display:none;">Borrar</button>
-                <button class="modal-btn primary" id="btn-subir-img" onclick="document.getElementById('img-file-input').click()">Subir Imagen</button>
-                <button class="modal-btn" onclick="closeModal('img')" style="background:transparent; color:#ccc; border-color:#ccc;">Cerrar</button>
+            <div class="img-modal-body">
+                <div class="img-interaction-panel">
+                    <div class="img-panel-header">
+                        <span>Acciones</span>
+                    </div>
+                    <div class="img-panel-actions">
+                        <button class="modal-btn primary" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="addImageSlot()">+ Agregar Slot</button>
+                        <button class="modal-btn" style="width: 100%; font-size: 10px; padding: 6px 8px;" onclick="closeModal('img')">Cerrar</button>
+                    </div>
+                    
+                    <div class="img-panel-separator"></div>
+                    
+                    <div class="img-panel-header">
+                        <span>Interacciones (Slot <span id="activeSlotNum">-</span>)</span>
+                    </div>
+                    <div id="interactionsContent" class="img-panel-interactions">
+                        <div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>
+                    </div>
+                </div>
+                
+                <div class="img-slots-area">
+                    <div id="img-slots-container" class="slots-container"></div>
+                </div>
+            </div>
+            <div class="img-modal-legend">
+                <span class="leg-item"><span class="leg-color" style="background:#fecaca;"></span>Raise/Bet</span>
+                <span class="leg-item"><span class="leg-color" style="background:#bfdbfe;"></span>Call</span>
+                <span class="leg-item"><span class="leg-color" style="background:#bbf7d0;"></span>Check</span>
+                <span class="leg-item"><span class="leg-color" style="background:#e9d5ff;"></span>Fold</span>
             </div>
         </div>
     </div>
@@ -1296,6 +1484,7 @@
             }
             return out;
         }
+        
         function getDeadCards() {
             const dead = new Set();
             const addFromText = (txt) => {
@@ -1321,17 +1510,21 @@
             }
             return dead;
         }
+        
         function getHands(c) { if (!c.hands) c.hands = []; return c.hands; }
+        
         function findOrCreateHand(c, hand) {
             let h = getHands(c).find(x => x.hand === hand);
             if (!h) { h = { hand, selected: [] }; c.hands.push(h); }
             return h;
         }
+        
         function getAllSelected(c) {
             const all = [];
             getHands(c).forEach(h => (h.selected||[]).forEach(sid => all.push(sid)));
             return all;
         }
+        
         function getAllSelectedFromNode(node) {
             const all = [];
             if (!node || !node.combos) return all;
@@ -1342,6 +1535,7 @@
             });
             return all;
         }
+        
         function removeCombo(c, sid) {
             getHands(c).forEach(h => {
                 const i = h.selected.indexOf(sid);
@@ -1349,6 +1543,7 @@
             });
             c.hands = c.hands.filter(h => h.selected && h.selected.length > 0);
         }
+        
         function checkMigration() {
             const v3raw = localStorage.getItem(DB_V3);
             const v4raw = localStorage.getItem(DB_KEY);
@@ -1361,6 +1556,7 @@
                 area.innerHTML = ''; 
             }
         }
+        
         function migrateFromV3() {
             const v3raw = localStorage.getItem(DB_V3); if (!v3raw) return;
             if (!confirm('¿Migrar data de V3.0.2 a V4.0.0?\n\nTu data V3 no se borra.')) return;
@@ -1409,7 +1605,13 @@
 
         function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
         
-        function exportData() { let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); let a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; a.click(); }
+        function exportData() { 
+            let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); 
+            let a = document.createElement("a"); 
+            a.href = URL.createObjectURL(blob); 
+            a.download = "Poker_V4_" + new Date().toISOString().slice(0,10) + ".json"; 
+            a.click(); 
+        }
         
         function importData(event) { 
             let file = event.target.files[0]; 
@@ -1437,25 +1639,38 @@
             reader.readAsText(file); 
             event.target.value = ''; 
         }
+        
         function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
+        
         function addSpot() { 
             const n=document.getElementById('spot-input').value.trim(); 
             if(!n) return; 
-            data.spots.push({name:n, textures:[], preflopRange: {}}); // Aquí está el fix: {} en lugar de []
+            data.spots.push({name:n, textures:[], preflopRange: {}}); 
             document.getElementById('spot-input').value=''; 
             commit(); 
         }
+        
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
+        
         function delTexture(i) { if(confirm('¿Borrar textura?')){ data.spots[aS].textures.splice(i,1); if(aT===i){aT=-1; clearAll();} else if(aT>i){aT--;} commit(); } }
+        
         function addTexture() { const n=prompt("Nombre de la textura:"); if(!n) return; data.spots[aS].textures.push({name:n, board:'', flopNodes:[]}); commit(); loadTexture(data.spots[aS].textures.length-1); }
-        function loadTexture(i) { aS = aS===-1?0:aS; aT=i; aF=-1; let t=data.spots[aS].textures[i]; document.getElementById('empty-state').style.display='none'; document.getElementById('editor').style.display='flex'; document.getElementById('header-breadcrumb').style.display='flex'; document.getElementById('spotHeader').innerText=data.spots[aS].name; document.getElementById('textureHeader').value=t.name; renderBoard(); renderFlopTabs(); if(t.flopNodes.length>0) selectFlop(0); else clearWorkspace(); }
+        
+        function loadTexture(i) { 
+            aS = aS===-1?0:aS; aT=i; aF=-1; let t=data.spots[aS].textures[i]; 
+            document.getElementById('empty-state').style.display='none'; 
+            document.getElementById('editor').style.display='flex'; 
+            document.getElementById('header-breadcrumb').style.display='flex'; 
+            document.getElementById('spotHeader').innerText=data.spots[aS].name; 
+            document.getElementById('textureHeader').value=t.name; 
+            renderBoard(); renderFlopTabs(); if(t.flopNodes.length>0) selectFlop(0); else clearWorkspace(); 
+        }
         
         function renderSidebar() { 
             const l = document.getElementById('spotsList'); 
             let html = ''; 
             if(!data.spots) data.spots = [];
             data.spots.forEach((s, i) => { 
-                // Aquí validamos si el objeto tiene datos
                 const hasRange = s.preflopRange && Object.keys(s.preflopRange).length > 0;
                 html += `<div class="spot-item"><div class="spot-name"><span>${s.name}</span><div class="spot-actions"><div class="micro-btn ${hasRange?'has-data':''}" onclick="event.stopPropagation(); openRangeModal(${i})" title="Rango preflop">R</div><span class="del-btn" onclick="event.stopPropagation(); delSpot(${i})">×</span></div></div>`; 
                 s.textures.forEach((t, j) => { 
@@ -1467,7 +1682,7 @@
             l.innerHTML = html; 
         }
 
-                // --- Lógica Rango Preflop (Flopzilla) ---
+        // --- Lógica Rango Preflop (Flopzilla) ---
         let rangeSpotIdx = -1;
         let rmDragModeAdd = false;
         let rmMouseDown = false;
@@ -1524,7 +1739,6 @@
                     let styleAttr = '';
                     if (active) {
                         const bg = getColorForWeight(weight);
-                        // Letra oscura para que resalte sobre el color pastel
                         styleAttr = `style="background-color:${bg}; color: var(--text-primary); border-color:${bg}; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"`;
                     }
                     
@@ -1559,7 +1773,6 @@
                 const sortedWeights = Array.from(activeWeights).sort((a, b) => b - a);
                 sortedWeights.forEach(w => {
                     const bg = getColorForWeight(w);
-                    // AQUÍ USAMOS Math.floor(w) PARA REDONDEAR VISUALMENTE (66.6667 -> 66)
                     const displayW = Math.floor(w);
                     legendHtml += `<div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border); padding:4px 8px; border-radius:4px; box-shadow: var(--shadow-xs);">
                                 <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
@@ -1600,9 +1813,9 @@
 
         function rmApplyAction(key) {
             if (rmDragModeAdd) {
-                tempPreflopRange[key] = 100; // Al hacer click, pone 100% por defecto
+                tempPreflopRange[key] = 100;
             } else {
-                delete tempPreflopRange[key]; // Al borrar, quita la mano
+                delete tempPreflopRange[key];
             }
             renderRangeGrid();
             updateRangeInputText();
@@ -1618,20 +1831,16 @@
                 return;
             }
 
-            // Regex simplificada: lee cualquier número de dígitos con o sin decimales
             const weightRegex = /\[([\d\.]+)\]([^\[]+)\[\/\1\]/g;
             
-            // 1. Procesar texto FUERA de los corchetes (peso 100%)
             const outsideText = text.replace(weightRegex, '|').split('|');
             outsideText.forEach(part => {
                 processRangeTokens(part, 100, rangeDict);
             });
 
-            // 2. Procesar texto DENTRO de los corchetes (peso personalizado)
-            // Usamos un bucle clásico para máxima compatibilidad
             let match;
             while ((match = weightRegex.exec(text)) !== null) {
-                const weight = parseFloat(match[1]); // parseFloat para decimales
+                const weight = parseFloat(match[1]);
                 const innerText = match[2];
                 processRangeTokens(innerText, weight, rangeDict);
             }
@@ -1888,7 +2097,7 @@
                     if (boardSet) {
                         const c1 = id.slice(0,2).toLowerCase();
                         const c2 = id.slice(2,4).toLowerCase();
-                        if (boardSet.has(c1) || boardSet.has(c2)) return; // Si la combo choca con el board, no la cuenta
+                        if (boardSet.has(c1) || boardSet.has(c2)) return;
                     }
                     count += getComboWeight(id);
                 });
@@ -1913,14 +2122,14 @@
                     if (aS === -1 || aT === -1 || aF === -1) return 0;
                     const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
                     const turnBoard = getActiveBoard('turnAction'); 
-                    const boardSet = new Set(turnBoard); // Board incluye el Turn
-                    return getComboCountFromNode(flopNode, boardSet); // Filtra combos muertos
+                    const boardSet = new Set(turnBoard);
+                    return getComboCountFromNode(flopNode, boardSet);
                 } else if (type === 'riverAction') {
                     if (aS === -1 || aT === -1 || aF === -1 || aTC === -1 || aTA === -1) return 0;
                     const turnNode = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA];
                     const riverBoard = getActiveBoard('riverAction');
-                    const boardSet = new Set(riverBoard); // Board incluye el River
-                    return getComboCountFromNode(turnNode, boardSet); // Filtra combos muertos
+                    const boardSet = new Set(riverBoard);
+                    return getComboCountFromNode(turnNode, boardSet);
                 }
                 return 0;
             } catch(e) {
@@ -2105,7 +2314,6 @@
             document.getElementById('turn-cards-tabs').innerHTML=h; 
         }
         
-
         function renderTurnActionsTabs() { 
             if(aTC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC]; 
@@ -2117,7 +2325,6 @@
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'turnAction');
                 const actionPool = getAllSelectedFromNode(a);
-                // Avisa si esta pestaña tiene combos que ya no existen en el Flop
                 const hasInvalids = actionPool.some(id => !flopPool.has(id));
                 let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Flop. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aTA?'active':'') + '" onclick="selectTurnAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'turnAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delTurnAction(' + i + ')">×</span></div>'; 
@@ -2166,7 +2373,6 @@
             document.getElementById('river-cards-tabs').innerHTML=h; 
         }
         
-
         function renderRiverActionsTabs() { 
             if(aRC===-1) return; 
             let card=data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA].riverCards[aRC]; 
@@ -2178,7 +2384,6 @@
                 if(i>0) h+='<span class="tab-slash">/</span>'; 
                 const pct = getTabPct(a, 'riverAction');
                 const actionPool = getAllSelectedFromNode(a);
-                // Avisa si esta pestaña tiene combos que ya no existen en el Turn
                 const hasInvalids = actionPool.some(id => !turnPool.has(id));
                 let warn = (hasOrphans || hasInvalids) ? ' <span class="orphan-warning-tab" title="Se modificaron combos en el Turn. Revisa y pulsa ↻ para reasignar.">⚠</span>' : '';
                 h+='<div class="tab-item ' + (i===aRA?'active':'') + '" onclick="selectRiverAction(' + i + ')" title="Clic para seleccionar">' + colorCards(a.name) + warn + ' <span class="tab-pct">' + pct + '%</span> <span class="del-btn" onclick="event.stopPropagation(); renameNode(\'riverAction\', ' + i + ')" title="Renombrar" style="font-size:10px; margin-right:3px;">✎</span><span class="del-btn" onclick="event.stopPropagation(); delRiverAction(' + i + ')">×</span></div>'; 
@@ -2265,7 +2470,6 @@
                     }
                 }
                 
-                // LÍMITE AJUSTADO A 6 AQUÍ
                 const limits = { board: 5, turn: 6, river: 6 };
                 document.getElementById('pc-info').textContent = currentCount + '/' + limits[pcTarget];
                 document.getElementById('pc-actions').innerHTML = `<button class="modal-btn" onclick="closeModal('pickcard')">Cerrar</button>`;
@@ -2341,6 +2545,7 @@
         }
 
         function miniCardHtml(card) { const m = String(card).match(/^([KQJTA2-9])([dhsc])$/i); if (!m) return card; return `<span class="mc c${m[2].toLowerCase()}"><span class="mc-rank">${m[1].toUpperCase()}</span></span>`; }
+        
         function openActionModal(t) { 
             if((t==='flop'&&aT===-1)||(t==='turnAction'&&aTC===-1)||(t==='riverAction'&&aRC===-1)) return; 
             mTarget=t;  
@@ -2350,9 +2555,13 @@
             document.getElementById('modal-input').value=''; 
             setTimeout(()=>document.getElementById('modal-input').focus(), 50); 
         }
+        
         function openCardModal(t) { if((t==='turn'&&aF===-1)||(t==='river'&&aTA===-1)) return; mTarget=t+'Card'; document.getElementById('quick-list-container').style.display='none'; document.getElementById('modal-input').placeholder='Ej: 2h, Jd, As...'; document.getElementById('modal-nodo').style.display='flex'; document.getElementById('modal-input').value=''; setTimeout(()=>document.getElementById('modal-input').focus(), 50); }
+        
         function selectQuick(n) { document.getElementById('modal-input').value=n; confirmModal(); }
+        
         function closeModal(id) { document.getElementById('modal-'+id).style.display='none'; }
+        
         function confirmModal() { 
             let n=document.getElementById('modal-input').value.trim(); 
             if(!n) return; 
@@ -2364,7 +2573,6 @@
                 } else if (mTarget === 'turnCard') { 
                     let node = data.spots[aS].textures[aT].flopNodes[aF]; 
                     if(!node.turnCards) node.turnCards = []; 
-                    // LÍMITE AJUSTADO A 6 AQUÍ
                     if (node.turnCards.length >= 6) { alert("Máximo 6 Turn Cards."); closeModal('nodo'); return; } 
                     node.turnCards.push({ name: n, turnActions: [] }); 
                     selectTurnCard(node.turnCards.length - 1); 
@@ -2378,7 +2586,6 @@
                     if (aF === -1 || aTC === -1 || aTA === -1) { alert('Selecciona una acción de Turn primero.'); closeModal('nodo'); return; }
                     let act = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[aTA]; 
                     if(!act.riverCards) act.riverCards = []; 
-                    // LÍMITE AJUSTADO A 6 AQUÍ
                     if (act.riverCards.length >= 6) { alert("Máximo 6 River Cards."); closeModal('nodo'); return; } 
                     act.riverCards.push({ name: n, riverActions: [] }); 
                     selectRiverCard(act.riverCards.length - 1); 
@@ -2409,8 +2616,7 @@
         
         function isNodeLocked(type) { const n = getNodeByType(type); return n && n.locked; }
 
-
-	function renameNode(type, index) {
+        function renameNode(type, index) {
             let node = null;
             if (type === 'flop') node = data.spots[aS].textures[aT].flopNodes[index];
             else if (type === 'turnAction') node = data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC].turnActions[index];
@@ -2430,8 +2636,6 @@
                 else if (type === 'riverCard') { renderRiverCardsTabs(); }
             }
         }
-
-
 
         function toggleLock(type) {
             const node = getNodeByType(type);
@@ -2602,7 +2806,6 @@
             const h1 = RANK_VAL[hr[0]], h2 = RANK_VAL[hr[1]];
             if (h1 > topRank && h2 > topRank) return 'overcards';
 
-            // CORRECCIÓN: El BDFD solo existe en el Flop (street === 3)
             if (street === 3) {
                 for (const suit of SUITS) {
                     const total = allCards.filter(c => c[1] === suit).length;
@@ -2695,28 +2898,11 @@
             let sourcePool = [];
             if (type === 'flop') {
                 const preRange = getActivePreflopRange();
-
-        function getColorForWeight(w) {
-            if (w >= 100) return '#c7d2fe'; // Indigo pastel (100%)
-            const w10 = Math.ceil(w / 10) * 10; 
-            const colors = {
-                10: '#fecaca', // Red pastel
-                20: '#fecdd3', // Rose pastel
-                30: '#fed7aa', // Orange pastel
-                40: '#fde68a', // Amber/Yellow pastel
-                50: '#d9f99d', // Lime pastel
-                60: '#bbf7d0', // Green pastel
-                70: '#a7f3d0', // Emerald pastel
-                80: '#a5f3fc', // Cyan pastel
-                90: '#bfdbfe'  // Blue pastel
-            };
-            return colors[w10] || '#fecaca';
-        }
                 const preKeys = Object.keys(preRange);
                 if (preKeys.length > 0) {
                     preKeys.forEach(key => {
                         const weight = preRange[key];
-                        if (weight === 0) return; // Ignoramos las manos con 0% de peso
+                        if (weight === 0) return;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2814,7 +3000,7 @@
                 if (preKeys.length > 0) {
                     preKeys.forEach(key => {
                         const weight = preRange[key];
-                        if (weight === 0) return; // Ignoramos las manos con 0% de peso
+                        if (weight === 0) return;
                         const r1 = key[0], r2 = key[1];
                         const isPair = r1 === r2;
                         const g = isPair ? 'p' : key[2];
@@ -2898,7 +3084,7 @@
 
                         const c1 = sc.id.slice(0,2).toLowerCase();
                         const c2 = sc.id.slice(2,4).toLowerCase();
-                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100); // Acumula fracciones
+                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100);
                     });
                 });
             } else {
@@ -3053,7 +3239,6 @@
         function cmRenderGrid() {
             let ghtml = '';
             const preRange = getActivePreflopRange();
-            // El fix está aquí abajo: Object.keys(preRange) en lugar de solo preRange
             const rangeSet = new Set(Object.keys(preRange)); 
             
             RANKS.forEach((rr, i) => {
@@ -3076,8 +3261,7 @@
                     
                     let clickAttrs = '';
                     if (!disabled && !(Object.keys(preRange).length > 0 && !rangeSet.has(rangeKey))) {
-                        clickAttrs = `onmousedown="cmCellMouseDown(event, '${hand}', '${grp}')" onmouseover="cmCellMouseOver(event, '${hand}', '${grp}')" onmouseup="cmCellMouseUp(event, '${hand}', '${grp}')"`;
-                    }
+                        clickAttrs = `onmousedown="cmCellMouseDown(event, '${hand}', '${grp}')" onmouseover="cmCellMouseOver(event, '${hand}', '${grp}')" onmouseup="cmCellMouseUp(event, '${hand}', '${grp}')"`;                    }
                     
                     ghtml += `<div class="cm-cell ${classes.join(' ')}" data-hand="${hand}" data-grp="${grp}" data-key="${selKey}" ${clickAttrs} title="${grp==='s'?'Suited':grp==='o'?'Offsuit':'Pares'} ${hand}">${hand}</div>`;
                 });
@@ -3664,7 +3848,12 @@
                 
                 if (tNode) {
                     if(tNode.generalNote && tNode.generalNote.trim()!=="") nb.classList.add('has-data'); 
-                    if(tNode.imageData) ib.classList.add('has-data'); 
+                    
+                    if(tNode.imageSlots && tNode.imageSlots.length > 0) {
+                        const hasData = tNode.imageSlots.some(s => (s.hero && (s.hero.gto || s.hero.text)) || (s.villain && (s.villain.gto || s.villain.text)));
+                        if(hasData) ib.classList.add('has-data'); 
+                    }
+                    
                     if(tNode.locked) {
                         lb.classList.add('locked');
                         lb.innerHTML = lockSvgClosed;
@@ -3673,6 +3862,7 @@
                 }
             }); 
         }
+
         function openNoteModal(type) { 
             currentEditType=type; 
             let node=getNodeByType(type); 
@@ -3688,97 +3878,721 @@
             commit();
             closeModal('nota');
         }
+        
+        function getImgNode() {
+            let node = getNodeByType(currentEditType);
+            if (!node) return null;
+            if (!node.imageSlots) node.imageSlots = [];
+            return node;
+        }
+
         function openImgModal(type) { 
-            currentEditType=type; 
-            let node=getNodeByType(type); 
-            let p=document.getElementById('img-preview'); 
-            if(node.imageData){
-                p.src=node.imageData;p.style.display='block';
-                document.getElementById('btn-subir-img').style.display= node.locked ? 'none' : 'inline-block';
-                document.getElementById('btn-cambiar-img').style.display= node.locked ? 'none' : 'inline-block';
-                document.getElementById('btn-borrar-img').style.display= node.locked ? 'none' : 'inline-block';
-            } else { 
-                p.style.display='none';
-                document.getElementById('btn-subir-img').style.display= node.locked ? 'none' : 'inline-block';
-                document.getElementById('btn-cambiar-img').style.display='none';
-                document.getElementById('btn-borrar-img').style.display='none';
-            } 
-            document.getElementById('modal-img').style.display='flex'; 
+            currentEditType = type; 
+            let node = getImgNode(); 
+            renderImgSlots();
+            document.getElementById('modal-img').style.display = 'flex'; 
         }
-        function processImageFile(file) {
-            try {
-                let node = getNodeByType(currentEditType);
-                if (!node || node.locked) { alert('Desbloquea el nodo para subir imágenes.'); return; }
-                if (!file) { alert('No se recibió archivo.'); return; }
-                if (file.size > 15 * 1024 * 1024) {
-                    alert('Imagen demasiado grande (' + (file.size/1024/1024).toFixed(1) + 'MB). Maximo 15MB. Reducila antes de subirla.');
-                    return;
+
+        let activeSlotId = null;
+        let activeHeroAction = null;
+        let activeVillainAction = null;
+
+        function renderImgSlots() {
+            const node = getImgNode();
+            const container = document.getElementById('img-slots-container');
+            if (!container) return;
+            
+            if (node.imageSlots.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--text-faint); margin-top:40px; font-size:12px;">No hay slots.<br>Haz clic en "+ Agregar Slot" en el panel izquierdo.</div>';
+                document.getElementById('activeSlotNum').textContent = '-';
+                document.getElementById('interactionsContent').innerHTML = '<div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>';
+                return;
+            }
+
+            container.innerHTML = node.imageSlots.map((slot, idx) => {
+                const isActive = slot.id === activeSlotId ? 'active-slot' : '';
+                return `
+                <div class="slot-card ${isActive}" onclick="setActiveSlot('${slot.id}')">
+                    <div class="slot-header">
+                        <span>Slot ${idx + 1} ${isActive ? '(Activo)' : ''}</span>
+                        <button class="slot-del-btn" onclick="event.stopPropagation(); deleteImageSlot('${slot.id}')">Eliminar ×</button>
+                    </div>
+                    <div class="slot-panels" onclick="event.stopPropagation();">
+                        <div class="range-panel">
+                            <div class="rp-header">
+                                <div class="rp-title">Hero Range</div>
+                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'hero')">Borrar</button>
+                            </div>
+                            <textarea class="rp-gto-input" placeholder="Pega la tabla de GTO+ aquí..." oninput="updateSlotGto('${slot.id}', 'hero', this.value)">${slot.hero?.gto || ''}</textarea>
+                            <div class="rp-gto-matrix" id="mat-${slot.id}-hero"></div>
+                            <div class="gto-analysis" id="analysis-${slot.id}-hero"></div>
+                            <textarea class="rp-text" placeholder="Notas Hero..." oninput="updateSlotText('${slot.id}', 'hero', this.value)">${slot.hero?.text || ''}</textarea>
+                        </div>
+                        <div class="range-panel">
+                            <div class="rp-header">
+                                <div class="rp-title">Villain Range</div>
+                                <button class="clear-gto-btn" onclick="clearSlotGto('${slot.id}', 'villain')">Borrar</button>
+                            </div>
+                            <textarea class="rp-gto-input" placeholder="Pega la tabla de GTO+ aquí..." oninput="updateSlotGto('${slot.id}', 'villain', this.value)">${slot.villain?.gto || ''}</textarea>
+                            <div class="rp-gto-matrix" id="mat-${slot.id}-villain"></div>
+                            <div class="gto-analysis" id="analysis-${slot.id}-villain"></div>
+                            <textarea class="rp-text" placeholder="Notas Villain..." oninput="updateSlotText('${slot.id}', 'villain', this.value)">${slot.villain?.text || ''}</textarea>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            node.imageSlots.forEach(slot => {
+                const isAct = slot.id === activeSlotId;
+                const heroData = parseGtoData(slot.hero?.gto);
+                const villainData = parseGtoData(slot.villain?.gto);
+                drawGtoMatrix(`mat-${slot.id}-hero`, heroData, isAct ? activeHeroAction : null);
+                drawGtoMatrix(`mat-${slot.id}-villain`, villainData, isAct ? activeVillainAction : null);
+                document.getElementById(`analysis-${slot.id}-hero`).innerHTML = renderGtoAnalysis(heroData);
+                document.getElementById(`analysis-${slot.id}-villain`).innerHTML = renderGtoAnalysis(villainData);
+            });
+            
+            updateInteractionPanel();
+        }
+
+        function setActiveSlot(id) {
+            activeSlotId = id;
+            activeHeroAction = null;
+            activeVillainAction = null;
+            renderImgSlots();
+        }
+
+        function setHeroAction(act) {
+            activeHeroAction = activeHeroAction === act ? null : act;
+            renderActiveMatrices();
+            updateInteractionPanel();
+        }
+
+        function setVillainAction(act) {
+            activeVillainAction = activeVillainAction === act ? null : act;
+            renderActiveMatrices();
+            updateInteractionPanel();
+        }
+
+        function clearHighlights() {
+            activeHeroAction = null;
+            activeVillainAction = null;
+            renderImgSlots();
+        }
+
+        function renderActiveMatrices() {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === activeSlotId);
+            if (slot) {
+                drawGtoMatrix(`mat-${slot.id}-hero`, parseGtoData(slot.hero?.gto), activeHeroAction);
+                drawGtoMatrix(`mat-${slot.id}-villain`, parseGtoData(slot.villain?.gto), activeVillainAction);
+            }
+        }
+
+        function updateInteractionPanel() {
+            const node = getImgNode();
+            if (!activeSlotId) {
+                document.getElementById('activeSlotNum').textContent = '-';
+                document.getElementById('interactionsContent').innerHTML = '<div class="img-empty-interaction">Selecciona o crea un slot para ver sus interacciones aquí.</div>';
+                return;
+            }
+            const idx = node.imageSlots.findIndex(s => s.id === activeSlotId);
+            if (idx === -1) {
+                activeSlotId = null;
+                updateInteractionPanel();
+                return;
+            }
+            document.getElementById('activeSlotNum').textContent = idx + 1;
+            
+            const slot = node.imageSlots[idx];
+            const heroData = parseGtoData(slot.hero?.gto);
+            const villainData = parseGtoData(slot.villain?.gto);
+            
+            const heroActs = new Set();
+            Object.values(heroData).forEach(d => Object.keys(getGtoActions(d)).forEach(k => heroActs.add(k)));
+            
+            const villainActs = new Set();
+            Object.values(villainData).forEach(d => Object.keys(getGtoActions(d)).forEach(k => villainActs.add(k)));
+            
+            let html = '';
+            
+            html += '<div class="interactions-group">';
+            html += '<div class="interactions-group-title">Resaltar Hero</div>';
+            if (heroActs.size > 0) {
+                html += '<div class="act-btns-wrap">';
+                Array.from(heroActs).forEach(act => {
+                    html += `<button class="act-btn ${activeHeroAction === act ? 'active' : ''}" onclick="setHeroAction('${act}')">${act}</button>`;
+                });
+                html += '</div>';
+            } else {
+                html += '<div style="color:var(--text-faint); font-size:11px; font-style:italic;">Pega el rango de Hero.</div>';
+            }
+            html += '</div>';
+            
+            html += '<div class="interactions-group">';
+            html += '<div class="interactions-group-title">Resaltar Villain</div>';
+            if (villainActs.size > 0) {
+                html += '<div class="act-btns-wrap">';
+                Array.from(villainActs).forEach(act => {
+                    html += `<button class="act-btn ${activeVillainAction === act ? 'active' : ''}" onclick="setVillainAction('${act}')">${act}</button>`;
+                });
+                html += '</div>';
+            } else {
+                html += '<div style="color:var(--text-faint); font-size:11px; font-style:italic;">Pega el rango de Villain.</div>';
+            }
+            html += '</div>';
+            
+            if (activeHeroAction || activeVillainAction) {
+                html += `<button class="clear-highlight-btn" onclick="clearHighlights()">Limpiar resaltado</button>`;
+            }
+            
+            document.getElementById('interactionsContent').innerHTML = html;
+        }
+
+        function clearSlotGto(id, who) {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === id);
+            if (slot) {
+                if(!slot[who]) slot[who] = {};
+                slot[who].gto = '';
+                renderImgSlots();
+                updateMicroButtons(currentEditType, node);
+                commit();
+            }
+        }
+
+        function normalizeHand(h) {
+            if (!h) return null;
+            h = h.toUpperCase().replace(/[^AKQJT2-9HDCSO]/g, '');
+            if (h.length === 3 && (h[2] === 'S' || h[2] === 'O') && h[0] !== h[1] && RANKS.includes(h[0]) && RANKS.includes(h[1])) {
+                return h[0] + h[1] + h[2].toLowerCase();
+            }
+            if (h.length === 2 && h[0] === h[1] && RANKS.includes(h[0])) {
+                return h;
+            }
+            if (h.length === 4 && ['H','D','C','S'].includes(h[1]) && ['H','D','C','S'].includes(h[3])) {
+                const r1 = h[0], r2 = h[2];
+                if (RANKS.includes(r1) && RANKS.includes(r2)) {
+                    if (r1 === r2) return r1 + r2;
+                    return r1 + r2 + (h[1] === h[3] ? 's' : 'o');
                 }
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const img = new Image();
-                        img.onload = function() {
-                            try {
-                                const canvas = document.createElement('canvas');
-                                const maxWidth = 1200;
-                                const maxHeight = 1200;
-                                let w = img.width, h = img.height;
-                                if (w > maxWidth) { h *= maxWidth / w; w = maxWidth; }
-                                if (h > maxHeight) { w *= maxHeight / h; h = maxHeight; }
-                                w = Math.round(w); h = Math.round(h);
-                                canvas.width = w;
-                                canvas.height = h;
-                                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                                
-                                if (!node) { alert('Error: no hay nodo activo.'); return; }
-                                let dataUrl = canvas.toDataURL('image/jpeg', 0.65);
-                                if (dataUrl.length > 3 * 1024 * 1024) {
-                                    dataUrl = canvas.toDataURL('image/jpeg', 0.4);
-                                }
-                                if (dataUrl.length > 3 * 1024 * 1024) {
-                                    const sw = Math.round(w * 0.6), sh = Math.round(h * 0.6);
-                                    canvas.width = sw; canvas.height = sh;
-                                    canvas.getContext('2d').drawImage(img, 0, 0, sw, sh);
-                                    dataUrl = canvas.toDataURL('image/jpeg', 0.4);
-                                }
-                                node.imageData = dataUrl;
-                                updateMicroButtons(currentEditType, node);
-                                try { 
-                                    commit(); 
-                                } catch(e) { 
-                                    delete node.imageData;
-                                    updateMicroButtons(currentEditType, node);
-                                    alert('No se pudo guardar la imagen. El almacenamiento del navegador esta lleno.\n\nSolucion: borra imagenes viejas o exporta la DB y limpia el navegador.\n\nError: ' + e.message);
-                                    return;
-                                }
-                                openImgModal(currentEditType);
-                            } catch(err) { alert('Error al procesar imagen: ' + err.message); }
-                        };
-                        img.onerror = function() { alert('Error: no se pudo cargar la imagen.'); };
-                        img.src = e.target.result;
-                    } catch(err) { alert('Error al crear imagen: ' + err.message); }
+            }
+            return null;
+        }
+
+        function separarConComillas(linea, separador) {
+            const resultado = [];
+            let valor = '';
+            let entreComillas = false;
+            for (let i = 0; i < linea.length; i++) {
+                const caracter = linea[i];
+                if (caracter === '"') {
+                    if (entreComillas && linea[i + 1] === '"') { valor += '"'; i++; }
+                    else entreComillas = !entreComillas;
+                } else if (caracter === separador && !entreComillas) {
+                    resultado.push(valor.trim());
+                    valor = '';
+                } else valor += caracter;
+            }
+            resultado.push(valor.trim());
+            return resultado;
+        }
+
+        function obtenerSeparador(lineas) {
+            const muestra = lineas.slice(0, Math.min(lineas.length, 25));
+            const candidatos = ['\t', ';', '|', ','];
+            let mejor = null;
+            for (const candidato of candidatos) {
+                const cantidades = muestra.map(linea => separarConComillas(linea, candidato).length);
+                if (cantidades[0] < 2) continue;
+                const conVariasColumnas = cantidades.filter(n => n > 1);
+                if (conVariasColumnas.length < 2) continue;
+                const frecuencia = conVariasColumnas.length / muestra.length;
+                const promedio = conVariasColumnas.reduce((a, b) => a + b, 0) / conVariasColumnas.length;
+                const puntaje = frecuencia * promedio + (candidato === '\t' ? 1 : 0);
+                if (!mejor || puntaje > mejor.puntaje) mejor = { candidato, puntaje };
+            }
+            return mejor ? mejor.candidato : null;
+        }
+
+        function dividirLinea(linea, separador) {
+            if (separador) return separarConComillas(linea, separador);
+            if (/ {2,}/.test(linea)) return linea.trim().split(/\s{2,}/).map(valor => valor.trim());
+            return linea.trim().split(/\s+/);
+        }
+
+        function numeroGto(valor) {
+            let texto = String(valor ?? '').trim().replace(/[%\s]/g, '');
+            if (!texto) return NaN;
+
+            const coma = texto.lastIndexOf(',');
+            const punto = texto.lastIndexOf('.');
+
+            if (coma !== -1 && punto !== -1) {
+                texto = coma > punto
+                    ? texto.replace(/\./g, '').replace(',', '.')
+                    : texto.replace(/,/g, '');
+            } else if (coma !== -1) {
+                texto = texto.replace(',', '.');
+            }
+
+            return Number(texto);
+        }
+
+        function accionGto(etiqueta) {
+            const texto = String(etiqueta ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+            return /\b(?:raise|bet|donk|call|check|fold)\b/.test(texto) ? texto : null;
+        }
+
+        function esManoResumen(valor) {
+            const mano = String(valor ?? '').trim();
+            return /^(?:([AKQJT2-9])\1|[AKQJT2-9]{2}[so])$/i.test(mano);
+        }
+
+        function esComboEspecifico(valor) {
+            const mano = String(valor ?? '').trim();
+            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
+        }
+
+        function columnasDeAccion(encabezados, inicio, fin = encabezados.length) {
+            const columnas = {};
+            for (let i = Math.max(0, inicio); i < fin; i++) {
+                const accion = accionGto(encabezados[i]);
+                if (accion && columnas[accion] === undefined) columnas[accion] = i;
+            }
+            return columnas;
+        }
+
+        function getGtoActions(dato) {
+            return dato && dato.actions ? dato.actions : (dato || {});
+        }
+
+        function getGtoActionNames(data) {
+            const acciones = new Set();
+            Object.values(data || {}).forEach(dato => {
+                Object.keys(getGtoActions(dato)).forEach(accion => acciones.add(accion));
+            });
+            return Array.from(acciones);
+        }
+
+        function parseGtoData(text) {
+            const data = {};
+            if (!text) return data;
+
+            const lineas = String(text).replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+            if (lineas.length < 2) return data;
+
+            const separador = obtenerSeparador(lineas);
+            const matriz = lineas.map(l => dividirLinea(l, separador));
+
+            const indiceEncabezado = lineas.findIndex(l => {
+                const h = l.toLowerCase();
+                return /\bhand\b/.test(h) && /raise|call|fold|check|bet|donk/.test(h);
+            });
+
+            if (indiceEncabezado === -1) return data;
+
+            const encabezados = matriz[indiceEncabezado].map(c => c.toLowerCase());
+            const indiceHand = Math.max(0, encabezados.findIndex(c => c.includes('hand')));
+            const inicioPorcentajes = encabezados.findIndex(c => /percentage|porcentaje|frequency|frecuencia|freq/.test(c));
+            
+            const isNotActionCol = (c) => !/(raise|call|check|fold|bet|donk)/.test(String(c).toLowerCase());
+            const indiceEquity = encabezados.findIndex(c => cellaIncluye(c, 'equity'));
+            const indiceCombos = encabezados.findIndex(c => cellaIncluye(c, 'combos') && isNotActionCol(c));
+            const indiceEvTotal = encabezados.findIndex(c => /\bev\b/.test(c) && isNotActionCol(c));
+
+            const finPorcentajes = indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length;
+            const columnasFrecuencia = columnasDeAccion(encabezados, inicioPorcentajes + 1, finPorcentajes);
+            const acciones = Object.keys(columnasFrecuencia);
+
+            if (inicioPorcentajes < 0 || !acciones.length) return data;
+
+            // Las filas de "mano resumen" (AKo, AA) se usan para la matriz y la tabla de acciones.
+            const filasDeManos = matriz
+                .slice(indiceEncabezado + 1)
+                .filter(cols => esManoResumen(cols[indiceHand]));
+
+            // Las filas de "combo específico" (AhKd, 2h2c) tienen su propia Equity individual,
+            // distinta al promedio de la mano. Las guardamos aparte para que las EQ Buckets
+            // puedan repartir los combos según su Equity real y no la de la mano resumen.
+            const filasDeCombos = matriz
+                .slice(indiceEncabezado + 1)
+                .filter(cols => esComboEspecifico(cols[indiceHand]));
+
+            const columnasCombos = indiceCombos >= 0
+                ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes >= 0 ? inicioPorcentajes : (indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length))
+                : {};
+            const columnasEv = indiceEvTotal >= 0 ? columnasDeAccion(encabezados, indiceEvTotal + 1) : {};
+
+            for (const cols of filasDeManos) {
+                const hand = normalizeHand(cols[indiceHand]);
+                if (!hand) continue;
+
+                const accionesMano = {};
+                const actionCombos = {};
+                const actionEv = {};
+                let suma = 0;
+
+                for (const accion of acciones) {
+                    const frecuencia = numeroGto(cols[columnasFrecuencia[accion]]);
+                    accionesMano[accion] = Number.isFinite(frecuencia) ? frecuencia : 0;
+                    suma += accionesMano[accion];
+
+                    const combosAccion = numeroGto(cols[columnasCombos[accion]]);
+                    if (Number.isFinite(combosAccion)) actionCombos[accion] = combosAccion;
+
+                    const evAccion = numeroGto(cols[columnasEv[accion]]);
+                    if (Number.isFinite(evAccion)) actionEv[accion] = evAccion;
+                }
+
+                // Solo guardamos si las frecuencias suman ~100%
+                if (Math.abs(suma - 100) <= 0.15) {
+                    const equity = numeroGto(cols[indiceEquity]);
+                    let eqVal = Number.isFinite(equity) ? equity : null;
+                    if (eqVal !== null && eqVal <= 1) eqVal *= 100; // Arregla decimal 0.45 -> 45
+
+                    const combos = numeroGto(cols[indiceCombos]);
+                    const evTotal = numeroGto(cols[indiceEvTotal]);
+                    
+                    data[hand] = {
+                        actions: accionesMano,
+                        equity: eqVal,
+                        combos: Number.isFinite(combos) ? combos : null,
+                        actionCombos,
+                        ev: {
+                            total: Number.isFinite(evTotal) ? evTotal : null,
+                            actions: actionEv
+                        }
+                    };
+                }
+            }
+
+            // Detalle por combo específico (solo equity + cantidad de combos), usado por las EQ Buckets
+            // para repartir cada combo según su propia Equity real en vez de la Equity promedio de la mano.
+            const combosDetalle = [];
+            for (const cols of filasDeCombos) {
+                const equityCombo = numeroGto(cols[indiceEquity]);
+                const combosCombo = numeroGto(cols[indiceCombos]);
+                if (!Number.isFinite(equityCombo) || !Number.isFinite(combosCombo) || combosCombo <= 0) continue;
+                let eqVal = equityCombo;
+                if (eqVal <= 1) eqVal *= 100;
+                combosDetalle.push({ equity: eqVal, combos: combosCombo });
+            }
+            Object.defineProperty(data, '__combosDetalle', {
+                value: combosDetalle,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            });
+
+            return data;
+        }
+
+        function cellaIncluye(celda, texto) {
+            return String(celda ?? '').toLowerCase().includes(texto);
+        }
+
+        function numeroVisible(valor, decimales = 1) {
+            return Number.isFinite(valor) ? valor.toFixed(decimales) : '—';
+        }
+
+        function nombreAccionGto(accion) {
+            return String(accion).replace(/\b\w/g, letra => letra.toUpperCase());
+        }
+
+        function pesoAccionGto(dato, accion) {
+            const combos = Number.isFinite(dato?.combos) ? Number(dato.combos) : 0;
+            const frecuencia = Number(getGtoActions(dato)[accion]) || 0;
+            // Combos totales de la mano * la frecuencia de la acción
+            return combos * frecuencia / 100;
+        }
+
+        function calcularMetricasGto(data) {
+            const filas = Object.values(data || {}).filter(dato =>
+                Number.isFinite(dato?.combos) && Number(dato.combos) > 0
+            );
+            if (!filas.length) return null;
+
+            const totalCombos = filas.reduce((total, dato) => total + (Number(dato.combos) || 0), 0);
+            let eqSum = 0, eqCombos = 0;
+            let evSum = 0, evCombos = 0;
+            
+            filas.forEach(dato => {
+                const c = Number(dato.combos) || 0;
+                let eq = Number(dato.equity);
+                if (Number.isFinite(eq)) {
+                    if (eq <= 1) eq *= 100;
+                    eqSum += eq * c;
+                    eqCombos += c;
+                }
+                let ev = Number(dato?.ev?.total);
+                if (Number.isFinite(ev)) {
+                    evSum += ev * c;
+                    evCombos += c;
+                }
+            });
+
+            const equity = eqCombos > 0 ? eqSum / eqCombos : null;
+            const ev = evCombos > 0 ? evSum / evCombos : null;
+
+            // LÍMITES ESTRICTOS: 0-19.99, 20-39.99, etc.
+            const buckets = [
+                { label: '0–20', min: 0, max: 20, combos: 0 },
+                { label: '20–40', min: 20, max: 40, combos: 0 },
+                { label: '40–60', min: 40, max: 60, combos: 0 },
+                { label: '60–80', min: 60, max: 80, combos: 0 },
+                { label: '80–100', min: 80, max: 100.0001, combos: 0 }
+            ];
+            
+            // Si tenemos el detalle por combo específico (con su Equity individual), lo usamos para
+            // repartir los buckets con precisión real. Si no (ej. datos pegados sin nivel de combo),
+            // caemos al comportamiento anterior usando la Equity promedio de cada mano resumen.
+            const combosDetalle = Array.isArray(data?.__combosDetalle) ? data.__combosDetalle : [];
+            if (combosDetalle.length) {
+                combosDetalle.forEach(({ equity, combos }) => {
+                    let eq = Number(equity);
+                    if (!Number.isFinite(eq)) eq = 0;
+                    if (eq < 0) eq = 0;
+                    if (eq > 100) eq = 100;
+
+                    const bucket = buckets.find(b => eq >= b.min && eq < b.max) || buckets[buckets.length - 1];
+                    bucket.combos += (Number(combos) || 0);
+                });
+            } else {
+                filas.forEach(dato => {
+                    let eq = Number(dato.equity);
+                    if (!Number.isFinite(eq)) eq = 0;
+                    if (eq <= 1) eq *= 100;
+                    if (eq < 0) eq = 0;
+                    if (eq > 100) eq = 100;
+
+                    const bucket = buckets.find(b => eq >= b.min && eq < b.max) || buckets[buckets.length - 1];
+                    bucket.combos += (Number(dato.combos) || 0);
+                });
+            }
+
+            const acciones = getGtoActionNames(data).map(accion => {
+                let combos = 0, equityTotal = 0, evTotal = 0, combosConEv = 0;
+                filas.forEach(dato => {
+                    const peso = pesoAccionGto(dato, accion);
+                    if (peso <= 0) return;
+                    combos += peso;
+                    
+                    let eq = Number(dato.equity);
+                    if (Number.isFinite(eq)) {
+                        if (eq <= 1) eq *= 100;
+                        equityTotal += eq * peso;
+                    }
+                    
+                    const evAccion = dato?.ev?.actions?.[accion];
+                    if (Number.isFinite(evAccion)) {
+                        evTotal += evAccion * peso;
+                        combosConEv += peso;
+                    }
+                });
+                return {
+                    name: accion,
+                    combos,
+                    frequency: totalCombos > 0 ? (combos / totalCombos) * 100 : 0,
+                    equity: combos > 0 ? equityTotal / combos : null,
+                    ev: combosConEv > 0 ? evTotal / combosConEv : null
                 };
-                reader.onerror = function() { alert('Error al leer el archivo.'); };
-                reader.readAsDataURL(file);
-            } catch(err) { alert('Error en processImageFile: ' + err.message); }
+            }).filter(accion => accion.combos > 0);
+
+            return { totalCombos, equity, ev, buckets, acciones };
         }
-        function handleImageUpload(event) {
-            try {
-                const f=event.target.files[0];
-                if(!f){ return; }
-                processImageFile(f);
-                event.target.value='';
-            } catch(err) { alert('Error en handleImageUpload: ' + err.message); }
+
+        function renderGtoAnalysis(data) {
+            const metricas = calcularMetricasGto(data);
+            if (!metricas) return '<div class="gto-analysis-empty">Pega un reporte GTO+ con Equity y Combos para ver el análisis.</div>';
+
+            const buckets = metricas.buckets.map(bucket => `
+                <div class="gto-bucket" title="${numeroVisible(bucket.combos, 2)} combos · ${numeroVisible(metricas.totalCombos ? bucket.combos / metricas.totalCombos * 100 : 0, 1)}% del rango">
+                    <span class="gto-bucket-label">${bucket.label}%</span>
+                    <span class="gto-bucket-value">${numeroVisible(bucket.combos, 2)}</span>
+                </div>`).join('');
+            const acciones = metricas.acciones.map(accion => `
+                <tr>
+                    <td class="gto-action-name">${nombreAccionGto(accion.name)}</td>
+                    <td>${numeroVisible(accion.combos, 2)}</td>
+                    <td>${numeroVisible(accion.frequency)}%</td>
+                    <td>${numeroVisible(accion.equity)}%</td>
+                    <td>${numeroVisible(accion.ev, 2)}</td>
+                </tr>`).join('');
+
+            return `
+                <div class="gto-kpis">
+                    <div class="gto-kpi"><span class="gto-kpi-label">Combos</span><span class="gto-kpi-value">${numeroVisible(metricas.totalCombos, 2)}</span></div>
+                    <div class="gto-kpi"><span class="gto-kpi-label">EQ rango</span><span class="gto-kpi-value">${numeroVisible(metricas.equity)}%</span></div>
+                    <div class="gto-kpi"><span class="gto-kpi-label">EV rango</span><span class="gto-kpi-value">${numeroVisible(metricas.ev, 2)}</span></div>
+                </div>
+                <div class="gto-section-label">EQ buckets · combos</div>
+                <div class="gto-buckets">${buckets}</div>
+                <div class="gto-section-label">EQ y EV por acción</div>
+                <table class="gto-action-table">
+                    <thead><tr><th>Acción</th><th>Combos</th><th>Mix</th><th>EQ</th><th>EV</th></tr></thead>
+                    <tbody>${acciones}</tbody>
+                </table>`;
         }
-        function deleteImage() { 
-            let node=getNodeByType(currentEditType); 
-            if (node.locked) return;
-            delete node.imageData; 
-            updateMicroButtons(currentEditType,node); 
-            commit(); 
-            openImgModal(currentEditType); 
+
+        function getColorForAction(act) {
+            act = act.toLowerCase();
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#fecaca';
+            if (act.includes('call')) return '#bfdbfe';
+            if (act.includes('check')) return '#bbf7d0';
+            if (act.includes('fold')) return '#e9d5ff';
+            return '#d6d3d1';
         }
+
+        function getAccentColor(act) {
+            // Un paso más profundo dentro de la MISMA familia pastel (no un color saturado distinto),
+            // para resaltar la acción activa sin romper la paleta general de la matriz.
+            act = act.toLowerCase();
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#f87171';
+            if (act.includes('call')) return '#60a5fa';
+            if (act.includes('check')) return '#4ade80';
+            if (act.includes('fold')) return '#c084fc';
+            return '#a8a29e';
+        }
+
+        function getMutedColor() {
+            // Color neutro y suave para las porciones de la celda que no son la acción resaltada,
+            // en vez de un gris plano que rompe con la paleta cálida del resto de la app.
+            return '#e7e4de';
+        }
+
+        function drawGtoMatrix(containerId, data, highlightAction = null) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const ranks = ['A','K','Q','J','T','9','8','7','6','5','4','3','2'];
+            const grid = document.createElement('div');
+            grid.className = 'gto-grid';
+            
+            grid.appendChild(document.createElement('div'));
+            ranks.forEach(r => {
+                const h = document.createElement('div');
+                h.className = 'gto-h';
+                h.textContent = r;
+                grid.appendChild(h);
+            });
+            
+            ranks.forEach((ri, i) => {
+                const rh = document.createElement('div');
+                rh.className = 'gto-h';
+                rh.textContent = ri;
+                grid.appendChild(rh);
+                
+                ranks.forEach((rj, j) => {
+                    let hand;
+                    if (i === j) hand = ri + rj;
+                    else if (i < j) hand = ri + rj + 's';
+                    else hand = rj + ri + 'o';
+                    
+                    const cell = document.createElement('div');
+                    cell.className = 'gto-cell';
+                    cell.textContent = hand;
+                    
+                    const d = data[hand];
+                    if (d) {
+                        const acciones = getGtoActions(d);
+                        let stops = [], pos = 0;
+                        let tooltip = hand;
+                        if (Number.isFinite(d.equity)) tooltip += `\nEQ: ${d.equity.toFixed(2)}%`;
+                        if (Number.isFinite(d.combos)) tooltip += `\nCombos: ${d.combos.toFixed(3)}`;
+                        if (Number.isFinite(d.ev?.total)) tooltip += `\nEV: ${d.ev.total.toFixed(4)}`;
+                        
+                        const hasHighlightAction = highlightAction && acciones[highlightAction] > 0;
+                        
+                        Object.keys(acciones).forEach(act => {
+                            const val = acciones[act];
+                            if (val > 0) {
+                                let color;
+                                // Si estamos filtrando y esta NO es la acción, se hace transparente para mimetizarse con el fondo
+                                if (highlightAction && act !== highlightAction) {
+                                    color = 'transparent'; 
+                                } 
+                                // Si es la acción objetivo (o no hay filtro), mantiene su color pastel
+                                else {
+                                    color = getColorForAction(act);
+                                }
+                                
+                                stops.push(`${color} ${pos}%`);
+                                pos += val;
+                                stops.push(`${color} ${pos}%`);
+                                tooltip += `\n${act}: ${val.toFixed(1)}%`;
+                                if (Number.isFinite(d.ev?.actions?.[act])) tooltip += ` · EV ${d.ev.actions[act].toFixed(4)}`;
+                            }
+                        });
+                        
+                        // Si hay filtro y la celda NO tiene la acción, la vaciamos y atenuamos la letra
+                        if (highlightAction && !hasHighlightAction) {
+                            cell.style.background = 'transparent';
+                            cell.style.color = '#d6d3d1'; // Color gris claro para el texto, igual que las manos fuera de rango
+                        } else {
+                            cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
+                        }
+                        cell.title = tooltip;
+                        
+                    } else {
+                        cell.style.background = 'transparent'; // Fondo transparente para mimetizarse
+                        cell.style.color = '#d6d3d1';
+                        cell.title = `${hand}\nFuera de rango`;
+                    }
+                    grid.appendChild(cell);
+                });
+            });
+            container.appendChild(grid);
+        }
+
+        function addImageSlot() {
+            const node = getImgNode();
+            const newSlot = { id: Date.now().toString(), hero: { gto: '', text: '' }, villain: { gto: '', text: '' } };
+            node.imageSlots.push(newSlot);
+            activeSlotId = newSlot.id;
+            renderImgSlots();
+            updateMicroButtons(currentEditType, node);
+            commit();
+        }
+
+        function deleteImageSlot(id) {
+            const node = getImgNode();
+            node.imageSlots = node.imageSlots.filter(s => s.id !== id);
+            if (activeSlotId === id) activeSlotId = null;
+            renderImgSlots();
+            updateMicroButtons(currentEditType, node);
+            commit();
+        }
+
+        function updateSlotText(id, who, val) {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === id);
+            if (slot) {
+                if(!slot[who]) slot[who] = { gto: '', text: '' };
+                slot[who].text = val;
+                commit();
+            }
+        }
+
+        function updateSlotGto(id, who, val) {
+            const node = getImgNode();
+            const slot = node.imageSlots.find(s => s.id === id);
+            if (slot) {
+                if(!slot[who]) slot[who] = { gto: '', text: '' };
+                slot[who].gto = val;
+                const gtoData = parseGtoData(val);
+                drawGtoMatrix(`mat-${id}-${who}`, gtoData, who === 'hero' ? activeHeroAction : activeVillainAction);
+                const analysis = document.getElementById(`analysis-${id}-${who}`);
+                if (analysis) analysis.innerHTML = renderGtoAnalysis(gtoData);
+                
+                if (id === activeSlotId) updateInteractionPanel(); 
+                
+                updateMicroButtons(currentEditType, node);
+                commit();
+            }
+        }
+
         document.addEventListener('paste', function(event) {
             let items = (event.clipboardData || event.originalEvent.clipboardData).items;
             let imgFile = null;
@@ -3802,6 +4616,7 @@
             processImageFile(imgFile);
             event.preventDefault();
         });
+        
         document.addEventListener('keydown', function(e) {
             if (e.key === 'escape' && document.getElementById('card-modal').style.display === 'flex') closeCardModal();
         });
