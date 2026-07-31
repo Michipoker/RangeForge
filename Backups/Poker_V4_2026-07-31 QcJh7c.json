@@ -1,0 +1,2692 @@
+{
+  "spots": [
+    {
+      "name": "SB vs BB",
+      "textures": [
+        {
+          "name": "BLLR",
+          "board": "jd4c2s",
+          "flopNodes": [
+            {
+              "name": "CB33",
+              "combos": [
+                {
+                  "id": "set",
+                  "name": "Set",
+                  "sort": 5,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2h2d",
+                        "2h2c",
+                        "2d2c"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4h4d",
+                        "4h4s",
+                        "4d4s"
+                      ]
+                    },
+                    {
+                      "hand": "JJ",
+                      "selected": [
+                        "JhJc",
+                        "JhJs",
+                        "JcJs"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jh4h",
+                        "Js4s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AhAd",
+                        "AhAc",
+                        "AhAs",
+                        "AdAc",
+                        "AdAs",
+                        "AcAs"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KhKd",
+                        "KhKc",
+                        "KhKs",
+                        "KdKc",
+                        "KdKs",
+                        "KcKs"
+                      ]
+                    },
+                    {
+                      "hand": "QQ",
+                      "selected": [
+                        "QhQd",
+                        "QhQc",
+                        "QhQs",
+                        "QdQc",
+                        "QdQs",
+                        "QcQs"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AhJh",
+                        "AcJc",
+                        "AsJs",
+                        "AhJc",
+                        "AhJs",
+                        "AdJh",
+                        "AdJc",
+                        "AdJs",
+                        "AcJh",
+                        "AcJs",
+                        "AsJh",
+                        "AsJc"
+                      ]
+                    },
+                    {
+                      "hand": "KJ",
+                      "selected": [
+                        "KhJh",
+                        "KcJc",
+                        "KsJs",
+                        "KhJc",
+                        "KhJs",
+                        "KdJh",
+                        "KdJc",
+                        "KdJs",
+                        "KcJh",
+                        "KcJs",
+                        "KsJh",
+                        "KsJc"
+                      ]
+                    },
+                    {
+                      "hand": "QJ",
+                      "selected": [
+                        "QhJh",
+                        "QcJc",
+                        "QsJs",
+                        "QhJc",
+                        "QhJs",
+                        "QdJh",
+                        "QdJc",
+                        "QdJs",
+                        "QcJh",
+                        "QcJs",
+                        "QsJh",
+                        "QsJc"
+                      ]
+                    },
+                    {
+                      "hand": "JT",
+                      "selected": [
+                        "JhTh",
+                        "JcTc",
+                        "JsTs",
+                        "JhTd",
+                        "JhTc",
+                        "JhTs",
+                        "JcTh",
+                        "JcTd",
+                        "JcTs",
+                        "JsTh",
+                        "JsTd",
+                        "JsTc"
+                      ]
+                    },
+                    {
+                      "hand": "J9",
+                      "selected": [
+                        "Jh9h",
+                        "Jc9c",
+                        "Js9s",
+                        "Jh9d",
+                        "Jh9c",
+                        "Jh9s",
+                        "Jc9h",
+                        "Jc9d",
+                        "Jc9s",
+                        "Js9h",
+                        "Js9d",
+                        "Js9c"
+                      ]
+                    },
+                    {
+                      "hand": "J8",
+                      "selected": [
+                        "Jh8h",
+                        "Jc8c",
+                        "Js8s",
+                        "Jh8d",
+                        "Jh8c",
+                        "Jh8s",
+                        "Jc8h",
+                        "Jc8d",
+                        "Jc8s",
+                        "Js8h",
+                        "Js8d",
+                        "Js8c"
+                      ]
+                    },
+                    {
+                      "hand": "J7",
+                      "selected": [
+                        "Jh7h",
+                        "Jc7c",
+                        "Js7s"
+                      ]
+                    },
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jh6h",
+                        "Jc6c",
+                        "Js6s"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jh5h",
+                        "Jc5c",
+                        "Js5s"
+                      ]
+                    },
+                    {
+                      "hand": "J3",
+                      "selected": [
+                        "Jh3h",
+                        "Jc3c",
+                        "Js3s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "pp-below-tp",
+                  "name": "PP below TP",
+                  "sort": 10,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "55",
+                      "selected": [
+                        "5h5d",
+                        "5h5c",
+                        "5h5s",
+                        "5d5c",
+                        "5d5s",
+                        "5c5s"
+                      ]
+                    },
+                    {
+                      "hand": "66",
+                      "selected": [
+                        "6h6d",
+                        "6h6c",
+                        "6h6s",
+                        "6d6c",
+                        "6d6s",
+                        "6c6s"
+                      ]
+                    },
+                    {
+                      "hand": "77",
+                      "selected": [
+                        "7h7d",
+                        "7h7c",
+                        "7h7s",
+                        "7d7c",
+                        "7d7s",
+                        "7c7s"
+                      ]
+                    },
+                    {
+                      "hand": "88",
+                      "selected": [
+                        "8h8d",
+                        "8h8c",
+                        "8h8s",
+                        "8d8c",
+                        "8d8s",
+                        "8c8s"
+                      ]
+                    },
+                    {
+                      "hand": "99",
+                      "selected": [
+                        "9h9d",
+                        "9h9c",
+                        "9h9s",
+                        "9d9c",
+                        "9d9s",
+                        "9c9s"
+                      ]
+                    },
+                    {
+                      "hand": "TT",
+                      "selected": [
+                        "ThTd",
+                        "ThTc",
+                        "ThTs",
+                        "TdTc",
+                        "TdTs",
+                        "TcTs"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4h3h",
+                        "4d3d",
+                        "4s3s"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5h4h",
+                        "5d4d",
+                        "5s4s"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6h4h",
+                        "6d4d",
+                        "6s4s"
+                      ]
+                    },
+                    {
+                      "hand": "74",
+                      "selected": [
+                        "7h4h",
+                        "7d4d",
+                        "7s4s"
+                      ]
+                    },
+                    {
+                      "hand": "84",
+                      "selected": [
+                        "8h4h",
+                        "8d4d",
+                        "8s4s"
+                      ]
+                    },
+                    {
+                      "hand": "94",
+                      "selected": [
+                        "9h4h",
+                        "9d4d",
+                        "9s4s"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4h",
+                        "Ad4d",
+                        "As4s",
+                        "Ah4d",
+                        "Ah4s",
+                        "Ad4h",
+                        "Ad4s",
+                        "Ac4h",
+                        "Ac4d",
+                        "Ac4s",
+                        "As4h",
+                        "As4d"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kh4h",
+                        "Kd4d",
+                        "Ks4s"
+                      ]
+                    },
+                    {
+                      "hand": "Q4",
+                      "selected": [
+                        "Qh4h",
+                        "Qd4d",
+                        "Qs4s"
+                      ]
+                    },
+                    {
+                      "hand": "T4",
+                      "selected": [
+                        "Th4h",
+                        "Td4d",
+                        "Ts4s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "pp-below-mp",
+                  "name": "PP below MP",
+                  "sort": 12,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3h3d",
+                        "3h3c",
+                        "3h3s",
+                        "3d3c",
+                        "3d3s",
+                        "3c3s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "32",
+                      "selected": [
+                        "3h2h",
+                        "3d2d",
+                        "3c2c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ah2h",
+                        "Ad2d",
+                        "Ac2c",
+                        "Ah2d",
+                        "Ah2c",
+                        "Ad2h",
+                        "Ad2c",
+                        "Ac2h",
+                        "Ac2d",
+                        "As2h",
+                        "As2d",
+                        "As2c"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kh2h",
+                        "Kd2d",
+                        "Kc2c"
+                      ]
+                    },
+                    {
+                      "hand": "Q2",
+                      "selected": [
+                        "Qh2h",
+                        "Qd2d",
+                        "Qc2c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AhTh",
+                        "AhTd",
+                        "AhTc",
+                        "AhTs",
+                        "AdTh",
+                        "AdTc",
+                        "AdTs",
+                        "AcTh",
+                        "AcTd",
+                        "AcTs",
+                        "AsTh",
+                        "AsTd",
+                        "AsTc"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9h",
+                        "Ah9d",
+                        "Ah9c",
+                        "Ah9s",
+                        "Ad9h",
+                        "Ad9c",
+                        "Ad9s",
+                        "Ac9h",
+                        "Ac9d",
+                        "Ac9s",
+                        "As9h",
+                        "As9d",
+                        "As9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8h",
+                        "Ah8d",
+                        "Ah8c",
+                        "Ah8s",
+                        "Ad8h",
+                        "Ad8c",
+                        "Ad8s",
+                        "Ac8h",
+                        "Ac8d",
+                        "Ac8s",
+                        "As8h",
+                        "As8d",
+                        "As8c"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ah7h",
+                        "Ah7d",
+                        "Ah7c",
+                        "Ah7s",
+                        "Ad7h",
+                        "Ad7c",
+                        "Ad7s",
+                        "Ac7h",
+                        "Ac7d",
+                        "Ac7s",
+                        "As7h",
+                        "As7d",
+                        "As7c"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6h",
+                        "Ah6d",
+                        "Ah6c",
+                        "Ah6s",
+                        "Ad6h",
+                        "Ad6c",
+                        "Ad6s",
+                        "Ac6h",
+                        "Ac6d",
+                        "Ac6s",
+                        "As6h",
+                        "As6d",
+                        "As6c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5h3h",
+                        "5d3d",
+                        "5c3c",
+                        "5s3s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6h5h",
+                        "6d5d",
+                        "6c5c",
+                        "6s5s"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5h",
+                        "Ad5d",
+                        "Ac5c",
+                        "As5s",
+                        "Ah5d",
+                        "Ah5c",
+                        "Ah5s",
+                        "Ad5h",
+                        "Ad5c",
+                        "Ad5s",
+                        "Ac5h",
+                        "Ac5d",
+                        "Ac5s",
+                        "As5h",
+                        "As5d",
+                        "As5c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ah3h",
+                        "Ad3d",
+                        "Ac3c",
+                        "As3s",
+                        "Ah3d",
+                        "Ah3c",
+                        "Ah3s",
+                        "Ad3h",
+                        "Ad3c",
+                        "Ad3s",
+                        "Ac3h",
+                        "Ac3d",
+                        "Ac3s",
+                        "As3h",
+                        "As3d",
+                        "As3c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "overcards",
+                  "name": "Overcards",
+                  "sort": 23,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AhKh",
+                        "AdKd",
+                        "AcKc",
+                        "AsKs",
+                        "AhKd",
+                        "AhKc",
+                        "AhKs",
+                        "AdKh",
+                        "AdKc",
+                        "AdKs",
+                        "AcKh",
+                        "AcKd",
+                        "AcKs",
+                        "AsKh",
+                        "AsKd",
+                        "AsKc"
+                      ]
+                    },
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AhQh",
+                        "AdQd",
+                        "AcQc",
+                        "AsQs",
+                        "AhQd",
+                        "AhQc",
+                        "AhQs",
+                        "AdQh",
+                        "AdQc",
+                        "AdQs",
+                        "AcQh",
+                        "AcQd",
+                        "AcQs",
+                        "AsQh",
+                        "AsQd",
+                        "AsQc"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KhQh",
+                        "KdQd",
+                        "KcQc",
+                        "KsQs",
+                        "KhQd",
+                        "KhQc",
+                        "KhQs",
+                        "KdQh",
+                        "KdQc",
+                        "KdQs",
+                        "KcQh",
+                        "KcQd",
+                        "KcQs",
+                        "KsQh",
+                        "KsQd",
+                        "KsQc"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7d5d",
+                        "7c5c",
+                        "7s5s"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7d6d",
+                        "7c6c",
+                        "7s6s"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8d5d",
+                        "8c5c",
+                        "8s5s"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8d6d",
+                        "8c6c",
+                        "8s6s"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8d7d",
+                        "8c7c",
+                        "8s7s"
+                      ]
+                    },
+                    {
+                      "hand": "95",
+                      "selected": [
+                        "9d5d",
+                        "9c5c",
+                        "9s5s"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9d6d",
+                        "9c6c",
+                        "9s6s"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9d7d",
+                        "9c7c",
+                        "9s7s"
+                      ]
+                    },
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9d8d",
+                        "9c8c",
+                        "9s8s"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AdTd",
+                        "AcTc",
+                        "AsTs"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ad9d",
+                        "Ac9c",
+                        "As9s"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ad8d",
+                        "Ac8c",
+                        "As8s"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ad7d",
+                        "Ac7c",
+                        "As7s"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ad6d",
+                        "Ac6c",
+                        "As6s"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KdTd",
+                        "KcTc",
+                        "KsTs"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kd9d",
+                        "Kc9c",
+                        "Ks9s"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kd8d",
+                        "Kc8c",
+                        "Ks8s"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kd7d",
+                        "Kc7c",
+                        "Ks7s"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kd6d",
+                        "Kc6c",
+                        "Ks6s"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kd5d",
+                        "Kc5c",
+                        "Ks5s"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kd3d",
+                        "Kc3c",
+                        "Ks3s"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QdTd",
+                        "QcTc",
+                        "QsTs"
+                      ]
+                    },
+                    {
+                      "hand": "Q9",
+                      "selected": [
+                        "Qd9d",
+                        "Qc9c",
+                        "Qs9s"
+                      ]
+                    },
+                    {
+                      "hand": "Q8",
+                      "selected": [
+                        "Qd8d",
+                        "Qc8c",
+                        "Qs8s"
+                      ]
+                    },
+                    {
+                      "hand": "Q7",
+                      "selected": [
+                        "Qd7d",
+                        "Qc7c",
+                        "Qs7s"
+                      ]
+                    },
+                    {
+                      "hand": "Q6",
+                      "selected": [
+                        "Qd6d",
+                        "Qc6c",
+                        "Qs6s"
+                      ]
+                    },
+                    {
+                      "hand": "Q5",
+                      "selected": [
+                        "Qd5d",
+                        "Qc5c",
+                        "Qs5s"
+                      ]
+                    },
+                    {
+                      "hand": "Q3",
+                      "selected": [
+                        "Qd3d",
+                        "Qc3c",
+                        "Qs3s"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Td9d",
+                        "Tc9c",
+                        "Ts9s"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Td8d",
+                        "Tc8c",
+                        "Ts8s"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Td7d",
+                        "Tc7c",
+                        "Ts7s"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Td6d",
+                        "Tc6c",
+                        "Ts6s"
+                      ]
+                    },
+                    {
+                      "hand": "T5",
+                      "selected": [
+                        "Td5d",
+                        "Tc5c",
+                        "Ts5s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7h5h"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7h6h"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8h5h"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8h6h"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8h7h",
+                        "8h7d",
+                        "8h7c",
+                        "8h7s",
+                        "8d7h",
+                        "8d7c",
+                        "8d7s",
+                        "8c7h",
+                        "8c7d",
+                        "8c7s",
+                        "8s7h",
+                        "8s7d",
+                        "8s7c"
+                      ]
+                    },
+                    {
+                      "hand": "95",
+                      "selected": [
+                        "9h5h"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9h6h"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9h7h"
+                      ]
+                    },
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9h8h",
+                        "9h8d",
+                        "9h8c",
+                        "9h8s",
+                        "9d8h",
+                        "9d8c",
+                        "9d8s",
+                        "9c8h",
+                        "9c8d",
+                        "9c8s",
+                        "9s8h",
+                        "9s8d",
+                        "9s8c"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KhTh",
+                        "KhTd",
+                        "KhTc",
+                        "KhTs",
+                        "KdTh",
+                        "KdTc",
+                        "KdTs",
+                        "KcTh",
+                        "KcTd",
+                        "KcTs",
+                        "KsTh",
+                        "KsTd",
+                        "KsTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kh9h",
+                        "Kh9d",
+                        "Kh9c",
+                        "Kh9s",
+                        "Kd9h",
+                        "Kd9c",
+                        "Kd9s",
+                        "Kc9h",
+                        "Kc9d",
+                        "Kc9s",
+                        "Ks9h",
+                        "Ks9d",
+                        "Ks9c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kh8h",
+                        "Kh8d",
+                        "Kh8c",
+                        "Kh8s",
+                        "Kd8h",
+                        "Kd8c",
+                        "Kd8s",
+                        "Kc8h",
+                        "Kc8d",
+                        "Kc8s",
+                        "Ks8h",
+                        "Ks8d",
+                        "Ks8c"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kh7h",
+                        "Kh7d",
+                        "Kh7c",
+                        "Kh7s",
+                        "Kd7h",
+                        "Kd7c",
+                        "Kd7s",
+                        "Kc7h",
+                        "Kc7d",
+                        "Kc7s",
+                        "Ks7h",
+                        "Ks7d",
+                        "Ks7c"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kh6h",
+                        "Kh6d",
+                        "Kh6c",
+                        "Kh6s",
+                        "Kd6h",
+                        "Kd6c",
+                        "Kd6s",
+                        "Kc6h",
+                        "Kc6d",
+                        "Kc6s",
+                        "Ks6h",
+                        "Ks6d",
+                        "Ks6c"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kh5h"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kh3h"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QhTh",
+                        "QhTd",
+                        "QhTc",
+                        "QhTs",
+                        "QdTh",
+                        "QdTc",
+                        "QdTs",
+                        "QcTh",
+                        "QcTd",
+                        "QcTs",
+                        "QsTh",
+                        "QsTd",
+                        "QsTc"
+                      ]
+                    },
+                    {
+                      "hand": "Q9",
+                      "selected": [
+                        "Qh9h",
+                        "Qh9d",
+                        "Qh9c",
+                        "Qh9s",
+                        "Qd9h",
+                        "Qd9c",
+                        "Qd9s",
+                        "Qc9h",
+                        "Qc9d",
+                        "Qc9s",
+                        "Qs9h",
+                        "Qs9d",
+                        "Qs9c"
+                      ]
+                    },
+                    {
+                      "hand": "Q8",
+                      "selected": [
+                        "Qh8h",
+                        "Qh8d",
+                        "Qh8c",
+                        "Qh8s",
+                        "Qd8h",
+                        "Qd8c",
+                        "Qd8s",
+                        "Qc8h",
+                        "Qc8d",
+                        "Qc8s",
+                        "Qs8h",
+                        "Qs8d",
+                        "Qs8c"
+                      ]
+                    },
+                    {
+                      "hand": "Q7",
+                      "selected": [
+                        "Qh7h"
+                      ]
+                    },
+                    {
+                      "hand": "Q6",
+                      "selected": [
+                        "Qh6h"
+                      ]
+                    },
+                    {
+                      "hand": "Q5",
+                      "selected": [
+                        "Qh5h"
+                      ]
+                    },
+                    {
+                      "hand": "Q3",
+                      "selected": [
+                        "Qh3h"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Th9h",
+                        "Th9d",
+                        "Th9c",
+                        "Th9s",
+                        "Td9h",
+                        "Td9c",
+                        "Td9s",
+                        "Tc9h",
+                        "Tc9d",
+                        "Tc9s",
+                        "Ts9h",
+                        "Ts9d",
+                        "Ts9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Th8h",
+                        "Th8d",
+                        "Th8c",
+                        "Th8s",
+                        "Td8h",
+                        "Td8c",
+                        "Td8s",
+                        "Tc8h",
+                        "Tc8d",
+                        "Tc8s",
+                        "Ts8h",
+                        "Ts8d",
+                        "Ts8c"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Th7h"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Th6h"
+                      ]
+                    },
+                    {
+                      "hand": "T5",
+                      "selected": [
+                        "Th5h"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [],
+              "locked": false
+            }
+          ]
+        },
+        {
+          "name": "BBLF",
+          "board": "qcjh7c",
+          "flopNodes": [
+            {
+              "name": "CB75",
+              "combos": [
+                {
+                  "id": "set",
+                  "name": "Set",
+                  "sort": 5,
+                  "note": "por valor no bloquean rango que paga 2 calles<div>RR: mucho call casi no hay FE</div>",
+                  "hands": [
+                    {
+                      "hand": "77",
+                      "selected": [
+                        "7d7s",
+                        "7h7d",
+                        "7h7s"
+                      ]
+                    },
+                    {
+                      "hand": "JJ",
+                      "selected": [
+                        "JcJs",
+                        "JdJc",
+                        "JdJs"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "two-pair",
+                  "name": "Two pair",
+                  "sort": 7,
+                  "note": "solo la mejor en este spot quiero controlar el pot , mucha EQ switchs<br>RR: draws, deberían pagar doble BD EQ,&nbsp;",
+                  "hands": [
+                    {
+                      "hand": "QJ",
+                      "selected": [
+                        "QdJd",
+                        "QsJs",
+                        "QdJc",
+                        "QdJs",
+                        "QhJc",
+                        "QhJd",
+                        "QhJs",
+                        "QsJc",
+                        "QsJd"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "overpair",
+                  "name": "Overpair",
+                  "sort": 8,
+                  "note": "con BDFD, fácil de recordar, tienen EQ adicional, no bloquean rango de call&nbsp;y juegan bien en turn trébol<br>RR: Qx, muchos draws, incluso doble BD EQ, MP y WP",
+                  "hands": [
+                    {
+                      "hand": "AA",
+                      "selected": [
+                        "AcAs",
+                        "AdAc",
+                        "AhAc"
+                      ]
+                    },
+                    {
+                      "hand": "KK",
+                      "selected": [
+                        "KcKs",
+                        "KdKc",
+                        "KhKc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "top-pair",
+                  "name": "Top pair",
+                  "sort": 9,
+                  "note": "BDFD + kicker T+, fácil de recordar, tiene EQ adicional, juegan cómodo en trébol<br>RR: muchos draws, manos con doble BD EQ, MP, WP",
+                  "hands": [
+                    {
+                      "hand": "AQ",
+                      "selected": [
+                        "AhQh",
+                        "AcQd",
+                        "AcQh",
+                        "AcQs"
+                      ]
+                    },
+                    {
+                      "hand": "KQ",
+                      "selected": [
+                        "KhQh",
+                        "KcQd",
+                        "KcQh",
+                        "KcQs"
+                      ]
+                    },
+                    {
+                      "hand": "QT",
+                      "selected": [
+                        "QhTh",
+                        "QdTc",
+                        "QhTc",
+                        "QsTc"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "mid-pair",
+                  "name": "Middle pair",
+                  "sort": 11,
+                  "note": "Jx con kicker bajo + FD, mergean bien en turn foldean Qx, Jx, WP y pagan FD mejores que van perdiendo",
+                  "hands": [
+                    {
+                      "hand": "AJ",
+                      "selected": [
+                        "AcJc"
+                      ]
+                    },
+                    {
+                      "hand": "J6",
+                      "selected": [
+                        "Jc6c"
+                      ]
+                    },
+                    {
+                      "hand": "J5",
+                      "selected": [
+                        "Jc5c"
+                      ]
+                    },
+                    {
+                      "hand": "J4",
+                      "selected": [
+                        "Jc4c"
+                      ]
+                    },
+                    {
+                      "hand": "J3",
+                      "selected": [
+                        "Jc3c"
+                      ]
+                    }
+                  ],
+                  "expanded": true
+                },
+                {
+                  "id": "pp-below-mp",
+                  "name": "PP below MP",
+                  "sort": 12,
+                  "note": "",
+                  "hands": [],
+                  "expanded": true
+                },
+                {
+                  "id": "3rd-pair",
+                  "name": "3rd pair",
+                  "sort": 13,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "74",
+                      "selected": [
+                        "7h4h",
+                        "7d4d",
+                        "7s4s"
+                      ]
+                    },
+                    {
+                      "hand": "75",
+                      "selected": [
+                        "7h5h",
+                        "7d5d",
+                        "7s5s"
+                      ]
+                    },
+                    {
+                      "hand": "76",
+                      "selected": [
+                        "7h6h",
+                        "7d6d",
+                        "7s6s"
+                      ]
+                    },
+                    {
+                      "hand": "87",
+                      "selected": [
+                        "8h7h",
+                        "8d7d",
+                        "8s7s",
+                        "8h7d",
+                        "8h7s",
+                        "8d7h",
+                        "8d7s",
+                        "8c7h",
+                        "8c7d",
+                        "8c7s",
+                        "8s7h",
+                        "8s7d"
+                      ]
+                    },
+                    {
+                      "hand": "97",
+                      "selected": [
+                        "9h7h",
+                        "9d7d",
+                        "9s7s"
+                      ]
+                    },
+                    {
+                      "hand": "A7",
+                      "selected": [
+                        "Ah7h",
+                        "Ad7d",
+                        "As7s",
+                        "Ah7d",
+                        "Ah7s",
+                        "Ad7h",
+                        "Ad7s",
+                        "Ac7h",
+                        "Ac7d",
+                        "Ac7s",
+                        "As7h",
+                        "As7d"
+                      ]
+                    },
+                    {
+                      "hand": "K7",
+                      "selected": [
+                        "Kh7h",
+                        "Kd7d",
+                        "Ks7s",
+                        "Kh7d",
+                        "Kh7s",
+                        "Kd7h",
+                        "Kd7s",
+                        "Kc7h",
+                        "Kc7d",
+                        "Kc7s",
+                        "Ks7h",
+                        "Ks7d"
+                      ]
+                    },
+                    {
+                      "hand": "T7",
+                      "selected": [
+                        "Th7h",
+                        "Td7d",
+                        "Ts7s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "pp-below-3rd",
+                  "name": "PP below 3rd",
+                  "sort": 14,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "22",
+                      "selected": [
+                        "2h2d",
+                        "2h2c",
+                        "2h2s",
+                        "2d2c",
+                        "2d2s",
+                        "2c2s"
+                      ]
+                    },
+                    {
+                      "hand": "33",
+                      "selected": [
+                        "3h3d",
+                        "3h3c",
+                        "3h3s",
+                        "3d3c",
+                        "3d3s",
+                        "3c3s"
+                      ]
+                    },
+                    {
+                      "hand": "44",
+                      "selected": [
+                        "4h4d",
+                        "4h4c",
+                        "4h4s",
+                        "4d4c",
+                        "4d4s",
+                        "4c4s"
+                      ]
+                    },
+                    {
+                      "hand": "55",
+                      "selected": [
+                        "5h5d",
+                        "5h5c",
+                        "5h5s",
+                        "5d5c",
+                        "5d5s",
+                        "5c5s"
+                      ]
+                    },
+                    {
+                      "hand": "66",
+                      "selected": [
+                        "6h6d",
+                        "6h6c",
+                        "6h6s",
+                        "6d6c",
+                        "6d6s",
+                        "6c6s"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "ace-high",
+                  "name": "Ace high",
+                  "sort": 15,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ad9d",
+                        "As9s",
+                        "Ah9d",
+                        "Ah9s",
+                        "Ad9h",
+                        "Ad9s",
+                        "As9h",
+                        "As9d"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ad8d",
+                        "As8s",
+                        "Ah8d",
+                        "Ah8s",
+                        "Ad8h",
+                        "Ad8s",
+                        "As8h",
+                        "As8d"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ad6d",
+                        "As6s",
+                        "Ah6d",
+                        "Ah6s",
+                        "Ad6h",
+                        "Ad6s",
+                        "As6h",
+                        "As6d"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ad5d",
+                        "As5s",
+                        "Ah5d",
+                        "Ah5s",
+                        "Ad5h",
+                        "Ad5s",
+                        "As5h",
+                        "As5d"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ad4d",
+                        "As4s",
+                        "Ah4d",
+                        "Ah4s",
+                        "Ad4h",
+                        "Ad4s",
+                        "As4h",
+                        "As4d"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ad3d",
+                        "As3s",
+                        "Ah3d",
+                        "Ah3s",
+                        "Ad3h",
+                        "Ad3s",
+                        "As3h",
+                        "As3d"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ad2d",
+                        "As2s",
+                        "Ah2d",
+                        "Ah2s",
+                        "Ad2h",
+                        "Ad2s",
+                        "As2h",
+                        "As2d"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "fd-2",
+                  "name": "FD (2crd)",
+                  "sort": 17,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "32",
+                      "selected": [
+                        "3c2c"
+                      ]
+                    },
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4c3c"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5c3c"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5c4c"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6c4c"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6c5c"
+                      ]
+                    },
+                    {
+                      "hand": "84",
+                      "selected": [
+                        "8c4c"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8c5c"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8c6c"
+                      ]
+                    },
+                    {
+                      "hand": "94",
+                      "selected": [
+                        "9c4c"
+                      ]
+                    },
+                    {
+                      "hand": "95",
+                      "selected": [
+                        "9c5c"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9c6c"
+                      ]
+                    },
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9c8c"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AcKc"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AcTc"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ac9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ac8c"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ac6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ac5c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ac4c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ac3c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ac2c"
+                      ]
+                    },
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KcTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kc9c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kc8c"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kc6c"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kc5c"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kc4c"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kc3c"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kc2c"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Tc9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Tc8c"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Tc6c"
+                      ]
+                    },
+                    {
+                      "hand": "T5",
+                      "selected": [
+                        "Tc5c"
+                      ]
+                    },
+                    {
+                      "hand": "T4",
+                      "selected": [
+                        "Tc4c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "oesd-2",
+                  "name": "OESD (2crd)",
+                  "sort": 19,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "KT",
+                      "selected": [
+                        "KhTh",
+                        "KdTd",
+                        "KsTs",
+                        "KhTd",
+                        "KhTc",
+                        "KhTs",
+                        "KdTh",
+                        "KdTc",
+                        "KdTs",
+                        "KcTh",
+                        "KcTd",
+                        "KcTs",
+                        "KsTh",
+                        "KsTd",
+                        "KsTc"
+                      ]
+                    },
+                    {
+                      "hand": "T9",
+                      "selected": [
+                        "Th9h",
+                        "Td9d",
+                        "Ts9s",
+                        "Th9d",
+                        "Th9c",
+                        "Th9s",
+                        "Td9h",
+                        "Td9c",
+                        "Td9s",
+                        "Tc9h",
+                        "Tc9d",
+                        "Tc9s",
+                        "Ts9h",
+                        "Ts9d",
+                        "Ts9c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "gs-2",
+                  "name": "GS (2crd)",
+                  "sort": 21,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "98",
+                      "selected": [
+                        "9h8h",
+                        "9d8d",
+                        "9s8s",
+                        "9h8d",
+                        "9h8c",
+                        "9h8s",
+                        "9d8h",
+                        "9d8c",
+                        "9d8s",
+                        "9c8h",
+                        "9c8d",
+                        "9c8s",
+                        "9s8h",
+                        "9s8d",
+                        "9s8c"
+                      ]
+                    },
+                    {
+                      "hand": "AK",
+                      "selected": [
+                        "AhKh",
+                        "AdKd",
+                        "AsKs",
+                        "AhKd",
+                        "AhKc",
+                        "AhKs",
+                        "AdKh",
+                        "AdKc",
+                        "AdKs",
+                        "AcKh",
+                        "AcKd",
+                        "AcKs",
+                        "AsKh",
+                        "AsKd",
+                        "AsKc"
+                      ]
+                    },
+                    {
+                      "hand": "AT",
+                      "selected": [
+                        "AhTh",
+                        "AdTd",
+                        "AsTs",
+                        "AhTd",
+                        "AhTc",
+                        "AhTs",
+                        "AdTh",
+                        "AdTc",
+                        "AdTs",
+                        "AcTh",
+                        "AcTd",
+                        "AcTs",
+                        "AsTh",
+                        "AsTd",
+                        "AsTc"
+                      ]
+                    },
+                    {
+                      "hand": "K9",
+                      "selected": [
+                        "Kh9h",
+                        "Kd9d",
+                        "Ks9s",
+                        "Kh9d",
+                        "Kh9c",
+                        "Kh9s",
+                        "Kd9h",
+                        "Kd9c",
+                        "Kd9s",
+                        "Kc9h",
+                        "Kc9d",
+                        "Kc9s",
+                        "Ks9h",
+                        "Ks9d",
+                        "Ks9c"
+                      ]
+                    },
+                    {
+                      "hand": "T8",
+                      "selected": [
+                        "Th8h",
+                        "Td8d",
+                        "Ts8s",
+                        "Th8d",
+                        "Th8c",
+                        "Th8s",
+                        "Td8h",
+                        "Td8c",
+                        "Td8s",
+                        "Tc8h",
+                        "Tc8d",
+                        "Tc8s",
+                        "Ts8h",
+                        "Ts8d",
+                        "Ts8c"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "bdfd",
+                  "name": "BDFD",
+                  "sort": 24,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "32",
+                      "selected": [
+                        "3h2h"
+                      ]
+                    },
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4h3h"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5h3h"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5h4h"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6h4h"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6h5h"
+                      ]
+                    },
+                    {
+                      "hand": "84",
+                      "selected": [
+                        "8h4h"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8h5h"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8h6h"
+                      ]
+                    },
+                    {
+                      "hand": "94",
+                      "selected": [
+                        "9h4h"
+                      ]
+                    },
+                    {
+                      "hand": "95",
+                      "selected": [
+                        "9h5h"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9h6h"
+                      ]
+                    },
+                    {
+                      "hand": "A9",
+                      "selected": [
+                        "Ah9h",
+                        "Ah9c",
+                        "Ad9c",
+                        "Ac9h",
+                        "Ac9d",
+                        "Ac9s",
+                        "As9c"
+                      ]
+                    },
+                    {
+                      "hand": "A8",
+                      "selected": [
+                        "Ah8h",
+                        "Ah8c",
+                        "Ad8c",
+                        "Ac8h",
+                        "Ac8d",
+                        "Ac8s",
+                        "As8c"
+                      ]
+                    },
+                    {
+                      "hand": "A6",
+                      "selected": [
+                        "Ah6h",
+                        "Ah6c",
+                        "Ad6c",
+                        "Ac6h",
+                        "Ac6d",
+                        "Ac6s",
+                        "As6c"
+                      ]
+                    },
+                    {
+                      "hand": "A5",
+                      "selected": [
+                        "Ah5h",
+                        "Ah5c",
+                        "Ad5c",
+                        "Ac5h",
+                        "Ac5d",
+                        "Ac5s",
+                        "As5c"
+                      ]
+                    },
+                    {
+                      "hand": "A4",
+                      "selected": [
+                        "Ah4h",
+                        "Ah4c",
+                        "Ad4c",
+                        "Ac4h",
+                        "Ac4d",
+                        "Ac4s",
+                        "As4c"
+                      ]
+                    },
+                    {
+                      "hand": "A3",
+                      "selected": [
+                        "Ah3h",
+                        "Ah3c",
+                        "Ad3c",
+                        "Ac3h",
+                        "Ac3d",
+                        "Ac3s",
+                        "As3c"
+                      ]
+                    },
+                    {
+                      "hand": "A2",
+                      "selected": [
+                        "Ah2h",
+                        "Ah2c",
+                        "Ad2c",
+                        "Ac2h",
+                        "Ac2d",
+                        "Ac2s",
+                        "As2c"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kh8h",
+                        "Kh8c",
+                        "Kd8c",
+                        "Kc8h",
+                        "Kc8d",
+                        "Kc8s",
+                        "Ks8c"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kh6h",
+                        "Kh6c",
+                        "Kd6c",
+                        "Kc6h",
+                        "Kc6d",
+                        "Kc6s",
+                        "Ks6c"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kh5h"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kh4h"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kh3h"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kh2h"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Th6h"
+                      ]
+                    },
+                    {
+                      "hand": "T5",
+                      "selected": [
+                        "Th5h"
+                      ]
+                    },
+                    {
+                      "hand": "T4",
+                      "selected": [
+                        "Th4h"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "air",
+                  "name": "Air",
+                  "sort": 26,
+                  "note": "",
+                  "hands": [
+                    {
+                      "hand": "32",
+                      "selected": [
+                        "3d2d",
+                        "3s2s"
+                      ]
+                    },
+                    {
+                      "hand": "43",
+                      "selected": [
+                        "4d3d",
+                        "4s3s"
+                      ]
+                    },
+                    {
+                      "hand": "53",
+                      "selected": [
+                        "5d3d",
+                        "5s3s"
+                      ]
+                    },
+                    {
+                      "hand": "54",
+                      "selected": [
+                        "5d4d",
+                        "5s4s"
+                      ]
+                    },
+                    {
+                      "hand": "64",
+                      "selected": [
+                        "6d4d",
+                        "6s4s"
+                      ]
+                    },
+                    {
+                      "hand": "65",
+                      "selected": [
+                        "6d5d",
+                        "6s5s"
+                      ]
+                    },
+                    {
+                      "hand": "84",
+                      "selected": [
+                        "8d4d",
+                        "8s4s"
+                      ]
+                    },
+                    {
+                      "hand": "85",
+                      "selected": [
+                        "8d5d",
+                        "8s5s"
+                      ]
+                    },
+                    {
+                      "hand": "86",
+                      "selected": [
+                        "8d6d",
+                        "8s6s"
+                      ]
+                    },
+                    {
+                      "hand": "94",
+                      "selected": [
+                        "9d4d",
+                        "9s4s"
+                      ]
+                    },
+                    {
+                      "hand": "95",
+                      "selected": [
+                        "9d5d",
+                        "9s5s"
+                      ]
+                    },
+                    {
+                      "hand": "96",
+                      "selected": [
+                        "9d6d",
+                        "9s6s"
+                      ]
+                    },
+                    {
+                      "hand": "K8",
+                      "selected": [
+                        "Kd8d",
+                        "Ks8s",
+                        "Kh8d",
+                        "Kh8s",
+                        "Kd8h",
+                        "Kd8s",
+                        "Ks8h",
+                        "Ks8d"
+                      ]
+                    },
+                    {
+                      "hand": "K6",
+                      "selected": [
+                        "Kd6d",
+                        "Ks6s",
+                        "Kh6d",
+                        "Kh6s",
+                        "Kd6h",
+                        "Kd6s",
+                        "Ks6h",
+                        "Ks6d"
+                      ]
+                    },
+                    {
+                      "hand": "K5",
+                      "selected": [
+                        "Kd5d",
+                        "Ks5s"
+                      ]
+                    },
+                    {
+                      "hand": "K4",
+                      "selected": [
+                        "Kd4d",
+                        "Ks4s"
+                      ]
+                    },
+                    {
+                      "hand": "K3",
+                      "selected": [
+                        "Kd3d",
+                        "Ks3s"
+                      ]
+                    },
+                    {
+                      "hand": "K2",
+                      "selected": [
+                        "Kd2d",
+                        "Ks2s"
+                      ]
+                    },
+                    {
+                      "hand": "T6",
+                      "selected": [
+                        "Td6d",
+                        "Ts6s"
+                      ]
+                    },
+                    {
+                      "hand": "T5",
+                      "selected": [
+                        "Td5d",
+                        "Ts5s"
+                      ]
+                    },
+                    {
+                      "hand": "T4",
+                      "selected": [
+                        "Td4d",
+                        "Ts4s"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "generalNote": "",
+              "imageData": "",
+              "turnCards": [],
+              "locked": false,
+              "imageSlots": [
+                {
+                  "id": "1785467889244",
+                  "hero": {
+                    "gto": "Hand\t\tEquity\t\tCombos (total)\tBet 4.5\tCheck\t\tPercentage\tBet 4.5\tCheck\t\tEV (total)\tBet 4.5\tCheck\n\nAA\t\t81.141\t\t6.000\t2.553\t3.447\t\t\t42.555\t57.445\t\t6.1952\t6.4028\t6.0414\nAhAc\t\t82.550\t\t1.000\t0.701\t0.299\t\t\t70.13\t29.87\t\t6.5511\t6.5550\t6.5419\nAhAd\t\t79.848\t\t1.000\t0.179\t0.821\t\t\t17.942\t82.058\t\t5.8466\t5.8285\t5.8506\nAcAd\t\t82.432\t\t1.000\t0.672\t0.328\t\t\t67.159\t32.841\t\t6.5401\t6.5413\t6.5375\nAhAs\t\t79.848\t\t1.000\t0.179\t0.821\t\t\t17.942\t82.058\t\t5.8466\t5.8285\t5.8506\nAcAs\t\t82.432\t\t1.000\t0.672\t0.328\t\t\t67.159\t32.841\t\t6.5401\t6.5413\t6.5375\nAdAs\t\t79.733\t\t1.000\t0.149\t0.851\t\t\t14.942\t85.058\t\t5.8457\t5.8210\t5.8501\n\n\nAKs\t\t60.915\t\t4.000\t1.055\t2.945\t\t\t26.399\t73.601\t\t3.8919\t5.4530\t3.3320\nAhKh\t\t58.241\t\t1.000\t0.190\t0.810\t\t\t18.991\t81.009\t\t3.1730\t3.1682\t3.1742\nAcKc\t\t73.923\t\t1.000\t0.616\t0.384\t\t\t61.619\t38.381\t\t7.3478\t7.3355\t7.3677\nAdKd\t\t55.732\t\t1.000\t0.125\t0.875\t\t\t12.452\t87.548\t\t2.5193\t2.5228\t2.5188\nAsKs\t\t55.732\t\t1.000\t0.125\t0.875\t\t\t12.45\t87.55\t\t2.5193\t2.5228\t2.5188\n\n\nAQs\t\t80.188\t\t3.000\t1.311\t1.689\t\t\t43.68\t56.32\t\t5.6861\t5.6997\t5.6755\nAhQh\t\t81.035\t\t1.000\t0.508\t0.492\t\t\t50.837\t49.163\t\t6.0829\t6.0595\t6.1071\nAdQd\t\t79.765\t\t1.000\t0.401\t0.599\t\t\t40.114\t59.886\t\t5.4884\t5.4726\t5.4990\nAsQs\t\t79.765\t\t1.000\t0.401\t0.599\t\t\t40.116\t59.884\t\t5.4884\t5.4726\t5.4990\n\n\nAJs\t\t76.700\t\t3.000\t0.769\t2.231\t\t\t25.638\t74.362\t\t5.1934\t8.4665\t4.0649\nAcJc\t\t85.020\t\t1.000\t0.750\t0.250\t\t\t74.969\t25.031\t\t8.5867\t8.5912\t8.5734\nAdJd\t\t72.535\t\t1.000\t0.009\t0.991\t\t\t0.941\t99.059\t\t3.4946\t3.4958\t3.4946\nAsJs\t\t72.535\t\t1.000\t0.009\t0.991\t\t\t0.942\t99.058\t\t3.4946\t3.4958\t3.4946\n\n\nATs\t\t58.318\t\t4.000\t1.415\t2.585\t\t\t35.409\t64.591\t\t3.5311\t4.2482\t3.1381\nAhTh\t\t55.521\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7558\t2.6912\t2.7558\nAcTc\t\t71.639\t\t1.000\t0.602\t0.398\t\t\t60.156\t39.844\t\t7.1804\t7.1648\t7.2038\nAdTd\t\t53.043\t\t1.000\t0.407\t0.593\t\t\t40.656\t59.344\t\t2.0904\t2.0876\t2.0923\nAsTs\t\t53.043\t\t1.000\t0.407\t0.593\t\t\t40.655\t59.345\t\t2.0904\t2.0876\t2.0923\n\n\nA9s\t\t48.519\t\t4.000\t0.613\t3.387\t\t\t15.301\t84.699\t\t2.1995\t2.2923\t2.1827\nAh9h\t\t45.105\t\t1.000\t0.474\t0.526\t\t\t47.364\t52.636\t\t1.2521\t1.2604\t1.2446\nAc9c\t\t64.799\t\t1.000\t0.140\t0.860\t\t\t13.967\t86.033\t\t5.7549\t5.7691\t5.7526\nAd9d\t\t42.058\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.8891\t0.7506\t0.8891\nAs9s\t\t42.058\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.8891\t0.7506\t0.8891\n\n\nA8s\t\t46.510\t\t4.000\t0.370\t3.630\t\t\t9.273\t90.727\t\t2.0543\t5.6357\t1.6883\nAh8h\t\t42.918\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0915\t1.0625\t1.0915\nAc8c\t\t63.443\t\t1.000\t0.370\t0.630\t\t\t37.026\t62.974\t\t5.6249\t5.6357\t5.6186\nAd8d\t\t39.821\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7463\t0.5156\t0.7463\nAs8s\t\t39.821\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7464\t0.5156\t0.7464\n\n\nA7s\t\t60.659\t\t3.000\t0.025\t2.975\t\t\t0.825\t99.175\t\t2.3329\t2.0975\t2.3349\nAh7h\t\t62.165\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.8083\t2.7663\t2.8083\nAd7d\t\t59.906\t\t1.000\t0.012\t0.988\t\t\t1.245\t98.755\t\t2.0953\t2.0975\t2.0952\nAs7s\t\t59.906\t\t1.000\t0.012\t0.988\t\t\t1.231\t98.769\t\t2.0953\t2.0975\t2.0952\n\n\nA6s\t\t42.708\t\t4.000\t0.772\t3.228\t\t\t19.312\t80.688\t\t1.8711\t4.6559\t1.2046\nAh6h\t\t38.838\t\t1.000\t0.128\t0.872\t\t\t12.788\t87.212\t\t0.9266\t0.9126\t0.9286\nAc6c\t\t60.768\t\t1.000\t0.644\t0.356\t\t\t64.374\t35.626\t\t5.3968\t5.3981\t5.3945\nAd6d\t\t35.595\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5771\t0.4230\t0.5771\nAs6s\t\t35.595\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5771\t0.4230\t0.5771\n\n\nA5s\t\t42.319\t\t4.000\t1.053\t2.947\t\t\t26.395\t73.605\t\t1.8664\t3.9849\t1.1067\nAh5h\t\t38.428\t\t1.000\t0.332\t0.668\t\t\t33.19\t66.81\t\t0.9245\t0.9177\t0.9279\nAc5c\t\t60.409\t\t1.000\t0.722\t0.278\t\t\t72.158\t27.842\t\t5.3870\t5.3886\t5.3828\nAd5d\t\t35.175\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5681\t0.4368\t0.5681\nAs5s\t\t35.175\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5681\t0.4368\t0.5681\n\n\nA4s\t\t42.115\t\t4.000\t1.421\t2.579\t\t\t35.552\t64.448\t\t1.8942\t2.9369\t1.3191\nAh4h\t\t38.244\t\t1.000\t0.801\t0.199\t\t\t80.107\t19.893\t\t0.9542\t0.9585\t0.9369\nAc4c\t\t60.209\t\t1.000\t0.620\t0.380\t\t\t62.043\t37.957\t\t5.4700\t5.4743\t5.4632\nAd4d\t\t34.956\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5666\t0.4858\t0.5666\nAs4s\t\t34.956\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5666\t0.4858\t0.5666\n\n\nA3s\t\t41.837\t\t4.000\t1.295\t2.705\t\t\t32.376\t67.624\t\t1.8815\t3.0362\t1.3287\nAh3h\t\t37.951\t\t1.000\t0.696\t0.304\t\t\t69.637\t30.363\t\t0.9405\t0.9437\t0.9333\nAc3c\t\t60.030\t\t1.000\t0.599\t0.401\t\t\t59.861\t40.139\t\t5.4575\t5.4604\t5.4533\nAd3d\t\t34.659\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5588\t0.4685\t0.5588\nAs3s\t\t34.659\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5588\t0.4685\t0.5588\n\n\nA2s\t\t41.720\t\t4.000\t1.589\t2.411\t\t\t39.721\t60.279\t\t1.9084\t2.6632\t1.4110\nAh2h\t\t37.832\t\t1.000\t1.000\t0\t\t\t100\t0\t\t0.9752\t0.9752\t0.9412\nAc2c\t\t59.917\t\t1.000\t0.589\t0.411\t\t\t58.935\t41.065\t\t5.5162\t5.5157\t5.5169\nAd2d\t\t34.541\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5659\t0.5076\t0.5659\nAs2s\t\t34.541\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5659\t0.5076\t0.5659\n\n\nAKo\t\t57.540\t\t12.000\t1.860\t10.140\t\t\t15.493\t84.507\t\t2.8693\t2.9432\t2.8557\nAhKc\t\t59.258\t\t1.000\t0.131\t0.869\t\t\t13.127\t86.873\t\t3.1937\t3.1943\t3.1936\nAhKd\t\t55.949\t\t1.000\t0.131\t0.869\t\t\t13.097\t86.903\t\t2.5550\t2.5567\t2.5548\nAhKs\t\t55.949\t\t1.000\t0.131\t0.869\t\t\t13.096\t86.904\t\t2.5550\t2.5567\t2.5548\nAcKh\t\t59.433\t\t1.000\t0.324\t0.676\t\t\t32.448\t67.552\t\t3.2435\t3.2493\t3.2407\nAcKd\t\t59.200\t\t1.000\t0.283\t0.717\t\t\t28.252\t71.748\t\t3.2086\t3.2117\t3.2074\nAcKs\t\t59.200\t\t1.000\t0.283\t0.717\t\t\t28.258\t71.742\t\t3.2086\t3.2117\t3.2073\nAdKh\t\t55.965\t\t1.000\t0.126\t0.874\t\t\t12.611\t87.389\t\t2.5529\t2.5575\t2.5523\nAdKc\t\t59.043\t\t1.000\t0.040\t0.960\t\t\t3.984\t96.016\t\t3.1599\t3.1594\t3.1600\nAdKs\t\t55.732\t\t1.000\t0.122\t0.878\t\t\t12.243\t87.757\t\t2.5192\t2.5227\t2.5188\nAsKh\t\t55.965\t\t1.000\t0.126\t0.874\t\t\t12.611\t87.389\t\t2.5529\t2.5575\t2.5523\nAsKc\t\t59.043\t\t1.000\t0.040\t0.960\t\t\t3.986\t96.014\t\t3.1600\t3.1594\t3.1600\nAsKd\t\t55.732\t\t1.000\t0.122\t0.878\t\t\t12.245\t87.755\t\t2.5193\t2.5227\t2.5188\n\n\nKK\t\t80.701\t\t6.000\t5.130\t0.870\t\t\t85.5\t14.5\t\t6.0630\t6.0723\t6.0082\nKhKc\t\t82.049\t\t1.000\t0.913\t0.087\t\t\t91.336\t8.664\t\t6.3710\t6.3715\t6.3658\nKhKd\t\t79.478\t\t1.000\t0.799\t0.201\t\t\t79.9\t20.1\t\t5.7670\t5.7691\t5.7587\nKcKd\t\t81.921\t\t1.000\t0.862\t0.138\t\t\t86.171\t13.829\t\t6.3578\t6.3582\t6.3552\nKhKs\t\t79.478\t\t1.000\t0.799\t0.201\t\t\t79.9\t20.1\t\t5.7670\t5.7691\t5.7587\nKcKs\t\t81.921\t\t1.000\t0.862\t0.138\t\t\t86.177\t13.823\t\t6.3578\t6.3582\t6.3552\nKdKs\t\t79.354\t\t1.000\t0.895\t0.105\t\t\t89.493\t10.507\t\t5.7556\t5.7561\t5.7515\n\n\nKQs\t\t80.045\t\t3.000\t2.049\t0.951\t\t\t68.246\t31.754\t\t5.5947\t5.6735\t5.4255\nKhQh\t\t80.834\t\t1.000\t1.000\t0\t\t\t100\t0\t\t5.9476\t5.9476\t5.9376\nKdQd\t\t79.651\t\t1.000\t0.524\t0.476\t\t\t52.428\t47.572\t\t5.4190\t5.4131\t5.4255\nKsQs\t\t79.651\t\t1.000\t0.524\t0.476\t\t\t52.429\t47.571\t\t5.4190\t5.4131\t5.4255\n\n\nKJs\t\t75.850\t\t3.000\t0.287\t2.713\t\t\t9.573\t90.427\t\t4.7316\t7.4673\t4.4420\nKcJc\t\t83.903\t\t1.000\t0.287\t0.713\t\t\t28.672\t71.328\t\t7.4874\t7.4673\t7.4955\nKdJd\t\t71.814\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3502\t3.3411\t3.3502\nKsJs\t\t71.814\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3502\t3.3411\t3.3502\n\n\nKTs\t\t57.641\t\t4.000\t2.464\t1.536\t\t\t61.581\t38.419\t\t4.3966\t4.7824\t3.7781\nKhTh\t\t54.927\t\t1.000\t0.869\t0.131\t\t\t86.933\t13.067\t\t3.8171\t3.8181\t3.8101\nKcTc\t\t70.530\t\t1.000\t0.813\t0.187\t\t\t81.315\t18.685\t\t7.2787\t7.2784\t7.2802\nKdTd\t\t52.532\t\t1.000\t0.391\t0.609\t\t\t39.062\t60.938\t\t3.2405\t3.2469\t3.2365\nKsTs\t\t52.532\t\t1.000\t0.391\t0.609\t\t\t39.061\t60.939\t\t3.2405\t3.2469\t3.2365\n\n\nK9s\t\t47.932\t\t4.000\t3.290\t0.710\t\t\t82.267\t17.733\t\t2.8280\t2.7789\t3.0557\nKh9h\t\t44.590\t\t1.000\t0.602\t0.398\t\t\t60.153\t39.847\t\t2.1486\t2.1474\t2.1505\nKc9c\t\t63.807\t\t1.000\t0.811\t0.189\t\t\t81.08\t18.92\t\t5.8704\t5.8719\t5.8639\nKd9d\t\t41.630\t\t1.000\t0.939\t0.061\t\t\t93.877\t6.123\t\t1.6395\t1.6398\t1.6348\nKs9s\t\t41.630\t\t1.000\t0.939\t0.061\t\t\t93.881\t6.119\t\t1.6395\t1.6398\t1.6348\n\n\nK8s\t\t38.157\t\t4.000\t0.745\t3.255\t\t\t18.632\t81.368\t\t1.7806\t2.4419\t1.6291\nKh8h\t\t34.176\t\t1.000\t0.457\t0.543\t\t\t45.697\t54.303\t\t1.0420\t1.0347\t1.0481\nKc8c\t\t56.986\t\t1.000\t0.288\t0.712\t\t\t28.831\t71.169\t\t4.6642\t4.6628\t4.6648\nKd8d\t\t30.701\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7031\t0.5918\t0.7031\nKs8s\t\t30.701\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7031\t0.5918\t0.7031\n\n\nK7s\t\t60.314\t\t3.000\t0.002\t2.998\t\t\t0.055\t99.945\t\t2.3188\t2.1119\t2.3189\nKh7h\t\t61.762\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7345\t2.7208\t2.7345\nKd7d\t\t59.590\t\t1.000\t0.001\t0.999\t\t\t0.085\t99.915\t\t2.1109\t2.1119\t2.1109\nKs7s\t\t59.590\t\t1.000\t0.001\t0.999\t\t\t0.081\t99.919\t\t2.1110\t2.1119\t2.1109\n\n\nK6s\t\t36.126\t\t4.000\t0.872\t3.128\t\t\t21.833\t78.167\t\t1.6775\t2.9240\t1.3293\nKh6h\t\t32.001\t\t1.000\t0.392\t0.608\t\t\t39.213\t60.787\t\t0.9606\t0.9577\t0.9625\nKc6c\t\t55.478\t\t1.000\t0.480\t0.520\t\t\t48.036\t51.964\t\t4.5182\t4.5242\t4.5127\nKd6d\t\t28.483\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6112\t0.5611\t0.6112\nKs6s\t\t28.483\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6112\t0.5611\t0.6112\n\n\nK5s\t\t35.904\t\t4.000\t0.904\t3.096\t\t\t22.64\t77.36\t\t1.6875\t2.9162\t1.3279\nKh5h\t\t31.766\t\t1.000\t0.407\t0.593\t\t\t40.733\t59.267\t\t0.9823\t0.9771\t0.9859\nKc5c\t\t55.231\t\t1.000\t0.497\t0.503\t\t\t49.661\t50.339\t\t4.4917\t4.4970\t4.4864\nKd5d\t\t28.249\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6293\t0.5918\t0.6293\nKs5s\t\t28.249\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6293\t0.5918\t0.6293\n\n\nK4s\t\t35.808\t\t4.000\t1.099\t2.901\t\t\t27.469\t72.531\t\t1.7371\t2.4039\t1.4846\nKh4h\t\t31.685\t\t1.000\t0.676\t0.324\t\t\t67.638\t32.362\t\t1.0184\t1.0211\t1.0129\nKc4c\t\t55.118\t\t1.000\t0.422\t0.578\t\t\t42.214\t57.786\t\t4.5994\t4.6023\t4.5972\nKd4d\t\t28.153\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6561\t0.6425\t0.6561\nKs4s\t\t28.153\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6561\t0.6425\t0.6561\n\n\nK3s\t\t35.541\t\t4.000\t1.042\t2.958\t\t\t26.042\t73.958\t\t1.7271\t2.5562\t1.4352\nKh3h\t\t31.407\t\t1.000\t0.594\t0.406\t\t\t59.39\t40.61\t\t1.0136\t1.0138\t1.0133\nKc3c\t\t54.936\t\t1.000\t0.448\t0.552\t\t\t44.765\t55.235\t\t4.5857\t4.5917\t4.5808\nKd3d\t\t27.871\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6488\t0.6296\t0.6488\nKs3s\t\t27.871\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6488\t0.6296\t0.6488\n\n\nK2s\t\t35.502\t\t4.000\t1.281\t2.719\t\t\t32.021\t67.979\t\t1.7629\t2.3131\t1.5038\nKh2h\t\t31.369\t\t1.000\t0.832\t0.168\t\t\t83.198\t16.802\t\t1.0391\t1.0424\t1.0223\nKc2c\t\t54.895\t\t1.000\t0.449\t0.551\t\t\t44.921\t55.079\t\t4.6539\t4.6541\t4.6538\nKd2d\t\t27.833\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6735\t0.6642\t0.6735\nKs2s\t\t27.833\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.6735\t0.6642\t0.6735\n\n\nAQo\t\t80.788\t\t9.000\t4.656\t4.344\t\t\t51.735\t48.265\t\t5.7523\t5.8427\t5.6553\nAhQd\t\t79.883\t\t1.000\t0.376\t0.624\t\t\t37.645\t62.355\t\t5.5038\t5.4860\t5.5145\nAhQs\t\t79.883\t\t1.000\t0.376\t0.624\t\t\t37.647\t62.353\t\t5.5038\t5.4860\t5.5145\nAcQh\t\t82.754\t\t1.000\t0.800\t0.200\t\t\t80.013\t19.987\t\t6.2685\t6.2647\t6.2837\nAcQd\t\t82.518\t\t1.000\t0.713\t0.287\t\t\t71.341\t28.659\t\t6.1803\t6.1754\t6.1925\nAcQs\t\t82.518\t\t1.000\t0.713\t0.287\t\t\t71.346\t28.654\t\t6.1802\t6.1753\t6.1924\nAdQh\t\t80.002\t\t1.000\t0.437\t0.563\t\t\t43.675\t56.325\t\t5.5781\t5.5594\t5.5925\nAdQs\t\t79.765\t\t1.000\t0.401\t0.599\t\t\t40.11\t59.89\t\t5.4883\t5.4724\t5.4989\nAsQh\t\t80.002\t\t1.000\t0.437\t0.563\t\t\t43.675\t56.325\t\t5.5781\t5.5594\t5.5925\nAsQd\t\t79.765\t\t1.000\t0.401\t0.599\t\t\t40.108\t59.892\t\t5.4883\t5.4724\t5.4989\n\n\nKQo\t\t80.601\t\t9.000\t5.064\t3.936\t\t\t56.27\t43.73\t\t5.6576\t5.6709\t5.6404\nKhQd\t\t79.744\t\t1.000\t0.525\t0.475\t\t\t52.497\t47.503\t\t5.4314\t5.4280\t5.4351\nKhQs\t\t79.744\t\t1.000\t0.525\t0.475\t\t\t52.495\t47.505\t\t5.4314\t5.4280\t5.4351\nKcQh\t\t82.483\t\t1.000\t0.659\t0.341\t\t\t65.937\t34.063\t\t6.1294\t6.1190\t6.1494\nKcQd\t\t82.254\t\t1.000\t0.592\t0.408\t\t\t59.186\t40.814\t\t6.0388\t6.0280\t6.0545\nKcQs\t\t82.254\t\t1.000\t0.592\t0.408\t\t\t59.187\t40.813\t\t6.0388\t6.0280\t6.0545\nKdQh\t\t79.844\t\t1.000\t0.571\t0.429\t\t\t57.069\t42.931\t\t5.5081\t5.5001\t5.5186\nKdQs\t\t79.614\t\t1.000\t0.515\t0.485\t\t\t51.48\t48.52\t\t5.4149\t5.4090\t5.4211\nKsQh\t\t79.844\t\t1.000\t0.571\t0.429\t\t\t57.071\t42.929\t\t5.5081\t5.5001\t5.5186\nKsQd\t\t79.614\t\t1.000\t0.515\t0.485\t\t\t51.485\t48.515\t\t5.4149\t5.4090\t5.4211\n\n\nQQ\t\t91.208\t\t3.000\t2.705\t0.295\t\t\t90.164\t9.836\t\t11.9909\t11.9895\t12.0039\nQhQd\t\t91.230\t\t1.000\t0.923\t0.077\t\t\t92.3\t7.7\t\t11.9738\t11.9729\t11.9852\nQhQs\t\t91.230\t\t1.000\t0.923\t0.077\t\t\t92.298\t7.702\t\t11.9738\t11.9729\t11.9852\nQdQs\t\t91.162\t\t1.000\t0.859\t0.141\t\t\t85.901\t14.099\t\t12.0251\t12.0252\t12.0242\n\n\nQJs\t\t85.564\t\t2.000\t1.473\t0.527\t\t\t73.657\t26.343\t\t8.2405\t8.2406\t8.2403\nQdJd\t\t85.564\t\t1.000\t0.737\t0.263\t\t\t73.659\t26.341\t\t8.2405\t8.2406\t8.2403\nQsJs\t\t85.564\t\t1.000\t0.737\t0.263\t\t\t73.656\t26.344\t\t8.2406\t8.2406\t8.2403\n\n\nQTs\t\t78.040\t\t3.000\t1.192\t1.808\t\t\t39.699\t60.301\t\t4.9561\t5.0956\t4.8642\nQhTh\t\t78.853\t\t1.000\t0.687\t0.313\t\t\t68.658\t31.342\t\t5.3006\t5.3152\t5.2686\nQdTd\t\t77.634\t\t1.000\t0.253\t0.747\t\t\t25.259\t74.741\t\t4.7843\t4.7978\t4.7797\nQsTs\t\t77.634\t\t1.000\t0.253\t0.747\t\t\t25.253\t74.747\t\t4.7843\t4.7978\t4.7797\n\n\nQ9s\t\t75.904\t\t3.000\t1.073\t1.927\t\t\t35.754\t64.246\t\t4.4872\t4.5881\t4.4311\nQh9h\t\t76.813\t\t1.000\t0.546\t0.454\t\t\t54.649\t45.351\t\t4.8326\t4.8449\t4.8178\nQd9d\t\t75.451\t\t1.000\t0.263\t0.737\t\t\t26.336\t73.664\t\t4.3149\t4.3222\t4.3123\nQs9s\t\t75.451\t\t1.000\t0.263\t0.737\t\t\t26.323\t73.677\t\t4.3149\t4.3222\t4.3123\n\n\nQ8s\t\t74.404\t\t3.000\t0.592\t2.408\t\t\t19.731\t80.269\t\t4.2435\t4.3847\t4.2088\nQh8h\t\t75.396\t\t1.000\t0.351\t0.649\t\t\t35.096\t64.904\t\t4.5966\t4.6005\t4.5946\nQd8d\t\t73.907\t\t1.000\t0.121\t0.879\t\t\t12.058\t87.942\t\t4.0670\t4.0704\t4.0665\nQs8s\t\t73.907\t\t1.000\t0.120\t0.880\t\t\t12.04\t87.96\t\t4.0670\t4.0704\t4.0665\n\n\nQ7s\t\t83.555\t\t3.000\t2.767\t0.233\t\t\t92.224\t7.776\t\t7.3890\t7.4044\t7.2054\nQh7h\t\t84.153\t\t1.000\t1.000\t0\t\t\t100\t0\t\t7.7611\t7.7611\t7.7298\nQd7d\t\t83.255\t\t1.000\t0.883\t0.117\t\t\t88.327\t11.673\t\t7.2027\t7.2023\t7.2054\nQs7s\t\t83.255\t\t1.000\t0.883\t0.117\t\t\t88.335\t11.665\t\t7.2027\t7.2023\t7.2054\n\n\nQ6s\t\t72.913\t\t3.000\t0.587\t2.413\t\t\t19.591\t80.409\t\t4.0510\t4.2213\t4.0095\nQh6h\t\t73.979\t\t1.000\t0.378\t0.622\t\t\t37.829\t62.171\t\t4.4170\t4.4186\t4.4161\nQd6d\t\t72.379\t\t1.000\t0.105\t0.895\t\t\t10.47\t89.53\t\t3.8677\t3.8642\t3.8682\nQs6s\t\t72.379\t\t1.000\t0.104\t0.896\t\t\t10.45\t89.55\t\t3.8677\t3.8642\t3.8682\n\n\nQ5s\t\t72.825\t\t3.000\t0.826\t2.174\t\t\t27.526\t72.474\t\t4.0143\t4.0929\t3.9845\nQh5h\t\t73.893\t\t1.000\t0.394\t0.606\t\t\t39.361\t60.639\t\t4.3760\t4.3791\t4.3740\nQd5d\t\t72.290\t\t1.000\t0.216\t0.784\t\t\t21.61\t78.39\t\t3.8333\t3.8319\t3.8336\nQs5s\t\t72.290\t\t1.000\t0.216\t0.784\t\t\t21.593\t78.407\t\t3.8333\t3.8320\t3.8336\n\n\nQ4s\t\t72.988\t\t3.000\t0.580\t2.420\t\t\t19.323\t80.677\t\t4.0064\t3.9768\t4.0135\nQh4h\t\t74.030\t\t1.000\t0.157\t0.843\t\t\t15.75\t84.25\t\t4.3642\t4.3686\t4.3634\nQd4d\t\t72.467\t\t1.000\t0.211\t0.789\t\t\t21.117\t78.883\t\t3.8276\t3.8307\t3.8268\nQs4s\t\t72.467\t\t1.000\t0.211\t0.789\t\t\t21.1\t78.9\t\t3.8276\t3.8308\t3.8268\n\n\nQ3s\t\t72.908\t\t3.000\t0.491\t2.509\t\t\t16.358\t83.642\t\t3.9975\t3.9310\t4.0106\nQh3h\t\t73.954\t\t1.000\t0.104\t0.896\t\t\t10.387\t89.613\t\t4.3551\t4.3536\t4.3553\nQd3d\t\t72.385\t\t1.000\t0.194\t0.806\t\t\t19.351\t80.649\t\t3.8188\t3.8175\t3.8191\nQs3s\t\t72.385\t\t1.000\t0.193\t0.807\t\t\t19.334\t80.666\t\t3.8188\t3.8175\t3.8191\n\n\nQ2s\t\t73.024\t\t3.000\t0.231\t2.769\t\t\t7.712\t92.288\t\t4.0062\t3.8284\t4.0211\nQh2h\t\t74.068\t\t1.000\t0\t1.000\t\t\t0\t100\t\t4.3652\t4.3594\t4.3652\nQd2d\t\t72.503\t\t1.000\t0.116\t0.884\t\t\t11.576\t88.424\t\t3.8268\t3.8283\t3.8266\nQs2s\t\t72.503\t\t1.000\t0.116\t0.884\t\t\t11.558\t88.442\t\t3.8268\t3.8284\t3.8266\n\n\nAJo\t\t74.029\t\t9.000\t0.517\t8.483\t\t\t5.751\t94.249\t\t3.8495\t4.0574\t3.8368\nAhJc\t\t75.173\t\t1.000\t0.153\t0.847\t\t\t15.341\t84.659\t\t4.0837\t4.0775\t4.0848\nAhJd\t\t72.690\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.5250\t3.5234\t3.5250\nAhJs\t\t72.690\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.5250\t3.5234\t3.5250\nAcJd\t\t75.413\t\t1.000\t0.072\t0.928\t\t\t7.205\t92.795\t\t4.2086\t4.2080\t4.2087\nAcJs\t\t75.413\t\t1.000\t0.072\t0.928\t\t\t7.224\t92.776\t\t4.2086\t4.2080\t4.2087\nAdJc\t\t74.959\t\t1.000\t0.088\t0.912\t\t\t8.837\t91.163\t\t4.0540\t4.0535\t4.0541\nAdJs\t\t72.477\t\t1.000\t0.021\t0.979\t\t\t2.145\t97.855\t\t3.4922\t3.4949\t3.4921\nAsJc\t\t74.959\t\t1.000\t0.088\t0.912\t\t\t8.84\t91.16\t\t4.0540\t4.0535\t4.0541\nAsJd\t\t72.477\t\t1.000\t0.021\t0.979\t\t\t2.145\t97.855\t\t3.4922\t3.4949\t3.4921\n\n\nKJo\t\t73.301\t\t9.000\t0\t9.000\t\t\t0\t100\t\t3.6937\t0\t3.6937\nKhJc\t\t74.461\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.9199\t3.9093\t3.9199\nKhJd\t\t71.978\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3768\t3.3718\t3.3768\nKhJs\t\t71.978\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3768\t3.3718\t3.3768\nKcJd\t\t74.638\t\t1.000\t0\t1.000\t\t\t0\t100\t\t4.0386\t3.9897\t4.0386\nKcJs\t\t74.638\t\t1.000\t0\t1.000\t\t\t0\t100\t\t4.0386\t3.9897\t4.0386\nKdJc\t\t74.242\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.8966\t3.8810\t3.8966\nKdJs\t\t71.759\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3486\t3.3398\t3.3486\nKsJc\t\t74.242\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.8966\t3.8810\t3.8966\nKsJd\t\t71.759\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3486\t3.3398\t3.3486\n\n\nQJo\t\t86.316\t\t7.000\t5.442\t1.558\t\t\t77.748\t22.252\t\t8.3951\t8.4026\t8.3689\nQhJc\t\t87.375\t\t1.000\t0.850\t0.150\t\t\t84.964\t15.036\t\t8.6109\t8.6087\t8.6231\nQhJd\t\t85.661\t\t1.000\t0.745\t0.255\t\t\t74.517\t25.483\t\t8.2651\t8.2644\t8.2670\nQhJs\t\t85.661\t\t1.000\t0.745\t0.255\t\t\t74.513\t25.487\t\t8.2651\t8.2644\t8.2670\nQdJc\t\t87.235\t\t1.000\t0.809\t0.191\t\t\t80.874\t19.126\t\t8.5800\t8.5770\t8.5925\nQdJs\t\t85.520\t\t1.000\t0.742\t0.258\t\t\t74.236\t25.764\t\t8.2320\t8.2329\t8.2293\nQsJc\t\t87.235\t\t1.000\t0.809\t0.191\t\t\t80.876\t19.124\t\t8.5800\t8.5770\t8.5925\nQsJd\t\t85.520\t\t1.000\t0.742\t0.258\t\t\t74.241\t25.759\t\t8.2320\t8.2329\t8.2293\n\n\nJJ\t\t91.801\t\t3.000\t1.908\t1.092\t\t\t63.589\t36.411\t\t12.0725\t12.0695\t12.0779\nJcJd\t\t92.299\t\t1.000\t0.609\t0.391\t\t\t60.946\t39.054\t\t12.1267\t12.1261\t12.1274\nJcJs\t\t92.299\t\t1.000\t0.609\t0.391\t\t\t60.947\t39.053\t\t12.1267\t12.1262\t12.1274\nJdJs\t\t90.805\t\t1.000\t0.689\t0.311\t\t\t68.88\t31.12\t\t11.9641\t11.9690\t11.9533\n\n\nJTs\t\t73.534\t\t3.000\t0.051\t2.949\t\t\t1.707\t98.293\t\t4.1578\t2.9260\t4.1792\nJcTc\t\t81.659\t\t1.000\t0\t1.000\t\t\t0\t100\t\t6.6140\t6.6079\t6.6140\nJdTd\t\t69.461\t\t1.000\t0.026\t0.974\t\t\t2.563\t97.437\t\t2.9265\t2.9260\t2.9266\nJsTs\t\t69.461\t\t1.000\t0.026\t0.974\t\t\t2.563\t97.437\t\t2.9266\t2.9260\t2.9266\n\n\nJ9s\t\t71.735\t\t3.000\t0.068\t2.932\t\t\t2.277\t97.723\t\t3.9307\t3.3064\t3.9453\nJc9c\t\t80.471\t\t1.000\t0.012\t0.988\t\t\t1.174\t98.826\t\t6.4965\t6.4878\t6.4966\nJd9d\t\t67.351\t\t1.000\t0.028\t0.972\t\t\t2.832\t97.168\t\t2.6430\t2.6447\t2.6430\nJs9s\t\t67.351\t\t1.000\t0.028\t0.972\t\t\t2.831\t97.169\t\t2.6430\t2.6447\t2.6430\n\n\nJ8s\t\t70.344\t\t3.000\t0.461\t2.539\t\t\t15.376\t84.624\t\t3.8266\t5.5003\t3.5225\nJc8c\t\t79.436\t\t1.000\t0.352\t0.648\t\t\t35.21\t64.79\t\t6.4210\t6.4147\t6.4245\nJd8d\t\t65.783\t\t1.000\t0.054\t0.946\t\t\t5.426\t94.574\t\t2.5254\t2.5251\t2.5254\nJs8s\t\t65.783\t\t1.000\t0.054\t0.946\t\t\t5.43\t94.57\t\t2.5253\t2.5251\t2.5254\n\n\nJ7s\t\t81.388\t\t2.000\t1.061\t0.939\t\t\t53.034\t46.966\t\t6.5856\t6.5559\t6.6191\nJd7d\t\t81.388\t\t1.000\t0.530\t0.470\t\t\t53.034\t46.966\t\t6.5856\t6.5559\t6.6191\nJs7s\t\t81.388\t\t1.000\t0.530\t0.470\t\t\t53.035\t46.965\t\t6.5856\t6.5559\t6.6191\n\n\nJ6s\t\t69.143\t\t3.000\t0.086\t2.914\t\t\t2.881\t97.119\t\t3.7561\t6.2904\t3.6809\nJc6c\t\t78.610\t\t1.000\t0.086\t0.914\t\t\t8.624\t91.376\t\t6.2997\t6.2904\t6.3006\nJd6d\t\t64.394\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4803\t2.4559\t2.4803\nJs6s\t\t64.394\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4802\t2.4560\t2.4802\n\n\nJ5s\t\t69.139\t\t3.000\t0.153\t2.847\t\t\t5.117\t94.883\t\t3.7452\t6.2622\t3.6095\nJc5c\t\t78.601\t\t1.000\t0.153\t0.847\t\t\t15.286\t84.714\t\t6.2849\t6.2622\t6.2890\nJd5d\t\t64.378\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4674\t2.4465\t2.4674\nJs5s\t\t64.378\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4674\t2.4465\t2.4674\n\n\nJ4s\t\t69.399\t\t3.000\t0.212\t2.788\t\t\t7.089\t92.911\t\t3.7931\t6.3731\t3.5963\nJc4c\t\t78.787\t\t1.000\t0.212\t0.788\t\t\t21.181\t78.819\t\t6.3840\t6.3731\t6.3869\nJd4d\t\t64.675\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4897\t2.4778\t2.4897\nJs4s\t\t64.675\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4897\t2.4778\t2.4897\n\n\nJ3s\t\t69.322\t\t1.500\t0.103\t1.397\t\t\t6.897\t93.103\t\t3.8014\t6.3727\t3.6109\nJc3c\t\t78.722\t\t0.500\t0.103\t0.397\t\t\t20.641\t79.359\t\t6.3885\t6.3727\t6.3925\nJd3d\t\t64.605\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.5031\t2.4698\t2.5031\nJs3s\t\t64.605\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.5031\t2.4698\t2.5031\n\n\nATo\t\t54.678\t\t12.000\t3.790\t8.210\t\t\t31.573\t68.427\t\t2.3790\t2.2075\t2.4582\nAhTc\t\t55.945\t\t1.000\t0.314\t0.686\t\t\t31.437\t68.563\t\t2.5264\t2.5295\t2.5250\nAhTd\t\t53.268\t\t1.000\t0.491\t0.509\t\t\t49.12\t50.88\t\t2.1335\t2.1360\t2.1310\nAhTs\t\t53.268\t\t1.000\t0.491\t0.509\t\t\t49.119\t50.881\t\t2.1335\t2.1360\t2.1310\nAcTh\t\t56.685\t\t1.000\t0.051\t0.949\t\t\t5.137\t94.863\t\t2.8004\t2.8019\t2.8004\nAcTd\t\t56.534\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7692\t2.7668\t2.7692\nAcTs\t\t56.534\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7692\t2.7668\t2.7692\nAdTh\t\t53.191\t\t1.000\t0.575\t0.425\t\t\t57.477\t42.523\t\t2.1269\t2.1292\t2.1239\nAdTc\t\t55.719\t\t1.000\t0.225\t0.775\t\t\t22.531\t77.469\t\t2.4883\t2.4878\t2.4885\nAdTs\t\t53.039\t\t1.000\t0.421\t0.579\t\t\t42.096\t57.904\t\t2.0920\t2.0908\t2.0929\nAsTh\t\t53.191\t\t1.000\t0.575\t0.425\t\t\t57.476\t42.524\t\t2.1269\t2.1292\t2.1239\nAsTc\t\t55.719\t\t1.000\t0.225\t0.775\t\t\t22.531\t77.469\t\t2.4883\t2.4878\t2.4885\nAsTd\t\t53.039\t\t1.000\t0.421\t0.579\t\t\t42.097\t57.903\t\t2.0920\t2.0908\t2.0929\n\n\nKTo\t\t54.082\t\t12.000\t4.634\t7.366\t\t\t38.627\t61.373\t\t3.5086\t3.5530\t3.4807\nKhTc\t\t55.347\t\t1.000\t0.356\t0.644\t\t\t35.595\t64.405\t\t3.6582\t3.6533\t3.6609\nKhTd\t\t52.733\t\t1.000\t0.363\t0.637\t\t\t36.327\t63.673\t\t3.2841\t3.2858\t3.2832\nKhTs\t\t52.733\t\t1.000\t0.363\t0.637\t\t\t36.327\t63.673\t\t3.2841\t3.2858\t3.2832\nKcTh\t\t55.918\t\t1.000\t0.462\t0.538\t\t\t46.213\t53.787\t\t3.8904\t3.8847\t3.8954\nKcTd\t\t55.782\t\t1.000\t0.557\t0.443\t\t\t55.718\t44.282\t\t3.8769\t3.8778\t3.8758\nKcTs\t\t55.782\t\t1.000\t0.557\t0.443\t\t\t55.72\t44.28\t\t3.8769\t3.8778\t3.8758\nKdTh\t\t52.664\t\t1.000\t0.246\t0.754\t\t\t24.56\t75.44\t\t3.2580\t3.2540\t3.2593\nKdTc\t\t55.144\t\t1.000\t0.330\t0.670\t\t\t33.042\t66.958\t\t3.6167\t3.6140\t3.6181\nKdTs\t\t52.529\t\t1.000\t0.412\t0.588\t\t\t41.17\t58.83\t\t3.2403\t3.2477\t3.2352\nKsTh\t\t52.664\t\t1.000\t0.246\t0.754\t\t\t24.558\t75.442\t\t3.2580\t3.2540\t3.2593\nKsTc\t\t55.144\t\t1.000\t0.330\t0.670\t\t\t33.043\t66.957\t\t3.6168\t3.6140\t3.6181\nKsTd\t\t52.529\t\t1.000\t0.412\t0.588\t\t\t41.168\t58.832\t\t3.2403\t3.2477\t3.2351\n\n\nQTo\t\t78.432\t\t9.000\t2.461\t6.539\t\t\t27.346\t72.654\t\t4.9722\t5.0054\t4.9597\nQhTc\t\t80.016\t\t1.000\t0.338\t0.662\t\t\t33.808\t66.192\t\t5.3421\t5.3354\t5.3456\nQhTd\t\t77.833\t\t1.000\t0.273\t0.727\t\t\t27.333\t72.667\t\t4.8747\t4.8808\t4.8725\nQhTs\t\t77.833\t\t1.000\t0.273\t0.727\t\t\t27.333\t72.667\t\t4.8747\t4.8808\t4.8725\nQdTh\t\t77.714\t\t1.000\t0.224\t0.776\t\t\t22.359\t77.641\t\t4.8003\t4.8072\t4.7983\nQdTc\t\t79.784\t\t1.000\t0.313\t0.687\t\t\t31.262\t68.738\t\t5.2473\t5.2470\t5.2475\nQdTs\t\t77.600\t\t1.000\t0.252\t0.748\t\t\t25.196\t74.804\t\t4.7807\t4.7945\t4.7760\nQsTh\t\t77.714\t\t1.000\t0.224\t0.776\t\t\t22.353\t77.647\t\t4.8003\t4.8072\t4.7983\nQsTc\t\t79.784\t\t1.000\t0.313\t0.687\t\t\t31.258\t68.742\t\t5.2473\t5.2470\t5.2475\nQsTd\t\t77.600\t\t1.000\t0.252\t0.748\t\t\t25.191\t74.809\t\t4.7807\t4.7945\t4.7760\n\n\nJTo\t\t70.860\t\t9.000\t0.046\t8.954\t\t\t0.513\t99.487\t\t3.2216\t2.9253\t3.2231\nJcTh\t\t72.119\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.5056\t3.4960\t3.5056\nJcTd\t\t71.963\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.4783\t3.4720\t3.4783\nJcTs\t\t71.963\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.4783\t3.4720\t3.4783\nJdTh\t\t69.593\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.9542\t2.9525\t2.9542\nJdTc\t\t71.813\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3846\t3.3333\t3.3846\nJdTs\t\t69.436\t\t1.000\t0.023\t0.977\t\t\t2.31\t97.69\t\t2.9263\t2.9253\t2.9263\nJsTh\t\t69.593\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.9542\t2.9525\t2.9543\nJsTc\t\t71.813\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.3846\t3.3334\t3.3846\nJsTd\t\t69.436\t\t1.000\t0.023\t0.977\t\t\t2.313\t97.687\t\t2.9262\t2.9252\t2.9263\n\n\nTT\t\t64.227\t\t6.000\t0\t6.000\t\t\t0\t100\t\t2.4940\t0\t2.4940\nThTc\t\t65.632\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7351\t2.5218\t2.7351\nThTd\t\t63.011\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.2822\t2.1140\t2.2822\nTcTd\t\t65.441\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7026\t2.4679\t2.7026\nThTs\t\t63.011\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.2822\t2.1140\t2.2822\nTcTs\t\t65.441\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.7026\t2.4679\t2.7026\nTdTs\t\t62.818\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.2580\t2.0664\t2.2580\n\n\nT9s\t\t50.752\t\t4.000\t2.365\t1.635\t\t\t59.111\t40.889\t\t3.5100\t3.6993\t3.2365\nTh9h\t\t47.813\t\t1.000\t0.799\t0.201\t\t\t79.854\t20.146\t\t3.0279\t3.0302\t3.0188\nTc9c\t\t64.475\t\t1.000\t0.697\t0.303\t\t\t69.686\t30.314\t\t5.8578\t5.8547\t5.8652\nTd9d\t\t45.331\t\t1.000\t0.435\t0.565\t\t\t43.458\t56.542\t\t2.5722\t2.5778\t2.5679\nTs9s\t\t45.331\t\t1.000\t0.435\t0.565\t\t\t43.459\t56.541\t\t2.5722\t2.5778\t2.5679\n\n\nT8s\t\t40.963\t\t4.000\t2.102\t1.898\t\t\t52.541\t47.459\t\t2.2234\t1.8655\t2.6197\nTh8h\t\t37.379\t\t1.000\t0.790\t0.210\t\t\t79.046\t20.954\t\t1.6841\t1.6867\t1.6742\nTc8c\t\t57.665\t\t1.000\t0.267\t0.733\t\t\t26.663\t73.337\t\t4.5985\t4.5918\t4.6009\nTd8d\t\t34.379\t\t1.000\t0.523\t0.477\t\t\t52.269\t47.731\t\t1.3018\t1.3031\t1.3004\nTs8s\t\t34.379\t\t1.000\t0.523\t0.477\t\t\t52.268\t47.732\t\t1.3018\t1.3031\t1.3004\n\n\nT7s\t\t59.152\t\t3.000\t0\t3.000\t\t\t0\t100\t\t2.1362\t0\t2.1362\nTh7h\t\t60.455\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.4611\t2.4351\t2.4611\nTd7d\t\t58.499\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.9735\t1.9573\t1.9735\nTs7s\t\t58.499\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.9735\t1.9573\t1.9735\n\n\nT6s\t\t30.626\t\t4.000\t0.064\t3.936\t\t\t1.607\t98.393\t\t1.4124\t2.5292\t1.3942\nTh6h\t\t26.363\t\t1.000\t0.025\t0.975\t\t\t2.487\t97.513\t\t0.8671\t0.8441\t0.8677\nTc6c\t\t50.348\t\t1.000\t0.039\t0.961\t\t\t3.933\t96.067\t\t3.5925\t3.5930\t3.5925\nTd6d\t\t22.868\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5920\t0.4961\t0.5920\nTs6s\t\t22.868\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5920\t0.4961\t0.5920\n\n\nT5s\t\t30.466\t\t2.000\t0.008\t1.992\t\t\t0.413\t99.587\t\t1.4364\t0.8667\t1.4388\nTh5h\t\t26.192\t\t0.500\t0.008\t0.492\t\t\t1.652\t98.348\t\t0.8934\t0.8667\t0.8939\nTc5c\t\t50.156\t\t0.500\t0\t0.500\t\t\t0\t100\t\t3.6092\t3.5952\t3.6092\nTd5d\t\t22.700\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6152\t0.5213\t0.6152\nTs5s\t\t22.700\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6152\t0.5213\t0.6152\n\n\nA9o\t\t43.819\t\t12.000\t0\t12.000\t\t\t0\t100\t\t1.0538\t0\t1.0538\nAh9c\t\t45.125\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1010\t1.0658\t1.1010\nAh9d\t\t42.289\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9207\t0.7545\t0.9207\nAh9s\t\t42.289\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9207\t0.7545\t0.9207\nAc9h\t\t46.026\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.3394\t1.3330\t1.3394\nAc9d\t\t45.878\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.3200\t1.3113\t1.3200\nAc9s\t\t45.878\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.3200\t1.3113\t1.3200\nAd9h\t\t42.206\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9034\t0.7777\t0.9034\nAd9c\t\t44.898\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0690\t1.0580\t1.0690\nAd9s\t\t42.058\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.8890\t0.7506\t0.8890\nAs9h\t\t42.206\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9034\t0.7777\t0.9035\nAs9c\t\t44.898\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0690\t1.0580\t1.0690\nAs9d\t\t42.058\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.8890\t0.7506\t0.8890\n\n\nK9o\t\t43.309\t\t12.000\t8.329\t3.671\t\t\t69.389\t30.611\t\t1.8692\t1.8117\t1.9996\nKh9c\t\t44.628\t\t1.000\t0.432\t0.568\t\t\t43.248\t56.752\t\t1.9634\t1.9533\t1.9711\nKh9d\t\t41.837\t\t1.000\t0.755\t0.245\t\t\t75.519\t24.481\t\t1.6686\t1.6684\t1.6692\nKh9s\t\t41.837\t\t1.000\t0.755\t0.245\t\t\t75.518\t24.482\t\t1.6686\t1.6684\t1.6692\nKc9h\t\t45.337\t\t1.000\t0.491\t0.509\t\t\t49.098\t50.902\t\t2.2271\t2.2257\t2.2286\nKc9d\t\t45.207\t\t1.000\t0.513\t0.487\t\t\t51.28\t48.72\t\t2.2068\t2.2019\t2.2121\nKc9s\t\t45.207\t\t1.000\t0.513\t0.487\t\t\t51.279\t48.721\t\t2.2068\t2.2019\t2.2121\nKd9h\t\t41.761\t\t1.000\t0.927\t0.073\t\t\t92.684\t7.316\t\t1.6679\t1.6684\t1.6614\nKd9c\t\t44.423\t\t1.000\t0.569\t0.431\t\t\t56.937\t43.063\t\t1.9359\t1.9332\t1.9394\nKd9s\t\t41.630\t\t1.000\t0.938\t0.062\t\t\t93.84\t6.16\t\t1.6395\t1.6398\t1.6347\nKs9h\t\t41.761\t\t1.000\t0.927\t0.073\t\t\t92.683\t7.317\t\t1.6679\t1.6684\t1.6614\nKs9c\t\t44.423\t\t1.000\t0.569\t0.431\t\t\t56.936\t43.064\t\t1.9359\t1.9332\t1.9394\nKs9d\t\t41.630\t\t1.000\t0.938\t0.062\t\t\t93.847\t6.153\t\t1.6394\t1.6398\t1.6347\n\n\nQ9o\t\t76.265\t\t9.000\t1.562\t7.438\t\t\t17.349\t82.651\t\t4.4815\t4.4337\t4.4915\nQh9c\t\t77.809\t\t1.000\t0.071\t0.929\t\t\t7.06\t92.94\t\t4.8031\t4.8021\t4.8031\nQh9d\t\t75.677\t\t1.000\t0.182\t0.818\t\t\t18.229\t81.771\t\t4.3985\t4.4026\t4.3976\nQh9s\t\t75.677\t\t1.000\t0.182\t0.818\t\t\t18.229\t81.771\t\t4.3985\t4.4026\t4.3976\nQd9h\t\t75.567\t\t1.000\t0.167\t0.833\t\t\t16.719\t83.281\t\t4.3331\t4.3314\t4.3334\nQd9c\t\t77.585\t\t1.000\t0.136\t0.864\t\t\t13.572\t86.428\t\t4.7175\t4.7187\t4.7173\nQd9s\t\t75.451\t\t1.000\t0.261\t0.739\t\t\t26.057\t73.943\t\t4.3148\t4.3222\t4.3123\nQs9h\t\t75.567\t\t1.000\t0.167\t0.833\t\t\t16.705\t83.295\t\t4.3331\t4.3314\t4.3334\nQs9c\t\t77.585\t\t1.000\t0.136\t0.864\t\t\t13.559\t86.441\t\t4.7175\t4.7187\t4.7173\nQs9d\t\t75.451\t\t1.000\t0.260\t0.740\t\t\t26.046\t73.954\t\t4.3148\t4.3222\t4.3123\n\n\nJ9o\t\t68.736\t\t9.000\t0.080\t8.920\t\t\t0.894\t99.106\t\t2.9239\t2.6525\t2.9263\nJc9h\t\t70.040\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.2150\t3.1849\t3.2150\nJc9d\t\t69.884\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.1881\t3.1601\t3.1881\nJc9s\t\t69.884\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.1881\t3.1600\t3.1881\nJd9h\t\t67.485\t\t1.000\t0.010\t0.990\t\t\t0.981\t99.019\t\t2.6778\t2.6762\t2.6779\nJd9c\t\t69.590\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.0397\t2.9896\t3.0397\nJd9s\t\t67.329\t\t1.000\t0.030\t0.970\t\t\t3.043\t96.957\t\t2.6433\t2.6448\t2.6432\nJs9h\t\t67.485\t\t1.000\t0.010\t0.990\t\t\t0.983\t99.017\t\t2.6779\t2.6763\t2.6779\nJs9c\t\t69.590\t\t1.000\t0\t1.000\t\t\t0\t100\t\t3.0397\t2.9897\t3.0397\nJs9d\t\t67.329\t\t1.000\t0.030\t0.970\t\t\t3.042\t96.958\t\t2.6433\t2.6448\t2.6432\n\n\nT9o\t\t46.755\t\t12.000\t4.716\t7.284\t\t\t39.298\t60.702\t\t2.7632\t2.7672\t2.7605\nTh9c\t\t48.089\t\t1.000\t0.282\t0.718\t\t\t28.234\t71.766\t\t2.9291\t2.9219\t2.9319\nTh9d\t\t45.466\t\t1.000\t0.336\t0.664\t\t\t33.588\t66.412\t\t2.5993\t2.5965\t2.6008\nTh9s\t\t45.466\t\t1.000\t0.336\t0.664\t\t\t33.588\t66.412\t\t2.5993\t2.5965\t2.6008\nTc9h\t\t48.254\t\t1.000\t0.404\t0.596\t\t\t40.367\t59.633\t\t2.9738\t2.9718\t2.9751\nTc9d\t\t48.125\t\t1.000\t0.490\t0.510\t\t\t48.989\t51.011\t\t2.9538\t2.9556\t2.9522\nTc9s\t\t48.125\t\t1.000\t0.490\t0.510\t\t\t48.99\t51.01\t\t2.9538\t2.9556\t2.9522\nTd9h\t\t45.466\t\t1.000\t0.355\t0.645\t\t\t35.487\t64.513\t\t2.5969\t2.5958\t2.5975\nTd9c\t\t47.960\t\t1.000\t0.368\t0.632\t\t\t36.778\t63.222\t\t2.9024\t2.9020\t2.9026\nTd9s\t\t45.337\t\t1.000\t0.466\t0.534\t\t\t46.637\t53.363\t\t2.5740\t2.5804\t2.5684\nTs9h\t\t45.466\t\t1.000\t0.355\t0.645\t\t\t35.487\t64.513\t\t2.5969\t2.5958\t2.5975\nTs9c\t\t47.960\t\t1.000\t0.368\t0.632\t\t\t36.777\t63.223\t\t2.9024\t2.9020\t2.9026\nTs9d\t\t45.337\t\t1.000\t0.466\t0.534\t\t\t46.638\t53.362\t\t2.5740\t2.5803\t2.5684\n\n\n99\t\t61.336\t\t6.000\t0\t6.000\t\t\t0\t100\t\t2.1678\t0\t2.1678\n9h9c\t\t62.701\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.3598\t2.1424\t2.3598\n9h9d\t\t60.159\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.0043\t1.7581\t2.0043\n9c9d\t\t62.511\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.3306\t2.1075\t2.3306\n9h9s\t\t60.159\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.0043\t1.7581\t2.0043\n9c9s\t\t62.511\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.3306\t2.1075\t2.3306\n9d9s\t\t59.966\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.9755\t1.7281\t1.9755\n\n\n98s\t\t38.730\t\t4.000\t2.187\t1.813\t\t\t54.675\t45.325\t\t2.1507\t2.1069\t2.2036\n9h8h\t\t35.055\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.6037\t1.6037\t1.6016\n9c8c\t\t55.907\t\t1.000\t0.470\t0.530\t\t\t47.026\t52.974\t\t4.5361\t4.5386\t4.5339\n9d8d\t\t31.941\t\t1.000\t0.359\t0.641\t\t\t35.854\t64.146\t\t1.2263\t1.2070\t1.2371\n9s8s\t\t31.941\t\t1.000\t0.359\t0.641\t\t\t35.853\t64.147\t\t1.2263\t1.2070\t1.2371\n\n\n97s\t\t57.720\t\t3.000\t0.107\t2.893\t\t\t3.573\t96.427\t\t1.9658\t1.9599\t1.9660\n9h7h\t\t59.083\t\t1.000\t0.034\t0.966\t\t\t3.407\t96.593\t\t2.2853\t2.2860\t2.2852\n9d7d\t\t57.038\t\t1.000\t0.037\t0.963\t\t\t3.659\t96.341\t\t1.8058\t1.8078\t1.8058\n9s7s\t\t57.038\t\t1.000\t0.037\t0.963\t\t\t3.654\t96.346\t\t1.8059\t1.8078\t1.8058\n\n\n96s\t\t28.511\t\t4.000\t0.236\t3.764\t\t\t5.925\t94.075\t\t1.3486\t3.4741\t1.2148\n9h6h\t\t24.167\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.8137\t0.7927\t0.8137\n9c6c\t\t48.667\t\t1.000\t0.236\t0.764\t\t\t23.63\t76.37\t\t3.4810\t3.4741\t3.4832\n9d6d\t\t20.563\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5456\t0.4410\t0.5456\n9s6s\t\t20.563\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5456\t0.4410\t0.5456\n\n\n95s\t\t28.351\t\t2.000\t0.063\t1.937\t\t\t3.162\t96.838\t\t1.3724\t3.4904\t1.3033\n9h5h\t\t23.994\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.8397\t0.8140\t0.8397\n9c5c\t\t48.481\t\t0.500\t0.063\t0.437\t\t\t12.581\t87.419\t\t3.4960\t3.4904\t3.4968\n9d5d\t\t20.392\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5694\t0.4653\t0.5694\n9s5s\t\t20.392\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5694\t0.4653\t0.5694\n\n\nA8o\t\t41.567\t\t12.000\t0\t12.000\t\t\t0\t100\t\t0.9061\t0\t0.9061\nAh8c\t\t42.880\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9529\t0.8505\t0.9529\nAh8d\t\t40.038\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7739\t0.5209\t0.7739\nAh8s\t\t40.038\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7739\t0.5209\t0.7739\nAc8h\t\t43.742\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1835\t1.1282\t1.1835\nAc8d\t\t43.651\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1647\t1.1014\t1.1647\nAc8s\t\t43.651\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1647\t1.1014\t1.1647\nAd8h\t\t39.911\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7601\t0.5485\t0.7601\nAd8c\t\t42.668\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9229\t0.8350\t0.9229\nAd8s\t\t39.821\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7464\t0.5153\t0.7464\nAs8h\t\t39.911\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7601\t0.5485\t0.7601\nAs8c\t\t42.668\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9229\t0.8350\t0.9229\nAs8d\t\t39.821\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7464\t0.5153\t0.7464\n\n\nK8o\t\t32.483\t\t12.000\t3.133\t8.867\t\t\t26.142\t73.858\t\t0.8697\t1.0905\t0.7915\nKh8c\t\t33.915\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9660\t0.8948\t0.9660\nKh8d\t\t30.881\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7462\t0.5692\t0.7462\nKh8s\t\t30.881\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7462\t0.5692\t0.7462\nKc8h\t\t34.655\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.1176\t1.1176\t1.1106\nKc8d\t\t34.562\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.0900\t1.0900\t1.0810\nKc8s\t\t34.562\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.0900\t1.0900\t1.0810\nKd8h\t\t30.770\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7266\t0.6162\t0.7266\nKd8c\t\t33.715\t\t1.000\t0.067\t0.933\t\t\t6.665\t93.335\t\t0.9128\t0.8958\t0.9140\nKd8s\t\t30.677\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7002\t0.5856\t0.7002\nKs8h\t\t30.770\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7266\t0.6162\t0.7266\nKs8c\t\t33.715\t\t1.000\t0.067\t0.933\t\t\t6.664\t93.336\t\t0.9128\t0.8958\t0.9140\nKs8d\t\t30.677\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7002\t0.5856\t0.7002\n\n\nQ8o\t\t74.770\t\t4.500\t0.378\t4.122\t\t\t8.401\t91.599\t\t4.2372\t4.3008\t4.2314\nQh8c\t\t76.267\t\t0.500\t0.037\t0.463\t\t\t7.467\t92.533\t\t4.5452\t4.5531\t4.5445\nQh8d\t\t74.183\t\t0.500\t0.017\t0.483\t\t\t3.457\t96.543\t\t4.1529\t4.1486\t4.1530\nQh8s\t\t74.183\t\t0.500\t0.017\t0.483\t\t\t3.457\t96.543\t\t4.1529\t4.1486\t4.1530\nQd8h\t\t74.126\t\t0.500\t0.010\t0.490\t\t\t1.94\t98.06\t\t4.1059\t4.1016\t4.1060\nQd8c\t\t76.054\t\t0.500\t0.080\t0.420\t\t\t16.024\t83.976\t\t4.4634\t4.4767\t4.4609\nQd8s\t\t73.967\t\t0.500\t0.063\t0.437\t\t\t12.661\t87.339\t\t4.0721\t4.0751\t4.0717\nQs8h\t\t74.126\t\t0.500\t0.010\t0.490\t\t\t1.916\t98.084\t\t4.1059\t4.1017\t4.1060\nQs8c\t\t76.054\t\t0.500\t0.080\t0.420\t\t\t16.015\t83.985\t\t4.4634\t4.4768\t4.4609\nQs8d\t\t73.967\t\t0.500\t0.063\t0.437\t\t\t12.644\t87.356\t\t4.0722\t4.0751\t4.0717\n\n\nJ8o\t\t67.152\t\t4.500\t0.084\t4.416\t\t\t1.876\t98.124\t\t2.7937\t3.0547\t2.7887\nJc8h\t\t68.467\t\t0.500\t0\t0.500\t\t\t0\t100\t\t3.0985\t3.0789\t3.0985\nJc8d\t\t68.350\t\t0.500\t0.042\t0.458\t\t\t8.304\t91.696\t\t3.0700\t3.0633\t3.0706\nJc8s\t\t68.350\t\t0.500\t0.042\t0.458\t\t\t8.306\t91.694\t\t3.0700\t3.0633\t3.0706\nJd8h\t\t65.921\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.5641\t2.5511\t2.5641\nJd8c\t\t67.876\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.8614\t2.8305\t2.8614\nJd8s\t\t65.803\t\t0.500\t0.001\t0.499\t\t\t0.135\t99.865\t\t2.5264\t2.5251\t2.5264\nJs8h\t\t65.921\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.5641\t2.5511\t2.5641\nJs8c\t\t67.876\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.8614\t2.8305\t2.8614\nJs8d\t\t65.803\t\t0.500\t0.001\t0.499\t\t\t0.137\t99.863\t\t2.5264\t2.5251\t2.5264\n\n\nT8o\t\t35.898\t\t12.000\t6.984\t5.016\t\t\t58.205\t41.795\t\t1.4675\t1.4923\t1.4329\nTh8c\t\t37.334\t\t1.000\t0.795\t0.205\t\t\t79.498\t20.502\t\t1.6136\t1.6129\t1.6162\nTh8d\t\t34.481\t\t1.000\t0.470\t0.530\t\t\t47.033\t52.967\t\t1.3240\t1.3240\t1.3240\nTh8s\t\t34.481\t\t1.000\t0.470\t0.530\t\t\t47.033\t52.967\t\t1.3240\t1.3240\t1.3240\nTc8h\t\t37.533\t\t1.000\t0.569\t0.431\t\t\t56.864\t43.136\t\t1.6561\t1.6499\t1.6643\nTc8d\t\t37.443\t\t1.000\t0.590\t0.410\t\t\t58.98\t41.02\t\t1.6277\t1.6213\t1.6369\nTc8s\t\t37.443\t\t1.000\t0.590\t0.410\t\t\t58.98\t41.02\t\t1.6277\t1.6213\t1.6369\nTd8h\t\t34.449\t\t1.000\t0.436\t0.564\t\t\t43.628\t56.372\t\t1.3334\t1.3303\t1.3357\nTd8c\t\t37.213\t\t1.000\t0.822\t0.178\t\t\t82.211\t17.789\t\t1.5861\t1.5853\t1.5899\nTd8s\t\t34.359\t\t1.000\t0.492\t0.508\t\t\t49.152\t50.848\t\t1.2982\t1.2977\t1.2988\nTs8h\t\t34.449\t\t1.000\t0.436\t0.564\t\t\t43.627\t56.373\t\t1.3334\t1.3303\t1.3357\nTs8c\t\t37.213\t\t1.000\t0.822\t0.178\t\t\t82.209\t17.791\t\t1.5861\t1.5853\t1.5899\nTs8d\t\t34.359\t\t1.000\t0.492\t0.508\t\t\t49.151\t50.849\t\t1.2982\t1.2977\t1.2988\n\n\n98o\t\t33.463\t\t6.000\t3.841\t2.159\t\t\t64.049\t35.951\t\t1.3864\t1.4460\t1.2801\n9h8c\t\t34.937\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.5399\t1.5399\t1.5243\n9h8d\t\t32.068\t\t0.500\t0.182\t0.318\t\t\t36.436\t63.564\t\t1.2610\t1.2368\t1.2749\n9h8s\t\t32.068\t\t0.500\t0.182\t0.318\t\t\t36.436\t63.564\t\t1.2610\t1.2368\t1.2749\n9c8h\t\t35.004\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.5364\t1.5364\t1.5217\n9c8d\t\t34.917\t\t0.500\t0.431\t0.069\t\t\t86.218\t13.782\t\t1.5115\t1.5125\t1.5050\n9c8s\t\t34.917\t\t0.500\t0.431\t0.069\t\t\t86.217\t13.783\t\t1.5115\t1.5125\t1.5050\n9d8h\t\t32.039\t\t0.500\t0.122\t0.378\t\t\t24.303\t75.697\t\t1.2669\t1.2350\t1.2772\n9d8c\t\t34.822\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.5110\t1.5110\t1.4938\n9d8s\t\t31.952\t\t0.500\t0.186\t0.314\t\t\t37.149\t62.851\t\t1.2287\t1.2104\t1.2395\n9s8h\t\t32.039\t\t0.500\t0.122\t0.378\t\t\t24.303\t75.697\t\t1.2669\t1.2350\t1.2772\n9s8c\t\t34.822\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.5110\t1.5110\t1.4938\n9s8d\t\t31.952\t\t0.500\t0.186\t0.314\t\t\t37.148\t62.852\t\t1.2287\t1.2104\t1.2395\n\n\n88\t\t57.750\t\t6.000\t0\t6.000\t\t\t0\t100\t\t1.8732\t0\t1.8732\n8h8c\t\t58.978\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.9807\t1.7838\t1.9807\n8h8d\t\t56.585\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.7816\t1.3406\t1.7816\n8c8d\t\t58.913\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.9655\t1.7372\t1.9655\n8h8s\t\t56.585\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.7816\t1.3406\t1.7816\n8c8s\t\t58.913\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.9655\t1.7372\t1.9655\n8d8s\t\t56.522\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.7636\t1.2855\t1.7636\n\n\n87s\t\t56.599\t\t3.000\t0\t3.000\t\t\t0\t100\t\t1.8822\t0\t1.8822\n8h7h\t\t57.941\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.1872\t2.1529\t2.1872\n8d7d\t\t55.925\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.7291\t1.6645\t1.7291\n8s7s\t\t55.925\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.7291\t1.6645\t1.7291\n\n\n86s\t\t28.014\t\t4.000\t0.424\t3.576\t\t\t10.624\t89.376\t\t1.3378\t3.5246\t1.0779\n8h6h\t\t23.629\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7856\t0.7051\t0.7856\n8c6c\t\t48.256\t\t1.000\t0.424\t0.576\t\t\t42.416\t57.584\t\t3.5157\t3.5246\t3.5092\n8d6d\t\t20.056\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5220\t0.3357\t0.5220\n8s6s\t\t20.056\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5220\t0.3357\t0.5220\n\n\n85s\t\t27.850\t\t4.000\t0.434\t3.566\t\t\t10.887\t89.113\t\t1.3449\t3.5234\t1.0787\n8h5h\t\t23.452\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7987\t0.7285\t0.7987\n8c5c\t\t48.069\t\t1.000\t0.434\t0.566\t\t\t43.368\t56.632\t\t3.5132\t3.5234\t3.5054\n8d5d\t\t19.878\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5274\t0.3632\t0.5274\n8s5s\t\t19.878\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5274\t0.3632\t0.5274\n\n\nA7o\t\t61.133\t\t9.000\t0.259\t8.741\t\t\t2.879\t97.121\t\t2.3509\t2.4069\t2.3493\nAh7d\t\t60.173\t\t1.000\t0.034\t0.966\t\t\t3.425\t96.575\t\t2.1346\t2.1361\t2.1345\nAh7s\t\t60.173\t\t1.000\t0.034\t0.966\t\t\t3.398\t96.602\t\t2.1346\t2.1361\t2.1345\nAc7h\t\t63.409\t\t1.000\t0.107\t0.893\t\t\t10.715\t89.285\t\t2.8353\t2.8206\t2.8370\nAc7d\t\t63.382\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.8356\t2.8274\t2.8356\nAc7s\t\t63.382\t\t1.000\t0\t1.000\t\t\t0\t100\t\t2.8356\t2.8274\t2.8356\nAd7h\t\t59.932\t\t1.000\t0.026\t0.974\t\t\t2.623\t97.377\t\t2.0955\t2.0954\t2.0954\nAd7s\t\t59.906\t\t1.000\t0.015\t0.985\t\t\t1.541\t98.459\t\t2.0954\t2.0973\t2.0954\nAs7h\t\t59.932\t\t1.000\t0.026\t0.974\t\t\t2.623\t97.377\t\t2.0954\t2.0954\t2.0954\nAs7d\t\t59.906\t\t1.000\t0.016\t0.984\t\t\t1.57\t98.43\t\t2.0954\t2.0973\t2.0954\n\n\nK7o\t\t60.803\t\t4.500\t0.054\t4.446\t\t\t1.202\t98.798\t\t2.3567\t2.1218\t2.3595\nKh7d\t\t59.886\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.1473\t2.1451\t2.1473\nKh7s\t\t59.886\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.1473\t2.1450\t2.1473\nKc7h\t\t62.995\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.8195\t2.7584\t2.8195\nKc7d\t\t62.973\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.8201\t2.7311\t2.8201\nKc7s\t\t62.973\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.8201\t2.7311\t2.8201\nKd7h\t\t59.636\t\t0.500\t0.027\t0.473\t\t\t5.4\t94.6\t\t2.1152\t2.1218\t2.1148\nKd7s\t\t59.614\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.1114\t2.1102\t2.1114\nKs7h\t\t59.636\t\t0.500\t0.027\t0.473\t\t\t5.401\t94.599\t\t2.1152\t2.1218\t2.1148\nKs7d\t\t59.614\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.1114\t2.1102\t2.1114\n\n\n87o\t\t56.787\t\t4.500\t0.063\t4.437\t\t\t1.406\t98.594\t\t1.8445\t2.0625\t1.8414\n8h7d\t\t55.992\t\t0.500\t0\t0.500\t\t\t0\t100\t\t1.7487\t1.7107\t1.7487\n8h7s\t\t55.992\t\t0.500\t0\t0.500\t\t\t0\t100\t\t1.7487\t1.7107\t1.7487\n8c7h\t\t58.470\t\t0.500\t0.063\t0.437\t\t\t12.617\t87.383\t\t2.0517\t2.0625\t2.0501\n8c7d\t\t58.499\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.0583\t2.0348\t2.0583\n8c7s\t\t58.499\t\t0.500\t0\t0.500\t\t\t0\t100\t\t2.0583\t2.0347\t2.0583\n8d7h\t\t55.890\t\t0.500\t0\t0.500\t\t\t0\t100\t\t1.7364\t1.6959\t1.7364\n8d7s\t\t55.921\t\t0.500\t0\t0.500\t\t\t0\t100\t\t1.7307\t1.6658\t1.7307\n8s7h\t\t55.890\t\t0.500\t0\t0.500\t\t\t0\t100\t\t1.7364\t1.6959\t1.7364\n8s7d\t\t55.921\t\t0.500\t0\t0.500\t\t\t0\t100\t\t1.7307\t1.6658\t1.7307\n\n\n77\t\t90.327\t\t3.000\t1.793\t1.207\t\t\t59.757\t40.243\t\t11.6362\t11.6502\t11.6153\n7h7d\t\t90.352\t\t1.000\t0.607\t0.393\t\t\t60.667\t39.333\t\t11.6576\t11.6723\t11.6350\n7h7s\t\t90.352\t\t1.000\t0.607\t0.393\t\t\t60.667\t39.333\t\t11.6576\t11.6723\t11.6350\n7d7s\t\t90.278\t\t1.000\t0.579\t0.421\t\t\t57.933\t42.067\t\t11.5931\t11.6038\t11.5784\n\n\n76s\t\t53.971\t\t3.000\t1.089\t1.911\t\t\t36.273\t63.727\t\t1.8231\t1.7337\t1.8740\n7h6h\t\t55.403\t\t1.000\t0.174\t0.826\t\t\t17.409\t82.591\t\t2.1303\t2.1237\t2.1317\n7d6d\t\t53.252\t\t1.000\t0.458\t0.542\t\t\t45.756\t54.244\t\t1.6687\t1.6591\t1.6768\n7s6s\t\t53.252\t\t1.000\t0.457\t0.543\t\t\t45.748\t54.252\t\t1.6687\t1.6591\t1.6768\n\n\n75s\t\t54.008\t\t3.000\t1.018\t1.982\t\t\t33.902\t66.098\t\t1.8410\t1.7848\t1.8698\n7h5h\t\t55.435\t\t1.000\t0.228\t0.772\t\t\t22.803\t77.197\t\t2.1470\t2.1478\t2.1468\n7d5d\t\t53.291\t\t1.000\t0.395\t0.605\t\t\t39.49\t60.51\t\t1.6872\t1.6794\t1.6923\n7s5s\t\t53.291\t\t1.000\t0.395\t0.605\t\t\t39.469\t60.531\t\t1.6872\t1.6794\t1.6923\n\n\n74s\t\t54.369\t\t1.500\t1.179\t0.321\t\t\t78.591\t21.409\t\t1.8882\t1.8196\t2.1399\n7h4h\t\t55.818\t\t0.500\t0.213\t0.287\t\t\t42.632\t57.368\t\t2.1946\t2.2035\t2.1880\n7d4d\t\t53.642\t\t0.500\t0.483\t0.017\t\t\t96.649\t3.351\t\t1.7345\t1.7347\t1.7287\n7s4s\t\t53.642\t\t0.500\t0.483\t0.017\t\t\t96.608\t3.392\t\t1.7344\t1.7346\t1.7287\n\n\nA6o\t\t37.400\t\t12.000\t1.854\t10.146\t\t\t15.459\t84.541\t\t0.7349\t0.9431\t0.6969\nAh6c\t\t38.809\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7763\t0.7585\t0.7763\nAh6d\t\t35.792\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5970\t0.4247\t0.5970\nAh6s\t\t35.792\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5970\t0.4247\t0.5970\nAc6h\t\t39.594\t\t1.000\t0.355\t0.645\t\t\t35.493\t64.507\t\t1.0140\t0.9996\t1.0219\nAc6d\t\t39.517\t\t1.000\t0.555\t0.445\t\t\t55.502\t44.498\t\t0.9940\t0.9970\t0.9903\nAc6s\t\t39.517\t\t1.000\t0.555\t0.445\t\t\t55.502\t44.498\t\t0.9940\t0.9970\t0.9902\nAd6h\t\t35.671\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5966\t0.4202\t0.5966\nAd6c\t\t38.617\t\t1.000\t0.195\t0.805\t\t\t19.467\t80.533\t\t0.7494\t0.7380\t0.7521\nAd6s\t\t35.595\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5771\t0.4226\t0.5771\nAs6h\t\t35.671\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5966\t0.4202\t0.5966\nAs6c\t\t38.617\t\t1.000\t0.195\t0.805\t\t\t19.468\t80.532\t\t0.7494\t0.7380\t0.7521\nAs6d\t\t35.595\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5770\t0.4226\t0.5770\n\n\nK6o\t\t30.249\t\t6.000\t2.077\t3.923\t\t\t34.656\t65.344\t\t0.7988\t1.0086\t0.6875\nKh6c\t\t31.747\t\t0.500\t0.092\t0.408\t\t\t18.326\t81.674\t\t0.8872\t0.8774\t0.8894\nKh6d\t\t28.610\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6483\t0.5304\t0.6483\nKh6s\t\t28.610\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6483\t0.5304\t0.6483\nKc6h\t\t32.381\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.0666\t1.0666\t1.0338\nKc6d\t\t32.293\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.0601\t1.0601\t0.9924\nKc6s\t\t32.293\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.0601\t1.0601\t0.9924\nKd6h\t\t28.517\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6451\t0.5488\t0.6451\nKd6c\t\t31.570\t\t0.500\t0.243\t0.257\t\t\t48.538\t51.462\t\t0.8544\t0.8676\t0.8418\nKd6s\t\t28.430\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6070\t0.5484\t0.6070\nKs6h\t\t28.517\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6451\t0.5488\t0.6451\nKs6c\t\t31.570\t\t0.500\t0.243\t0.257\t\t\t48.537\t51.463\t\t0.8544\t0.8676\t0.8419\nKs6d\t\t28.430\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6070\t0.5484\t0.6070\n\n\n66\t\t46.392\t\t6.000\t0\t6.000\t\t\t0\t100\t\t1.3153\t0\t1.3153\n6h6c\t\t47.892\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.4423\t1.3136\t1.4423\n6h6d\t\t44.934\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.2190\t0.8030\t1.2190\n6c6d\t\t47.847\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.4094\t1.2845\t1.4094\n6h6s\t\t44.934\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.2190\t0.8030\t1.2190\n6c6s\t\t47.847\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.4094\t1.2845\t1.4094\n6d6s\t\t44.893\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1920\t0.7916\t1.1920\n\n\n65s\t\t25.520\t\t4.000\t0.703\t3.297\t\t\t17.632\t82.368\t\t1.2732\t3.4736\t0.8023\n6h5h\t\t20.962\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7242\t0.6988\t0.7242\n6c5c\t\t46.336\t\t1.000\t0.703\t0.297\t\t\t70.255\t29.745\t\t3.4679\t3.4736\t3.4545\n6d5d\t\t17.332\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.4443\t0.3628\t0.4443\n6s5s\t\t17.332\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.4443\t0.3628\t0.4443\n\n\n64s\t\t24.677\t\t4.000\t0.434\t3.566\t\t\t10.884\t89.116\t\t1.2416\t3.3622\t0.9826\n6h4h\t\t20.127\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7130\t0.6992\t0.7130\n6c4c\t\t45.566\t\t1.000\t0.434\t0.566\t\t\t43.355\t56.645\t\t3.3560\t3.3622\t3.3513\n6d4d\t\t16.445\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.4425\t0.3644\t0.4425\n6s4s\t\t16.445\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.4425\t0.3644\t0.4425\n\n\nA5o\t\t36.945\t\t12.000\t2.254\t9.746\t\t\t18.793\t81.207\t\t0.7302\t0.9370\t0.6824\nAh5c\t\t38.233\t\t1.000\t0.112\t0.888\t\t\t11.193\t88.807\t\t0.7611\t0.7485\t0.7627\nAh5d\t\t35.369\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5880\t0.4381\t0.5880\nAh5s\t\t35.369\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5880\t0.4381\t0.5880\nAc5h\t\t39.190\t\t1.000\t0.376\t0.624\t\t\t37.562\t62.438\t\t1.0269\t1.0120\t1.0358\nAc5d\t\t39.109\t\t1.000\t0.635\t0.365\t\t\t63.48\t36.52\t\t1.0070\t1.0145\t0.9941\nAc5s\t\t39.109\t\t1.000\t0.635\t0.365\t\t\t63.479\t36.521\t\t1.0070\t1.0145\t0.9941\nAd5h\t\t35.254\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5906\t0.4329\t0.5906\nAd5c\t\t38.044\t\t1.000\t0.249\t0.751\t\t\t24.857\t75.143\t\t0.7332\t0.7259\t0.7356\nAd5s\t\t35.175\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5682\t0.4372\t0.5682\nAs5h\t\t35.254\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5906\t0.4329\t0.5906\nAs5c\t\t38.044\t\t1.000\t0.249\t0.751\t\t\t24.856\t75.144\t\t0.7332\t0.7259\t0.7356\nAs5d\t\t35.175\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5682\t0.4372\t0.5682\n\n\n55\t\t44.049\t\t6.000\t0\t6.000\t\t\t0\t100\t\t1.2298\t0\t1.2298\n5h5c\t\t45.486\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.3476\t1.3161\t1.3476\n5h5d\t\t42.654\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1447\t0.8372\t1.1447\n5c5d\t\t45.437\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.3111\t1.2889\t1.3111\n5h5s\t\t42.654\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1447\t0.8372\t1.1447\n5c5s\t\t45.437\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.3111\t1.2889\t1.3111\n5d5s\t\t42.609\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.1185\t0.8268\t1.1185\n\n\n54s\t\t23.964\t\t4.000\t0.455\t3.545\t\t\t11.459\t88.541\t\t1.2382\t3.3194\t0.9688\n5h4h\t\t19.408\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.7300\t0.7239\t0.7300\n5c4c\t\t44.866\t\t1.000\t0.455\t0.545\t\t\t45.54\t54.46\t\t3.3092\t3.3194\t3.3006\n5d4d\t\t15.697\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.4475\t0.3878\t0.4475\n5s4s\t\t15.697\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.4475\t0.3878\t0.4475\n\n\n53s\t\t22.599\t\t2.000\t0.169\t1.831\t\t\t8.478\t91.522\t\t1.1639\t3.2053\t0.9748\n5h3h\t\t17.961\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.6644\t0.5923\t0.6644\n5c3c\t\t43.932\t\t0.500\t0.169\t0.331\t\t\t33.754\t66.246\t\t3.1969\t3.2053\t3.1927\n5d3d\t\t14.181\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.3906\t0.2641\t0.3906\n5s3s\t\t14.181\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.3906\t0.2642\t0.3906\n\n\nA4o\t\t36.660\t\t12.000\t3.382\t8.618\t\t\t28.192\t71.808\t\t0.7295\t0.9857\t0.6290\nAh4c\t\t37.730\t\t1.000\t0.138\t0.862\t\t\t13.845\t86.155\t\t0.7215\t0.7021\t0.7246\nAh4d\t\t35.147\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5893\t0.4868\t0.5893\nAh4s\t\t35.147\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5893\t0.4868\t0.5893\nAc4h\t\t38.989\t\t1.000\t0.756\t0.244\t\t\t75.585\t24.415\t\t1.0537\t1.0555\t1.0482\nAc4d\t\t38.897\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.0535\t1.0535\t1.0132\nAc4s\t\t38.897\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.0535\t1.0535\t1.0132\nAd4h\t\t35.048\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5868\t0.4868\t0.5868\nAd4c\t\t37.545\t\t1.000\t0.244\t0.756\t\t\t24.404\t75.596\t\t0.6932\t0.6821\t0.6968\nAd4s\t\t34.956\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5667\t0.4867\t0.5667\nAs4h\t\t35.048\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5868\t0.4868\t0.5868\nAs4c\t\t37.545\t\t1.000\t0.244\t0.756\t\t\t24.405\t75.595\t\t0.6932\t0.6821\t0.6968\nAs4d\t\t34.956\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5667\t0.4867\t0.5667\n\n\n44\t\t42.514\t\t6.000\t1.038\t4.962\t\t\t17.344\t82.656\t\t1.1460\t1.2258\t1.1292\n4h4c\t\t43.867\t\t1.000\t0.301\t0.699\t\t\t30.074\t69.926\t\t1.2498\t1.2431\t1.2526\n4h4d\t\t41.241\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0651\t0.9169\t1.0651\n4c4d\t\t43.781\t\t1.000\t0.369\t0.631\t\t\t36.879\t63.121\t\t1.2227\t1.2187\t1.2250\n4h4s\t\t41.241\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0651\t0.9169\t1.0651\n4c4s\t\t43.781\t\t1.000\t0.369\t0.631\t\t\t36.878\t63.122\t\t1.2227\t1.2187\t1.2250\n4d4s\t\t41.156\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0494\t0.9014\t1.0494\n\n\nA3o\t\t36.378\t\t12.000\t3.526\t8.474\t\t\t29.401\t70.599\t\t0.7208\t0.9402\t0.6295\nAh3c\t\t37.481\t\t1.000\t0.211\t0.789\t\t\t21.052\t78.948\t\t0.7146\t0.7003\t0.7184\nAh3d\t\t34.848\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5800\t0.4687\t0.5800\nAh3s\t\t34.848\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5800\t0.4687\t0.5800\nAc3h\t\t38.707\t\t1.000\t0.656\t0.344\t\t\t65.619\t34.381\t\t1.0432\t1.0418\t1.0459\nAc3d\t\t38.610\t\t1.000\t0.941\t0.059\t\t\t94.115\t5.885\t\t1.0375\t1.0397\t1.0027\nAc3s\t\t38.610\t\t1.000\t0.941\t0.059\t\t\t94.114\t5.886\t\t1.0375\t1.0396\t1.0027\nAd3h\t\t34.754\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5832\t0.4693\t0.5832\nAd3c\t\t37.297\t\t1.000\t0.389\t0.611\t\t\t38.866\t61.134\t\t0.6864\t0.6789\t0.6912\nAd3s\t\t34.659\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5588\t0.4685\t0.5588\nAs3h\t\t34.754\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5832\t0.4693\t0.5832\nAs3c\t\t37.297\t\t1.000\t0.389\t0.611\t\t\t38.867\t61.133\t\t0.6864\t0.6789\t0.6912\nAs3d\t\t34.659\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.5587\t0.4685\t0.5587\n\n\n33\t\t40.568\t\t6.000\t2.642\t3.358\t\t\t44.082\t55.918\t\t1.0987\t1.1945\t1.0232\n3h3c\t\t42.005\t\t1.000\t0.837\t0.163\t\t\t83.719\t16.281\t\t1.2097\t1.2112\t1.2022\n3h3d\t\t39.223\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0092\t0.8948\t1.0092\n3c3d\t\t41.910\t\t1.000\t0.902\t0.098\t\t\t90.249\t9.751\t\t1.1855\t1.1868\t1.1736\n3h3s\t\t39.223\t\t1.000\t0\t1.000\t\t\t0\t100\t\t1.0092\t0.8948\t1.0092\n3c3s\t\t41.910\t\t1.000\t0.902\t0.098\t\t\t90.248\t9.752\t\t1.1855\t1.1868\t1.1736\n3d3s\t\t39.129\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9926\t0.8775\t0.9926\n\n\nA2o\t\t36.196\t\t6.000\t1.850\t4.150\t\t\t30.841\t69.159\t\t0.7326\t0.9875\t0.6189\nAh2c\t\t37.174\t\t0.500\t0.080\t0.420\t\t\t16.02\t83.98\t\t0.7148\t0.6924\t0.7191\nAh2d\t\t34.710\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5946\t0.5021\t0.5946\nAh2s\t\t34.710\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5946\t0.5020\t0.5946\nAc2h\t\t38.558\t\t0.500\t0.456\t0.044\t\t\t91.212\t8.788\t\t1.0713\t1.0728\t1.0563\nAc2d\t\t38.478\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.0712\t1.0712\t1.0276\nAc2s\t\t38.478\t\t0.500\t0.500\t0\t\t\t100\t0\t\t1.0712\t1.0712\t1.0276\nAd2h\t\t34.602\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5868\t0.5020\t0.5868\nAd2c\t\t36.991\t\t0.500\t0.157\t0.343\t\t\t31.351\t68.649\t\t0.6845\t0.6728\t0.6899\nAd2s\t\t34.522\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5651\t0.5013\t0.5651\nAs2h\t\t34.602\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5868\t0.5020\t0.5868\nAs2c\t\t36.991\t\t0.500\t0.157\t0.343\t\t\t31.352\t68.648\t\t0.6845\t0.6728\t0.6899\nAs2d\t\t34.522\t\t0.500\t0\t0.500\t\t\t0\t100\t\t0.5651\t0.5013\t0.5651\n\n\n22\t\t39.368\t\t6.000\t3.370\t2.630\t\t\t56.216\t43.784\t\t1.0830\t1.1828\t0.9549\n2h2c\t\t40.735\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.2296\t1.2296\t1.1548\n2h2d\t\t38.077\t\t1.000\t0.185\t0.815\t\t\t18.506\t81.494\t\t0.9574\t0.9401\t0.9614\n2c2d\t\t40.656\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.2043\t1.2043\t1.1276\n2h2s\t\t38.077\t\t1.000\t0.185\t0.815\t\t\t18.505\t81.495\t\t0.9574\t0.9401\t0.9614\n2c2s\t\t40.656\t\t1.000\t1.000\t0\t\t\t100\t0\t\t1.2043\t1.2043\t1.1276\n2d2s\t\t37.998\t\t1.000\t0\t1.000\t\t\t0\t100\t\t0.9444\t0.9226\t0.9444\n\n\n\npot: 6\nstack: 97\nto call: 0\nodds: NA\nfreq: 100%\n\nCombos:\t548\t144.8\t403.2\nPercent:\t26.5%\t73.5%\nEquity:\t53.95%\t57.6%\t52.6%\nEV:\t2.78748\t3.818\t2.416\n\n593 unique items in table\n",
+                    "text": ""
+                  },
+                  "villain": {
+                    "gto": "Hand\t\tEquity\t\tCombos (total)\tRaise 14.4\tCall\tFold\t\tPercentage\tRaise 14.4\tCall\tFold\t\tEV (total)\tRaise 14.4\tCall\tFold\n\nATs\t\t53.226\t\t2.000\t0.244\t1.756\t0\t\t\t11.15\t88.85\t0\t\t2.9654\t9.2240\t2.1800\t0\nAhTh\t\t50.269\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t1.7792\t1.4428\t1.7792\t0\nAcTc\t\t66.887\t\t0.500\t0.244\t0.256\t0\t\t\t48.735\t51.265\t0\t\t9.3341\t9.2240\t9.4387\t0\nAdTd\t\t48.642\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.7347\t0.6985\t0.7347\t0\nAsTs\t\t48.642\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.7346\t0.6985\t0.7346\t0\n\n\nA9s\t\t43.637\t\t4.000\t0\t1.000\t3.000\t\t\t0\t22.964\t77.036\t\t1.4981\t0\t6.5235\t0\nAh9h\t\t40.173\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.9808\t-0.2581\t0\nAc9c\t\t59.790\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t6.5235\t6.2960\t6.5235\t0\nAd9d\t\t38.165\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7632\t-1.0500\t0\nAs9s\t\t38.165\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7632\t-1.0500\t0\n\n\nA8s\t\t42.577\t\t4.000\t0\t1.000\t3.000\t\t\t0\t22.679\t77.321\t\t1.4454\t0\t6.3735\t0\nAh8h\t\t39.054\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1343\t-0.3840\t0\nAc8c\t\t59.204\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t6.3735\t6.2910\t6.3735\t0\nAd8d\t\t37.044\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8429\t-1.1531\t0\nAs8s\t\t37.044\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8429\t-1.1531\t0\n\n\nA7s\t\t51.265\t\t3.000\t0\t3.000\t0\t\t\t0\t100\t0\t\t0.7749\t0\t0.7749\t0\nAh7h\t\t52.432\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.6033\t1.2609\t1.6033\t0\nAd7d\t\t50.689\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.3663\t0.3225\t0.3663\t0\nAs7s\t\t50.689\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.3664\t0.3225\t0.3664\t0\n\n\nA6s\t\t39.744\t\t4.000\t0.220\t0.780\t3.000\t\t\t5.009\t17.717\t77.274\t\t1.3926\t6.1208\t6.1298\t0\nAh6h\t\t36.248\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.9327\t-0.4799\t0\nAc6c\t\t57.700\t\t1.000\t0.220\t0.780\t0\t\t\t22.042\t77.958\t0\t\t6.1278\t6.1208\t6.1298\t0\nAd6d\t\t33.589\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7216\t-1.2881\t0\nAs6s\t\t33.589\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7216\t-1.2881\t0\n\n\nA5s\t\t39.578\t\t2.000\t0.146\t0.354\t1.500\t\t\t6.639\t16.08\t77.281\t\t1.3987\t6.1480\t6.1603\t0\nAh5h\t\t36.076\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.9099\t-0.4769\t0\nAc5c\t\t57.668\t\t0.500\t0.146\t0.354\t0\t\t\t29.221\t70.779\t0\t\t6.1567\t6.1480\t6.1603\t0\nAd5d\t\t33.372\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6804\t-1.2768\t0\nAs5s\t\t33.372\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6804\t-1.2769\t0\n\n\nA4s\t\t39.430\t\t2.000\t0.119\t0.381\t1.500\t\t\t5.408\t17.395\t77.197\t\t1.4448\t6.3458\t6.3329\t0\nAh4h\t\t35.718\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.0068\t-0.5088\t0\nAc4c\t\t57.846\t\t0.500\t0.119\t0.381\t0\t\t\t23.716\t76.284\t0\t\t6.3360\t6.3458\t6.3329\t0\nAd4d\t\t33.144\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7510\t-1.3000\t0\nAs4s\t\t33.144\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7510\t-1.3000\t0\n\n\nA3s\t\t39.189\t\t2.000\t0.115\t0.385\t1.500\t\t\t5.19\t17.445\t77.365\t\t1.4440\t6.4154\t6.3687\t0\nAh3h\t\t35.499\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.0301\t-0.4968\t0\nAc3c\t\t57.865\t\t0.500\t0.115\t0.385\t0\t\t\t22.929\t77.071\t0\t\t6.3795\t6.4154\t6.3687\t0\nAd3d\t\t32.857\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7637\t-1.3013\t0\nAs3s\t\t32.857\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7637\t-1.3013\t0\n\n\nA2s\t\t38.980\t\t2.000\t0.012\t0.488\t1.500\t\t\t0.558\t22.151\t77.291\t\t1.4636\t6.4749\t6.4443\t0\nAh2h\t\t35.194\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.0800\t-0.5364\t0\nAc2c\t\t57.703\t\t0.500\t0.012\t0.488\t0\t\t\t2.457\t97.543\t0\t\t6.4450\t6.4749\t6.4443\t0\nAd2d\t\t32.643\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7498\t-1.3052\t0\nAs2s\t\t32.643\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7498\t-1.3052\t0\n\n\nKTs\t\t53.038\t\t2.000\t0.580\t1.420\t0\t\t\t28.059\t71.941\t0\t\t4.5912\t8.7764\t2.9589\t0\nKhTh\t\t50.127\t\t0.500\t0.040\t0.460\t0\t\t\t7.904\t92.096\t0\t\t3.5851\t3.5981\t3.5840\t0\nKcTc\t\t65.410\t\t0.500\t0.500\t0\t0\t\t\t100\t0\t0\t\t9.7222\t9.7222\t9.3690\t0\nKdTd\t\t48.634\t\t0.500\t0.020\t0.480\t0\t\t\t4.023\t95.977\t0\t\t2.6673\t2.6645\t2.6674\t0\nKsTs\t\t48.634\t\t0.500\t0.020\t0.480\t0\t\t\t4.023\t95.977\t0\t\t2.6673\t2.6645\t2.6674\t0\n\n\nK9s\t\t42.172\t\t4.000\t0.037\t3.552\t0.410\t\t\t0.902\t88.588\t10.511\t\t1.7167\t6.1356\t1.8754\t0\nKh9h\t\t38.551\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.7581\t0.6884\t0.7581\t0\nKc9c\t\t57.205\t\t1.000\t0.037\t0.963\t0\t\t\t3.736\t96.264\t0\t\t6.1951\t6.1356\t6.1974\t0\nKd9d\t\t36.832\t\t1.000\t0\t0.795\t0.205\t\t\t0\t79.487\t20.513\t\t0.0684\t-0.0027\t0.0860\t0\nKs9s\t\t36.832\t\t1.000\t0\t0.795\t0.205\t\t\t0\t79.487\t20.513\t\t0.0684\t-0.0026\t0.0860\t0\n\n\nK8s\t\t31.564\t\t4.000\t0\t1.000\t3.000\t\t\t0\t23.787\t76.213\t\t0.8448\t0\t3.5517\t0\nKh8h\t\t27.322\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2221\t-0.9573\t0\nKc8c\t\t49.771\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t3.5516\t3.4580\t3.5517\t0\nKd8d\t\t25.184\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9642\t-1.5008\t0\nKs8s\t\t25.184\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9642\t-1.5008\t0\n\n\nK7s\t\t51.991\t\t3.000\t0.420\t2.580\t0\t\t\t14.101\t85.899\t0\t\t0.7646\t0.3956\t0.8252\t0\nKh7h\t\t53.087\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.5006\t1.4962\t1.5006\t0\nKd7d\t\t51.454\t\t1.000\t0.210\t0.790\t0\t\t\t21.024\t78.976\t0\t\t0.4035\t0.3956\t0.4056\t0\nKs7s\t\t51.454\t\t1.000\t0.210\t0.790\t0\t\t\t21.015\t78.985\t0\t\t0.4035\t0.3956\t0.4056\t0\n\n\nK6s\t\t30.328\t\t4.000\t0.194\t0.806\t3.000\t\t\t4.622\t19.182\t76.195\t\t0.8694\t3.6355\t3.6563\t0\nKh6h\t\t26.329\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.8953\t-0.9039\t0\nKc6c\t\t49.345\t\t1.000\t0.194\t0.806\t0\t\t\t19.417\t80.583\t0\t\t3.6523\t3.6355\t3.6563\t0\nKd6d\t\t23.440\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7036\t-1.5143\t0\nKs6s\t\t23.440\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7036\t-1.5142\t0\n\n\nK5s\t\t30.289\t\t4.000\t0.228\t0.772\t3.000\t\t\t5.431\t18.363\t76.207\t\t0.8771\t3.6799\t3.6885\t0\nKh5h\t\t26.321\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.8771\t-0.8951\t0\nKc5c\t\t49.360\t\t1.000\t0.228\t0.772\t0\t\t\t22.825\t77.175\t0\t\t3.6865\t3.6799\t3.6885\t0\nKd5d\t\t23.368\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.6649\t-1.4937\t0\nKs5s\t\t23.368\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.6649\t-1.4937\t0\n\n\nK4s\t\t30.114\t\t4.000\t0.117\t0.883\t3.000\t\t\t2.789\t21.109\t76.102\t\t0.8994\t3.7472\t3.7659\t0\nKh4h\t\t26.087\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.9801\t-0.9414\t0\nKc4c\t\t49.363\t\t1.000\t0.117\t0.883\t0\t\t\t11.67\t88.33\t0\t\t3.7637\t3.7472\t3.7659\t0\nKd4d\t\t23.088\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7384\t-1.5370\t0\nKs4s\t\t23.088\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7384\t-1.5369\t0\n\n\nK3s\t\t29.833\t\t4.000\t0.135\t0.865\t3.000\t\t\t3.206\t20.529\t76.266\t\t0.8877\t3.7423\t3.7396\t0\nKh3h\t\t25.777\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.0140\t-0.9500\t0\nKc3c\t\t49.344\t\t1.000\t0.135\t0.865\t0\t\t\t13.507\t86.493\t0\t\t3.7400\t3.7423\t3.7396\t0\nKd3d\t\t22.780\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7607\t-1.5536\t0\nKs3s\t\t22.780\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7607\t-1.5536\t0\n\n\nK2s\t\t29.643\t\t4.000\t0.008\t0.992\t3.000\t\t\t0.191\t23.622\t76.187\t\t0.9143\t3.8483\t3.8395\t0\nKh2h\t\t25.590\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.0733\t-0.9846\t0\nKc2c\t\t49.183\t\t1.000\t0.008\t0.992\t0\t\t\t0.802\t99.198\t0\t\t3.8396\t3.8483\t3.8395\t0\nKd2d\t\t22.542\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7441\t-1.5614\t0\nKs2s\t\t22.542\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7441\t-1.5614\t0\n\n\nKQo\t\t66.050\t\t4.500\t0.035\t4.465\t0\t\t\t0.786\t99.214\t0\t\t4.0641\t3.6480\t4.0674\t0\nKhQd\t\t64.863\t\t0.500\t0.018\t0.482\t0\t\t\t3.529\t96.471\t0\t\t3.6485\t3.6481\t3.6485\t0\nKhQs\t\t64.863\t\t0.500\t0.018\t0.482\t0\t\t\t3.511\t96.489\t0\t\t3.6485\t3.6480\t3.6485\t0\nKcQh\t\t67.897\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t4.7311\t4.5540\t4.7311\t0\nKcQd\t\t67.566\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t4.6257\t4.5632\t4.6257\t0\nKcQs\t\t67.566\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t4.6257\t4.5632\t4.6257\t0\nKdQh\t\t65.638\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t3.8957\t3.8099\t3.8957\t0\nKdQs\t\t65.333\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t3.7983\t3.7597\t3.7983\t0\nKsQh\t\t65.638\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t3.8957\t3.8099\t3.8957\t0\nKsQd\t\t65.333\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t3.7982\t3.7597\t3.7982\t0\n\n\nQJs\t\t77.939\t\t1.000\t0.409\t0.591\t0\t\t\t40.89\t59.11\t0\t\t12.4802\t12.4699\t12.4873\t0\nQdJd\t\t77.939\t\t0.500\t0.204\t0.296\t0\t\t\t40.892\t59.108\t0\t\t12.4802\t12.4699\t12.4873\t0\nQsJs\t\t77.939\t\t0.500\t0.204\t0.296\t0\t\t\t40.889\t59.111\t0\t\t12.4802\t12.4699\t12.4873\t0\n\n\nQTs\t\t60.924\t\t1.500\t0\t1.500\t0\t\t\t0\t100\t0\t\t2.2418\t0\t2.2418\t0\nQhTh\t\t62.364\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t3.0480\t2.9618\t3.0480\t0\nQdTd\t\t60.218\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t1.8466\t1.6292\t1.8466\t0\nQsTs\t\t60.218\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t1.8466\t1.6293\t1.8466\t0\n\n\nQ9s\t\t58.828\t\t3.000\t0.022\t2.978\t0\t\t\t0.754\t99.246\t0\t\t1.5643\t1.1707\t1.5672\t0\nQh9h\t\t60.353\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.3920\t2.1509\t2.3920\t0\nQd9d\t\t58.086\t\t1.000\t0.011\t0.989\t0\t\t\t1.119\t98.881\t0\t\t1.1609\t1.1707\t1.1608\t0\nQs9s\t\t58.086\t\t1.000\t0.011\t0.989\t0\t\t\t1.123\t98.877\t0\t\t1.1609\t1.1707\t1.1608\t0\n\n\nQ8s\t\t57.446\t\t3.000\t0\t3.000\t0\t\t\t0\t100\t0\t\t1.5137\t0\t1.5137\t0\nQh8h\t\t59.077\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.3268\t2.1595\t2.3268\t0\nQd8d\t\t56.651\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.1174\t1.0506\t1.1174\t0\nQs8s\t\t56.651\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.1174\t1.0506\t1.1174\t0\n\n\nQ7s\t\t73.511\t\t3.000\t0.018\t2.982\t0\t\t\t0.593\t99.407\t0\t\t9.7508\t10.2895\t9.7476\t0\nQh7h\t\t74.470\t\t1.000\t0.018\t0.982\t0\t\t\t1.79\t98.21\t0\t\t10.2717\t10.2895\t10.2714\t0\nQd7d\t\t73.035\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t9.4927\t9.4264\t9.4927\t0\nQs7s\t\t73.035\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t9.4927\t9.4263\t9.4927\t0\n\n\nQ6s\t\t56.639\t\t3.000\t0\t3.000\t0\t\t\t0\t100\t0\t\t1.4806\t0\t1.4806\t0\nQh6h\t\t58.472\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.3044\t2.2455\t2.3044\t0\nQd6d\t\t55.738\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.0757\t1.0091\t1.0757\t0\nQs6s\t\t55.738\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.0757\t1.0092\t1.0757\t0\n\n\nQ5s\t\t56.684\t\t3.000\t0\t3.000\t0\t\t\t0\t100\t0\t\t1.5063\t0\t1.5063\t0\nQh5h\t\t58.482\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.3165\t2.2875\t2.3165\t0\nQd5d\t\t55.803\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.1089\t1.0673\t1.1089\t0\nQs5s\t\t55.803\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.1089\t1.0673\t1.1089\t0\n\n\nQ4s\t\t56.466\t\t3.000\t0.050\t2.950\t0\t\t\t1.669\t98.331\t0\t\t1.4762\t1.0295\t1.4838\t0\nQh4h\t\t58.209\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.2725\t2.2210\t2.2725\t0\nQd4d\t\t55.615\t\t1.000\t0.025\t0.975\t0\t\t\t2.491\t97.509\t0\t\t1.0875\t1.0295\t1.0890\t0\nQs4s\t\t55.615\t\t1.000\t0.025\t0.975\t0\t\t\t2.478\t97.522\t0\t\t1.0875\t1.0295\t1.0889\t0\n\n\nQ3s\t\t56.408\t\t3.000\t0.403\t2.597\t0\t\t\t13.479\t86.521\t0\t\t1.4924\t1.3031\t1.5219\t0\nQh3h\t\t58.131\t\t1.000\t0.079\t0.921\t0\t\t\t7.933\t92.067\t0\t\t2.2893\t2.2747\t2.2905\t0\nQd3d\t\t55.566\t\t1.000\t0.162\t0.838\t0\t\t\t16.19\t83.81\t0\t\t1.1035\t1.0706\t1.1098\t0\nQs3s\t\t55.566\t\t1.000\t0.162\t0.838\t0\t\t\t16.181\t83.819\t0\t\t1.1035\t1.0707\t1.1098\t0\n\n\nQ2s\t\t56.353\t\t3.000\t0.297\t2.703\t0\t\t\t9.963\t90.037\t0\t\t1.4838\t1.2590\t1.5087\t0\nQh2h\t\t57.933\t\t1.000\t0.037\t0.963\t0\t\t\t3.668\t96.332\t0\t\t2.2516\t2.2717\t2.2508\t0\nQd2d\t\t55.588\t\t1.000\t0.130\t0.870\t0\t\t\t13.015\t86.985\t0\t\t1.1122\t1.1207\t1.1109\t0\nQs2s\t\t55.588\t\t1.000\t0.130\t0.870\t0\t\t\t13.005\t86.995\t0\t\t1.1122\t1.1208\t1.1109\t0\n\n\nAJo\t\t57.820\t\t9.000\t0.073\t8.927\t0\t\t\t0.803\t99.197\t0\t\t1.3048\t1.1457\t1.3061\t0\nAhJc\t\t58.920\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.5171\t1.4839\t1.5171\t0\nAhJd\t\t56.160\t\t1.000\t0.019\t0.981\t0\t\t\t1.933\t98.067\t0\t\t0.7311\t0.7560\t0.7306\t0\nAhJs\t\t56.160\t\t1.000\t0.019\t0.981\t0\t\t\t1.933\t98.067\t0\t\t0.7311\t0.7560\t0.7306\t0\nAcJd\t\t58.397\t\t1.000\t0.013\t0.987\t0\t\t\t1.315\t98.685\t0\t\t1.9686\t1.9802\t1.9685\t0\nAcJs\t\t58.397\t\t1.000\t0.011\t0.989\t0\t\t\t1.079\t98.921\t0\t\t1.9685\t1.9765\t1.9684\t0\nAdJc\t\t59.471\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.6311\t1.5798\t1.6311\t0\nAdJs\t\t56.771\t\t1.000\t0.005\t0.995\t0\t\t\t0.529\t99.471\t0\t\t0.8532\t0.8685\t0.8531\t0\nAsJc\t\t59.471\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.6311\t1.5799\t1.6311\t0\nAsJd\t\t56.771\t\t1.000\t0.005\t0.995\t0\t\t\t0.528\t99.472\t0\t\t0.8532\t0.8684\t0.8532\t0\n\n\nKJo\t\t58.876\t\t9.000\t0.112\t8.888\t0\t\t\t1.229\t98.771\t0\t\t1.3412\t1.4278\t1.3402\t0\nKhJc\t\t60.104\t\t1.000\t0.079\t0.921\t0\t\t\t7.872\t92.128\t0\t\t1.6492\t1.6824\t1.6464\t0\nKhJd\t\t57.096\t\t1.000\t0.016\t0.984\t0\t\t\t1.649\t98.351\t0\t\t0.8043\t0.8281\t0.8039\t0\nKhJs\t\t57.096\t\t1.000\t0.016\t0.984\t0\t\t\t1.648\t98.352\t0\t\t0.8043\t0.8281\t0.8039\t0\nKcJd\t\t59.685\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.7551\t1.6954\t1.7551\t0\nKcJs\t\t59.685\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.7551\t1.6954\t1.7551\t0\nKdJc\t\t60.549\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.7534\t1.7117\t1.7534\t0\nKdJs\t\t57.605\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.9196\t0.8547\t0.9196\t0\nKsJc\t\t60.549\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.7534\t1.7117\t1.7534\t0\nKsJd\t\t57.605\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.9196\t0.8547\t0.9196\t0\n\n\nQJo\t\t78.677\t\t7.000\t2.214\t4.786\t0\t\t\t31.676\t68.324\t0\t\t12.4864\t12.4550\t12.5009\t0\nQhJc\t\t79.681\t\t1.000\t0.221\t0.779\t0\t\t\t22.092\t77.908\t0\t\t12.5068\t12.5404\t12.4973\t0\nQhJd\t\t77.974\t\t1.000\t0.343\t0.657\t0\t\t\t34.294\t65.706\t0\t\t12.1806\t12.1640\t12.1892\t0\nQhJs\t\t77.974\t\t1.000\t0.343\t0.657\t0\t\t\t34.294\t65.706\t0\t\t12.1806\t12.1640\t12.1893\t0\nQdJc\t\t79.632\t\t1.000\t0.262\t0.738\t0\t\t\t26.16\t73.84\t0\t\t12.7997\t12.8087\t12.7964\t0\nQdJs\t\t77.938\t\t1.000\t0.392\t0.608\t0\t\t\t39.205\t60.795\t0\t\t12.4678\t12.4489\t12.4799\t0\nQsJc\t\t79.632\t\t1.000\t0.262\t0.738\t0\t\t\t26.152\t73.848\t0\t\t12.7997\t12.8088\t12.7965\t0\nQsJd\t\t77.938\t\t1.000\t0.392\t0.608\t0\t\t\t39.201\t60.799\t0\t\t12.4678\t12.4489\t12.4800\t0\n\n\nJTs\t\t60.236\t\t1.500\t0.087\t1.413\t0\t\t\t5.716\t94.284\t0\t\t2.7474\t7.7244\t2.4456\t0\nJcTc\t\t71.236\t\t0.500\t0.087\t0.413\t0\t\t\t17.348\t82.652\t0\t\t7.7043\t7.7244\t7.7000\t0\nJdTd\t\t54.830\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.3115\t0.2504\t0.3115\t0\nJsTs\t\t54.830\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.3115\t0.2504\t0.3115\t0\n\n\nJ9s\t\t59.231\t\t1.500\t0.308\t1.088\t0.103\t\t\t20.373\t72.703\t6.925\t\t2.4684\t7.3297\t1.3412\t0\nJc9c\t\t70.391\t\t0.500\t0.308\t0.192\t0\t\t\t61.619\t38.381\t0\t\t7.3340\t7.3297\t7.3410\t0\nJd9d\t\t53.719\t\t0.500\t0\t0.448\t0.052\t\t\t0\t89.655\t10.345\t\t0.0651\t0.0339\t0.0726\t0\nJs9s\t\t53.719\t\t0.500\t0\t0.448\t0.052\t\t\t0\t89.655\t10.345\t\t0.0651\t0.0339\t0.0726\t0\n\n\nJ8s\t\t58.293\t\t3.000\t0.533\t1.966\t0.501\t\t\t17.471\t65.679\t16.85\t\t2.3398\t6.6751\t1.7869\t0\nJc8c\t\t69.743\t\t1.000\t0.506\t0.494\t0\t\t\t50.561\t49.439\t0\t\t7.0991\t7.0511\t7.1482\t0\nJd8d\t\t52.730\t\t1.000\t0.014\t0.736\t0.250\t\t\t1.393\t73.57\t25.037\t\t0.0273\t0.0423\t0.0363\t0\nJs8s\t\t52.730\t\t1.000\t0.014\t0.736\t0.250\t\t\t1.393\t73.569\t25.038\t\t0.0273\t0.0423\t0.0363\t0\n\n\nJ7s\t\t71.800\t\t2.000\t0.320\t1.680\t0\t\t\t16.013\t83.987\t0\t\t8.5313\t8.5462\t8.5284\t0\nJd7d\t\t71.800\t\t1.000\t0.160\t0.840\t0\t\t\t16.008\t83.992\t0\t\t8.5313\t8.5462\t8.5284\t0\nJs7s\t\t71.800\t\t1.000\t0.160\t0.840\t0\t\t\t16.017\t83.983\t0\t\t8.5313\t8.5463\t8.5284\t0\n\n\nJ6s\t\t58.009\t\t3.000\t0.161\t2.839\t0\t\t\t5.269\t94.731\t0\t\t2.4948\t7.1349\t2.2367\t0\nJc6c\t\t69.653\t\t1.000\t0.161\t0.839\t0\t\t\t16.122\t83.878\t0\t\t7.1760\t7.1349\t7.1839\t0\nJd6d\t\t52.356\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.2221\t0.2001\t0.2221\t0\nJs6s\t\t52.356\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.2222\t0.2001\t0.2222\t0\n\n\nJ5s\t\t58.101\t\t3.000\t0.247\t2.753\t0\t\t\t8.258\t91.742\t0\t\t2.5306\t2.3165\t2.5498\t0\nJc5c\t\t69.707\t\t1.000\t0.075\t0.925\t0\t\t\t7.454\t92.546\t0\t\t7.2023\t7.1880\t7.2035\t0\nJd5d\t\t52.471\t\t1.000\t0.086\t0.914\t0\t\t\t8.648\t91.352\t0\t\t0.2640\t0.2794\t0.2625\t0\nJs5s\t\t52.471\t\t1.000\t0.086\t0.914\t0\t\t\t8.648\t91.352\t0\t\t0.2640\t0.2793\t0.2625\t0\n\n\nJ4s\t\t58.004\t\t1.000\t0.100\t0.900\t0\t\t\t9.986\t90.014\t0\t\t2.6299\t4.4851\t2.4241\t0\nJc4c\t\t69.700\t\t0.333\t0.060\t0.274\t0\t\t\t17.894\t82.106\t0\t\t7.4280\t7.4433\t7.4247\t0\nJd4d\t\t52.294\t\t0.333\t0.020\t0.313\t0\t\t\t6.125\t93.875\t0\t\t0.2873\t0.2661\t0.2887\t0\nJs4s\t\t52.294\t\t0.333\t0.020\t0.313\t0\t\t\t6.125\t93.875\t0\t\t0.2873\t0.2661\t0.2887\t0\n\n\nJ3s\t\t57.863\t\t1.000\t0.288\t0.712\t0\t\t\t28.626\t71.374\t0\t\t2.6826\t3.9099\t2.1904\t0\nJc3c\t\t69.463\t\t0.333\t0.143\t0.190\t0\t\t\t43.035\t56.965\t0\t\t7.5382\t7.6100\t7.4840\t0\nJd3d\t\t52.253\t\t0.333\t0.072\t0.261\t0\t\t\t21.658\t78.342\t0\t\t0.3343\t0.3542\t0.3288\t0\nJs3s\t\t52.253\t\t0.333\t0.072\t0.261\t0\t\t\t21.658\t78.342\t0\t\t0.3343\t0.3542\t0.3288\t0\n\n\nJ2s\t\t57.916\t\t1.000\t0.165\t0.835\t0\t\t\t16.44\t83.56\t0\t\t2.7199\t4.2961\t2.4098\t0\nJc2c\t\t69.557\t\t0.333\t0.089\t0.244\t0\t\t\t26.801\t73.199\t0\t\t7.6076\t7.7104\t7.5699\t0\nJd2d\t\t52.278\t\t0.333\t0.038\t0.295\t0\t\t\t11.423\t88.577\t0\t\t0.3529\t0.4165\t0.3447\t0\nJs2s\t\t52.278\t\t0.333\t0.038\t0.295\t0\t\t\t11.423\t88.577\t0\t\t0.3529\t0.4165\t0.3447\t0\n\n\nATo\t\t49.800\t\t12.000\t0.810\t11.190\t0\t\t\t6.605\t93.395\t0\t\t1.0972\t1.4478\t1.0724\t0\nAhTc\t\t50.849\t\t1.000\t0.069\t0.931\t0\t\t\t6.91\t93.09\t0\t\t1.1139\t1.1114\t1.1141\t0\nAhTd\t\t48.211\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.6532\t0.6333\t0.6532\t0\nAhTs\t\t48.211\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.6532\t0.6333\t0.6532\t0\nAcTh\t\t51.277\t\t1.000\t0.054\t0.946\t0\t\t\t5.401\t94.599\t0\t\t1.9250\t1.9146\t1.9256\t0\nAcTd\t\t51.198\t\t1.000\t0.154\t0.846\t0\t\t\t15.409\t84.591\t0\t\t1.9026\t1.8917\t1.9046\t0\nAcTs\t\t51.198\t\t1.000\t0.154\t0.846\t0\t\t\t15.41\t84.59\t0\t\t1.9026\t1.8917\t1.9046\t0\nAdTh\t\t48.706\t\t1.000\t0.017\t0.983\t0\t\t\t1.733\t98.267\t0\t\t0.7326\t0.7221\t0.7328\t0\nAdTc\t\t51.225\t\t1.000\t0.172\t0.828\t0\t\t\t17.217\t82.783\t0\t\t1.1829\t1.1707\t1.1855\t0\nAdTs\t\t48.642\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.7301\t0.6991\t0.7301\t0\nAsTh\t\t48.706\t\t1.000\t0.017\t0.983\t0\t\t\t1.733\t98.267\t0\t\t0.7326\t0.7221\t0.7328\t0\nAsTc\t\t51.225\t\t1.000\t0.172\t0.828\t0\t\t\t17.217\t82.783\t0\t\t1.1829\t1.1707\t1.1855\t0\nAsTd\t\t48.642\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.7301\t0.6991\t0.7301\t0\n\n\nKTo\t\t49.752\t\t12.000\t0.584\t11.416\t0\t\t\t4.867\t95.133\t0\t\t3.0327\t3.0936\t3.0296\t0\nKhTc\t\t50.782\t\t1.000\t0.018\t0.982\t0\t\t\t1.811\t98.189\t0\t\t3.1906\t3.2080\t3.1903\t0\nKhTd\t\t48.279\t\t1.000\t0.026\t0.974\t0\t\t\t2.582\t97.418\t0\t\t2.6293\t2.6254\t2.6294\t0\nKhTs\t\t48.279\t\t1.000\t0.026\t0.974\t0\t\t\t2.583\t97.417\t0\t\t2.6293\t2.6254\t2.6294\t0\nKcTh\t\t51.051\t\t1.000\t0.027\t0.973\t0\t\t\t2.687\t97.313\t0\t\t3.6637\t3.6772\t3.6633\t0\nKcTd\t\t51.035\t\t1.000\t0.074\t0.926\t0\t\t\t7.42\t92.58\t0\t\t3.6335\t3.6281\t3.6339\t0\nKcTs\t\t51.035\t\t1.000\t0.074\t0.926\t0\t\t\t7.421\t92.579\t0\t\t3.6335\t3.6281\t3.6339\t0\nKdTh\t\t48.638\t\t1.000\t0.046\t0.954\t0\t\t\t4.576\t95.424\t0\t\t2.6736\t2.6767\t2.6735\t0\nKdTc\t\t51.099\t\t1.000\t0.068\t0.932\t0\t\t\t6.828\t93.172\t0\t\t3.2188\t3.2231\t3.2185\t0\nKdTs\t\t48.634\t\t1.000\t0.055\t0.945\t0\t\t\t5.522\t94.478\t0\t\t2.6586\t2.6624\t2.6583\t0\nKsTh\t\t48.638\t\t1.000\t0.046\t0.954\t0\t\t\t4.576\t95.424\t0\t\t2.6736\t2.6767\t2.6735\t0\nKsTc\t\t51.099\t\t1.000\t0.068\t0.932\t0\t\t\t6.829\t93.171\t0\t\t3.2188\t3.2231\t3.2185\t0\nKsTd\t\t48.634\t\t1.000\t0.055\t0.945\t0\t\t\t5.521\t94.479\t0\t\t2.6585\t2.6624\t2.6583\t0\n\n\nQTo\t\t61.310\t\t9.000\t0\t9.000\t0\t\t\t0\t100\t0\t\t2.1675\t0\t2.1675\t0\nQhTc\t\t63.422\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.7820\t2.5342\t2.7820\t0\nQhTd\t\t60.774\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.0596\t1.7490\t2.0596\t0\nQhTs\t\t60.774\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.0596\t1.7490\t2.0596\t0\nQdTh\t\t60.347\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.9040\t1.6807\t1.9040\t0\nQdTc\t\t62.860\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.5613\t2.4160\t2.5613\t0\nQdTs\t\t60.218\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.8424\t1.6298\t1.8424\t0\nQsTh\t\t60.347\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.9040\t1.6808\t1.9040\t0\nQsTc\t\t62.860\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.5613\t2.4160\t2.5613\t0\nQsTd\t\t60.218\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t1.8425\t1.6298\t1.8425\t0\n\n\nJTo\t\t56.503\t\t9.000\t0.505\t8.495\t0\t\t\t5.606\t94.394\t0\t\t0.7288\t0.9241\t0.7172\t0\nJcTh\t\t58.086\t\t1.000\t0.111\t0.889\t0\t\t\t11.113\t88.887\t0\t\t1.1635\t1.1541\t1.1647\t0\nJcTd\t\t57.912\t\t1.000\t0.006\t0.994\t0\t\t\t0.574\t99.426\t0\t\t1.1089\t1.0865\t1.1091\t0\nJcTs\t\t57.912\t\t1.000\t0.006\t0.994\t0\t\t\t0.575\t99.425\t0\t\t1.1090\t1.0865\t1.1091\t0\nJdTh\t\t54.999\t\t1.000\t0.043\t0.957\t0\t\t\t4.341\t95.659\t0\t\t0.3278\t0.3338\t0.3275\t0\nJdTc\t\t57.506\t\t1.000\t0.148\t0.852\t0\t\t\t14.769\t85.231\t0\t\t0.9593\t1.0058\t0.9512\t0\nJdTs\t\t54.830\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.3095\t0.2499\t0.3095\t0\nJsTh\t\t54.999\t\t1.000\t0.043\t0.957\t0\t\t\t4.341\t95.659\t0\t\t0.3278\t0.3338\t0.3275\t0\nJsTc\t\t57.506\t\t1.000\t0.148\t0.852\t0\t\t\t14.769\t85.231\t0\t\t0.9593\t1.0058\t0.9512\t0\nJsTd\t\t54.830\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.3095\t0.2499\t0.3095\t0\n\n\nT9s\t\t43.799\t\t2.000\t0.534\t1.466\t0\t\t\t26.781\t73.219\t0\t\t3.2697\t7.2471\t1.8149\t0\nTh9h\t\t40.559\t\t0.500\t0.007\t0.493\t0\t\t\t1.498\t98.502\t0\t\t2.3209\t2.3605\t2.3203\t0\nTc9c\t\t57.568\t\t0.500\t0.500\t0\t0\t\t\t100\t0\t0\t\t7.6276\t7.6276\t7.4359\t0\nTd9d\t\t38.523\t\t0.500\t0.013\t0.487\t0\t\t\t2.696\t97.304\t0\t\t1.5617\t1.5398\t1.5623\t0\nTs9s\t\t38.523\t\t0.500\t0.013\t0.487\t0\t\t\t2.697\t97.303\t0\t\t1.5617\t1.5398\t1.5623\t0\n\n\nT8s\t\t33.352\t\t4.000\t0.195\t1.581\t2.223\t\t\t4.814\t39.165\t56.021\t\t1.2056\t4.6799\t2.5030\t0\nTh8h\t\t29.705\t\t1.000\t0\t0.777\t0.223\t\t\t0\t77.697\t22.303\t\t0.2178\t0.0182\t0.2803\t0\nTc8c\t\t50.032\t\t1.000\t0.195\t0.805\t0\t\t\t19.548\t80.452\t0\t\t4.6753\t4.6799\t4.6741\t0\nTd8d\t\t27.012\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.6035\t-0.1379\t0\nTs8s\t\t27.012\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.6035\t-0.1379\t0\n\n\nT7s\t\t50.716\t\t3.000\t0.695\t2.186\t0.119\t\t\t23.173\t72.862\t3.965\t\t0.4077\t0.2088\t0.4932\t0\nTh7h\t\t52.168\t\t1.000\t0.101\t0.899\t0\t\t\t10.139\t89.861\t0\t\t1.0573\t1.0827\t1.0545\t0\nTd7d\t\t49.989\t\t1.000\t0.297\t0.643\t0.059\t\t\t29.705\t64.346\t5.948\t\t0.0824\t0.0594\t0.1007\t0\nTs7s\t\t49.989\t\t1.000\t0.297\t0.644\t0.060\t\t\t29.695\t64.353\t5.952\t\t0.0824\t0.0594\t0.1007\t0\n\n\nT6s\t\t23.591\t\t4.000\t0.077\t0.923\t3.000\t\t\t1.898\t22.746\t75.355\t\t0.6809\t2.7365\t2.7652\t0\nTh6h\t\t19.529\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4040\t-1.2637\t0\nTc6c\t\t43.137\t\t1.000\t0.077\t0.923\t0\t\t\t7.703\t92.297\t0\t\t2.7630\t2.7365\t2.7652\t0\nTd6d\t\t16.043\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.1424\t-1.6390\t0\nTs6s\t\t16.043\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.1424\t-1.6390\t0\n\n\nT5s\t\t23.648\t\t4.000\t0.096\t0.904\t3.000\t\t\t2.365\t22.261\t75.374\t\t0.6850\t2.7809\t2.7815\t0\nTh5h\t\t19.592\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.3875\t-1.2584\t0\nTc5c\t\t43.192\t\t1.000\t0.096\t0.904\t0\t\t\t9.603\t90.397\t0\t\t2.7815\t2.7809\t2.7815\t0\nTd5d\t\t16.108\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0998\t-1.6249\t0\nTs5s\t\t16.108\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0998\t-1.6249\t0\n\n\nT4s\t\t23.446\t\t1.333\t0\t0.333\t1.000\t\t\t0\t24.754\t75.246\t\t0.7166\t0\t2.8949\t0\nTh4h\t\t19.292\t\t0.333\t0\t0\t0.333\t\t\t0\t0\t100\t\t0\t-1.5263\t-1.3305\t0\nTc4c\t\t43.180\t\t0.333\t0\t0.333\t0\t\t\t0\t100\t0\t\t2.8949\t2.8179\t2.8949\t0\nTd4d\t\t15.799\t\t0.333\t0\t0\t0.333\t\t\t0\t0\t100\t\t0\t-2.1695\t-1.6602\t0\nTs4s\t\t15.799\t\t0.333\t0\t0\t0.333\t\t\t0\t0\t100\t\t0\t-2.1695\t-1.6602\t0\n\n\nT3s\t\t23.159\t\t1.333\t0\t0.333\t1.000\t\t\t0\t24.59\t75.41\t\t0.6958\t0\t2.8297\t0\nTh3h\t\t18.994\t\t0.333\t0\t0\t0.333\t\t\t0\t0\t100\t\t0\t-1.5510\t-1.3251\t0\nTc3c\t\t43.073\t\t0.333\t0\t0.333\t0\t\t\t0\t100\t0\t\t2.8297\t2.7351\t2.8297\t0\nTd3d\t\t15.514\t\t0.333\t0\t0\t0.333\t\t\t0\t0\t100\t\t0\t-2.1920\t-1.6736\t0\nTs3s\t\t15.514\t\t0.333\t0\t0\t0.333\t\t\t0\t0\t100\t\t0\t-2.1920\t-1.6736\t0\n\n\nA9o\t\t39.222\t\t12.000\t0\t0.342\t11.658\t\t\t0\t2.607\t97.393\t\t-0.0020\t0\t-0.0783\t0\nAh9c\t\t40.425\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2644\t-0.7537\t0\nAh9d\t\t37.652\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9135\t-1.1473\t0\nAh9s\t\t37.652\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9134\t-1.1473\t0\nAc9h\t\t40.272\t\t1.000\t0\t0.111\t0.889\t\t\t0\t11.14\t88.86\t\t-0.0097\t-0.5384\t-0.0868\t0\nAc9d\t\t40.335\t\t1.000\t0\t0.115\t0.885\t\t\t0\t11.536\t88.464\t\t-0.0086\t-0.5046\t-0.0743\t0\nAc9s\t\t40.335\t\t1.000\t0\t0.115\t0.885\t\t\t0\t11.537\t88.463\t\t-0.0086\t-0.5046\t-0.0743\t0\nAd9h\t\t38.108\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7619\t-1.0611\t0\nAd9c\t\t40.883\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1216\t-0.6674\t0\nAd9s\t\t38.165\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7632\t-1.0499\t0\nAs9h\t\t38.108\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7619\t-1.0611\t0\nAs9c\t\t40.883\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1216\t-0.6674\t0\nAs9d\t\t38.165\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7632\t-1.0499\t0\n\n\nK9o\t\t37.763\t\t12.000\t0.768\t9.664\t1.569\t\t\t6.231\t80.556\t13.213\t\t0.3232\t0.6783\t0.3487\t0\nKh9c\t\t38.693\t\t1.000\t0.065\t0.935\t0\t\t\t6.503\t93.497\t0\t\t0.4039\t0.4407\t0.4014\t0\nKh9d\t\t36.215\t\t1.000\t0\t0.675\t0.325\t\t\t0\t67.502\t32.498\t\t0.0217\t-0.0326\t0.0321\t0\nKh9s\t\t36.215\t\t1.000\t0\t0.675\t0.325\t\t\t0\t67.502\t32.498\t\t0.0217\t-0.0326\t0.0321\t0\nKc9h\t\t38.761\t\t1.000\t0.171\t0.829\t0\t\t\t17.128\t82.872\t0\t\t0.7807\t0.7278\t0.7916\t0\nKc9d\t\t38.899\t\t1.000\t0.199\t0.801\t0\t\t\t19.862\t80.138\t0\t\t0.8157\t0.7700\t0.8270\t0\nKc9s\t\t38.899\t\t1.000\t0.199\t0.801\t0\t\t\t19.864\t80.136\t0\t\t0.8157\t0.7700\t0.8270\t0\nKd9h\t\t36.700\t\t1.000\t0\t0.746\t0.254\t\t\t0\t74.579\t25.421\t\t0.0305\t-0.0366\t0.0409\t0\nKd9c\t\t39.270\t\t1.000\t0.067\t0.933\t0\t\t\t6.703\t93.297\t0\t\t0.4471\t0.4761\t0.4451\t0\nKd9s\t\t36.832\t\t1.000\t0\t0.795\t0.205\t\t\t0\t79.486\t20.514\t\t0.0686\t-0.0026\t0.0864\t0\nKs9h\t\t36.700\t\t1.000\t0\t0.746\t0.254\t\t\t0\t74.578\t25.422\t\t0.0305\t-0.0366\t0.0409\t0\nKs9c\t\t39.270\t\t1.000\t0.067\t0.933\t0\t\t\t6.702\t93.298\t0\t\t0.4471\t0.4761\t0.4451\t0\nKs9d\t\t36.832\t\t1.000\t0\t0.795\t0.205\t\t\t0\t79.486\t20.514\t\t0.0686\t-0.0026\t0.0864\t0\n\n\nQ9o\t\t59.143\t\t9.000\t0.409\t8.591\t0\t\t\t4.513\t95.487\t0\t\t1.4699\t1.4283\t1.4718\t0\nQh9c\t\t61.279\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.0802\t2.0073\t2.0802\t0\nQh9d\t\t58.767\t\t1.000\t0.159\t0.841\t0\t\t\t15.925\t84.075\t0\t\t1.4117\t1.3682\t1.4200\t0\nQh9s\t\t58.767\t\t1.000\t0.159\t0.841\t0\t\t\t15.925\t84.075\t0\t\t1.4118\t1.3682\t1.4200\t0\nQd9h\t\t58.046\t\t1.000\t0.002\t0.998\t0\t\t\t0.247\t99.753\t0\t\t1.1787\t1.1826\t1.1787\t0\nQd9c\t\t60.608\t\t1.000\t0.032\t0.968\t0\t\t\t3.166\t96.834\t0\t\t1.8242\t1.8329\t1.8239\t0\nQd9s\t\t58.086\t\t1.000\t0.011\t0.989\t0\t\t\t1.084\t98.916\t0\t\t1.1609\t1.1708\t1.1608\t0\nQs9h\t\t58.046\t\t1.000\t0.003\t0.997\t0\t\t\t0.25\t99.75\t0\t\t1.1787\t1.1826\t1.1787\t0\nQs9c\t\t60.608\t\t1.000\t0.032\t0.968\t0\t\t\t3.167\t96.833\t0\t\t1.8242\t1.8330\t1.8240\t0\nQs9d\t\t58.086\t\t1.000\t0.011\t0.989\t0\t\t\t1.088\t98.912\t0\t\t1.1609\t1.1708\t1.1608\t0\n\n\nJ9o\t\t55.251\t\t9.000\t0.948\t7.658\t0.394\t\t\t10.488\t85.124\t4.387\t\t0.4495\t0.7567\t0.4349\t0\nJc9h\t\t56.765\t\t1.000\t0.243\t0.757\t0\t\t\t24.278\t75.722\t0\t\t0.8583\t0.8751\t0.8529\t0\nJc9d\t\t56.804\t\t1.000\t0.207\t0.793\t0\t\t\t20.695\t79.305\t0\t\t0.8493\t0.8555\t0.8477\t0\nJc9s\t\t56.804\t\t1.000\t0.207\t0.793\t0\t\t\t20.696\t79.304\t0\t\t0.8493\t0.8555\t0.8477\t0\nJd9h\t\t53.662\t\t1.000\t0.036\t0.877\t0.087\t\t\t3.611\t87.726\t8.663\t\t0.0502\t0.0492\t0.0551\t0\nJd9c\t\t56.083\t\t1.000\t0.110\t0.890\t0\t\t\t10.976\t89.024\t0\t\t0.6374\t0.6754\t0.6327\t0\nJd9s\t\t53.719\t\t1.000\t0\t0.890\t0.110\t\t\t0\t88.983\t11.017\t\t0.0627\t0.0339\t0.0705\t0\nJs9h\t\t53.662\t\t1.000\t0.036\t0.877\t0.087\t\t\t3.611\t87.725\t8.664\t\t0.0502\t0.0492\t0.0552\t0\nJs9c\t\t56.083\t\t1.000\t0.110\t0.890\t0\t\t\t10.975\t89.025\t0\t\t0.6374\t0.6754\t0.6327\t0\nJs9d\t\t53.719\t\t1.000\t0\t0.890\t0.110\t\t\t0\t88.982\t11.018\t\t0.0627\t0.0339\t0.0704\t0\n\n\nT9o\t\t39.684\t\t12.000\t1.515\t10.485\t0\t\t\t12.621\t87.379\t0\t\t1.7885\t1.8920\t1.7736\t0\nTh9c\t\t40.688\t\t1.000\t0.171\t0.829\t0\t\t\t17.149\t82.851\t0\t\t2.0328\t2.0206\t2.0353\t0\nTh9d\t\t38.529\t\t1.000\t0.090\t0.910\t0\t\t\t9.002\t90.998\t0\t\t1.5498\t1.5321\t1.5516\t0\nTh9s\t\t38.529\t\t1.000\t0.090\t0.910\t0\t\t\t9.003\t90.997\t0\t\t1.5499\t1.5321\t1.5516\t0\nTc9h\t\t41.009\t\t1.000\t0.211\t0.789\t0\t\t\t21.071\t78.929\t0\t\t2.0347\t2.0502\t2.0306\t0\nTc9d\t\t41.166\t\t1.000\t0.198\t0.802\t0\t\t\t19.808\t80.192\t0\t\t2.0545\t2.0670\t2.0515\t0\nTc9s\t\t41.166\t\t1.000\t0.198\t0.802\t0\t\t\t19.808\t80.192\t0\t\t2.0546\t2.0670\t2.0515\t0\nTd9h\t\t38.352\t\t1.000\t0.084\t0.916\t0\t\t\t8.406\t91.594\t0\t\t1.5208\t1.5078\t1.5219\t0\nTd9c\t\t40.677\t\t1.000\t0.149\t0.851\t0\t\t\t14.861\t85.139\t0\t\t2.0180\t2.0153\t2.0184\t0\nTd9s\t\t38.526\t\t1.000\t0.046\t0.954\t0\t\t\t4.574\t95.426\t0\t\t1.5533\t1.5405\t1.5540\t0\nTs9h\t\t38.352\t\t1.000\t0.084\t0.916\t0\t\t\t8.407\t91.593\t0\t\t1.5208\t1.5078\t1.5220\t0\nTs9c\t\t40.677\t\t1.000\t0.149\t0.851\t0\t\t\t14.861\t85.139\t0\t\t2.0180\t2.0153\t2.0184\t0\nTs9d\t\t38.526\t\t1.000\t0.046\t0.954\t0\t\t\t4.573\t95.427\t0\t\t1.5534\t1.5405\t1.5540\t0\n\n\n98s\t\t30.567\t\t2.000\t0.152\t0.722\t1.126\t\t\t7.528\t35.804\t56.668\t\t1.2385\t4.6912\t2.4727\t0\n9h8h\t\t26.832\t\t0.500\t0.007\t0.367\t0.126\t\t\t1.401\t73.301\t25.298\t\t0.0782\t0.0617\t0.1056\t0\n9c8c\t\t47.941\t\t0.500\t0.145\t0.355\t0\t\t\t28.973\t71.027\t0\t\t4.9190\t4.9155\t4.9204\t0\n9d8d\t\t23.863\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.5265\t-0.4403\t0\n9s8s\t\t23.863\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.5265\t-0.4403\t0\n\n\n97s\t\t49.329\t\t3.000\t0\t1.676\t1.324\t\t\t0\t55.819\t44.181\t\t0.2371\t0\t0.4247\t0\n9h7h\t\t50.715\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.7749\t0.7550\t0.7749\t0\n9d7d\t\t48.638\t\t1.000\t0\t0.338\t0.662\t\t\t0\t33.794\t66.206\t\t-0.0311\t-0.1446\t-0.0919\t0\n9s7s\t\t48.638\t\t1.000\t0\t0.338\t0.662\t\t\t0\t33.794\t66.206\t\t-0.0311\t-0.1446\t-0.0919\t0\n\n\n96s\t\t21.856\t\t4.000\t0\t1.000\t3.000\t\t\t0\t24.792\t75.208\t\t0.6848\t0\t2.7620\t0\n9h6h\t\t17.668\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.5109\t-1.4234\t0\n9c6c\t\t41.742\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.7620\t2.6694\t2.7620\t0\n9d6d\t\t14.131\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.1378\t-1.8167\t0\n9s6s\t\t14.131\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.1378\t-1.8167\t0\n\n\n95s\t\t21.904\t\t4.000\t0\t1.000\t3.000\t\t\t0\t24.754\t75.246\t\t0.6802\t0\t2.7478\t0\n9h5h\t\t17.740\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4942\t-1.4184\t0\n9c5c\t\t41.747\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.7478\t2.6897\t2.7478\t0\n9d5d\t\t14.209\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0909\t-1.8048\t0\n9s5s\t\t14.209\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0908\t-1.8048\t0\n\n\nA8o\t\t38.038\t\t12.000\t0\t0\t12.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\nAh8c\t\t39.081\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.5729\t-0.9443\t0\nAh8d\t\t36.643\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9878\t-1.2426\t0\nAh8s\t\t36.643\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9878\t-1.2426\t0\nAc8h\t\t39.139\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.6376\t-0.2061\t0\nAc8d\t\t39.389\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.5532\t-0.1681\t0\nAc8s\t\t39.389\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.5532\t-0.1681\t0\nAd8h\t\t36.816\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9189\t-1.1971\t0\nAd8c\t\t39.452\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4250\t-0.8562\t0\nAd8s\t\t37.044\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8429\t-1.1531\t0\nAs8h\t\t36.816\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9189\t-1.1971\t0\nAs8c\t\t39.452\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4250\t-0.8562\t0\nAs8d\t\t37.044\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8429\t-1.1531\t0\n\n\nK8o\t\t26.109\t\t6.000\t0\t0\t6.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\nKh8c\t\t26.636\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.5735\t-1.2274\t0\nKh8d\t\t24.362\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9817\t-1.5348\t0\nKh8s\t\t24.362\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9817\t-1.5348\t0\nKc8h\t\t27.487\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.9452\t-0.7902\t0\nKc8d\t\t27.729\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.8500\t-0.7607\t0\nKc8s\t\t27.729\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.8500\t-0.7608\t0\nKd8h\t\t24.949\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-2.0507\t-1.5233\t0\nKd8c\t\t27.468\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.5262\t-1.1936\t0\nKd8s\t\t25.184\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9641\t-1.5008\t0\nKs8h\t\t24.949\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-2.0507\t-1.5232\t0\nKs8c\t\t27.468\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.5262\t-1.1936\t0\nKs8d\t\t25.184\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9641\t-1.5008\t0\n\n\nJ8o\t\t54.212\t\t4.500\t0.434\t3.683\t0.382\t\t\t9.625\t81.809\t8.566\t\t0.4363\t0.8527\t0.4330\t0\nJc8h\t\t55.784\t\t0.500\t0.092\t0.408\t0\t\t\t18.438\t81.562\t0\t\t0.8885\t0.8599\t0.8949\t0\nJc8d\t\t55.841\t\t0.500\t0.166\t0.334\t0\t\t\t33.134\t66.866\t0\t\t0.8691\t0.8777\t0.8648\t0\nJc8s\t\t55.841\t\t0.500\t0.166\t0.334\t0\t\t\t33.134\t66.866\t0\t\t0.8691\t0.8777\t0.8649\t0\nJd8h\t\t52.658\t\t0.500\t0\t0.433\t0.067\t\t\t0\t86.564\t13.436\t\t0.0574\t0.0131\t0.0663\t0\nJd8c\t\t54.866\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.5741\t0.5155\t0.5741\t0\nJd8s\t\t52.731\t\t0.500\t0.005\t0.371\t0.124\t\t\t1.088\t74.111\t24.802\t\t0.0280\t0.0403\t0.0371\t0\nJs8h\t\t52.658\t\t0.500\t0\t0.433\t0.067\t\t\t0\t86.564\t13.436\t\t0.0574\t0.0131\t0.0663\t0\nJs8c\t\t54.866\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.5741\t0.5155\t0.5741\t0\nJs8d\t\t52.731\t\t0.500\t0.005\t0.371\t0.124\t\t\t1.087\t74.11\t24.803\t\t0.0280\t0.0403\t0.0371\t0\n\n\nT8o\t\t28.236\t\t6.000\t0.235\t1.373\t4.392\t\t\t3.926\t22.805\t73.268\t\t0.0446\t0.0039\t0.1948\t0\nTh8c\t\t29.222\t\t0.500\t0\t0.215\t0.285\t\t\t0\t43.08\t56.92\t\t0.0736\t-0.1476\t0.1709\t0\nTh8d\t\t27.058\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.5942\t-0.1701\t0\nTh8s\t\t27.058\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.5942\t-0.1701\t0\nTc8h\t\t29.724\t\t0.500\t0.054\t0.245\t0.202\t\t\t10.712\t48.931\t40.358\t\t0.0798\t-0.0657\t0.1774\t0\nTc8d\t\t29.876\t\t0.500\t0.091\t0.239\t0.170\t\t\t18.129\t47.797\t34.074\t\t0.1125\t0.0242\t0.2263\t0\nTc8s\t\t29.876\t\t0.500\t0.091\t0.239\t0.170\t\t\t18.129\t47.797\t34.074\t\t0.1125\t0.0242\t0.2263\t0\nTd8h\t\t26.842\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.7008\t-0.1969\t0\nTd8c\t\t29.179\t\t0.500\t0\t0.217\t0.283\t\t\t0\t43.464\t56.536\t\t0.0788\t-0.1689\t0.1812\t0\nTd8s\t\t27.006\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.6060\t-0.1390\t0\nTs8h\t\t26.842\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.7008\t-0.1969\t0\nTs8c\t\t29.179\t\t0.500\t0\t0.217\t0.283\t\t\t0\t43.465\t56.535\t\t0.0788\t-0.1689\t0.1813\t0\nTs8d\t\t27.006\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.6060\t-0.1390\t0\n\n\n98o\t\t25.051\t\t9.000\t0.518\t0.920\t7.562\t\t\t5.799\t10.222\t83.979\t\t-0.0089\t0.0131\t-0.0941\t0\n9h8c\t\t26.210\t\t0.750\t0\t0.116\t0.634\t\t\t0\t15.41\t84.59\t\t-0.0222\t-0.1282\t-0.1441\t0\n9h8d\t\t23.761\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-0.5796\t-0.5167\t0\n9h8s\t\t23.761\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-0.5796\t-0.5167\t0\n9c8h\t\t26.350\t\t0.750\t0.139\t0.168\t0.443\t\t\t18.467\t22.452\t59.081\t\t-0.0326\t-0.0450\t-0.1084\t0\n9c8d\t\t26.370\t\t0.750\t0.190\t0.165\t0.396\t\t\t25.268\t21.973\t52.759\t\t-0.0072\t0.0341\t-0.0718\t0\n9c8s\t\t26.370\t\t0.750\t0.190\t0.165\t0.396\t\t\t25.268\t21.973\t52.759\t\t-0.0072\t0.0341\t-0.0718\t0\n9d8h\t\t23.790\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-0.6330\t-0.4981\t0\n9d8c\t\t26.285\t\t0.750\t0\t0.153\t0.597\t\t\t0\t20.462\t79.538\t\t-0.0188\t-0.0990\t-0.0919\t0\n9d8s\t\t23.830\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-0.5397\t-0.4444\t0\n9s8h\t\t23.790\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-0.6330\t-0.4981\t0\n9s8c\t\t26.285\t\t0.750\t0\t0.153\t0.597\t\t\t0\t20.462\t79.538\t\t-0.0188\t-0.0990\t-0.0919\t0\n9s8d\t\t23.830\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-0.5397\t-0.4444\t0\n\n\n88\t\t45.735\t\t3.000\t0\t0\t3.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\n8h8c\t\t46.937\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.9780\t-0.0298\t0\n8h8d\t\t44.444\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6411\t-0.5788\t0\n8c8d\t\t47.042\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.9527\t-0.0647\t0\n8h8s\t\t44.444\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6411\t-0.5788\t0\n8c8s\t\t47.042\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.9527\t-0.0647\t0\n8d8s\t\t44.554\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6136\t-0.6068\t0\n\n\n87s\t\t48.110\t\t1.500\t0\t0.795\t0.705\t\t\t0\t52.984\t47.016\t\t0.2351\t0\t0.4438\t0\n8h7h\t\t49.537\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.7757\t0.5703\t0.7757\t0\n8d7d\t\t47.399\t\t0.500\t0\t0.148\t0.352\t\t\t0\t29.54\t70.46\t\t-0.0344\t-0.2365\t-0.1165\t0\n8s7s\t\t47.399\t\t0.500\t0\t0.148\t0.352\t\t\t0\t29.54\t70.46\t\t-0.0344\t-0.2365\t-0.1165\t0\n\n\n86s\t\t22.369\t\t4.000\t0\t1.000\t3.000\t\t\t0\t24.474\t75.526\t\t0.7057\t0\t2.8833\t0\n8h6h\t\t18.327\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4507\t-1.3284\t0\n8c6c\t\t42.205\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.8833\t2.6144\t2.8833\t0\n8d6d\t\t14.761\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0080\t-1.8028\t0\n8s6s\t\t14.761\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0080\t-1.8028\t0\n\n\n85s\t\t22.412\t\t4.000\t0\t1.000\t3.000\t\t\t0\t24.462\t75.538\t\t0.6986\t0\t2.8559\t0\n8h5h\t\t18.392\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4376\t-1.3256\t0\n8c5c\t\t42.186\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.8559\t2.5875\t2.8559\t0\n8d5d\t\t14.831\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9711\t-1.7936\t0\n8s5s\t\t14.831\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.9711\t-1.7936\t0\n\n\nA7o\t\t51.058\t\t9.000\t0.446\t8.554\t0\t\t\t4.597\t95.403\t0\t\t0.7054\t1.4963\t0.6673\t0\nAh7d\t\t49.991\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.2650\t0.2268\t0.2650\t0\nAh7s\t\t49.991\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.2650\t0.2268\t0.2650\t0\nAc7h\t\t52.394\t\t1.000\t0.188\t0.812\t0\t\t\t18.821\t81.179\t0\t\t1.5475\t1.5482\t1.5473\t0\nAc7d\t\t52.185\t\t1.000\t0.129\t0.871\t0\t\t\t12.91\t87.09\t0\t\t1.4820\t1.4581\t1.4855\t0\nAc7s\t\t52.185\t\t1.000\t0.129\t0.871\t0\t\t\t12.906\t87.094\t0\t\t1.4820\t1.4581\t1.4855\t0\nAd7h\t\t50.877\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.4128\t0.4053\t0.4128\t0\nAd7s\t\t50.689\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.3665\t0.3227\t0.3665\t0\nAs7h\t\t50.877\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.4128\t0.4054\t0.4128\t0\nAs7d\t\t50.689\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t0.3665\t0.3227\t0.3665\t0\n\n\n87o\t\t48.252\t\t6.750\t0.086\t3.485\t3.179\t\t\t1.268\t51.411\t47.321\t\t0.0986\t0.3732\t0.1825\t0\n8h7d\t\t47.318\t\t0.750\t0\t0.228\t0.522\t\t\t0\t30.391\t69.609\t\t-0.0394\t-0.2794\t-0.1296\t0\n8h7s\t\t47.318\t\t0.750\t0\t0.228\t0.522\t\t\t0\t30.391\t69.609\t\t-0.0394\t-0.2794\t-0.1296\t0\n8c7h\t\t50.038\t\t0.750\t0.086\t0.664\t0\t\t\t11.466\t88.534\t0\t\t0.3809\t0.3732\t0.3819\t0\n8c7d\t\t49.978\t\t0.750\t0\t0.750\t0\t\t\t0\t100\t0\t\t0.3612\t0.3108\t0.3612\t0\n8c7s\t\t49.978\t\t0.750\t0\t0.750\t0\t\t\t0\t100\t0\t\t0.3612\t0.3108\t0.3612\t0\n8d7h\t\t47.456\t\t0.750\t0\t0.213\t0.537\t\t\t0\t28.361\t71.639\t\t-0.0287\t-0.1552\t-0.1013\t0\n8d7s\t\t47.399\t\t0.750\t0\t0.220\t0.530\t\t\t0\t29.345\t70.655\t\t-0.0343\t-0.2365\t-0.1169\t0\n8s7h\t\t47.456\t\t0.750\t0\t0.213\t0.537\t\t\t0\t28.36\t71.64\t\t-0.0287\t-0.1552\t-0.1013\t0\n8s7d\t\t47.399\t\t0.750\t0\t0.220\t0.530\t\t\t0\t29.345\t70.655\t\t-0.0343\t-0.2365\t-0.1169\t0\n\n\n77\t\t83.296\t\t3.000\t2.820\t0.180\t0\t\t\t94.008\t5.992\t0\t\t17.7198\t17.7166\t17.7690\t0\n7h7d\t\t83.344\t\t1.000\t0.950\t0.050\t0\t\t\t94.962\t5.038\t0\t\t17.7439\t17.7416\t17.7884\t0\n7h7s\t\t83.344\t\t1.000\t0.950\t0.050\t0\t\t\t94.983\t5.017\t0\t\t17.7441\t17.7418\t17.7884\t0\n7d7s\t\t83.200\t\t1.000\t0.921\t0.079\t0\t\t\t92.065\t7.935\t0\t\t17.6710\t17.6646\t17.7442\t0\n\n\n76s\t\t46.801\t\t1.500\t0.252\t1.045\t0.203\t\t\t16.787\t69.696\t13.517\t\t0.2516\t-0.0855\t0.3817\t0\n7h6h\t\t48.385\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t0.8229\t0.7666\t0.8229\t0\n7d6d\t\t46.007\t\t0.500\t0.126\t0.273\t0.101\t\t\t25.201\t54.511\t20.288\t\t-0.0346\t-0.0855\t-0.0239\t0\n7s6s\t\t46.007\t\t0.500\t0.126\t0.273\t0.101\t\t\t25.192\t54.517\t20.291\t\t-0.0346\t-0.0855\t-0.0239\t0\n\n\n75s\t\t46.859\t\t3.000\t0.916\t2.084\t0\t\t\t30.513\t69.487\t0\t\t0.2869\t0.1709\t0.3378\t0\n7h5h\t\t48.394\t\t1.000\t0.196\t0.804\t0\t\t\t19.619\t80.381\t0\t\t0.8460\t0.8332\t0.8492\t0\n7d5d\t\t46.090\t\t1.000\t0.360\t0.640\t0\t\t\t35.974\t64.026\t0\t\t0.0068\t-0.0100\t0.0162\t0\n7s5s\t\t46.090\t\t1.000\t0.360\t0.640\t0\t\t\t35.965\t64.035\t0\t\t0.0068\t-0.0100\t0.0163\t0\n\n\n74s\t\t46.587\t\t3.000\t0.896\t2.104\t0\t\t\t29.889\t70.111\t0\t\t0.2698\t0.1294\t0.3297\t0\n7h4h\t\t47.978\t\t1.000\t0.175\t0.825\t0\t\t\t17.515\t82.485\t0\t\t0.8020\t0.7619\t0.8105\t0\n7d4d\t\t45.892\t\t1.000\t0.361\t0.639\t0\t\t\t36.069\t63.931\t0\t\t0.0041\t-0.0240\t0.0200\t0\n7s4s\t\t45.892\t\t1.000\t0.361\t0.639\t0\t\t\t36.062\t63.938\t0\t\t0.0041\t-0.0240\t0.0200\t0\n\n\nA6o\t\t34.913\t\t12.000\t0\t0\t12.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\nAh6c\t\t35.397\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.3963\t-0.9931\t0\nAh6d\t\t33.439\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8631\t-1.3684\t0\nAh6s\t\t33.439\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8631\t-1.3684\t0\nAc6h\t\t37.306\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.3681\t-0.2029\t0\nAc6d\t\t37.392\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.3721\t-0.2019\t0\nAc6s\t\t37.392\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.3721\t-0.2019\t0\nAd6h\t\t33.522\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.6923\t-1.2780\t0\nAd6c\t\t35.573\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2344\t-0.9018\t0\nAd6s\t\t33.589\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7216\t-1.2880\t0\nAs6h\t\t33.522\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.6923\t-1.2780\t0\nAs6c\t\t35.573\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2344\t-0.9017\t0\nAs6d\t\t33.589\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.7216\t-1.2880\t0\n\n\n76o\t\t46.780\t\t6.750\t1.464\t4.237\t1.050\t\t\t21.717\t62.65\t15.633\t\t0.1493\t0.1012\t0.2031\t0\n7h6c\t\t48.324\t\t0.750\t0.219\t0.531\t0\t\t\t29.213\t70.787\t0\t\t0.5232\t0.5161\t0.5261\t0\n7h6d\t\t46.027\t\t0.750\t0.237\t0.348\t0.165\t\t\t31.592\t46.362\t22.047\t\t-0.0216\t-0.0312\t-0.0254\t0\n7h6s\t\t46.027\t\t0.750\t0.237\t0.348\t0.165\t\t\t31.592\t46.361\t22.047\t\t-0.0216\t-0.0312\t-0.0254\t0\n7d6h\t\t46.081\t\t0.750\t0.133\t0.445\t0.172\t\t\t17.74\t59.371\t22.889\t\t-0.0236\t-0.0697\t-0.0189\t0\n7d6c\t\t48.286\t\t0.750\t0.112\t0.638\t0\t\t\t14.915\t85.085\t0\t\t0.5052\t0.4580\t0.5134\t0\n7d6s\t\t45.994\t\t0.750\t0.140\t0.422\t0.188\t\t\t18.732\t56.235\t25.032\t\t-0.0411\t-0.1119\t-0.0358\t0\n7s6h\t\t46.081\t\t0.750\t0.133\t0.445\t0.172\t\t\t17.73\t59.377\t22.893\t\t-0.0236\t-0.0697\t-0.0189\t0\n7s6c\t\t48.286\t\t0.750\t0.112\t0.638\t0\t\t\t14.915\t85.085\t0\t\t0.5052\t0.4580\t0.5135\t0\n7s6d\t\t45.994\t\t0.750\t0.140\t0.422\t0.188\t\t\t18.722\t56.242\t25.036\t\t-0.0411\t-0.1119\t-0.0358\t0\n\n\n66\t\t41.554\t\t6.000\t0\t0.451\t5.549\t\t\t0\t7.448\t92.552\t\t-0.0021\t0\t-0.0285\t0\n6h6c\t\t42.616\t\t1.000\t0\t0.213\t0.787\t\t\t0\t21.285\t78.715\t\t-0.0033\t-0.2934\t-0.0155\t0\n6h6d\t\t40.500\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1071\t-0.6456\t0\n6c6d\t\t42.626\t\t1.000\t0\t0.119\t0.881\t\t\t0\t11.891\t88.109\t\t-0.0048\t-0.3657\t-0.0402\t0\n6h6s\t\t40.500\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1071\t-0.6456\t0\n6c6s\t\t42.626\t\t1.000\t0\t0.119\t0.881\t\t\t0\t11.891\t88.109\t\t-0.0048\t-0.3657\t-0.0402\t0\n6d6s\t\t40.511\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1761\t-0.6746\t0\n\n\n65s\t\t23.118\t\t2.000\t0\t0.500\t1.500\t\t\t0\t24.47\t75.53\t\t0.7496\t0\t3.0634\t0\n6h5h\t\t19.088\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.0326\t-1.1509\t0\n6c5c\t\t42.785\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t3.0634\t2.9314\t3.0634\t0\n6d5d\t\t15.583\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6532\t-1.6845\t0\n6s5s\t\t15.583\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6532\t-1.6845\t0\n\n\n64s\t\t21.955\t\t4.000\t0\t1.000\t3.000\t\t\t0\t24.556\t75.444\t\t0.6982\t0\t2.8434\t0\n6h4h\t\t17.855\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2794\t-1.3055\t0\n6c4c\t\t41.846\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.8434\t2.7179\t2.8434\t0\n6d4d\t\t14.303\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8412\t-1.7922\t0\n6s4s\t\t14.303\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8412\t-1.7922\t0\n\n\n63s\t\t20.436\t\t4.000\t0.055\t0.945\t3.000\t\t\t1.331\t23.009\t75.66\t\t0.5809\t2.3961\t2.3860\t0\n6h3h\t\t16.329\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.5163\t-1.5043\t0\n6c3c\t\t40.780\t\t1.000\t0.055\t0.945\t0\t\t\t5.47\t94.53\t0\t\t2.3866\t2.3961\t2.3860\t0\n6d3d\t\t12.683\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0768\t-1.9588\t0\n6s3s\t\t12.683\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0768\t-1.9588\t0\n\n\nA5o\t\t34.730\t\t6.000\t0\t0\t6.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\nAh5c\t\t35.191\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.3296\t-0.9548\t0\nAh5d\t\t33.243\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8215\t-1.3557\t0\nAh5s\t\t33.243\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8215\t-1.3557\t0\nAc5h\t\t37.220\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3465\t-0.1877\t0\nAc5d\t\t37.326\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3251\t-0.1728\t0\nAc5s\t\t37.326\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3251\t-0.1728\t0\nAd5h\t\t33.291\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6709\t-1.2741\t0\nAd5c\t\t35.346\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.1732\t-0.8707\t0\nAd5s\t\t33.372\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6804\t-1.2769\t0\nAs5h\t\t33.291\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6709\t-1.2741\t0\nAs5c\t\t35.346\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.1732\t-0.8707\t0\nAs5d\t\t33.372\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.6804\t-1.2769\t0\n\n\n65o\t\t16.883\t\t9.000\t0\t0\t9.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\n6h5c\t\t18.163\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.1577\t-1.2474\t0\n6h5d\t\t15.649\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.6376\t-1.6758\t0\n6h5s\t\t15.649\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.6376\t-1.6758\t0\n6c5h\t\t18.232\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.1944\t-1.2721\t0\n6c5d\t\t18.177\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.1982\t-1.2725\t0\n6c5s\t\t18.177\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.1982\t-1.2724\t0\n6d5h\t\t15.649\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.6548\t-1.6841\t0\n6d5c\t\t18.105\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.1768\t-1.2591\t0\n6d5s\t\t15.583\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.6532\t-1.6848\t0\n6s5h\t\t15.649\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.6548\t-1.6841\t0\n6s5c\t\t18.105\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.1769\t-1.2591\t0\n6s5d\t\t15.583\t\t0.750\t0\t0\t0.750\t\t\t0\t0\t100\t\t0\t-1.6532\t-1.6848\t0\n\n\n55\t\t41.235\t\t6.000\t0\t0.745\t5.255\t\t\t0\t12.31\t87.69\t\t0.0004\t0\t0.0036\t0\n5h5c\t\t42.268\t\t1.000\t0\t0.283\t0.717\t\t\t0\t28.284\t71.716\t\t0.0051\t-0.1625\t0.0182\t0\n5h5d\t\t40.175\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.0260\t-0.6266\t0\n5c5d\t\t42.313\t\t1.000\t0\t0.231\t0.769\t\t\t0\t23.11\t76.89\t\t-0.0012\t-0.2233\t-0.0053\t0\n5h5s\t\t40.175\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.0260\t-0.6266\t0\n5c5s\t\t42.313\t\t1.000\t0\t0.231\t0.769\t\t\t0\t23.11\t76.89\t\t-0.0012\t-0.2233\t-0.0053\t0\n5d5s\t\t40.222\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.0820\t-0.6507\t0\n\n\n54s\t\t21.938\t\t2.000\t0\t0.500\t1.500\t\t\t0\t24.545\t75.455\t\t0.7019\t0\t2.8596\t0\n5h4h\t\t17.846\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.2725\t-1.2970\t0\n5c4c\t\t41.851\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t2.8596\t2.7019\t2.8596\t0\n5d4d\t\t14.279\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8102\t-1.7798\t0\n5s4s\t\t14.279\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8102\t-1.7798\t0\n\n\n53s\t\t20.423\t\t4.000\t0.036\t0.964\t3.000\t\t\t0.873\t23.476\t75.65\t\t0.5702\t2.3552\t2.3412\t0\n5h3h\t\t16.343\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.4940\t-1.5013\t0\n5c3c\t\t40.701\t\t1.000\t0.036\t0.964\t0\t\t\t3.587\t96.413\t0\t\t2.3417\t2.3552\t2.3412\t0\n5d3d\t\t12.685\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0277\t-1.9457\t0\n5s3s\t\t12.685\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0277\t-1.9457\t0\n\n\n52s\t\t18.937\t\t4.000\t0.102\t0.898\t3.000\t\t\t2.492\t21.918\t75.59\t\t0.5173\t2.1239\t2.1189\t0\n5h2h\t\t14.775\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.8509\t-1.6736\t0\n5c2c\t\t39.596\t\t1.000\t0.102\t0.898\t0\t\t\t10.209\t89.791\t0\t\t2.1194\t2.1239\t2.1189\t0\n5d2d\t\t11.031\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.2911\t-1.9904\t0\n5s2s\t\t11.031\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.2911\t-1.9904\t0\n\n\nA4o\t\t34.534\t\t6.000\t0\t0\t6.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\nAh4c\t\t35.205\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.5069\t-1.0818\t0\nAh4d\t\t33.025\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8960\t-1.3802\t0\nAh4s\t\t33.025\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8960\t-1.3802\t0\nAc4h\t\t36.864\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.4467\t-0.2405\t0\nAc4d\t\t37.185\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3669\t-0.2004\t0\nAc4s\t\t37.185\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3670\t-0.2004\t0\nAd4h\t\t32.856\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8092\t-1.3244\t0\nAd4c\t\t35.344\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.3531\t-0.9972\t0\nAd4s\t\t33.144\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7511\t-1.3001\t0\nAs4h\t\t32.856\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8092\t-1.3245\t0\nAs4c\t\t35.344\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.3531\t-0.9972\t0\nAs4d\t\t33.144\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7511\t-1.3001\t0\n\n\n44\t\t40.251\t\t6.000\t0\t0.238\t5.762\t\t\t0\t3.945\t96.055\t\t-0.0037\t0\t-0.0949\t0\n4h4c\t\t41.221\t\t1.000\t0\t0.098\t0.902\t\t\t0\t9.802\t90.198\t\t-0.0093\t-0.4186\t-0.0954\t0\n4h4d\t\t38.955\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2006\t-0.6892\t0\n4c4d\t\t41.553\t\t1.000\t0\t0.070\t0.930\t\t\t0\t6.988\t93.012\t\t-0.0066\t-0.4284\t-0.0945\t0\n4h4s\t\t38.955\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2006\t-0.6892\t0\n4c4s\t\t41.553\t\t1.000\t0\t0.070\t0.930\t\t\t0\t6.989\t93.011\t\t-0.0066\t-0.4284\t-0.0945\t0\n4d4s\t\t39.294\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.2063\t-0.6829\t0\n\n\n43s\t\t20.217\t\t4.000\t0\t1.000\t3.000\t\t\t0\t24.448\t75.552\t\t0.5526\t0\t2.2601\t0\n4h3h\t\t16.112\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.6213\t-1.5623\t0\n4c3c\t\t40.424\t\t1.000\t0\t1.000\t0\t\t\t0\t100\t0\t\t2.2601\t2.2324\t2.2601\t0\n4d3d\t\t12.475\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0948\t-1.9721\t0\n4s3s\t\t12.475\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-2.0948\t-1.9721\t0\n\n\n42s\t\t18.784\t\t2.000\t0\t0.500\t1.500\t\t\t0\t24.532\t75.468\t\t0.5112\t0\t2.0839\t0\n4h2h\t\t14.595\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9675\t-1.7294\t0\n4c2c\t\t39.346\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t2.0839\t2.0107\t2.0839\t0\n4d2d\t\t10.877\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-2.3481\t-2.0174\t0\n4s2s\t\t10.877\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-2.3481\t-2.0174\t0\n\n\nA3o\t\t34.301\t\t6.000\t0\t0\t6.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\nAh3c\t\t35.077\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7441\t-1.1830\t0\nAh3d\t\t32.737\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9084\t-1.3809\t0\nAh3s\t\t32.737\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9084\t-1.3809\t0\nAc3h\t\t36.629\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.4845\t-0.2513\t0\nAc3d\t\t36.877\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3851\t-0.2214\t0\nAc3s\t\t36.877\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-0.3851\t-0.2214\t0\nAd3h\t\t32.644\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8327\t-1.3124\t0\nAd3c\t\t35.228\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.5822\t-1.0868\t0\nAd3s\t\t32.857\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7637\t-1.3013\t0\nAs3h\t\t32.644\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.8327\t-1.3123\t0\nAs3c\t\t35.228\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.5822\t-1.0868\t0\nAs3d\t\t32.857\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.7637\t-1.3013\t0\n\n\n33\t\t38.536\t\t6.000\t0\t0.007\t5.993\t\t\t0\t0.119\t99.881\t\t-0.0002\t0\t-0.1387\t0\n3h3c\t\t39.521\t\t1.000\t0\t0.007\t0.993\t\t\t0\t0.721\t99.279\t\t-0.0010\t-0.4969\t-0.1387\t0\n3h3d\t\t37.338\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1546\t-0.6459\t0\n3c3d\t\t39.747\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.5233\t-0.1477\t0\n3h3s\t\t37.338\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1546\t-0.6459\t0\n3c3s\t\t39.747\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.5233\t-0.1477\t0\n3d3s\t\t37.564\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1777\t-0.6566\t0\n\n\n32s\t\t18.516\t\t2.000\t0\t0.500\t1.500\t\t\t0\t24.374\t75.626\t\t0.4667\t0\t1.9147\t0\n3h2h\t\t14.383\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-1.9866\t-1.7098\t0\n3c2c\t\t39.094\t\t0.500\t0\t0.500\t0\t\t\t0\t100\t0\t\t1.9147\t1.8146\t1.9147\t0\n3d2d\t\t10.659\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-2.3639\t-2.0192\t0\n3s2s\t\t10.659\t\t0.500\t0\t0\t0.500\t\t\t0\t0\t100\t\t0\t-2.3639\t-2.0192\t0\n\n\n22\t\t36.478\t\t6.000\t0\t0\t6.000\t\t\t0\t0\t100\t\t0\t0\t0\t0\n2h2c\t\t37.302\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.5104\t-0.1723\t0\n2h2d\t\t35.165\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1727\t-0.6916\t0\n2c2d\t\t37.802\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.4666\t-0.1518\t0\n2h2s\t\t35.165\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1727\t-0.6916\t0\n2c2s\t\t37.802\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-0.4666\t-0.1518\t0\n2d2s\t\t35.655\t\t1.000\t0\t0\t1.000\t\t\t0\t0\t100\t\t0\t-1.1355\t-0.6749\t0\n\n\n\npot: 10.5\nstack: 97\nto call: 4.5\nodds: 2.33\nfreq: 26%\n\nCombos:\t439.7\t23.97\t216.2\t199.5\nPercent:\t5.42%\t48.3%\t46.3%\nEquity:\t42.37%\t58.2%\t52.6%\t29.8%\nEV:\t1.28391\t5.347\t2.058\t0\n\n536 unique items in table\n",
+                    "text": ""
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preflopRange": {
+        "AAp": 100,
+        "KKp": 100,
+        "QQp": 100,
+        "JJp": 100,
+        "TTp": 100,
+        "99p": 100,
+        "88p": 100,
+        "77p": 100,
+        "66p": 100,
+        "55p": 100,
+        "44p": 100,
+        "33p": 100,
+        "22p": 100,
+        "AKs": 100,
+        "AQs": 100,
+        "AJs": 100,
+        "ATs": 100,
+        "A9s": 100,
+        "A8s": 100,
+        "A7s": 100,
+        "A6s": 100,
+        "A5s": 100,
+        "A4s": 100,
+        "A3s": 100,
+        "A2s": 100,
+        "KQs": 100,
+        "KJs": 100,
+        "KTs": 100,
+        "K9s": 100,
+        "K8s": 100,
+        "K7s": 100,
+        "K6s": 100,
+        "K5s": 100,
+        "K4s": 100,
+        "K3s": 100,
+        "K2s": 100,
+        "QJs": 100,
+        "QTs": 100,
+        "Q9s": 100,
+        "Q8s": 100,
+        "Q7s": 100,
+        "Q6s": 100,
+        "Q5s": 100,
+        "Q4s": 100,
+        "Q3s": 100,
+        "Q2s": 100,
+        "JTs": 100,
+        "J9s": 100,
+        "J8s": 100,
+        "J7s": 100,
+        "J6s": 100,
+        "J5s": 100,
+        "T9s": 100,
+        "T8s": 100,
+        "T7s": 100,
+        "T6s": 100,
+        "T5s": 100,
+        "98s": 100,
+        "97s": 100,
+        "96s": 100,
+        "95s": 100,
+        "87s": 100,
+        "86s": 100,
+        "85s": 100,
+        "76s": 100,
+        "75s": 100,
+        "74s": 100,
+        "65s": 100,
+        "64s": 100,
+        "54s": 100,
+        "53s": 100,
+        "AKo": 100,
+        "AQo": 100,
+        "AJo": 100,
+        "ATo": 100,
+        "A9o": 100,
+        "A8o": 100,
+        "A7o": 100,
+        "A6o": 100,
+        "A5o": 100,
+        "A4o": 100,
+        "A3o": 100,
+        "KQo": 100,
+        "KJo": 100,
+        "KTo": 100,
+        "K9o": 100,
+        "K8o": 100,
+        "QJo": 100,
+        "QTo": 100,
+        "Q9o": 100,
+        "JTo": 100,
+        "J9o": 100,
+        "J8o": 100,
+        "T9o": 100,
+        "J4s": 33.3333,
+        "J3s": 33.3333,
+        "T4s": 33.3333,
+        "94s": 33.3333,
+        "84s": 33.3333,
+        "43s": 33.3333,
+        "32s": 33.3333,
+        "A2o": 33.3333,
+        "K7o": 33.3333,
+        "K6o": 33.3333,
+        "Q8o": 33.3333,
+        "T8o": 33.3333,
+        "98o": 33.3333,
+        "87o": 33.3333
+      }
+    }
+  ],
+  "library": [
+    {
+      "category": "OR",
+      "ranges": [
+        {
+          "name": "SB",
+          "value": "AA-22,AKs-A2s,KQs-K2s,QJs-Q2s,JTs-J4s,T9s-T6s,98s-96s,87s-85s,76s-75s,65s-64s,54s-53s,43s,AKo-A4o,KQo-K9o,QJo-Q8o,JTo-J9o,T9o,98o"
+        },
+        {
+          "name": "UTG",
+          "value": "AA-77,AKs-A2s,KQs-K9s,QJs-Q9s,JTs-J9s,T9s,AKo-ATo,KQo-KJo"
+        },
+        {
+          "name": "CO",
+          "value": "AA-44,AKs-A2s,KQs-K3s,QJs-Q5s,JTs-J7s,T9s-T8s,98s,87s,76s,65s,54s,AKo-A9o,A5o,KQo-KTo,QJo-QTo,JTo"
+        },
+        {
+          "name": "BTN",
+          "value": "AA-22,AKs-A2s,KQs-K2s,QJs-Q2s,JTs-J4s,T9s-T6s,98s-96s,87s-85s,76s-75s,65s-64s,54s-53s,AKo-A4o,KQo-K9o,QJo-Q8o,JTo-J9o,T9o,98o"
+        }
+      ]
+    },
+    {
+      "category": "3B",
+      "ranges": [
+        {
+          "name": "MP- CO-BTN-SB vs EP (6%)",
+          "value": "AA-TT,AKs-AJs,A5s,KQs-KTs,QJs,AKo-AQo"
+        },
+        {
+          "name": "CO-BTN-SB vs MP",
+          "value": "AA-99,AKs-ATs,A5s,KQs-KTs,QJs-QTs,AKo-AQo,KQo"
+        }
+      ]
+    }
+  ]
+}
