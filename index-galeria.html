@@ -376,6 +376,21 @@
         .micro-btn:hover { color: var(--text-secondary); border-color: var(--border); }
         .micro-btn.has-data { color: var(--accent-text); border-color: var(--accent-border); border-style: solid; }
 
+        .micro-btn-gto {
+            font-size: 8px;
+            letter-spacing: 0.02em;
+            color: var(--text-faint);
+            cursor: pointer;
+            padding: 2px 5px;
+            border: 1px solid var(--border-light);
+            border-radius: 2px;
+            transition: all var(--transition);
+            background: var(--bg-surface);
+            font-weight: 600;
+        }
+        .micro-btn-gto:hover { color: var(--accent-text); border-color: var(--accent-border); }
+        .micro-btn-gto.has-data { color: var(--accent-text); border-color: var(--accent-border); border-style: solid; }
+
         .add-combo-btn {
             font-size: 11px;
             color: #92400e;
@@ -545,13 +560,13 @@
             box-shadow: var(--shadow-lg);
         }
         
-        .img-modal-body { flex: 1; display: flex; gap: 16px; overflow: hidden; }
+        .img-modal-body { flex: 1; display: flex; gap: 16px; overflow: hidden; min-height: 0; }
         
-        .img-interaction-panel { width: 240px; flex-shrink: 0; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 12px; overflow-y: auto; display: flex; flex-direction: column; }
+        .img-interaction-panel { width: 240px; flex-shrink: 0; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 12px; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
         .img-panel-header { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-        .img-panel-actions { display: flex; flex-direction: column; gap: 6px; }
-        .img-panel-separator { height: 1px; background: var(--border-light); margin: 16px 0; }
-        .img-panel-interactions { flex: 1; display: flex; flex-direction: column; gap: 8px; font-size: 11px; color: var(--text-secondary); }
+        .img-panel-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+        .img-panel-separator { height: 1px; background: var(--border-light); margin: 16px 0; flex-shrink: 0; }
+        .img-panel-interactions { flex: 1; display: flex; flex-direction: column; gap: 8px; font-size: 11px; color: var(--text-secondary); min-height: 0; }
         .img-empty-interaction { color: var(--text-faint); font-style: italic; text-align: center; margin-top: 20px; font-size: 11px; }
         
         .interactions-group { margin-bottom: 16px; }
@@ -563,12 +578,12 @@
         .act-btn.active:hover { background: #4338ca; }
         
         /* Estilos para el resaltado en la matriz */
-        .gto-cell.dim { opacity: 0.15; filter: grayscale(1); }
+        .gto-cell.dim { opacity: 0.4; filter: saturate(0.4); }
         .gto-cell.highlight { box-shadow: 0 0 0 2px var(--text-primary); z-index: 3; transform: scale(1.05); }
         .clear-highlight-btn { width: 100%; font-size: 10px; padding: 6px; border: 1px solid #fca5a5; color: var(--bluff); background: var(--bluff-bg); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.15s; margin-top: 10px; }
         .clear-highlight-btn:hover { background: #fee2e2; }
 
-        .img-slots-area { flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; }
+        .img-slots-area { flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; min-height: 0; }
         .slots-container { display: flex; flex-direction: column; gap: 12px; flex: 1; } 
         
         .slot-card {
@@ -601,7 +616,7 @@
         .clear-gto-btn:hover { background: #fee2e2; }
         
         .rp-gto-input {
-            width: 100%; height: 50px;
+            width: 100%; height: 34px;
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
             background: var(--bg-surface-warm);
@@ -609,7 +624,7 @@
             font-family: 'Inter', sans-serif;
             font-size: 10px;
             color: var(--text-secondary);
-            resize: none;
+            resize: vertical;
             outline: none;
             transition: all var(--transition);
             flex-shrink: 0;
@@ -617,8 +632,7 @@
         .rp-gto-input:focus { border-color: var(--border-focus); background: var(--bg-surface); box-shadow: 0 0 0 2px rgba(99,102,241,0.05); }
         
         .rp-gto-matrix {
-            flex: 1; display: flex; justify-content: center; align-items: center;
-            min-height: 300px; 
+            display: flex; justify-content: center; align-items: center;
             background: var(--bg-surface-warm);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
@@ -626,19 +640,20 @@
             overflow: hidden;
         }
         
-        /* MATRIZ EXPANDIDA AL 100% */
-        .gto-grid { display: grid; grid-template-columns: 16px repeat(13, 1fr); grid-template-rows: 16px repeat(13, 1fr); gap: 2px; width: 100%; height: 100%; aspect-ratio: 1; }
-        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted); font-weight: 600; }
+        /* Cuadrado real: height:auto deja que aspect-ratio mande (antes width Y height al 100% lo anulaban) */
+        .gto-grid { display: grid; grid-template-columns: 22px repeat(13, 1fr); grid-template-rows: 22px repeat(13, 1fr); gap: 2px; width: 100%; max-width: 400px; height: auto; aspect-ratio: 1; margin: 0 auto; }
+        .gto-h { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted); font-weight: 600; }
         .gto-cell {
             display: flex; align-items: center; justify-content: center;
-            font-size: 9px; font-weight: 600; border-radius: 2px;
-            color: var(--text-primary); cursor: help; transition: transform 0.1s;
+            font-size: 10px; font-weight: 600; border-radius: 3px;
+            color: var(--text-primary); cursor: help;
+            transition: transform 0.1s, opacity 0.15s, filter 0.15s, box-shadow 0.15s;
             border: 1px solid transparent; overflow: hidden;
         }
         .gto-cell:hover { transform: scale(1.15); z-index: 2; box-shadow: 0 0 0 1.5px var(--text-primary); }
 
         /* GTO+ metrics — kept compact so the matrix remains the visual focus */
-        .gto-analysis { border-top: 1px solid var(--border-light); padding-top: 8px; display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
+        .gto-analysis { border-top: 1px solid var(--border-light); padding-top: 6px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
         .gto-analysis-empty { color: var(--text-faint); font-size: 10px; text-align: center; padding: 3px 0; }
         .gto-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
         .gto-kpi { min-width: 0; padding: 5px 6px; background: var(--bg-surface-warm); border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
@@ -657,14 +672,14 @@
         
         .rp-text {
             width: 100%;
-            min-height: 60px;
+            min-height: 36px;
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
             padding: 8px;
             font-family: 'Inter', sans-serif;
             font-size: 12px;
             color: var(--text-secondary);
-            resize: none;
+            resize: vertical;
             outline: none;
             background: var(--bg-surface-warm);
             transition: all var(--transition);
@@ -1235,7 +1250,7 @@
                         <div class="auto-btn" onclick="autoFillPanel('flop')" title="Autodetectar todo desde el board">A</div>
                         <div class="lock-btn" id="flop-lock-btn" onclick="toggleLock('flop')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="flop-note-btn" onclick="openNoteModal('flop')">N</div>
-                        <div class="micro-btn" id="flop-img-btn" onclick="openImgModal('flop')">I</div>
+                        <div class="micro-btn-gto" id="flop-img-btn" onclick="openImgModal('flop')">GTO+</div>
                         <div class="add-node-btn" onclick="openActionModal('flop')">+nodo</div>
                     </div>
                     <div class="flow-row">
@@ -1254,7 +1269,7 @@
                         <div class="auto-btn" onclick="autoFillPanel('turnAction')" title="Autodetectar y traer rango restante del Flop">A</div>
                         <div class="lock-btn" id="turnAction-lock-btn" onclick="toggleLock('turnAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="turnAction-note-btn" onclick="openNoteModal('turnAction')">N</div>
-                        <div class="micro-btn" id="turnAction-img-btn" onclick="openImgModal('turnAction')">I</div>
+                        <div class="micro-btn-gto" id="turnAction-img-btn" onclick="openImgModal('turnAction')">GTO+</div>
                         <div class="add-node-btn" onclick="openActionModal('turnAction')">+nodo</div>
                     </div>
                     <div class="flow-row" id="turn-actions-tabs-row" style="display:none;">
@@ -1273,7 +1288,7 @@
                         <div class="auto-btn" onclick="autoFillPanel('riverAction')" title="Autodetectar y traer rango restante del Turn">A</div>
                         <div class="lock-btn" id="riverAction-lock-btn" onclick="toggleLock('riverAction')" title="Bloquear/Desbloquear rango trabajado"></div>
                         <div class="micro-btn" id="riverAction-note-btn" onclick="openNoteModal('riverAction')">N</div>
-                        <div class="micro-btn" id="riverAction-img-btn" onclick="openImgModal('riverAction')">I</div>
+                        <div class="micro-btn-gto" id="riverAction-img-btn" onclick="openImgModal('riverAction')">GTO+</div>
                         <div class="add-node-btn" onclick="openActionModal('riverAction')">+nodo</div>
                     </div>
                     <div class="flow-row" id="river-actions-tabs-row" style="display:none;">
@@ -4160,17 +4175,6 @@
             return Array.from(acciones);
         }
 
-        function esComboEspecifico(valor) {
-            const mano = String(valor ?? '').trim();
-            // Detecta formatos como AhKd, Kh9c, TcTh (letra+número+palo+palo)
-            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
-        }
-
-        function esComboEspecifico(valor) {
-            const mano = String(valor ?? '').trim();
-            return /^([AKQJT2-9][hdcs]){2}$/i.test(mano);
-        }
-
         function parseGtoData(text) {
             const data = {};
             if (!text) return data;
@@ -4203,10 +4207,17 @@
 
             if (inicioPorcentajes < 0 || !acciones.length) return data;
 
-            // SIMPLIFICACIÓN: Ignoramos los combos específicos (AhKd) y leemos SOLO las manos resumen (AKo)
+            // Las filas de "mano resumen" (AKo, AA) se usan para la matriz y la tabla de acciones.
             const filasDeManos = matriz
                 .slice(indiceEncabezado + 1)
                 .filter(cols => esManoResumen(cols[indiceHand]));
+
+            // Las filas de "combo específico" (AhKd, 2h2c) tienen su propia Equity individual,
+            // distinta al promedio de la mano. Las guardamos aparte para que las EQ Buckets
+            // puedan repartir los combos según su Equity real y no la de la mano resumen.
+            const filasDeCombos = matriz
+                .slice(indiceEncabezado + 1)
+                .filter(cols => esComboEspecifico(cols[indiceHand]));
 
             const columnasCombos = indiceCombos >= 0
                 ? columnasDeAccion(encabezados, indiceCombos + 1, inicioPorcentajes >= 0 ? inicioPorcentajes : (indiceEvTotal >= 0 ? indiceEvTotal : encabezados.length))
@@ -4255,6 +4266,25 @@
                     };
                 }
             }
+
+            // Detalle por combo específico (solo equity + cantidad de combos), usado por las EQ Buckets
+            // para repartir cada combo según su propia Equity real en vez de la Equity promedio de la mano.
+            const combosDetalle = [];
+            for (const cols of filasDeCombos) {
+                const equityCombo = numeroGto(cols[indiceEquity]);
+                const combosCombo = numeroGto(cols[indiceCombos]);
+                if (!Number.isFinite(equityCombo) || !Number.isFinite(combosCombo) || combosCombo <= 0) continue;
+                let eqVal = equityCombo;
+                if (eqVal <= 1) eqVal *= 100;
+                combosDetalle.push({ equity: eqVal, combos: combosCombo });
+            }
+            Object.defineProperty(data, '__combosDetalle', {
+                value: combosDetalle,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            });
+
             return data;
         }
 
@@ -4314,16 +4344,32 @@
                 { label: '80–100', min: 80, max: 100.0001, combos: 0 }
             ];
             
-            filas.forEach(dato => {
-                let eq = Number(dato.equity);
-                if (!Number.isFinite(eq)) eq = 0;
-                if (eq <= 1) eq *= 100;
-                if (eq < 0) eq = 0;
-                if (eq > 100) eq = 100;
-                
-                const bucket = buckets.find(b => eq >= b.min && eq < b.max) || buckets[buckets.length - 1];
-                bucket.combos += (Number(dato.combos) || 0);
-            });
+            // Si tenemos el detalle por combo específico (con su Equity individual), lo usamos para
+            // repartir los buckets con precisión real. Si no (ej. datos pegados sin nivel de combo),
+            // caemos al comportamiento anterior usando la Equity promedio de cada mano resumen.
+            const combosDetalle = Array.isArray(data?.__combosDetalle) ? data.__combosDetalle : [];
+            if (combosDetalle.length) {
+                combosDetalle.forEach(({ equity, combos }) => {
+                    let eq = Number(equity);
+                    if (!Number.isFinite(eq)) eq = 0;
+                    if (eq < 0) eq = 0;
+                    if (eq > 100) eq = 100;
+
+                    const bucket = buckets.find(b => eq >= b.min && eq < b.max) || buckets[buckets.length - 1];
+                    bucket.combos += (Number(combos) || 0);
+                });
+            } else {
+                filas.forEach(dato => {
+                    let eq = Number(dato.equity);
+                    if (!Number.isFinite(eq)) eq = 0;
+                    if (eq <= 1) eq *= 100;
+                    if (eq < 0) eq = 0;
+                    if (eq > 100) eq = 100;
+
+                    const bucket = buckets.find(b => eq >= b.min && eq < b.max) || buckets[buckets.length - 1];
+                    bucket.combos += (Number(dato.combos) || 0);
+                });
+            }
 
             const acciones = getGtoActionNames(data).map(accion => {
                 let combos = 0, equityTotal = 0, evTotal = 0, combosConEv = 0;
@@ -4398,13 +4444,21 @@
             return '#d6d3d1';
         }
 
-        function getIntenseColor(act) {
+        function getAccentColor(act) {
+            // Un paso más profundo dentro de la MISMA familia pastel (no un color saturado distinto),
+            // para resaltar la acción activa sin romper la paleta general de la matriz.
             act = act.toLowerCase();
-            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#ef4444';
-            if (act.includes('call')) return '#3b82f6';
-            if (act.includes('check')) return '#10b981';
-            if (act.includes('fold')) return '#8b5cf6';
-            return '#6b7280';
+            if (act.includes('raise') || act.includes('bet') || act.includes('donk') || act.includes('3b') || act.includes('4b')) return '#f87171';
+            if (act.includes('call')) return '#60a5fa';
+            if (act.includes('check')) return '#4ade80';
+            if (act.includes('fold')) return '#c084fc';
+            return '#a8a29e';
+        }
+
+        function getMutedColor() {
+            // Color neutro y suave para las porciones de la celda que no son la acción resaltada,
+            // en vez de un gris plano que rompe con la paleta cálida del resto de la app.
+            return '#e7e4de';
         }
 
         function drawGtoMatrix(containerId, data, highlightAction = null) {
@@ -4456,9 +4510,9 @@
                             if (val > 0) {
                                 let color;
                                 if (highlightAction && act !== highlightAction) {
-                                    color = '#e5e7eb';
+                                    color = getMutedColor();
                                 } else if (highlightAction && act === highlightAction) {
-                                    color = getIntenseColor(act);
+                                    color = getAccentColor(act);
                                 } else {
                                     color = getColorForAction(act);
                                 }
@@ -4476,7 +4530,8 @@
                         
                         if (highlightAction) {
                             if (hasHighlightAction) {
-                                cell.style.fontWeight = '800';
+                                cell.style.fontWeight = '700';
+                                cell.style.boxShadow = `inset 0 0 0 1.5px ${getAccentColor(highlightAction)}`;
                             } else {
                                 cell.classList.add('dim');
                             }
