@@ -4509,9 +4509,9 @@
                             const val = acciones[act];
                             if (val > 0) {
                                 let color;
-                                // Si estamos filtrando y esta NO es la acción objetivo, va a gris claro
+                                // Si estamos filtrando y esta NO es la acción, se hace transparente para mimetizarse con el fondo
                                 if (highlightAction && act !== highlightAction) {
-                                    color = '#e5e7eb'; 
+                                    color = 'transparent'; 
                                 } 
                                 // Si es la acción objetivo (o no hay filtro), mantiene su color pastel
                                 else {
@@ -4526,18 +4526,19 @@
                             }
                         });
                         
-                        cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
+                        // Si hay filtro y la celda NO tiene la acción, la vaciamos y atenuamos la letra
+                        if (highlightAction && !hasHighlightAction) {
+                            cell.style.background = 'transparent';
+                            cell.style.color = '#d6d3d1'; // Color gris claro para el texto, igual que las manos fuera de rango
+                        } else {
+                            cell.style.background = `linear-gradient(to right, ${stops.join(',')})`;
+                        }
                         cell.title = tooltip;
                         
-                        // Atenuar celdas que no tienen la acción seleccionada
-                        if (highlightAction && !hasHighlightAction) {
-                            cell.classList.add('dim');
-                        }
                     } else {
-                        cell.style.background = '#f5f5f4';
+                        cell.style.background = 'transparent'; // Fondo transparente para mimetizarse
                         cell.style.color = '#d6d3d1';
                         cell.title = `${hand}\nFuera de rango`;
-                        if (highlightAction) cell.classList.add('dim');
                     }
                     grid.appendChild(cell);
                 });
