@@ -1177,9 +1177,9 @@
 
       /* Card Modal */
       #card-modal .modal-box {
-        width: 95vw;
-        max-width: 960px;
-        height: 88vh;
+        width: 98vw;
+        max-width: 1600px;
+        height: 94vh;
         padding: 16px 18px;
         display: flex;
         flex-direction: column;
@@ -1211,12 +1211,172 @@
         flex-direction: column;
       }
       .cm-right {
-        flex: 1;
+        flex: 0 0 320px;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
         padding-left: 0;
+        padding-right: 12px;
+        border-right: 1px solid var(--border-light);
       }
+      .cm-villain {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        min-width: 380px;
+      }
+      .cm-villain-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        flex-shrink: 0;
+      }
+      .cm-villain-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: 0.01em;
+      }
+      #cmv-grid {
+        display: inline-grid;
+        grid-template-columns: repeat(13, 24px);
+        gap: 2px;
+        justify-content: center;
+        margin: 8px auto;
+        user-select: none;
+      }
+      .cmv-cell {
+        width: 24px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 7.5px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: var(--bg-surface-warm);
+        color: var(--text-faint);
+        border-radius: 2px;
+        transition: all 0.1s;
+      }
+      .cmv-cell:hover {
+        background: var(--bg-hover);
+        color: var(--text-secondary);
+      }
+      .cmv-cell.dead {
+        opacity: 0.2;
+        cursor: not-allowed;
+        filter: grayscale(1);
+      }
+      #cmv-input {
+        width: 100%;
+        margin-bottom: 6px;
+        padding: 6px 8px;
+        font-size: 11px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-family: "Inter", sans-serif;
+        background: var(--bg-surface-warm);
+      }
+      .cmv-info {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-align: center;
+        margin-top: 4px;
+        font-weight: 500;
+      }
+      .cmv-eq-box {
+        margin-top: 12px;
+        padding: 10px;
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface-warm);
+        flex-shrink: 0;
+      }
+      .cmv-eq-title {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+      }
+      .cmv-eq-val {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .cmv-eq-sub {
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+      .cmv-buckets {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .cmv-bucket-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 9.5px;
+        color: var(--text-secondary);
+      }
+      .cmv-bucket-label {
+        width: 55px;
+        flex-shrink: 0;
+        text-align: right;
+      }
+      .cmv-bucket-bar-wrap {
+        flex: 1;
+        height: 10px;
+        background: var(--border-light);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .cmv-bucket-bar {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 3px;
+        transition: width 0.2s;
+      }
+      .cmv-bucket-pct {
+        width: 36px;
+        flex-shrink: 0;
+        font-weight: 600;
+        font-size: 9.5px;
+      }
+      .cmv-calc-btn {
+        width: 100%;
+        margin-top: 8px;
+        padding: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        border: 1px solid var(--accent);
+        background: var(--accent-light);
+        color: var(--accent);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--transition);
+      }
+      .cmv-calc-btn:hover {
+        background: var(--accent);
+        color: #fff;
+      }
+      .cmv-calc-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .cmv-loading {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 6px;
+      }
+
       .cm-title {
         font-size: 12px;
         font-weight: 600;
@@ -4326,6 +4486,381 @@
         K: 13,
         A: 14,
       };
+
+      // ══════════════════════════════════════════
+      //  MOTOR DE EQUITY — Evaluador de manos + enumeración
+      // ══════════════════════════════════════════
+      // Codifica una carta tipo "ah" -> {r: 14, s: 'h'}
+      function eqParseCard(c) {
+        return { r: RANK_VAL[c[0].toUpperCase()], s: c[1].toLowerCase() };
+      }
+
+      // Evalúa la mejor mano de 5 cartas entre un set de 5,6,7 cartas.
+      // Devuelve un valor numérico comparable (mayor = mejor).
+      function eqEvaluate7(cards) {
+        // cards: array de {r,s} (5 a 7 cartas)
+        const n = cards.length;
+        let best = -1;
+        if (n === 5) {
+          best = eqEval5(cards);
+        } else {
+          // combinaciones de 5 entre n
+          const idx = [];
+          for (let i = 0; i < n; i++) idx.push(i);
+          const combos5 = eqCombinations(idx, 5);
+          for (const combo of combos5) {
+            const five = combo.map((i) => cards[i]);
+            const v = eqEval5(five);
+            if (v > best) best = v;
+          }
+        }
+        return best;
+      }
+
+      function eqCombinations(arr, k) {
+        const result = [];
+        const n = arr.length;
+        function backtrack(start, combo) {
+          if (combo.length === k) {
+            result.push(combo.slice());
+            return;
+          }
+          for (let i = start; i < n; i++) {
+            combo.push(arr[i]);
+            backtrack(i + 1, combo);
+            combo.pop();
+          }
+        }
+        backtrack(0, []);
+        return result;
+      }
+
+      // Evalúa exactamente 5 cartas. Retorna un entero donde categorías más altas
+      // producen valores más altos, y dentro de la misma categoría se compara por kickers.
+      // Categorías (0-8): 8=straight flush,7=quads,6=fullhouse,5=flush,4=straight,
+      // 3=trips,2=twopair,1=pair,0=highcard
+      function eqEval5(cards) {
+        const ranks = cards.map((c) => c.r).sort((a, b) => b - a);
+        const suits = cards.map((c) => c.s);
+
+        const rankCount = {};
+        ranks.forEach((r) => (rankCount[r] = (rankCount[r] || 0) + 1));
+
+        const isFlush = suits.every((s) => s === suits[0]);
+
+        // Detectar straight (considerando A-5 wheel)
+        const uniqRanks = [...new Set(ranks)].sort((a, b) => b - a);
+        let straightHigh = -1;
+        // Chequeo normal
+        for (let i = 0; i <= uniqRanks.length - 5; i++) {
+          if (uniqRanks[i] - uniqRanks[i + 4] === 4) {
+            straightHigh = uniqRanks[i];
+            break;
+          }
+        }
+        // Wheel A-2-3-4-5
+        if (
+          straightHigh === -1 &&
+          uniqRanks.includes(14) &&
+          uniqRanks.includes(2) &&
+          uniqRanks.includes(3) &&
+          uniqRanks.includes(4) &&
+          uniqRanks.includes(5)
+        ) {
+          straightHigh = 5;
+        }
+
+        const isStraight = straightHigh !== -1;
+
+        // Contar grupos por count
+        const groups = Object.keys(rankCount)
+          .map((r) => ({ r: parseInt(r), c: rankCount[r] }))
+          .sort((a, b) => (b.c - a.c) * 100 + (b.r - a.r));
+
+        const counts = groups.map((g) => g.c);
+
+        let category = 0;
+        let kickers = [];
+
+        if (isStraight && isFlush) {
+          category = 8;
+          kickers = [straightHigh];
+        } else if (counts[0] === 4) {
+          category = 7;
+          kickers = [groups[0].r, groups[1] ? groups[1].r : 0];
+        } else if (counts[0] === 3 && counts[1] === 2) {
+          category = 6;
+          kickers = [groups[0].r, groups[1].r];
+        } else if (isFlush) {
+          category = 5;
+          kickers = ranks.slice(0, 5);
+        } else if (isStraight) {
+          category = 4;
+          kickers = [straightHigh];
+        } else if (counts[0] === 3) {
+          category = 3;
+          kickers = [groups[0].r, ...groups.slice(1).map((g) => g.r)].slice(
+            0,
+            3,
+          );
+        } else if (counts[0] === 2 && counts[1] === 2) {
+          category = 2;
+          const pairRanks = groups
+            .filter((g) => g.c === 2)
+            .map((g) => g.r)
+            .sort((a, b) => b - a);
+          const kicker = groups.find((g) => g.c === 1);
+          kickers = [pairRanks[0], pairRanks[1], kicker ? kicker.r : 0];
+        } else if (counts[0] === 2) {
+          category = 1;
+          kickers = [groups[0].r, ...groups.slice(1).map((g) => g.r)].slice(
+            0,
+            4,
+          );
+        } else {
+          category = 0;
+          kickers = ranks.slice(0, 5);
+        }
+
+        // Empaquetar en un número comparable: category(4bits) + 5 kickers de 4 bits (rank max 14)
+        let value = category;
+        for (let i = 0; i < 5; i++) {
+          value = value * 16 + (kickers[i] || 0);
+        }
+        return value;
+      }
+
+      // Genera el mazo completo de 52 cartas como objetos {r,s}
+      function eqFullDeck() {
+        const deck = [];
+        for (const s of SUITS) {
+          for (const rk of RANKS) {
+            deck.push({ r: RANK_VAL[rk], s: s, id: rk.toLowerCase() + s });
+          }
+        }
+        return deck;
+      }
+
+      // Convierte un comboId tipo "AhKd" a [{r,s},{r,s}]
+      function eqComboToCards(comboId) {
+        const c1 = comboId.slice(0, 2);
+        const c2 = comboId.slice(2, 4);
+        return [eqParseCard(c1), eqParseCard(c2)];
+      }
+
+      // Expande un rango {handKey: weight} a lista de {cards:[{r,s},{r,s}], weight, id}
+      function eqExpandRange(rangeDict, deadSet) {
+        const out = [];
+        for (const key in rangeDict) {
+          const weight = rangeDict[key];
+          if (!weight || weight <= 0) continue;
+          const r1 = key[0],
+            r2 = key[1];
+          const isPair = r1 === r2;
+          const g = isPair ? "p" : key[2];
+          suitCombos(r1 + r2).forEach((sc) => {
+            if (g === "s" && sc.g !== "s") return;
+            if (g === "o" && sc.g !== "o") return;
+            if (g === "p" && sc.g !== "p") return;
+            const c1 = sc.id.slice(0, 2).toLowerCase();
+            const c2 = sc.id.slice(2, 4).toLowerCase();
+            if (deadSet && (deadSet.has(c1) || deadSet.has(c2))) return;
+            out.push({
+              id: sc.id,
+              weight: weight / 100,
+              cards: [eqParseCard(c1), eqParseCard(c2)],
+            });
+          });
+        }
+        return out;
+      }
+
+      // Calcula el equity de una mano (heroCards) vs un rango de villano expandido,
+      // dado un board conocido (array de {r,s}), enumerando todos los runouts restantes.
+      // Retorna {equity: 0-1, matchups: n} — promedio ponderado por peso del villano.
+      function eqHandVsRange(heroCards, villainRangeExpanded, board) {
+        const knownCards = [...heroCards, ...board];
+        const knownSet = new Set(knownCards.map((c) => r_s(c)));
+
+        // Filtra combos de villano que colisionan con hero o board
+        const validVillains = villainRangeExpanded.filter((v) => {
+          const s1 = r_s(v.cards[0]),
+            s2 = r_s(v.cards[1]);
+          return !knownSet.has(s1) && !knownSet.has(s2);
+        });
+
+        if (validVillains.length === 0) return { equity: null, matchups: 0 };
+
+        const needed = 5 - board.length; // cartas restantes por repartir (turn+river, o solo river, o 5 en preflop)
+
+        let totalWin = 0,
+          totalTie = 0,
+          totalLose = 0,
+          totalWeight = 0;
+
+        const deck = eqFullDeck();
+
+        if (needed === 0) {
+          // River completo: comparación directa
+          validVillains.forEach((v) => {
+            const heroVal = eqEvaluate7([...heroCards, ...board]);
+            const vSet = new Set([r_s(v.cards[0]), r_s(v.cards[1])]);
+            const villVal = eqEvaluate7([...v.cards, ...board]);
+            if (heroVal > villVal) totalWin += v.weight;
+            else if (heroVal === villVal) totalTie += v.weight;
+            else totalLose += v.weight;
+            totalWeight += v.weight;
+          });
+        } else if (needed <= 2 && board.length >= 3) {
+          // Flop (needed=2) o Turn (needed=1): enumeración exhaustiva de runouts
+          const usedSet = new Set(knownSet);
+          const availDeck = deck.filter((c) => !usedSet.has(r_s(c)));
+
+          let runouts = [];
+          if (needed === 1) {
+            runouts = availDeck.map((c) => [c]);
+          } else {
+            // needed === 2
+            for (let i = 0; i < availDeck.length; i++) {
+              for (let j = i + 1; j < availDeck.length; j++) {
+                runouts.push([availDeck[i], availDeck[j]]);
+              }
+            }
+          }
+
+          validVillains.forEach((v) => {
+            const s1 = r_s(v.cards[0]),
+              s2 = r_s(v.cards[1]);
+            let vWin = 0,
+              vTie = 0,
+              vLose = 0,
+              vTotal = 0;
+            runouts.forEach((ro) => {
+              // Skip runouts que colisionan con las cartas del villano
+              if (ro.some((c) => r_s(c) === s1 || r_s(c) === s2)) return;
+              const fullBoard = [...board, ...ro];
+              const heroVal = eqEvaluate7([...heroCards, ...fullBoard]);
+              const villVal = eqEvaluate7([...v.cards, ...fullBoard]);
+              vTotal++;
+              if (heroVal > villVal) vWin++;
+              else if (heroVal === villVal) vTie++;
+              else vLose++;
+            });
+            if (vTotal > 0) {
+              totalWin += (vWin / vTotal) * v.weight;
+              totalTie += (vTie / vTotal) * v.weight;
+              totalLose += (vLose / vTotal) * v.weight;
+              totalWeight += v.weight;
+            }
+          });
+        } else {
+          // Preflop (board.length === 0): Monte Carlo
+          const SAMPLES = 500;
+          const usedSet = new Set(knownSet);
+          const availDeck = deck.filter((c) => !usedSet.has(r_s(c)));
+
+          validVillains.forEach((v) => {
+            const s1 = r_s(v.cards[0]),
+              s2 = r_s(v.cards[1]);
+            const localDeck = availDeck.filter(
+              (c) => r_s(c) !== s1 && r_s(c) !== s2,
+            );
+            let vWin = 0,
+              vTie = 0,
+              vTotal = 0;
+            for (let iter = 0; iter < SAMPLES; iter++) {
+              const shuffled = eqSampleN(localDeck, 5);
+              const fullBoard = shuffled;
+              const heroVal = eqEvaluate7([...heroCards, ...fullBoard]);
+              const villVal = eqEvaluate7([...v.cards, ...fullBoard]);
+              vTotal++;
+              if (heroVal > villVal) vWin++;
+              else if (heroVal === villVal) vTie++;
+            }
+            if (vTotal > 0) {
+              totalWin += (vWin / vTotal) * v.weight;
+              totalTie += (vTie / vTotal) * v.weight;
+              totalWeight += v.weight;
+            }
+          });
+        }
+
+        if (totalWeight === 0) return { equity: null, matchups: 0 };
+        const equity = (totalWin + totalTie / 2) / totalWeight;
+        return { equity, matchups: validVillains.length };
+      }
+
+      function r_s(c) {
+        return c.r + c.s;
+      }
+
+      function eqSampleN(arr, n) {
+        // Fisher-Yates parcial para elegir n elementos aleatorios sin repetición
+        const a = arr.slice();
+        const len = a.length;
+        for (let i = 0; i < n; i++) {
+          const j = i + Math.floor(Math.random() * (len - i));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a.slice(0, n);
+      }
+
+      // Calcula el equity de un ARRAY de combos hero (ej. todos los combos de "Set")
+      // vs un rango de villano, en un board dado. Retorna equity promedio ponderado.
+      function eqComboListVsRange(heroComboIds, villainRangeExpanded, board) {
+        if (!heroComboIds || heroComboIds.length === 0)
+          return { equity: null, n: 0 };
+        let totalEq = 0,
+          totalW = 0;
+        heroComboIds.forEach((id) => {
+          const heroCards = eqComboToCards(id);
+          const res = eqHandVsRange(heroCards, villainRangeExpanded, board);
+          if (res.equity !== null) {
+            totalEq += res.equity;
+            totalW++;
+          }
+        });
+        if (totalW === 0) return { equity: null, n: 0 };
+        return { equity: totalEq / totalW, n: totalW };
+      }
+
+      // Calcula EQ buckets del rango villano vs un rango hero (heroRangeDict) en un board dado.
+      // Retorna array de {label, pct} con distribución de equity.
+      function eqVillainBuckets(
+        villainRangeExpanded,
+        heroRangeExpanded,
+        board,
+      ) {
+        const buckets = [
+          { label: "80-100%", min: 0.8, max: 1.01, weight: 0 },
+          { label: "60-80%", min: 0.6, max: 0.8, weight: 0 },
+          { label: "40-60%", min: 0.4, max: 0.6, weight: 0 },
+          { label: "20-40%", min: 0.2, max: 0.4, weight: 0 },
+          { label: "0-20%", min: -0.01, max: 0.2, weight: 0 },
+        ];
+        let totalWeight = 0;
+        let totalEquity = 0;
+
+        villainRangeExpanded.forEach((v) => {
+          const res = eqHandVsRange(v.cards, heroRangeExpanded, board);
+          if (res.equity === null) return;
+          totalWeight += v.weight;
+          totalEquity += res.equity * v.weight;
+          for (const b of buckets) {
+            if (res.equity >= b.min && res.equity < b.max) {
+              b.weight += v.weight;
+              break;
+            }
+          }
+        });
+
+        const bucketsPct = buckets.map((b) => ({
+          label: b.label,
+          pct: totalWeight > 0 ? (b.weight / totalWeight) * 100 : 0,
+        }));
+        const avgEquity = totalWeight > 0 ? totalEquity / totalWeight : null;
+        return { buckets: bucketsPct, avgEquity, totalWeight };
+      }
 
       function getActiveBoard(type) {
         if (aS === -1 || aT === -1) return null;

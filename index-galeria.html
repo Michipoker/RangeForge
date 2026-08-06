@@ -1216,7 +1216,9 @@
 </head>
 <body>
     <div id="sidebar">
-        <img src="RangForge%20logo%20SVG.svg" alt="Rangeforge" class="app-logo">
+        <!-- El SVG debe estar en la MISMA carpeta que este .html. Si falta, ocultamos
+             el <img> en vez de dejar el icono roto y el error en consola. -->
+        <img src="RangForge%20logo%20SVG.svg" alt="Rangeforge" class="app-logo" onerror="this.style.display='none'">
         <div style="display: flex; gap: 5px;">
             <input type="text" id="spot-input" placeholder="Nuevo spot..." onkeypress="if(event.key==='Enter')addSpot()">
             <button class="add-btn" onclick="addSpot()">+</button>
@@ -1450,6 +1452,34 @@
     <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
 
+        // ── Errores visibles ──────────────────────────────────────────
+        // Los onclick inline se tragan las excepciones: si algo falla a media función, la
+        // UI simplemente no cambia y el usuario reporta "di clic y no pasó nada". Este
+        // banner convierte cualquier fallo en algo que un tester puede reportar.
+        function mostrarErrorUI(mensaje, err) {
+            let box = document.getElementById('rf-error-banner');
+            if (!box) {
+                box = document.createElement('div');
+                box.id = 'rf-error-banner';
+                box.style.cssText = 'position:fixed;bottom:12px;right:12px;z-index:99999;max-width:420px;' +
+                    'background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d;padding:10px 12px;' +
+                    'border-radius:8px;font:12px/1.45 Inter,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.15);' +
+                    'white-space:pre-wrap;user-select:text;cursor:pointer';
+                box.title = 'Clic para cerrar';
+                box.onclick = () => box.remove();
+                document.body.appendChild(box);
+            }
+            const detalle = err ? ('\n' + (err.message || err) + (err.stack ? '\n' + String(err.stack).split('\n')[1] : '')) : '';
+            box.textContent = '⚠ ' + mensaje + detalle + '\n\n(clic para cerrar)';
+        }
+
+        window.addEventListener('error', function(e) {
+            mostrarErrorUI('Ocurrió un error inesperado. Copia este texto y repórtalo.', e.error || { message: e.message });
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+            mostrarErrorUI('Error asíncrono no controlado.', e.reason);
+        });
+
         const DB_V3 = 'poker_app_v12_FIX';
         const DB_KEY = 'poker_app_v4';
         let data = { spots: [], library: [] };
@@ -1603,7 +1633,46 @@
             renderSidebar(); 
         };
 
-        function commit(force) { localStorage.setItem(DB_KEY, JSON.stringify(data)); if(!force) renderSidebar(); }
+        // ── Persistencia ──────────────────────────────────────────────
+        // persist() es la ÚNICA puerta hacia localStorage. Captura QuotaExceededError:
+        // antes, cuando el almacenamiento se llenaba, el setItem lanzaba y abortaba el
+        // handler completo, así que la UI dejaba de responder sin ningún aviso.
+        let _commitTimer = null;
+        let _quotaWarned = false;
+
+        function persist() {
+            try {
+                localStorage.setItem(DB_KEY, JSON.stringify(data));
+                _quotaWarned = false;
+                return true;
+            } catch (e) {
+                console.error('No se pudo guardar en localStorage:', e);
+                if (!_quotaWarned) {
+                    _quotaWarned = true;
+                    alert('⚠ No se pudo guardar.\n\nEl almacenamiento del navegador está lleno (límite ~5 MB) o bloqueado.\n\nLo que escribas a partir de ahora NO se está guardando.\n\nQué hacer:\n1. Exporta tu data ahora mismo (botón Exportar).\n2. Borra spots/texturas que ya no uses.\n\nDetalle técnico: ' + (e && e.name ? e.name : e));
+                }
+                return false;
+            }
+        }
+
+        function commit(force) { persist(); if(!force) renderSidebar(); }
+
+        // Escritura diferida para campos que se teclean de corrido (nombre de textura,
+        // notas, tablas GTO). Evita un JSON.stringify de toda la base + un rebuild del
+        // sidebar por cada tecla, que es lo que hacía crecer el lag con cada textura.
+        function commitSoon(alsoSidebar) {
+            clearTimeout(_commitTimer);
+            _commitTimer = setTimeout(() => {
+                _commitTimer = null;
+                persist();
+                if (alsoSidebar) renderSidebar();
+            }, 400);
+        }
+
+        function flushCommit() {
+            if (_commitTimer) { clearTimeout(_commitTimer); _commitTimer = null; persist(); }
+        }
+        window.addEventListener('beforeunload', flushCommit);
         
         function exportData() { 
             let blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"}); 
@@ -1640,7 +1709,7 @@
             event.target.value = ''; 
         }
         
-        function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commit(); }
+        function saveTexts() { if(aS===-1||aT===-1) return; let t=data.spots[aS].textures[aT]; t.name=document.getElementById('textureHeader').value; commitSoon(true); }
         
         function addSpot() { 
             const n=document.getElementById('spot-input').value.trim(); 
@@ -1652,18 +1721,70 @@
         
         function delSpot(i) { if(confirm('¿Borrar spot?')){ data.spots.splice(i,1); if(aS===i){aS=-1; aT=-1; clearAll();} else if(aS>i){aS--;} commit(); } }
         
-        function delTexture(i) { if(confirm('¿Borrar textura?')){ data.spots[aS].textures.splice(i,1); if(aT===i){aT=-1; clearAll();} else if(aT>i){aT--;} commit(); } }
+        // Antes recibía solo el índice de textura y borraba de data.spots[aS] — el spot
+        // ACTIVO, no el spot al que pertenece la × que pulsaste (el stopPropagation del
+        // botón impide que se asigne aS). Con aS===-1 (recién cargada la página) reventaba
+        // en data.spots[-1] y el clic "no hacía nada". Ahora recibe ambos índices.
+        function delTexture(spotIdx, i) {
+            const spot = data.spots[spotIdx];
+            if (!spot || !spot.textures || !spot.textures[i]) return;
+            if (!confirm('¿Borrar textura "' + spot.textures[i].name + '"?')) return;
+            spot.textures.splice(i, 1);
+            if (aS === spotIdx) {
+                if (aT === i) { aT = -1; clearAll(); }
+                else if (aT > i) { aT--; }
+            }
+            commit();
+        }
         
         function addTexture() { const n=prompt("Nombre de la textura:"); if(!n) return; data.spots[aS].textures.push({name:n, board:'', flopNodes:[]}); commit(); loadTexture(data.spots[aS].textures.length-1); }
         
-        function loadTexture(i) { 
-            aS = aS===-1?0:aS; aT=i; aF=-1; let t=data.spots[aS].textures[i]; 
-            document.getElementById('empty-state').style.display='none'; 
-            document.getElementById('editor').style.display='flex'; 
-            document.getElementById('header-breadcrumb').style.display='flex'; 
-            document.getElementById('spotHeader').innerText=data.spots[aS].name; 
-            document.getElementById('textureHeader').value=t.name; 
-            renderBoard(); renderFlopTabs(); if(t.flopNodes.length>0) selectFlop(0); else clearWorkspace(); 
+        // Esta es la función del clic en una textura. Antes, cualquier dato incompleto
+        // (una textura sin flopNodes, un índice desfasado, un nodo corrupto) lanzaba una
+        // excepción a media ejecución: el handler moría y el clic "no hacía nada", sin
+        // ningún aviso. Ahora valida, rellena lo que falte y aísla el render pesado.
+        function loadTexture(i) {
+            aS = aS === -1 ? 0 : aS;
+            const spot = data.spots[aS];
+            if (!spot) { console.error('loadTexture: spot inexistente', aS); renderSidebar(); return; }
+            if (!Array.isArray(spot.textures)) spot.textures = [];
+
+            const t = spot.textures[i];
+            if (!t) {
+                // Índice desfasado respecto al sidebar dibujado: repintamos en vez de morir.
+                console.warn('loadTexture: textura', i, 'no existe en el spot', aS, '— refrescando sidebar');
+                renderSidebar();
+                return;
+            }
+
+            aT = i;
+            // Reiniciar TODOS los índices de nodo. Antes solo se reiniciaba aF, así que al
+            // venir de un turn/river de otra textura quedaban aTC/aTA/aRC/aRA apuntando a
+            // nodos que no existen aquí.
+            aF = -1; aTC = -1; aTA = -1; aRC = -1; aRA = -1;
+
+            if (!Array.isArray(t.flopNodes)) t.flopNodes = [];
+            if (typeof t.board !== 'string') t.board = '';
+            if (typeof t.name !== 'string') t.name = '(sin nombre)';
+
+            document.getElementById('empty-state').style.display='none';
+            document.getElementById('editor').style.display='flex';
+            document.getElementById('header-breadcrumb').style.display='flex';
+            document.getElementById('spotHeader').innerText = spot.name || '';
+            document.getElementById('textureHeader').value = t.name;
+
+            try {
+                renderBoard();
+                renderFlopTabs();
+                if (t.flopNodes.length > 0) selectFlop(0); else clearWorkspace();
+            } catch (e) {
+                // La textura queda abierta aunque su contenido falle al dibujarse, en vez
+                // de dejar la pantalla anterior y aparentar que el clic se ignoró.
+                console.error('loadTexture: fallo al dibujar la textura', i, e);
+                clearWorkspace();
+                mostrarErrorUI('No se pudo dibujar el contenido de la textura "' + t.name + '".', e);
+            }
+            renderSidebar();
         }
         
         function renderSidebar() { 
@@ -1675,7 +1796,7 @@
                 html += `<div class="spot-item"><div class="spot-name"><span>${s.name}</span><div class="spot-actions"><div class="micro-btn ${hasRange?'has-data':''}" onclick="event.stopPropagation(); openRangeModal(${i})" title="Rango preflop">R</div><span class="del-btn" onclick="event.stopPropagation(); delSpot(${i})">×</span></div></div>`; 
                 s.textures.forEach((t, j) => { 
                     let ac = (i === aS && j === aT) ? 'active' : ''; 
-                    html += `<div class="texture-item ${ac}" onclick="aS=${i}; loadTexture(${j})"><span>${t.name}</span><span class="del-btn" onclick="event.stopPropagation(); delTexture(${j})">×</span></div>`; 
+                    html += `<div class="texture-item ${ac}" onclick="aS=${i}; loadTexture(${j})"><span>${t.name}</span><span class="del-btn" onclick="event.stopPropagation(); delTexture(${i}, ${j})">×</span></div>`;
                 }); 
                 html += `<div class="add-texture" onclick="aS=${i}; addTexture()">+ añadir textura</div></div>`; 
             }); 
@@ -3059,47 +3180,8 @@
             commit();
         }
 
-        function getBrutoUniverse(type) {
-            if (aS === -1 || aT === -1) return 1326;
-            const tex = data.spots[aS].textures[aT];
-            if (!tex) return 1326;
-            const board = getActiveBoard(type) || [];
-            const boardSet = new Set(board);
-
-            let count = 0;
-            const preRange = getActivePreflopRange();
-            const preKeys = Object.keys(preRange);
-            
-            if (preKeys.length > 0) {
-                preKeys.forEach(key => {
-                    const weight = preRange[key];
-                    if (weight === 0) return;
-                    const r1 = key[0], r2 = key[1];
-                    const isPair = r1 === r2;
-                    const g = isPair ? 'p' : key[2];
-                    suitCombos(r1+r2).forEach(sc => {
-                        if (g === 's' && sc.g !== 's') return;
-                        if (g === 'o' && sc.g !== 'o') return;
-                        if (g === 'p' && sc.g !== 'p') return;
-
-                        const c1 = sc.id.slice(0,2).toLowerCase();
-                        const c2 = sc.id.slice(2,4).toLowerCase();
-                        if (!boardSet.has(c1) && !boardSet.has(c2)) count += (weight / 100);
-                    });
-                });
-            } else {
-                for (let i = 0; i < RANKS.length; i++) {
-                    for (let j = i; j < RANKS.length; j++) {
-                        suitCombos(RANKS[i] + RANKS[j]).forEach(sc => {
-                            const c1 = sc.id.slice(0,2).toLowerCase();
-                            const c2 = sc.id.slice(2,4).toLowerCase();
-                            if (!boardSet.has(c1) && !boardSet.has(c2)) count++;
-                        });
-                    }
-                }
-            }
-            return count;
-        }
+        // (Aquí había una segunda copia idéntica de getBrutoUniverse, byte por byte, que
+        //  sobrescribía la de arriba. Eliminada: código muerto de la última integración.)
 
         function getOrphanedIds(type) {
             try {
@@ -3814,7 +3896,7 @@
             let noteHtml = event.target.innerHTML;
             let node = getNodeByType(type);
             node.combos[index].note = noteHtml;
-            localStorage.setItem(DB_KEY, JSON.stringify(data)); 
+            commitSoon();
         }
 
         function updateMicroButtons(type, node) { 
@@ -3912,9 +3994,9 @@
             container.innerHTML = node.imageSlots.map((slot, idx) => {
                 const isActive = slot.id === activeSlotId ? 'active-slot' : '';
                 return `
-                <div class="slot-card ${isActive}" onclick="setActiveSlot('${slot.id}')">
+                <div class="slot-card ${isActive}" data-slot-id="${slot.id}" onclick="setActiveSlot('${slot.id}')">
                     <div class="slot-header">
-                        <span>Slot ${idx + 1} ${isActive ? '(Activo)' : ''}</span>
+                        <span>Slot ${idx + 1}${isActive ? ' (Activo)' : ''}</span>
                         <button class="slot-del-btn" onclick="event.stopPropagation(); deleteImageSlot('${slot.id}')">Eliminar ×</button>
                     </div>
                     <div class="slot-panels" onclick="event.stopPropagation();">
@@ -3955,11 +4037,41 @@
             updateInteractionPanel();
         }
 
+        // Cambiar de slot activo reconstruía el innerHTML de TODOS los slots (y con ello
+        // reparseaba y repintaba cada matriz). Ahora solo tocamos lo que cambia: el
+        // resaltado del slot que se desactiva y las clases/etiquetas.
         function setActiveSlot(id) {
+            const prevId = activeSlotId;
+            const hadHighlight = activeHeroAction || activeVillainAction;
             activeSlotId = id;
             activeHeroAction = null;
             activeVillainAction = null;
-            renderImgSlots();
+
+            const node = getImgNode();
+            const container = document.getElementById('img-slots-container');
+            if (!node || !container || !container.querySelector('.slot-card')) {
+                renderImgSlots();
+                return;
+            }
+
+            if (prevId && prevId !== id && hadHighlight) {
+                const prev = node.imageSlots.find(s => s.id === prevId);
+                if (prev) {
+                    drawGtoMatrix(`mat-${prevId}-hero`, parseGtoData(prev.hero?.gto), null);
+                    drawGtoMatrix(`mat-${prevId}-villain`, parseGtoData(prev.villain?.gto), null);
+                }
+            }
+
+            node.imageSlots.forEach((slot, idx) => {
+                const card = document.querySelector(`.slot-card[data-slot-id="${slot.id}"]`);
+                if (!card) return;
+                const isActive = slot.id === activeSlotId;
+                card.classList.toggle('active-slot', isActive);
+                const label = card.querySelector('.slot-header > span');
+                if (label) label.textContent = `Slot ${idx + 1}${isActive ? ' (Activo)' : ''}`;
+            });
+
+            updateInteractionPanel();
         }
 
         function setHeroAction(act) {
@@ -3977,7 +4089,8 @@
         function clearHighlights() {
             activeHeroAction = null;
             activeVillainAction = null;
-            renderImgSlots();
+            renderActiveMatrices();
+            updateInteractionPanel();
         }
 
         function renderActiveMatrices() {
@@ -4175,7 +4288,20 @@
             return Array.from(acciones);
         }
 
+        // parseGtoData es caro (recorre y regexea cada fila de la tabla GTO+, que pueden
+        // ser 1326). Se llamaba 4+ veces por pulsación de tecla y una vez por slot en cada
+        // render. Memoizamos por texto: mismo texto ⇒ mismo resultado, sin reparsear.
+        const _gtoCache = new Map();
         function parseGtoData(text) {
+            const key = text || '';
+            if (_gtoCache.has(key)) return _gtoCache.get(key);
+            const out = parseGtoDataRaw(key);
+            if (_gtoCache.size > 60) _gtoCache.clear();
+            _gtoCache.set(key, out);
+            return out;
+        }
+
+        function parseGtoDataRaw(text) {
             const data = {};
             if (!text) return data;
 
@@ -4571,54 +4697,58 @@
             if (slot) {
                 if(!slot[who]) slot[who] = { gto: '', text: '' };
                 slot[who].text = val;
-                commit();
+                commitSoon();
             }
         }
 
+        // Repintar la matriz (169 celdas), el análisis y el panel de interacciones en cada
+        // tecla es lo que congelaba el textarea. Guardamos el valor al instante y diferimos
+        // el trabajo pesado hasta que el usuario deja de escribir.
+        let _gtoRenderTimer = null;
         function updateSlotGto(id, who, val) {
             const node = getImgNode();
             const slot = node.imageSlots.find(s => s.id === id);
-            if (slot) {
-                if(!slot[who]) slot[who] = { gto: '', text: '' };
-                slot[who].gto = val;
+            if (!slot) return;
+            if(!slot[who]) slot[who] = { gto: '', text: '' };
+            slot[who].gto = val;
+            commitSoon();
+
+            clearTimeout(_gtoRenderTimer);
+            _gtoRenderTimer = setTimeout(() => {
+                _gtoRenderTimer = null;
                 const gtoData = parseGtoData(val);
                 drawGtoMatrix(`mat-${id}-${who}`, gtoData, who === 'hero' ? activeHeroAction : activeVillainAction);
                 const analysis = document.getElementById(`analysis-${id}-${who}`);
                 if (analysis) analysis.innerHTML = renderGtoAnalysis(gtoData);
-                
-                if (id === activeSlotId) updateInteractionPanel(); 
-                
+
+                if (id === activeSlotId) updateInteractionPanel();
+
                 updateMicroButtons(currentEditType, node);
-                commit();
-            }
+            }, 250);
         }
 
+        // Este handler llamaba a processImageFile(), una función que ya no existe desde que
+        // los slots pasaron de imágenes pegadas a tablas GTO+ en texto. Pegar una captura
+        // lanzaba ReferenceError y rompía el resto del pegado. Ahora solo avisa.
         document.addEventListener('paste', function(event) {
-            let items = (event.clipboardData || event.originalEvent.clipboardData).items;
-            let imgFile = null;
-            for (let index in items) {
-                if (items[index].type && items[index].type.indexOf('image') !== -1) {
-                    imgFile = items[index].getAsFile();
-                    if (imgFile) break;
-                }
+            const cd = event.clipboardData || (event.originalEvent && event.originalEvent.clipboardData);
+            if (!cd || !cd.items) return;
+            let hasImage = false, hasText = false;
+            for (let i = 0; i < cd.items.length; i++) {
+                const t = cd.items[i].type || '';
+                if (t.indexOf('image') !== -1) hasImage = true;
+                if (t.indexOf('text') !== -1) hasText = true;
             }
-            if (!imgFile) return;
-            if (document.getElementById('modal-img').style.display === 'flex') {
-                processImageFile(imgFile);
-                event.preventDefault();
-                return;
-            }
-            let type = 'flop';
-            if (aRA !== -1) type = 'riverAction';
-            else if (aTA !== -1) type = 'turnAction';
-            else if (aF === -1) { alert("Selecciona un nodo primero para pegar la imagen."); return; }
-            currentEditType = type;
-            processImageFile(imgFile);
+            // Si el portapapeles trae texto (la tabla de GTO+ suele venir con texto Y una
+            // imagen adjunta), dejamos que el pegado nativo funcione y no interrumpimos.
+            if (!hasImage || hasText) return;
             event.preventDefault();
+            alert('Esta versión ya no guarda capturas de pantalla.\n\nEn el modal de rangos, pega la tabla de GTO+ como TEXTO (Copy → Paste) en el cuadro "Pega la tabla de GTO+ aquí".');
         });
-        
+
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'escape' && document.getElementById('card-modal').style.display === 'flex') closeCardModal();
+            // e.key es 'Escape', no 'escape': la comparación nunca se cumplía.
+            if (e.key === 'Escape' && document.getElementById('card-modal').style.display === 'flex') closeCardModal();
         });
     </script>
 </body>
