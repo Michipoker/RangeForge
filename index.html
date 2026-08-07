@@ -1370,6 +1370,115 @@
         opacity: 0.5;
         cursor: not-allowed;
       }
+      .cmv-cat-box {
+        margin-top: 10px;
+        padding: 8px;
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface-warm);
+      }
+      .cmv-cat-title {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cmv-cat-quick {
+        display: flex;
+        gap: 4px;
+      }
+      .cmv-cat-quick button {
+        font-size: 9px;
+        padding: 2px 6px;
+        border: 1px solid var(--border);
+        background: var(--bg-surface);
+        color: var(--text-secondary);
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .cmv-cat-quick button:hover {
+        background: var(--bg-hover);
+      }
+      .cmv-cat-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        max-height: 160px;
+        overflow-y: auto;
+      }
+      .cmv-cat-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        color: var(--text-secondary);
+        padding: 3px 4px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .cmv-cat-item:hover {
+        background: var(--bg-hover);
+      }
+      .cmv-cat-item input[type="checkbox"] {
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+        accent-color: var(--accent);
+        flex-shrink: 0;
+      }
+      .cmv-cat-item .cmv-cat-name {
+        flex: 1;
+      }
+      .cmv-cat-item .cmv-cat-count {
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      .cmv-cat-empty {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 6px;
+      }
+      .cmv-eq-note {
+        font-size: 9.5px;
+        color: var(--text-muted);
+        margin-top: 2px;
+        font-style: italic;
+      }
+      .cmv-breakdown {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .cmv-breakdown-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        color: var(--text-secondary);
+        padding: 3px 0;
+        border-bottom: 1px dashed var(--border-light);
+      }
+      .cmv-breakdown-name {
+        flex: 1;
+      }
+      .cmv-breakdown-combos {
+        color: var(--text-muted);
+        font-size: 9px;
+        width: 60px;
+        text-align: right;
+      }
+      .cmv-breakdown-eq {
+        font-weight: 700;
+        color: var(--accent);
+        width: 50px;
+        text-align: right;
+      }
+
       .cmv-loading {
         font-size: 10px;
         color: var(--text-muted);
@@ -2324,7 +2433,57 @@
           <div class="cm-right">
             <div id="cm-sel-panel" class="cm-sel-panel"></div>
           </div>
+          <div class="cm-villain">
+            <div class="cm-villain-header">
+              <div class="cm-villain-title">Rango del Villano</div>
+              <button
+                type="button"
+                class="cm-qbtn cm-qbtn-danger"
+                style="font-size: 10px; padding: 3px 8px"
+                onclick="cmvClearRange()"
+              >
+                Limpiar
+              </button>
+            </div>
+            <input
+              type="text"
+              id="cmv-input"
+              placeholder="Ej: TT+, AKs, AQo, KQs (Enter para aplicar)"
+              onkeydown="
+                if (event.key === 'Enter') {
+                  cmvParseRangeText();
+                  event.preventDefault();
+                }
+              "
+            />
+            <div id="cmv-grid"></div>
+            <div class="cmv-info" id="cmv-info">0 combos seleccionados</div>
+            <div class="cmv-cat-box" id="cmv-cat-box" style="display: none">
+              <div class="cmv-cat-title">
+                <span>Diseccionar por categoría</span>
+                <div class="cmv-cat-quick">
+                  <button type="button" onclick="cmvCategoryQuickAll()">
+                    Todas
+                  </button>
+                  <button type="button" onclick="cmvCategoryQuickNone()">
+                    Ninguna
+                  </button>
+                </div>
+              </div>
+              <div class="cmv-cat-list" id="cmv-cat-list"></div>
+            </div>
+            <button
+              type="button"
+              class="cmv-calc-btn"
+              id="cmv-calc-btn"
+              onclick="cmvCalculate()"
+            >
+              Calcular equity
+            </button>
+            <div id="cmv-results"></div>
+          </div>
         </div>
+
         <div class="modal-actions" style="margin-top: 10px; flex-shrink: 0">
           <button class="modal-btn" onclick="closeCardModal()">Cerrar</button>
         </div>
@@ -3044,9 +3203,9 @@
             // AQUÍ USAMOS Math.floor(w) PARA REDONDEAR VISUALMENTE (66.6667 -> 66)
             const displayW = Math.floor(w);
             legendHtml += `<div style="display:flex; align-items:center; gap:8px; background:#ffffff; border:1px solid var(--border); padding:4px 8px; border-radius:4px; box-shadow: var(--shadow-xs);">
-                                <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
-                                <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${displayW}%</span>
-                            </div>`;
+                                      <span style="width:14px; height:14px; background-color:${bg}; border-radius:3px; border:1px solid ${bg}; flex-shrink:0;"></span>
+                                      <span style="color: var(--text-primary); font-size:11px; font-weight:700;">${displayW}%</span>
+                                  </div>`;
           });
         }
         legendEl.innerHTML = legendHtml;
@@ -3320,16 +3479,16 @@
         } else {
           data.library.forEach((cat, i) => {
             html += `<div class="lib-cat ${selectedLibCat === i ? "active" : ""}" onclick="selectLibCategory(${i})">
-                        <span>${cat.category || "Sin Nombre"}</span>
-                        <button class="lib-del-btn" onclick="event.stopPropagation(); deleteLibItem('cat', ${i})">×</button>
-                    </div>`;
+                              <span>${cat.category || "Sin Nombre"}</span>
+                              <button class="lib-del-btn" onclick="event.stopPropagation(); deleteLibItem('cat', ${i})">×</button>
+                          </div>`;
             if (selectedLibCat === i) {
               if (cat.ranges && cat.ranges.length > 0) {
                 cat.ranges.forEach((range, j) => {
                   html += `<div class="lib-range" onclick="loadLibraryRange(${i}, ${j})">
-                                    <span>${range.name}</span>
-                                    <button class="lib-del-btn" onclick="event.stopPropagation(); deleteLibItem('range', ${i}, ${j})">×</button>
-                                </div>`;
+                                          <span>${range.name}</span>
+                                          <button class="lib-del-btn" onclick="event.stopPropagation(); deleteLibItem('range', ${i}, ${j})">×</button>
+                                      </div>`;
                 });
               } else {
                 html +=
@@ -4132,9 +4291,9 @@
           currentCount = pcTempFlopCards.length;
           document.getElementById("pc-info").textContent = currentCount + "/3";
           document.getElementById("pc-actions").innerHTML = `
-                    <button class="modal-btn" onclick="closeModal('pickcard')">Cancelar</button>
-                    <button class="modal-btn primary" onclick="confirmBoardCards()">Agregar</button>
-                `;
+                          <button class="modal-btn" onclick="closeModal('pickcard')">Cancelar</button>
+                          <button class="modal-btn primary" onclick="confirmBoardCards()">Agregar</button>
+                      `;
         } else {
           dead = new Set(getBoardCards());
           if (pcTarget === "turn") {
@@ -4488,149 +4647,229 @@
       };
 
       // ══════════════════════════════════════════
-      //  MOTOR DE EQUITY — Evaluador de manos + enumeración
+      //  MOTOR DE EQUITY v2 — Encoding numérico + evaluador rápido
+      //  Cartas como enteros 0-51 (rank*4+suitIdx). Sin objetos/strings
+      //  en el hot path. Comparte trabajo villano×runout entre todos
+      //  los combos hero. Monte Carlo automático si el volumen es alto.
       // ══════════════════════════════════════════
-      // Codifica una carta tipo "ah" -> {r: 14, s: 'h'}
+
+      // Índice de palo 0-3 (orden de SUITS: h,d,c,s)
+      const EQ_SUIT_IDX = { h: 0, d: 1, c: 2, s: 3 };
+      const EQ_SUIT_CHAR = ["h", "d", "c", "s"];
+
+      // "ah" -> entero 0-51 : (rank-2)*4 + suitIdx  (rank 2..14)
+      function eqCardToInt(c) {
+        const r = RANK_VAL[c[0].toUpperCase()];
+        const s = EQ_SUIT_IDX[c[1].toLowerCase()];
+        return (r - 2) * 4 + s;
+      }
+      function eqIntToRank(v) {
+        return (v >> 2) + 2;
+      }
+      function eqIntToSuit(v) {
+        return v & 3;
+      }
+
+      // Codifica una carta tipo "ah" -> {r: 14, s: 'h'}  (se mantiene por compatibilidad externa)
       function eqParseCard(c) {
         return { r: RANK_VAL[c[0].toUpperCase()], s: c[1].toLowerCase() };
       }
-
-      // Evalúa la mejor mano de 5 cartas entre un set de 5,6,7 cartas.
-      // Devuelve un valor numérico comparable (mayor = mejor).
-      function eqEvaluate7(cards) {
-        // cards: array de {r,s} (5 a 7 cartas)
-        const n = cards.length;
-        let best = -1;
-        if (n === 5) {
-          best = eqEval5(cards);
-        } else {
-          // combinaciones de 5 entre n
-          const idx = [];
-          for (let i = 0; i < n; i++) idx.push(i);
-          const combos5 = eqCombinations(idx, 5);
-          for (const combo of combos5) {
-            const five = combo.map((i) => cards[i]);
-            const v = eqEval5(five);
-            if (v > best) best = v;
-          }
-        }
-        return best;
+      // {r,s} -> entero 0-51
+      function eqObjToInt(c) {
+        return (c.r - 2) * 4 + EQ_SUIT_IDX[c.s];
       }
 
-      function eqCombinations(arr, k) {
-        const result = [];
-        const n = arr.length;
-        function backtrack(start, combo) {
-          if (combo.length === k) {
-            result.push(combo.slice());
-            return;
-          }
-          for (let i = start; i < n; i++) {
-            combo.push(arr[i]);
-            backtrack(i + 1, combo);
-            combo.pop();
-          }
+      // ─────────────────────────────────────────
+      // Evaluador rápido de 5-7 cartas (enteros 0-51)
+      // Retorna un entero comparable: categoría*16^5 + kickers
+      // Sin generar arrays intermedios más de lo necesario, sin sort().
+      // ─────────────────────────────────────────
+      const EQ_RANK_COUNT = new Int32Array(15);
+      const EQ_SUIT_COUNT = new Int32Array(4);
+      // bySuitMask[s] = bitmask (bit r) de ranks presentes en ese palo
+      const EQ_SUIT_MASK = new Int32Array(4);
+      // rankPresentMask = bitmask general de ranks presentes (para straight)
+      function eqEvaluateFast(cardsInt, n) {
+        EQ_RANK_COUNT.fill(0);
+        EQ_SUIT_COUNT.fill(0);
+        EQ_SUIT_MASK.fill(0);
+        let rankPresentMask = 0;
+
+        for (let i = 0; i < n; i++) {
+          const cv = cardsInt[i];
+          const r = (cv >> 2) + 2;
+          const s = cv & 3;
+          EQ_RANK_COUNT[r]++;
+          EQ_SUIT_COUNT[s]++;
+          EQ_SUIT_MASK[s] |= 1 << r;
+          rankPresentMask |= 1 << r;
         }
-        backtrack(0, []);
-        return result;
-      }
 
-      // Evalúa exactamente 5 cartas. Retorna un entero donde categorías más altas
-      // producen valores más altos, y dentro de la misma categoría se compara por kickers.
-      // Categorías (0-8): 8=straight flush,7=quads,6=fullhouse,5=flush,4=straight,
-      // 3=trips,2=twopair,1=pair,0=highcard
-      function eqEval5(cards) {
-        const ranks = cards.map((c) => c.r).sort((a, b) => b - a);
-        const suits = cards.map((c) => c.s);
-
-        const rankCount = {};
-        ranks.forEach((r) => (rankCount[r] = (rankCount[r] || 0) + 1));
-
-        const isFlush = suits.every((s) => s === suits[0]);
-
-        // Detectar straight (considerando A-5 wheel)
-        const uniqRanks = [...new Set(ranks)].sort((a, b) => b - a);
-        let straightHigh = -1;
-        // Chequeo normal
-        for (let i = 0; i <= uniqRanks.length - 5; i++) {
-          if (uniqRanks[i] - uniqRanks[i + 4] === 4) {
-            straightHigh = uniqRanks[i];
+        // Detectar flush
+        let flushSuit = -1;
+        for (let s = 0; s < 4; s++) {
+          if (EQ_SUIT_COUNT[s] >= 5) {
+            flushSuit = s;
             break;
           }
         }
-        // Wheel A-2-3-4-5
-        if (
-          straightHigh === -1 &&
-          uniqRanks.includes(14) &&
-          uniqRanks.includes(2) &&
-          uniqRanks.includes(3) &&
-          uniqRanks.includes(4) &&
-          uniqRanks.includes(5)
-        ) {
-          straightHigh = 5;
+
+        // Straight-flush check (usa bitmask del palo, agrega bit "1" si hay As para wheel)
+        if (flushSuit !== -1) {
+          let mask = EQ_SUIT_MASK[flushSuit];
+          if (mask & (1 << 14)) mask |= 1 << 1;
+          let sfHigh = -1;
+          for (let hi = 14; hi >= 5; hi--) {
+            if (
+              mask & (1 << hi) &&
+              mask & (1 << (hi - 1)) &&
+              mask & (1 << (hi - 2)) &&
+              mask & (1 << (hi - 3)) &&
+              mask & (1 << (hi - 4))
+            ) {
+              sfHigh = hi;
+              break;
+            }
+          }
+          if (sfHigh !== -1) {
+            return 8 * 1048576 + sfHigh * 65536;
+          }
         }
 
-        const isStraight = straightHigh !== -1;
-
-        // Contar grupos por count
-        const groups = Object.keys(rankCount)
-          .map((r) => ({ r: parseInt(r), c: rankCount[r] }))
-          .sort((a, b) => (b.c - a.c) * 100 + (b.r - a.r));
-
-        const counts = groups.map((g) => g.c);
+        // Grupos por rank count (recorre de A a 2, ya viene ordenado desc)
+        // groupsR / groupsC paralelos, tamaño max 7
+        const groupsR = EQ_TMP_R,
+          groupsC = EQ_TMP_C;
+        let gN = 0;
+        for (let r = 14; r >= 2; r--) {
+          const c = EQ_RANK_COUNT[r];
+          if (c > 0) {
+            groupsR[gN] = r;
+            groupsC[gN] = c;
+            gN++;
+          }
+        }
+        // Ordenar grupos por count desc, luego rank desc (insertion sort, gN <= 7)
+        for (let i = 1; i < gN; i++) {
+          const cr = groupsR[i],
+            cc = groupsC[i];
+          let j = i - 1;
+          while (
+            j >= 0 &&
+            (groupsC[j] < cc || (groupsC[j] === cc && groupsR[j] < cr))
+          ) {
+            groupsR[j + 1] = groupsR[j];
+            groupsC[j + 1] = groupsC[j];
+            j--;
+          }
+          groupsR[j + 1] = cr;
+          groupsC[j + 1] = cc;
+        }
 
         let category = 0;
-        let kickers = [];
+        let k0 = 0,
+          k1 = 0,
+          k2 = 0,
+          k3 = 0,
+          k4 = 0;
 
-        if (isStraight && isFlush) {
-          category = 8;
-          kickers = [straightHigh];
-        } else if (counts[0] === 4) {
+        if (groupsC[0] === 4) {
           category = 7;
-          kickers = [groups[0].r, groups[1] ? groups[1].r : 0];
-        } else if (counts[0] === 3 && counts[1] === 2) {
+          k0 = groupsR[0];
+          k1 = gN > 1 ? groupsR[1] : 0;
+        } else if (groupsC[0] === 3 && groupsC[1] >= 2) {
           category = 6;
-          kickers = [groups[0].r, groups[1].r];
-        } else if (isFlush) {
+          k0 = groupsR[0];
+          k1 = groupsR[1];
+        } else if (flushSuit !== -1) {
           category = 5;
-          kickers = ranks.slice(0, 5);
-        } else if (isStraight) {
-          category = 4;
-          kickers = [straightHigh];
-        } else if (counts[0] === 3) {
-          category = 3;
-          kickers = [groups[0].r, ...groups.slice(1).map((g) => g.r)].slice(
-            0,
-            3,
-          );
-        } else if (counts[0] === 2 && counts[1] === 2) {
-          category = 2;
-          const pairRanks = groups
-            .filter((g) => g.c === 2)
-            .map((g) => g.r)
-            .sort((a, b) => b - a);
-          const kicker = groups.find((g) => g.c === 1);
-          kickers = [pairRanks[0], pairRanks[1], kicker ? kicker.r : 0];
-        } else if (counts[0] === 2) {
-          category = 1;
-          kickers = [groups[0].r, ...groups.slice(1).map((g) => g.r)].slice(
-            0,
-            4,
-          );
+          // top 5 ranks del palo (bitmask -> extraer los 5 más altos)
+          let mask = EQ_SUIT_MASK[flushSuit];
+          let cnt = 0;
+          const ks = [0, 0, 0, 0, 0];
+          for (let r = 14; r >= 2 && cnt < 5; r--) {
+            if (mask & (1 << r)) {
+              ks[cnt++] = r;
+            }
+          }
+          k0 = ks[0];
+          k1 = ks[1];
+          k2 = ks[2];
+          k3 = ks[3];
+          k4 = ks[4];
         } else {
-          category = 0;
-          kickers = ranks.slice(0, 5);
+          // Straight (sin flush) usando rankPresentMask
+          let mask = rankPresentMask;
+          if (mask & (1 << 14)) mask |= 1 << 1;
+          let straightHigh = -1;
+          for (let hi = 14; hi >= 5; hi--) {
+            if (
+              mask & (1 << hi) &&
+              mask & (1 << (hi - 1)) &&
+              mask & (1 << (hi - 2)) &&
+              mask & (1 << (hi - 3)) &&
+              mask & (1 << (hi - 4))
+            ) {
+              straightHigh = hi;
+              break;
+            }
+          }
+          if (straightHigh !== -1) {
+            category = 4;
+            k0 = straightHigh;
+          } else if (groupsC[0] === 3) {
+            category = 3;
+            k0 = groupsR[0];
+            k1 = gN > 1 ? groupsR[1] : 0;
+            k2 = gN > 2 ? groupsR[2] : 0;
+          } else if (groupsC[0] === 2 && groupsC[1] === 2) {
+            category = 2;
+            // groupsR ya viene ordenado por count desc, rank desc -> los dos primeros son los pairs top
+            k0 = groupsR[0];
+            k1 = groupsR[1];
+            // kicker: primer grupo con count 1
+            let kick = 0;
+            for (let i = 0; i < gN; i++) {
+              if (groupsC[i] === 1) {
+                kick = groupsR[i];
+                break;
+              }
+            }
+            k2 = kick;
+          } else if (groupsC[0] === 2) {
+            category = 1;
+            k0 = groupsR[0];
+            k1 = gN > 1 ? groupsR[1] : 0;
+            k2 = gN > 2 ? groupsR[2] : 0;
+            k3 = gN > 3 ? groupsR[3] : 0;
+          } else {
+            category = 0;
+            k0 = groupsR[0] || 0;
+            k1 = gN > 1 ? groupsR[1] : 0;
+            k2 = gN > 2 ? groupsR[2] : 0;
+            k3 = gN > 3 ? groupsR[3] : 0;
+            k4 = gN > 4 ? groupsR[4] : 0;
+          }
         }
 
-        // Empaquetar en un número comparable: category(4bits) + 5 kickers de 4 bits (rank max 14)
-        let value = category;
-        for (let i = 0; i < 5; i++) {
-          value = value * 16 + (kickers[i] || 0);
-        }
-        return value;
+        return (
+          category * 1048576 + k0 * 65536 + k1 * 4096 + k2 * 256 + k3 * 16 + k4
+        );
+      }
+      const EQ_TMP_R = new Int32Array(7);
+      const EQ_TMP_C = new Int32Array(7);
+
+      // Buffer reutilizable para evitar allocaciones en el hot loop
+      const EQ_BUF7 = new Int32Array(7);
+
+      // Genera el mazo completo como enteros 0-51
+      function eqFullDeckInt() {
+        const deck = new Int32Array(52);
+        for (let i = 0; i < 52; i++) deck[i] = i;
+        return deck;
       }
 
-      // Genera el mazo completo de 52 cartas como objetos {r,s}
+      // Genera el mazo completo de 52 cartas como objetos {r,s} (compatibilidad externa)
       function eqFullDeck() {
         const deck = [];
         for (const s of SUITS) {
@@ -4641,14 +4880,22 @@
         return deck;
       }
 
-      // Convierte un comboId tipo "AhKd" a [{r,s},{r,s}]
+      // Convierte un comboId tipo "AhKd" a [{r,s},{r,s}]  (compatibilidad externa)
       function eqComboToCards(comboId) {
         const c1 = comboId.slice(0, 2);
         const c2 = comboId.slice(2, 4);
         return [eqParseCard(c1), eqParseCard(c2)];
       }
+      // Convierte un comboId directamente a [int,int]
+      function eqComboToInts(comboId) {
+        return [
+          eqCardToInt(comboId.slice(0, 2)),
+          eqCardToInt(comboId.slice(2, 4)),
+        ];
+      }
 
       // Expande un rango {handKey: weight} a lista de {cards:[{r,s},{r,s}], weight, id}
+      // (se mantiene formato {r,s} por compatibilidad con cmvCalculate/eqVillainBuckets externos)
       function eqExpandRange(rangeDict, deadSet) {
         const out = [];
         for (const key in rangeDict) {
@@ -4669,129 +4916,11 @@
               id: sc.id,
               weight: weight / 100,
               cards: [eqParseCard(c1), eqParseCard(c2)],
+              intCards: [eqCardToInt(c1), eqCardToInt(c2)],
             });
           });
         }
         return out;
-      }
-
-      // Calcula el equity de una mano (heroCards) vs un rango de villano expandido,
-      // dado un board conocido (array de {r,s}), enumerando todos los runouts restantes.
-      // Retorna {equity: 0-1, matchups: n} — promedio ponderado por peso del villano.
-      function eqHandVsRange(heroCards, villainRangeExpanded, board) {
-        const knownCards = [...heroCards, ...board];
-        const knownSet = new Set(knownCards.map((c) => r_s(c)));
-
-        // Filtra combos de villano que colisionan con hero o board
-        const validVillains = villainRangeExpanded.filter((v) => {
-          const s1 = r_s(v.cards[0]),
-            s2 = r_s(v.cards[1]);
-          return !knownSet.has(s1) && !knownSet.has(s2);
-        });
-
-        if (validVillains.length === 0) return { equity: null, matchups: 0 };
-
-        const needed = 5 - board.length; // cartas restantes por repartir (turn+river, o solo river, o 5 en preflop)
-
-        let totalWin = 0,
-          totalTie = 0,
-          totalLose = 0,
-          totalWeight = 0;
-
-        const deck = eqFullDeck();
-
-        if (needed === 0) {
-          // River completo: comparación directa
-          validVillains.forEach((v) => {
-            const heroVal = eqEvaluate7([...heroCards, ...board]);
-            const vSet = new Set([r_s(v.cards[0]), r_s(v.cards[1])]);
-            const villVal = eqEvaluate7([...v.cards, ...board]);
-            if (heroVal > villVal) totalWin += v.weight;
-            else if (heroVal === villVal) totalTie += v.weight;
-            else totalLose += v.weight;
-            totalWeight += v.weight;
-          });
-        } else if (needed <= 2 && board.length >= 3) {
-          // Flop (needed=2) o Turn (needed=1): enumeración exhaustiva de runouts
-          const usedSet = new Set(knownSet);
-          const availDeck = deck.filter((c) => !usedSet.has(r_s(c)));
-
-          let runouts = [];
-          if (needed === 1) {
-            runouts = availDeck.map((c) => [c]);
-          } else {
-            // needed === 2
-            for (let i = 0; i < availDeck.length; i++) {
-              for (let j = i + 1; j < availDeck.length; j++) {
-                runouts.push([availDeck[i], availDeck[j]]);
-              }
-            }
-          }
-
-          validVillains.forEach((v) => {
-            const s1 = r_s(v.cards[0]),
-              s2 = r_s(v.cards[1]);
-            let vWin = 0,
-              vTie = 0,
-              vLose = 0,
-              vTotal = 0;
-            runouts.forEach((ro) => {
-              // Skip runouts que colisionan con las cartas del villano
-              if (ro.some((c) => r_s(c) === s1 || r_s(c) === s2)) return;
-              const fullBoard = [...board, ...ro];
-              const heroVal = eqEvaluate7([...heroCards, ...fullBoard]);
-              const villVal = eqEvaluate7([...v.cards, ...fullBoard]);
-              vTotal++;
-              if (heroVal > villVal) vWin++;
-              else if (heroVal === villVal) vTie++;
-              else vLose++;
-            });
-            if (vTotal > 0) {
-              totalWin += (vWin / vTotal) * v.weight;
-              totalTie += (vTie / vTotal) * v.weight;
-              totalLose += (vLose / vTotal) * v.weight;
-              totalWeight += v.weight;
-            }
-          });
-        } else {
-          // Preflop (board.length === 0): Monte Carlo
-          const SAMPLES = 500;
-          const usedSet = new Set(knownSet);
-          const availDeck = deck.filter((c) => !usedSet.has(r_s(c)));
-
-          validVillains.forEach((v) => {
-            const s1 = r_s(v.cards[0]),
-              s2 = r_s(v.cards[1]);
-            const localDeck = availDeck.filter(
-              (c) => r_s(c) !== s1 && r_s(c) !== s2,
-            );
-            let vWin = 0,
-              vTie = 0,
-              vTotal = 0;
-            for (let iter = 0; iter < SAMPLES; iter++) {
-              const shuffled = eqSampleN(localDeck, 5);
-              const fullBoard = shuffled;
-              const heroVal = eqEvaluate7([...heroCards, ...fullBoard]);
-              const villVal = eqEvaluate7([...v.cards, ...fullBoard]);
-              vTotal++;
-              if (heroVal > villVal) vWin++;
-              else if (heroVal === villVal) vTie++;
-            }
-            if (vTotal > 0) {
-              totalWin += (vWin / vTotal) * v.weight;
-              totalTie += (vTie / vTotal) * v.weight;
-              totalWeight += v.weight;
-            }
-          });
-        }
-
-        if (totalWeight === 0) return { equity: null, matchups: 0 };
-        const equity = (totalWin + totalTie / 2) / totalWeight;
-        return { equity, matchups: validVillains.length };
-      }
-
-      function r_s(c) {
-        return c.r + c.s;
       }
 
       function eqSampleN(arr, n) {
@@ -4800,32 +4929,361 @@
         const len = a.length;
         for (let i = 0; i < n; i++) {
           const j = i + Math.floor(Math.random() * (len - i));
-          [a[i], a[j]] = [a[j], a[i]];
+          const t = a[i];
+          a[i] = a[j];
+          a[j] = t;
         }
         return a.slice(0, n);
       }
 
+      // Umbral de evaluaciones (hero x villano x runouts) para pasar a Monte Carlo
+      const EQ_MC_THRESHOLD = 300000;
+      const EQ_MC_SAMPLES = 3000;
+
+      // ─────────────────────────────────────────
+      // Núcleo: dado un array de heroCombos (ints [c1,c2]) y un array de
+      // villainCombos (ints [c1,c2] + weight), y un board (ints), calcula
+      // para CADA combo hero su equity vs todo el rango villano, compartiendo
+      // el trabajo de enumerar runouts UNA sola vez por combo villano.
+      // Retorna array paralelo a heroCombos: {equity, matchups}
+      // ─────────────────────────────────────────
+      function eqCoreBatch(heroCombosInt, villainList, boardInt) {
+        const nHero = heroCombosInt.length;
+        const results = new Array(nHero);
+        for (let i = 0; i < nHero; i++)
+          results[i] = { win: 0, tie: 0, weight: 0 };
+
+        const boardLen = boardInt.length;
+        const needed = 5 - boardLen;
+
+        // Set de cartas conocidas del board (para exclusión rápida con bitset de 64 bits vía Number + hi/lo)
+        const usedMaskLo = new Float64Array(1); // no usado, placeholder
+        // Usamos un Set simple de enteros (rápido para <=10 elementos)
+        const boardSet = new Set(boardInt);
+
+        if (needed === 0) {
+          // River completo: comparación directa, sin runouts
+          const buf = new Int32Array(7);
+          for (let hi = 0; hi < nHero; hi++) {
+            const h1 = heroCombosInt[hi][0],
+              h2 = heroCombosInt[hi][1];
+            if (boardSet.has(h1) || boardSet.has(h2)) continue;
+            buf[0] = h1;
+            buf[1] = h2;
+            for (let b = 0; b < boardLen; b++) buf[2 + b] = boardInt[b];
+            const heroVal = eqEvaluateFast(buf, 2 + boardLen);
+
+            const res = results[hi];
+            for (let vi = 0; vi < villainList.length; vi++) {
+              const v = villainList[vi];
+              const v1 = v.i1,
+                v2 = v.i2;
+              if (v1 === h1 || v1 === h2 || v2 === h1 || v2 === h2) continue;
+              buf[0] = v1;
+              buf[1] = v2;
+              const villVal = eqEvaluateFast(buf, 2 + boardLen);
+              if (heroVal > villVal) res.win += v.weight;
+              else if (heroVal === villVal) res.tie += v.weight;
+              res.weight += v.weight;
+            }
+          }
+          return results;
+        }
+
+        // Construir mazo disponible (excluye board, se filtra hero/villano por combo)
+        const fullDeck = [];
+        for (let c = 0; c < 52; c++) {
+          if (!boardSet.has(c)) fullDeck.push(c);
+        }
+
+        // Decide exhaustivo vs Monte Carlo según volumen estimado
+        let runoutCount;
+        if (needed === 1)
+          runoutCount = fullDeck.length; // aprox, se filtra por colisión luego
+        else if (needed === 2) {
+          const m = fullDeck.length;
+          runoutCount = (m * (m - 1)) / 2;
+        } else {
+          runoutCount = 1; // preflop siempre MC (needed=5 se maneja aparte más abajo)
+        }
+        const estimatedWork = nHero * villainList.length * runoutCount;
+        const useMonteCarlo = needed <= 2 && estimatedWork > EQ_MC_THRESHOLD;
+
+        const buf = new Int32Array(7);
+
+        if (needed <= 2 && !useMonteCarlo) {
+          // ── Enumeración EXACTA compartida ──
+          // Precalcular runouts como pares/individuales de enteros del mazo disponible
+          const m = fullDeck.length;
+          let runoutsA, runoutsB, nRunouts;
+          if (needed === 1) {
+            nRunouts = m;
+            runoutsA = fullDeck;
+            runoutsB = null;
+          } else {
+            nRunouts = (m * (m - 1)) / 2;
+            runoutsA = new Int32Array(nRunouts);
+            runoutsB = new Int32Array(nRunouts);
+            let idx = 0;
+            for (let i = 0; i < m; i++) {
+              for (let j = i + 1; j < m; j++) {
+                runoutsA[idx] = fullDeck[i];
+                runoutsB[idx] = fullDeck[j];
+                idx++;
+              }
+            }
+          }
+
+          // Para cada combo villano, recorremos runouts UNA vez y evaluamos
+          // contra TODOS los heroCombos que no colisionen (comparte el bucle).
+          for (let vi = 0; vi < villainList.length; vi++) {
+            const v = villainList[vi];
+            const v1 = v.i1,
+              v2 = v.i2;
+
+            // heroes válidos para este villano (no colisionan con v)
+            const validHeroIdx = [];
+            for (let hi = 0; hi < nHero; hi++) {
+              const h1 = heroCombosInt[hi][0],
+                h2 = heroCombosInt[hi][1];
+              if (h1 === v1 || h1 === v2 || h2 === v1 || h2 === v2) continue;
+              validHeroIdx.push(hi);
+            }
+            if (validHeroIdx.length === 0) continue;
+
+            // acumuladores por hero para este villano
+            const vWin = new Float64Array(validHeroIdx.length);
+            const vTie = new Float64Array(validHeroIdx.length);
+            let vTotal = 0;
+
+            for (let ri = 0; ri < nRunouts; ri++) {
+              const r1 = runoutsA[ri];
+              const r2 = needed === 2 ? runoutsB[ri] : -1;
+              if (r1 === v1 || r1 === v2) continue;
+              if (needed === 2 && (r2 === v1 || r2 === v2)) continue;
+
+              buf[0] = v1;
+              buf[1] = v2;
+              let p = 2;
+              for (let b = 0; b < boardLen; b++) buf[p++] = boardInt[b];
+              buf[p++] = r1;
+              if (needed === 2) buf[p++] = r2;
+              const villVal = eqEvaluateFast(buf, p);
+
+              vTotal++;
+
+              for (let k = 0; k < validHeroIdx.length; k++) {
+                const hi = validHeroIdx[k];
+                const h1 = heroCombosInt[hi][0],
+                  h2 = heroCombosInt[hi][1];
+                if (h1 === r1 || h2 === r1) continue;
+                if (needed === 2 && (h1 === r2 || h2 === r2)) continue;
+
+                buf[0] = h1;
+                buf[1] = h2;
+                let p2 = 2;
+                for (let b = 0; b < boardLen; b++) buf[p2++] = boardInt[b];
+                buf[p2++] = r1;
+                if (needed === 2) buf[p2++] = r2;
+                const heroVal = eqEvaluateFast(buf, p2);
+
+                if (heroVal > villVal) vWin[k]++;
+                else if (heroVal === villVal) vTie[k]++;
+              }
+            }
+
+            if (vTotal > 0) {
+              for (let k = 0; k < validHeroIdx.length; k++) {
+                const hi = validHeroIdx[k];
+                const res = results[hi];
+                res.win += (vWin[k] / vTotal) * v.weight;
+                res.tie += (vTie[k] / vTotal) * v.weight;
+                res.weight += v.weight;
+              }
+            }
+          }
+        } else {
+          // ── Monte Carlo (flop/turn con volumen alto, o preflop) ──
+          const samples = needed === 5 ? 500 : EQ_MC_SAMPLES;
+          const drawN = needed === 5 ? 5 : needed;
+
+          for (let vi = 0; vi < villainList.length; vi++) {
+            const v = villainList[vi];
+            const v1 = v.i1,
+              v2 = v.i2;
+
+            const validHeroIdx = [];
+            for (let hi = 0; hi < nHero; hi++) {
+              const h1 = heroCombosInt[hi][0],
+                h2 = heroCombosInt[hi][1];
+              if (h1 === v1 || h1 === v2 || h2 === v1 || h2 === v2) continue;
+              validHeroIdx.push(hi);
+            }
+            if (validHeroIdx.length === 0) continue;
+
+            // Mazo local sin cartas del villano
+            const localDeck = [];
+            for (let i = 0; i < fullDeck.length; i++) {
+              const c = fullDeck[i];
+              if (c !== v1 && c !== v2) localDeck.push(c);
+            }
+            const localLen = localDeck.length;
+
+            const vWin = new Float64Array(validHeroIdx.length);
+            const vTie = new Float64Array(validHeroIdx.length);
+            let vTotal = 0;
+
+            const runoutBuf = new Int32Array(drawN);
+
+            for (let iter = 0; iter < samples; iter++) {
+              // Fisher-Yates parcial in-place sobre copia ligera usando índices
+              // (para evitar allocar array cada vez, usamos swap sobre un scratch)
+              eqPartialShuffle(localDeck, localLen, drawN, runoutBuf);
+
+              buf[0] = v1;
+              buf[1] = v2;
+              let p = 2;
+              for (let b = 0; b < boardLen; b++) buf[p++] = boardInt[b];
+              for (let d = 0; d < drawN; d++) buf[p++] = runoutBuf[d];
+              const villVal = eqEvaluateFast(buf, p);
+
+              vTotal++;
+
+              for (let k = 0; k < validHeroIdx.length; k++) {
+                const hi = validHeroIdx[k];
+                const h1 = heroCombosInt[hi][0],
+                  h2 = heroCombosInt[hi][1];
+                let collision = false;
+                for (let d = 0; d < drawN; d++) {
+                  if (runoutBuf[d] === h1 || runoutBuf[d] === h2) {
+                    collision = true;
+                    break;
+                  }
+                }
+                if (collision) continue;
+
+                buf[0] = h1;
+                buf[1] = h2;
+                let p2 = 2;
+                for (let b = 0; b < boardLen; b++) buf[p2++] = boardInt[b];
+                for (let d = 0; d < drawN; d++) buf[p2++] = runoutBuf[d];
+                const heroVal = eqEvaluateFast(buf, p2);
+
+                if (heroVal > villVal) vWin[k]++;
+                else if (heroVal === villVal) vTie[k]++;
+              }
+            }
+
+            if (vTotal > 0) {
+              for (let k = 0; k < validHeroIdx.length; k++) {
+                const hi = validHeroIdx[k];
+                const res = results[hi];
+                res.win += (vWin[k] / vTotal) * v.weight;
+                res.tie += (vTie[k] / vTotal) * v.weight;
+                res.weight += v.weight;
+              }
+            }
+          }
+        }
+
+        return results;
+      }
+
+      // Fisher-Yates parcial: elige drawN cartas aleatorias de deckArr[0..len)
+      // sin mutar el array original (copia mínima via scratch reutilizable).
+      let EQ_SHUFFLE_SCRATCH = [];
+      function eqPartialShuffle(deckArr, len, drawN, outBuf) {
+        if (EQ_SHUFFLE_SCRATCH.length < len)
+          EQ_SHUFFLE_SCRATCH = new Array(len);
+        for (let i = 0; i < len; i++) EQ_SHUFFLE_SCRATCH[i] = deckArr[i];
+        for (let i = 0; i < drawN; i++) {
+          const j = i + Math.floor(Math.random() * (len - i));
+          const tmp = EQ_SHUFFLE_SCRATCH[i];
+          EQ_SHUFFLE_SCRATCH[i] = EQ_SHUFFLE_SCRATCH[j];
+          EQ_SHUFFLE_SCRATCH[j] = tmp;
+          outBuf[i] = EQ_SHUFFLE_SCRATCH[i];
+        }
+      }
+
+      // Calcula el equity de una mano (heroCards {r,s}) vs un rango de villano expandido,
+      // dado un board conocido (array de {r,s}). Mantiene firma/formato original
+      // para compatibilidad, pero delega al núcleo rápido internamente.
+      function eqHandVsRange(heroCards, villainRangeExpanded, board) {
+        const h1 = eqObjToInt(heroCards[0]);
+        const h2 = eqObjToInt(heroCards[1]);
+        const boardInt = board.map(eqObjToInt);
+        const knownSet = new Set([h1, h2, ...boardInt]);
+
+        const villainList = [];
+        for (let i = 0; i < villainRangeExpanded.length; i++) {
+          const v = villainRangeExpanded[i];
+          const vi1 = v.intCards ? v.intCards[0] : eqObjToInt(v.cards[0]);
+          const vi2 = v.intCards ? v.intCards[1] : eqObjToInt(v.cards[1]);
+          if (knownSet.has(vi1) || knownSet.has(vi2)) continue;
+          villainList.push({ i1: vi1, i2: vi2, weight: v.weight });
+        }
+
+        if (villainList.length === 0) return { equity: null, matchups: 0 };
+
+        const results = eqCoreBatch([[h1, h2]], villainList, boardInt);
+        const res = results[0];
+        if (res.weight === 0) return { equity: null, matchups: 0 };
+        const equity = (res.win + res.tie / 2) / res.weight;
+        return { equity, matchups: villainList.length };
+      }
+
       // Calcula el equity de un ARRAY de combos hero (ej. todos los combos de "Set")
       // vs un rango de villano, en un board dado. Retorna equity promedio ponderado.
+      // Optimizado: procesa TODOS los combos hero en un solo batch compartiendo
+      // el recorrido de villano×runouts.
       function eqComboListVsRange(heroComboIds, villainRangeExpanded, board) {
         if (!heroComboIds || heroComboIds.length === 0)
           return { equity: null, n: 0 };
+
+        const boardInt = board.map(eqObjToInt);
+        const boardSet = new Set(boardInt);
+
+        const heroCombosInt = [];
+        const heroValidIdx = [];
+        heroComboIds.forEach((id, idx) => {
+          const ints = eqComboToInts(id);
+          if (boardSet.has(ints[0]) || boardSet.has(ints[1])) return;
+          heroCombosInt.push(ints);
+          heroValidIdx.push(idx);
+        });
+
+        if (heroCombosInt.length === 0) return { equity: null, n: 0 };
+
+        const villainList = [];
+        for (let i = 0; i < villainRangeExpanded.length; i++) {
+          const v = villainRangeExpanded[i];
+          const vi1 = v.intCards ? v.intCards[0] : eqObjToInt(v.cards[0]);
+          const vi2 = v.intCards ? v.intCards[1] : eqObjToInt(v.cards[1]);
+          if (boardSet.has(vi1) || boardSet.has(vi2)) continue;
+          villainList.push({ i1: vi1, i2: vi2, weight: v.weight });
+        }
+
+        if (villainList.length === 0) return { equity: null, n: 0 };
+
+        const results = eqCoreBatch(heroCombosInt, villainList, boardInt);
+
         let totalEq = 0,
           totalW = 0;
-        heroComboIds.forEach((id) => {
-          const heroCards = eqComboToCards(id);
-          const res = eqHandVsRange(heroCards, villainRangeExpanded, board);
-          if (res.equity !== null) {
-            totalEq += res.equity;
+        results.forEach((res) => {
+          if (res.weight > 0) {
+            totalEq += (res.win + res.tie / 2) / res.weight;
             totalW++;
           }
         });
+
         if (totalW === 0) return { equity: null, n: 0 };
         return { equity: totalEq / totalW, n: totalW };
       }
 
       // Calcula EQ buckets del rango villano vs un rango hero (heroRangeDict) en un board dado.
       // Retorna array de {label, pct} con distribución de equity.
+      // Optimizado: procesa el rango villano como "heroCombos" del batch (simetría),
+      // comparando cada combo villano contra el rango hero completo.
       function eqVillainBuckets(
         villainRangeExpanded,
         heroRangeExpanded,
@@ -4838,21 +5296,59 @@
           { label: "20-40%", min: 0.2, max: 0.4, weight: 0 },
           { label: "0-20%", min: -0.01, max: 0.2, weight: 0 },
         ];
+
+        const boardInt = board.map(eqObjToInt);
+        const boardSet = new Set(boardInt);
+
+        // villano actúa como "hero" del batch (queremos su equity individual)
+        const villCombosInt = [];
+        const villWeights = [];
+        for (let i = 0; i < villainRangeExpanded.length; i++) {
+          const v = villainRangeExpanded[i];
+          const vi1 = v.intCards ? v.intCards[0] : eqObjToInt(v.cards[0]);
+          const vi2 = v.intCards ? v.intCards[1] : eqObjToInt(v.cards[1]);
+          if (boardSet.has(vi1) || boardSet.has(vi2)) continue;
+          villCombosInt.push([vi1, vi2]);
+          villWeights.push(v.weight);
+        }
+
+        if (villCombosInt.length === 0)
+          return {
+            buckets: buckets.map((b) => ({ label: b.label, pct: 0 })),
+            avgEquity: null,
+            totalWeight: 0,
+          };
+
+        // rango hero actúa como "villainList" del batch
+        const heroList = [];
+        for (let i = 0; i < heroRangeExpanded.length; i++) {
+          const h = heroRangeExpanded[i];
+          const hi1 = h.intCards ? h.intCards[0] : eqObjToInt(h.cards[0]);
+          const hi2 = h.intCards ? h.intCards[1] : eqObjToInt(h.cards[1]);
+          if (boardSet.has(hi1) || boardSet.has(hi2)) continue;
+          heroList.push({ i1: hi1, i2: hi2, weight: h.weight });
+        }
+
         let totalWeight = 0;
         let totalEquity = 0;
 
-        villainRangeExpanded.forEach((v) => {
-          const res = eqHandVsRange(v.cards, heroRangeExpanded, board);
-          if (res.equity === null) return;
-          totalWeight += v.weight;
-          totalEquity += res.equity * v.weight;
-          for (const b of buckets) {
-            if (res.equity >= b.min && res.equity < b.max) {
-              b.weight += v.weight;
-              break;
+        if (heroList.length > 0) {
+          const results = eqCoreBatch(villCombosInt, heroList, boardInt);
+          for (let i = 0; i < results.length; i++) {
+            const res = results[i];
+            if (res.weight === 0) continue;
+            const equity = (res.win + res.tie / 2) / res.weight;
+            const w = villWeights[i];
+            totalWeight += w;
+            totalEquity += equity * w;
+            for (const b of buckets) {
+              if (equity >= b.min && equity < b.max) {
+                b.weight += w;
+                break;
+              }
             }
           }
-        });
+        }
 
         const bucketsPct = buckets.map((b) => ({
           label: b.label,
@@ -5738,6 +6234,7 @@
         cmHand = null;
         cmSelectedHands = [];
         cmActiveTab = "s";
+        cmvInit();
 
         cmValidCombosSet = new Set();
         const c = getNodeByType(type).combos[ci];
@@ -6619,6 +7116,370 @@
           document.getElementById("card-modal").style.display === "flex"
         )
           closeCardModal();
+      });
+
+      // ══════════════════════════════════════════
+      //  PANEL VILLANO — rango del oponente + cálculo de equity
+      // ══════════════════════════════════════════
+      let cmvVillainRange = {};
+      let cmvMouseDown = false;
+      let cmvDragModeAdd = false;
+
+      function cmvGetNode() {
+        if (!cmCtx) return null;
+        return getNodeByType(cmCtx.type);
+      }
+
+      let cmvSelectedCategories = new Set();
+
+      function cmvInit() {
+        const node = cmvGetNode();
+        if (!node) {
+          cmvVillainRange = {};
+        } else {
+          if (!node.villainRange || typeof node.villainRange !== "object") {
+            node.villainRange = {};
+          }
+          cmvVillainRange = node.villainRange;
+        }
+        const inputEl = document.getElementById("cmv-input");
+        if (inputEl) inputEl.value = "";
+        const resEl = document.getElementById("cmv-results");
+        if (resEl) resEl.innerHTML = "";
+        cmvSelectedCategories = new Set();
+        cmvRenderGrid();
+        cmvUpdateInfo();
+        cmvRenderCategoryCheckboxes();
+      }
+
+      function cmvSave() {
+        const node = cmvGetNode();
+        if (node) {
+          node.villainRange = cmvVillainRange;
+          commit();
+        }
+      }
+
+      function cmvRenderGrid() {
+        const gridEl = document.getElementById("cmv-grid");
+        if (!gridEl) return;
+        const deadSet = getDeadCards();
+        let html = "";
+        RANKS.forEach((r1, i) => {
+          RANKS.forEach((r2, j) => {
+            let hand, grp, label;
+            if (i === j) {
+              hand = r1 + r2;
+              grp = "p";
+              label = hand;
+            } else if (i < j) {
+              hand = r1 + r2;
+              grp = "s";
+              label = hand + "s";
+            } else {
+              hand = r2 + r1;
+              grp = "o";
+              label = hand + "o";
+            }
+            const key = hand + grp;
+
+            // Determinar si toda la mano está muerta (todas sus combinaciones chocan con dead cards)
+            let allDead = true;
+            for (const sc of suitCombos(hand)) {
+              if (grp === "s" && sc.g !== "s") continue;
+              if (grp === "o" && sc.g !== "o") continue;
+              if (grp === "p" && sc.g !== "p") continue;
+              const c1 = sc.id.slice(0, 2).toLowerCase();
+              const c2 = sc.id.slice(2, 4).toLowerCase();
+              if (!deadSet.has(c1) && !deadSet.has(c2)) {
+                allDead = false;
+                break;
+              }
+            }
+
+            const weight = cmvVillainRange[key] || 0;
+            const active = weight > 0;
+            let style = "";
+            if (active) {
+              style =
+                'style="background:var(--accent-light);color:var(--accent-text);border-color:var(--accent-border);font-weight:700;"';
+            }
+            const cls = allDead ? "cmv-cell dead" : "cmv-cell";
+            const click = allDead
+              ? ""
+              : `onmousedown="cmvCellDown(event,'${key}')" onmouseover="cmvCellOver(event,'${key}')"`;
+            html += `<div class="${cls}" data-key="${key}" ${click} ${style} title="${label}">${label}</div>`;
+          });
+        });
+        gridEl.innerHTML = html;
+      }
+
+      function cmvCellDown(e, key) {
+        cmvMouseDown = true;
+        cmvDragModeAdd = !cmvVillainRange[key];
+        cmvApplyCell(key);
+        e.preventDefault();
+      }
+      function cmvCellOver(e, key) {
+        if (cmvMouseDown) cmvApplyCell(key);
+      }
+      document.addEventListener("mouseup", function () {
+        if (cmvMouseDown) {
+          cmvMouseDown = false;
+          cmvSave();
+        }
+      });
+
+      function cmvApplyCell(key) {
+        if (cmvDragModeAdd) {
+          cmvVillainRange[key] = 100;
+        } else {
+          delete cmvVillainRange[key];
+        }
+        cmvRenderGrid();
+        cmvUpdateInfo();
+        cmvRenderCategoryCheckboxes();
+      }
+
+      function cmvClearRange() {
+        cmvVillainRange = {};
+        const inputEl = document.getElementById("cmv-input");
+        if (inputEl) inputEl.value = "";
+        cmvSelectedCategories = new Set();
+        cmvRenderGrid();
+        cmvUpdateInfo();
+        cmvSave();
+        const resEl = document.getElementById("cmv-results");
+        if (resEl) resEl.innerHTML = "";
+        cmvRenderCategoryCheckboxes();
+      }
+
+      function cmvParseRangeText() {
+        const inputEl = document.getElementById("cmv-input");
+        if (!inputEl) return;
+        const text = inputEl.value.toUpperCase();
+        if (!text.trim()) return;
+        // Reutiliza el parser existente de rangos preflop
+        const dict = {};
+        processRangeTokens(text, 100, dict);
+        // Fusiona con el rango actual (no reemplaza)
+        Object.keys(dict).forEach((k) => {
+          cmvVillainRange[k] = dict[k];
+        });
+        inputEl.value = "";
+        cmvRenderGrid();
+        cmvUpdateInfo();
+        cmvSave();
+        cmvRenderCategoryCheckboxes();
+      }
+
+      // ─────────────────────────────────────────
+      // Clasificación del rango villano por categoría (según board activo)
+      // Retorna { catId: { combos: [ids...], weight: number } }
+      // ─────────────────────────────────────────
+      function cmvClassifyVillainRange() {
+        const result = {};
+        if (!cmCtx) return result;
+        const board = getActiveBoard(cmCtx.type) || [];
+        if (board.length < 3) return result; // sin board no hay categorías (preflop)
+        const street = board.length;
+        const deadSet = getDeadCards();
+        const expanded = eqExpandRange(cmvVillainRange, deadSet);
+        expanded.forEach((combo) => {
+          const c1 = combo.id.slice(0, 2).toLowerCase();
+          const c2 = combo.id.slice(2, 4).toLowerCase();
+          const cat = bestCategory([c1, c2], board, street);
+          if (!result[cat]) result[cat] = { combos: [], weight: 0 };
+          result[cat].combos.push(combo.id);
+          result[cat].weight += combo.weight;
+        });
+        return result;
+      }
+
+      // Renderiza los checkboxes de categoría en #cmv-cat-list y muestra/oculta la caja
+      function cmvRenderCategoryCheckboxes() {
+        const box = document.getElementById("cmv-cat-box");
+        const list = document.getElementById("cmv-cat-list");
+        if (!box || !list) return;
+
+        const classification = cmvClassifyVillainRange();
+        const catIds = Object.keys(classification);
+
+        if (catIds.length === 0) {
+          box.style.display = "none";
+          list.innerHTML = "";
+          return;
+        }
+
+        box.style.display = "block";
+
+        // Mantener sólo las categorías seleccionadas que aún existen
+        cmvSelectedCategories = new Set(
+          Array.from(cmvSelectedCategories).filter((id) => classification[id]),
+        );
+
+        const sortedCats = COMBOS_MASTER.filter(
+          (m) => classification[m.id],
+        ).sort((a, b) => a.sort - b.sort);
+
+        let html = "";
+        sortedCats.forEach((m) => {
+          const info = classification[m.id];
+          const checked = cmvSelectedCategories.has(m.id) ? "checked" : "";
+          html += `<label class="cmv-cat-item">
+            <input type="checkbox" data-cat="${m.id}" ${checked} onchange="cmvOnCategoryToggle('${m.id}', this.checked)" />
+            <span class="cmv-cat-name">${m.name}</span>
+            <span class="cmv-cat-count">${info.weight.toFixed(1)}</span>
+          </label>`;
+        });
+        list.innerHTML = html;
+      }
+
+      function cmvOnCategoryToggle(catId, checked) {
+        if (checked) cmvSelectedCategories.add(catId);
+        else cmvSelectedCategories.delete(catId);
+      }
+
+      function cmvGetSelectedCategories() {
+        return Array.from(cmvSelectedCategories);
+      }
+
+      function cmvCategoryQuickAll() {
+        const classification = cmvClassifyVillainRange();
+        cmvSelectedCategories = new Set(Object.keys(classification));
+        cmvRenderCategoryCheckboxes();
+      }
+
+      function cmvCategoryQuickNone() {
+        cmvSelectedCategories = new Set();
+        cmvRenderCategoryCheckboxes();
+      }
+
+      function cmvUpdateInfo() {
+        const el = document.getElementById("cmv-info");
+        if (!el) return;
+        const deadSet = getDeadCards();
+        let totalCombos = 0;
+        let totalHands = 0;
+        Object.keys(cmvVillainRange).forEach((key) => {
+          const w = cmvVillainRange[key];
+          if (!w || w <= 0) return;
+          totalHands++;
+          const r1 = key[0],
+            r2 = key[1];
+          const isPair = r1 === r2;
+          const g = isPair ? "p" : key[2];
+          suitCombos(r1 + r2).forEach((sc) => {
+            if (g === "s" && sc.g !== "s") return;
+            if (g === "o" && sc.g !== "o") return;
+            if (g === "p" && sc.g !== "p") return;
+            const c1 = sc.id.slice(0, 2).toLowerCase();
+            const c2 = sc.id.slice(2, 4).toLowerCase();
+            if (deadSet.has(c1) || deadSet.has(c2)) return;
+            totalCombos += w / 100;
+          });
+        });
+        el.textContent =
+          totalHands === 0
+            ? "0 combos seleccionados"
+            : totalHands + " manos — " + totalCombos.toFixed(1) + " combos";
+      }
+
+      function cmvCalculate() {
+        if (!cmCtx) return;
+        const btn = document.getElementById("cmv-calc-btn");
+        const resEl = document.getElementById("cmv-results");
+        if (!resEl) return;
+
+        const hasVillainRange = Object.keys(cmvVillainRange).some(
+          (k) => cmvVillainRange[k] > 0,
+        );
+        if (!hasVillainRange) {
+          resEl.innerHTML =
+            '<div class="cmv-loading">Selecciona un rango de villano primero.</div>';
+          return;
+        }
+
+        const c = cmCurrentCombo();
+        const heroComboIds = getAllSelected(c);
+        if (!heroComboIds || heroComboIds.length === 0) {
+          resEl.innerHTML =
+            '<div class="cmv-loading">No hay combos guardados en esta jugada todavía.</div>';
+          return;
+        }
+
+        const board = getActiveBoard(cmCtx.type) || [];
+        const boardCards = board.map((c2) => eqParseCard(c2));
+
+        if (btn) btn.disabled = true;
+        resEl.innerHTML = '<div class="cmv-loading">Calculando equity...</div>';
+
+        setTimeout(() => {
+          try {
+            const deadSet = getDeadCards();
+            const villainExpanded = eqExpandRange(cmvVillainRange, deadSet);
+
+            const eqResult = eqComboListVsRange(
+              heroComboIds,
+              villainExpanded,
+              boardCards,
+            );
+
+            const bucketsResult = eqVillainBuckets(
+              villainExpanded,
+              heroComboIds.map((id) => ({
+                cards: eqComboToCards(id),
+                weight: getComboWeight(id) || 1,
+              })),
+              boardCards,
+            );
+
+            let html = '<div class="cmv-eq-box">';
+            html += '<div class="cmv-eq-title">Equity vs Rango Villano</div>';
+            if (eqResult.equity === null) {
+              html +=
+                '<div class="cmv-eq-sub">No hay matchups válidos (colisión total de cartas).</div>';
+            } else {
+              html += `<div class="cmv-eq-val">${(eqResult.equity * 100).toFixed(1)}%</div>`;
+              html += `<div class="cmv-eq-sub">${eqResult.n} combo(s) de tu mano evaluados</div>`;
+            }
+            html += "</div>";
+
+            if (bucketsResult.totalWeight > 0) {
+              html += '<div class="cmv-eq-box">';
+              html +=
+                '<div class="cmv-eq-title">Distribución de equity del Villano</div>';
+              html += `<div class="cmv-eq-sub" style="margin-bottom:6px;">Equity promedio del villano: <b>${(bucketsResult.avgEquity * 100).toFixed(1)}%</b></div>`;
+              html += '<div class="cmv-buckets">';
+              bucketsResult.buckets.forEach((b) => {
+                html += '<div class="cmv-bucket-row">';
+                html += `<div class="cmv-bucket-label">${b.label}</div>`;
+                html += `<div class="cmv-bucket-bar-wrap"><div class="cmv-bucket-bar" style="width:${b.pct.toFixed(1)}%"></div></div>`;
+                html += `<div class="cmv-bucket-pct">${b.pct.toFixed(1)}%</div>`;
+                html += "</div>";
+              });
+              html += "</div></div>";
+            }
+
+            resEl.innerHTML = html;
+          } catch (err) {
+            resEl.innerHTML =
+              '<div class="cmv-loading">Error al calcular: ' +
+              err.message +
+              "</div>";
+            console.error(err);
+          } finally {
+            if (btn) btn.disabled = false;
+          }
+        }, 30);
+      }
+    </script>
+
+    <script>
+      // Código JavaScript básico para inicializar la aplicación
+      document.addEventListener("DOMContentLoaded", function () {
+        // Aquí puedes agregar cualquier lógica de inicialización necesaria
+        console.log("La aplicación se ha cargado correctamente.");
       });
     </script>
   </body>
