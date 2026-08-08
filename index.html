@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rangeforge</title>
+    <title>RangeForge</title>
     <link rel="icon" type="image/png" href="RF logo (only square).png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
@@ -11,7 +11,7 @@
     />
     <style>
       /* ══════════════════════════════════════════
-           Rangeforge — Design System v2
+           RangeForge — Design System v2
            Warm Stone + Indigo | Minimalist Elegance
            ══════════════════════════════════════════ */
       :root {
@@ -73,6 +73,72 @@
         user-select: none;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Avisos (reemplazan al alert nativo del navegador) — no bloquean la pantalla */
+      #rf-toast-container {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 8px;
+        z-index: 500;
+        pointer-events: none;
+      }
+      .rf-toast {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 10px 12px;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        overflow: hidden;
+        max-width: 360px;
+        pointer-events: auto;
+        animation: rf-toast-in 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .rf-toast::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--text-faint);
+      }
+      .rf-toast.error::before {
+        background: var(--bluff);
+      }
+      .rf-toast-txt {
+        flex: 1;
+        font-size: 12px;
+        color: var(--text-primary);
+        line-height: 1.5;
+      }
+      .rf-toast-close {
+        color: var(--text-faint);
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 1;
+        padding: 2px;
+      }
+      .rf-toast-close:hover {
+        color: var(--text-secondary);
+      }
+      @keyframes rf-toast-in {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       input,
@@ -319,13 +385,46 @@
         overflow: hidden;
       }
       #empty-state {
+        padding: 50px 0 0 44px;
+      }
+      .empty-eyebrow {
+        font-size: 10px;
+        font-weight: 600;
         color: var(--text-faint);
-        text-align: center;
-        margin-top: 20%;
-        font-size: 11px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        margin-bottom: 14px;
+      }
+      .empty-rule {
+        width: 32px;
+        height: 1px;
+        background: var(--border);
+        margin-bottom: 22px;
+      }
+      .empty-head {
+        font-size: 22px;
         font-weight: 500;
+        color: var(--text-primary);
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+      .empty-sub {
+        font-size: 13px;
+        color: var(--text-muted);
+        max-width: 280px;
+        line-height: 1.6;
+      }
+      .empty-cue {
+        margin-top: 28px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--accent-text);
+      }
+      .empty-cue svg {
+        width: 13px;
+        height: 13px;
       }
 
       #editor {
@@ -360,7 +459,6 @@
         color: #000000;
         margin-right: 12px;
         min-width: 60px;
-        text-transform: uppercase;
         letter-spacing: 0.02em;
         display: flex;
         align-items: center;
@@ -1239,54 +1337,194 @@
         color: var(--text-primary);
         letter-spacing: 0.01em;
       }
-      #cmv-grid {
-        display: inline-grid;
-        grid-template-columns: repeat(13, 24px);
-        gap: 2px;
-        justify-content: center;
-        margin: 8px auto;
-        user-select: none;
-      }
-      .cmv-cell {
-        width: 24px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 7.5px;
-        font-weight: 600;
-        cursor: pointer;
-        border: 1px solid var(--border);
-        background: var(--bg-surface-warm);
-        color: var(--text-faint);
-        border-radius: 2px;
-        transition: all 0.1s;
-      }
-      .cmv-cell:hover {
-        background: var(--bg-hover);
-        color: var(--text-secondary);
-      }
-      .cmv-cell.dead {
-        opacity: 0.2;
-        cursor: not-allowed;
-        filter: grayscale(1);
-      }
-      #cmv-input {
-        width: 100%;
-        margin-bottom: 6px;
-        padding: 6px 8px;
-        font-size: 11px;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        font-family: "Inter", sans-serif;
-        background: var(--bg-surface-warm);
-      }
       .cmv-info {
         font-size: 10px;
         color: var(--text-muted);
-        text-align: center;
-        margin-top: 4px;
         font-weight: 500;
+        flex-shrink: 0;
+      }
+      .cmv-mod {
+        margin-top: 6px;
+        padding: 6px 7px;
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface-warm);
+        flex-shrink: 0;
+      }
+      .cmv-mod:first-of-type {
+        margin-top: 6px;
+      }
+      .cmv-cat-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        padding: 1px 4px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .cmv-cat-row:hover {
+        background: var(--bg-hover);
+      }
+      .cmv-cat-row.cmv-cat-added {
+        background: var(--accent-light);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .cmv-cat-row .cmv-cat-row-name {
+        flex: 1;
+      }
+      .cmv-cat-row .cmv-cat-row-count {
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+        font-size: 9.5px;
+      }
+      .cmv-cat-added .cmv-cat-row-count {
+        color: var(--accent-text);
+      }
+      .cmv-cat-empty {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 6px;
+      }
+      .cmv-weight-picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        margin-bottom: 5px;
+      }
+      .cmv-weight-btn {
+        font-size: 8.5px;
+        font-weight: 600;
+        padding: 2px 5px;
+        border-radius: 3px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+      .cmv-weight-btn.active {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+      #cmv-hgrid {
+        display: grid;
+        grid-template-columns: repeat(13, 27px);
+        user-select: none;
+      }
+      .cmv-hcell {
+        width: 27px;
+        height: 23px;
+        position: relative;
+        background: var(--bg-surface);
+        border-right: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        overflow: hidden;
+      }
+      #cmv-hgrid .cmv-hcell:nth-child(13n + 1) {
+        border-left: 1px solid var(--border-light);
+      }
+      #cmv-hgrid .cmv-hcell:nth-child(-n + 13) {
+        border-top: 1px solid var(--border-light);
+      }
+      .cmv-hcell-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .cmv-hcell-lbl {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-faint);
+      }
+      .cmv-hcell.on .cmv-hcell-lbl {
+        color: var(--text-primary);
+        font-weight: 700;
+      }
+      .cmv-hcell.cmv-hcell-ref {
+        background: var(--accent-light);
+      }
+      .cmv-hcell.cmv-hcell-ref .cmv-hcell-lbl {
+        color: var(--accent-text);
+      }
+      .cmv-hcell.cmv-hcell-clickable {
+        cursor: pointer;
+      }
+      .cmv-hcell.cmv-hcell-clickable:hover {
+        background: var(--bg-hover);
+      }
+      .cmv-hcell.cmv-hcell-na {
+        opacity: 0.3;
+        filter: grayscale(1);
+      }
+      .cmv-added-empty {
+        font-size: 9.5px;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 4px;
+      }
+      .cmv-added-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        padding: 2px 2px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .cmv-added-row:last-child {
+        border-bottom: none;
+      }
+      .cmv-added-row .name {
+        flex: 1;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .cmv-added-row .count {
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+        font-size: 9.5px;
+      }
+      .cmv-added-row .rm-btn {
+        color: var(--bluff);
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 1;
+        padding: 0 2px;
+      }
+      .cmv-eq-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10.5px;
+      }
+      .cmv-eq-table th {
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 9.5px;
+        letter-spacing: 0.02em;
+        padding: 0 4px 4px;
+      }
+      .cmv-eq-table th:not(:first-child),
+      .cmv-eq-table td:not(:first-child) {
+        text-align: right;
+      }
+      .cmv-eq-table td {
+        padding: 4px;
+        border-top: 1px solid var(--border-light);
+        font-variant-numeric: tabular-nums;
+      }
+      .cmv-eq-table tr.cmv-eq-resumen td {
+        font-weight: 700;
+        color: var(--text-primary);
+        border-top: 1px solid var(--border);
       }
       .cmv-eq-box {
         margin-top: 12px;
@@ -1351,14 +1589,14 @@
       }
       .cmv-calc-btn {
         width: 100%;
-        margin-top: 8px;
-        padding: 7px;
-        font-size: 11px;
+        margin-top: 5px;
+        padding: 5px;
+        font-size: 10px;
         font-weight: 600;
         border: 1px solid var(--accent);
         background: var(--accent-light);
         color: var(--accent);
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-sm);
         cursor: pointer;
         transition: all var(--transition);
       }
@@ -1369,78 +1607,6 @@
       .cmv-calc-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
-      }
-      .cmv-cat-box {
-        margin-top: 10px;
-        padding: 8px;
-        border: 1px solid var(--border-light);
-        border-radius: var(--radius-md);
-        background: var(--bg-surface-warm);
-      }
-      .cmv-cat-title {
-        font-size: 10.5px;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 6px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .cmv-cat-quick {
-        display: flex;
-        gap: 4px;
-      }
-      .cmv-cat-quick button {
-        font-size: 9px;
-        padding: 2px 6px;
-        border: 1px solid var(--border);
-        background: var(--bg-surface);
-        color: var(--text-secondary);
-        border-radius: 3px;
-        cursor: pointer;
-      }
-      .cmv-cat-quick button:hover {
-        background: var(--bg-hover);
-      }
-      .cmv-cat-list {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        max-height: 160px;
-        overflow-y: auto;
-      }
-      .cmv-cat-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 10px;
-        color: var(--text-secondary);
-        padding: 3px 4px;
-        border-radius: 3px;
-        cursor: pointer;
-      }
-      .cmv-cat-item:hover {
-        background: var(--bg-hover);
-      }
-      .cmv-cat-item input[type="checkbox"] {
-        width: 12px;
-        height: 12px;
-        cursor: pointer;
-        accent-color: var(--accent);
-        flex-shrink: 0;
-      }
-      .cmv-cat-item .cmv-cat-name {
-        flex: 1;
-      }
-      .cmv-cat-item .cmv-cat-count {
-        font-weight: 600;
-        color: var(--text-muted);
-      }
-      .cmv-cat-empty {
-        font-size: 10px;
-        color: var(--text-muted);
-        text-align: center;
-        padding: 6px;
       }
       .cmv-eq-note {
         font-size: 9.5px;
@@ -2071,36 +2237,51 @@
       }
       #rm-grid {
         display: inline-grid;
-        grid-template-columns: repeat(13, 26px);
-        gap: 2px;
-        justify-content: center;
+        grid-template-columns: repeat(13, 27px);
         margin-top: 10px;
         user-select: none;
       }
       .rm-cell {
-        width: 26px;
-        height: 22px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 8px;
-        font-weight: 600;
+        width: 27px;
+        height: 23px;
+        position: relative;
         cursor: pointer;
-        border: 1px solid var(--border);
+        background: var(--bg-surface);
+        border-right: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        overflow: hidden;
+      }
+      #rm-grid .rm-cell:nth-child(13n + 1) {
+        border-left: 1px solid var(--border-light);
+      }
+      #rm-grid .rm-cell:nth-child(-n + 13) {
+        border-top: 1px solid var(--border-light);
+      }
+      .rm-cell.rm-cell-pair {
         background: var(--bg-surface-warm);
-        color: var(--text-faint);
-        border-radius: 2px;
-        transition: all 0.1s;
       }
       .rm-cell:hover {
         background: var(--bg-hover);
-        color: var(--text-secondary);
       }
-      .rm-cell.active {
-        background: var(--accent-light);
-        color: var(--accent-text);
-        border-color: var(--accent-border);
-        box-shadow: inset 0 0 0 1px var(--accent-border);
+      .rm-cell-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .rm-cell-lbl {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-faint);
+      }
+      .rm-cell.active .rm-cell-lbl {
+        color: var(--text-primary);
+        font-weight: 700;
       }
       .rm-info {
         font-size: 10px;
@@ -2128,7 +2309,7 @@
   </head>
   <body>
     <div id="sidebar">
-      <img src="RangForge%20logo%20SVG.svg" alt="Rangeforge" class="app-logo" />
+      <img src="RangForge%20logo%20SVG.svg" alt="RangeForge" class="app-logo" />
       <div style="display: flex; gap: 5px">
         <input
           type="text"
@@ -2171,7 +2352,29 @@
         </div>
       </div>
       <div id="workspace">
-        <div id="empty-state"><p>Selecciona una textura</p></div>
+        <div id="empty-state">
+          <div class="empty-eyebrow">RangeForge</div>
+          <div class="empty-rule"></div>
+          <div class="empty-head">Nada que revelar todavía.</div>
+          <div class="empty-sub">
+            Elegí una textura del panel de la izquierda, o creá un spot
+            nuevo para empezar.
+          </div>
+          <div class="empty-cue">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            empezá acá
+          </div>
+        </div>
         <div id="editor">
           <div class="workspace-col" id="flop-col">
             <div class="flow-row">
@@ -2373,7 +2576,7 @@
     <div id="card-modal" class="modal-overlay" style="z-index: 150">
       <div class="modal-box">
         <div class="cm-header">
-          <div class="cm-title">Agregar combos</div>
+          <div class="cm-title">Gestión de Rangos</div>
           <div class="cm-selected-hand" id="cm-hand-label">—</div>
         </div>
         <div id="cm-tabs" class="cm-tabs">
@@ -2436,50 +2639,37 @@
           <div class="cm-villain">
             <div class="cm-villain-header">
               <div class="cm-villain-title">Rango del Villano</div>
+              <div class="cmv-info" id="cmv-info"></div>
+            </div>
+
+            <!-- Módulo 1: categorías del rango del villano (multi-selección, clic acumula/saca) -->
+            <div class="cmv-mod" id="cmv-mod1">
+              <div id="cmv-cat-list2"></div>
+            </div>
+
+            <!-- Módulo 2: matriz 13x13 estática — siempre visible, une las categorías activas -->
+            <div class="cmv-mod" id="cmv-mod2">
+              <div class="cmv-weight-picker" id="cmv-weight-picker"></div>
+              <div id="cmv-hgrid"></div>
+            </div>
+
+            <!-- Módulo 3: manos seleccionadas con peso del villano -->
+            <div class="cmv-mod" id="cmv-mod3">
+              <div id="cmv-added-list" class="cmv-added-empty">
+                Elegí una jugada arriba para empezar.
+              </div>
               <button
                 type="button"
-                class="cm-qbtn cm-qbtn-danger"
-                style="font-size: 10px; padding: 3px 8px"
-                onclick="cmvClearRange()"
+                class="cmv-calc-btn"
+                id="cmv-calc-btn"
+                onclick="cmvCalculateEQ()"
+                disabled
               >
-                Limpiar
+                Calcular EQ
               </button>
             </div>
-            <input
-              type="text"
-              id="cmv-input"
-              placeholder="Ej: TT+, AKs, AQo, KQs (Enter para aplicar)"
-              onkeydown="
-                if (event.key === 'Enter') {
-                  cmvParseRangeText();
-                  event.preventDefault();
-                }
-              "
-            />
-            <div id="cmv-grid"></div>
-            <div class="cmv-info" id="cmv-info">0 combos seleccionados</div>
-            <div class="cmv-cat-box" id="cmv-cat-box" style="display: none">
-              <div class="cmv-cat-title">
-                <span>Diseccionar por categoría</span>
-                <div class="cmv-cat-quick">
-                  <button type="button" onclick="cmvCategoryQuickAll()">
-                    Todas
-                  </button>
-                  <button type="button" onclick="cmvCategoryQuickNone()">
-                    Ninguna
-                  </button>
-                </div>
-              </div>
-              <div class="cmv-cat-list" id="cmv-cat-list"></div>
-            </div>
-            <button
-              type="button"
-              class="cmv-calc-btn"
-              id="cmv-calc-btn"
-              onclick="cmvCalculate()"
-            >
-              Calcular equity
-            </button>
+
+            <!-- Módulo 4: output -->
             <div id="cmv-results"></div>
           </div>
         </div>
@@ -2492,9 +2682,27 @@
 
     <div id="modal-range" class="modal-overlay" style="z-index: 150">
       <div class="modal-box">
-        <div class="cm-header" style="text-align: left; margin-bottom: 10px">
-          <div class="cm-title">Rango preflop (Flopzilla style)</div>
+        <div class="cm-header" style="text-align: left; margin-bottom: 6px">
+          <div class="cm-title" id="rm-title">Rango preflop (Flopzilla style)</div>
           <div class="cm-selected-hand" id="rm-info">0 manos (0%)</div>
+        </div>
+        <div class="cm-tabs" style="margin-bottom: 10px">
+          <button
+            type="button"
+            class="cm-tab"
+            id="rm-tab-hero"
+            onclick="rmSwitchMode('hero')"
+          >
+            Mi rango
+          </button>
+          <button
+            type="button"
+            class="cm-tab"
+            id="rm-tab-villain"
+            onclick="rmSwitchMode('villain')"
+          >
+            Rango del villano
+          </button>
         </div>
         <div id="rm-layout">
           <div id="rm-lib">
@@ -2544,7 +2752,7 @@
           class="modal-actions"
           style="margin-top: 15px; justify-content: space-between"
         >
-          <button class="modal-btn danger" onclick="clearRange()">
+          <button class="modal-btn danger" id="rm-clear-btn" onclick="clearRange()">
             Limpiar rango
           </button>
           <div style="display: flex; gap: 8px">
@@ -2683,6 +2891,31 @@
         },
         false,
       );
+
+      // Aviso propio que reemplaza al alert nativo del navegador: no bloquea la pantalla,
+      // se cierra solo. type: "error" (por defecto) | "info".
+      function showToast(message, type) {
+        let container = document.getElementById("rf-toast-container");
+        if (!container) {
+          container = document.createElement("div");
+          container.id = "rf-toast-container";
+          document.body.appendChild(container);
+        }
+        const toast = document.createElement("div");
+        toast.className = "rf-toast" + (type === "info" ? "" : " error");
+        const txt = document.createElement("div");
+        txt.className = "rf-toast-txt";
+        txt.textContent = message;
+        const close = document.createElement("div");
+        close.className = "rf-toast-close";
+        close.innerHTML = "&times;";
+        const remove = () => toast.remove();
+        close.onclick = remove;
+        toast.appendChild(txt);
+        toast.appendChild(close);
+        container.appendChild(toast);
+        setTimeout(remove, 4500);
+      }
 
       const DB_V3 = "poker_app_v12_FIX";
       const DB_KEY = "poker_app_v4";
@@ -2931,7 +3164,7 @@
           clearAll();
           renderSidebar();
         } catch (e) {
-          alert("Error: " + e.message);
+          showToast("Error: " + e.message);
         }
       }
 
@@ -3007,7 +3240,7 @@
               renderSidebar();
             }
           } catch (err) {
-            alert("Error: Archivo no válido.");
+            showToast("Error: Archivo no válido.");
           }
         };
         reader.readAsText(file);
@@ -3097,7 +3330,50 @@
       let rmDragModeAdd = false;
       let rmMouseDown = false;
       let tempPreflopRange = {};
+      let tempVillainRange = {};
+      let rmMode = "hero"; // "hero" | "villain" — qué rango está editando la matriz ahora mismo
       let selectedLibCat = -1;
+
+      // Devuelve el diccionario {hand: peso} que la matriz está mostrando/editando
+      // según la pestaña activa (Mi rango vs Rango del villano).
+      function rmActiveRange() {
+        return rmMode === "villain" ? tempVillainRange : tempPreflopRange;
+      }
+      function rmSetActiveRange(dict) {
+        if (rmMode === "villain") tempVillainRange = dict;
+        else tempPreflopRange = dict;
+      }
+
+      function rmSwitchMode(mode) {
+        rmMode = mode;
+        document
+          .getElementById("rm-tab-hero")
+          .classList.toggle("active", mode === "hero");
+        document
+          .getElementById("rm-tab-villain")
+          .classList.toggle("active", mode === "villain");
+        document.getElementById("rm-title").textContent =
+          mode === "villain"
+            ? "Rango del villano (Flopzilla style)"
+            : "Rango preflop (Flopzilla style)";
+        document.getElementById("rm-input").placeholder =
+          mode === "villain"
+            ? "Ej: AA-TT, AKs, AQo (rango con el que te paga)"
+            : "Ej: AA-44, AKs-A2s, T9s...";
+        document.getElementById("rm-clear-btn").textContent =
+          mode === "villain" ? "Limpiar rango del villano" : "Limpiar mi rango";
+        updateRangeInputText();
+        renderRangeGrid();
+      }
+
+      // Rango del rival del spot activo (paralelo a getActivePreflopRange)
+      function getActiveVillainRange() {
+        if (aS === -1 || !data.spots[aS]) return {};
+        return typeof data.spots[aS].villainRange === "object" &&
+          !Array.isArray(data.spots[aS].villainRange)
+          ? data.spots[aS].villainRange
+          : {};
+      }
 
       function openRangeModal(idx) {
         rangeSpotIdx = idx;
@@ -3108,12 +3384,19 @@
         ) {
           data.spots[idx].preflopRange = {};
         }
+        if (
+          typeof data.spots[idx].villainRange !== "object" ||
+          Array.isArray(data.spots[idx].villainRange) ||
+          data.spots[idx].villainRange === null
+        ) {
+          data.spots[idx].villainRange = {};
+        }
         tempPreflopRange = { ...data.spots[idx].preflopRange };
+        tempVillainRange = { ...data.spots[idx].villainRange };
         selectedLibCat = -1;
         renderLibrary();
-        updateRangeInputText();
-        renderRangeGrid();
         document.getElementById("modal-range").style.display = "flex";
+        rmSwitchMode("hero");
       }
 
       function getColorForWeight(w) {
@@ -3136,38 +3419,37 @@
       function renderRangeGrid() {
         let gridHtml = "";
         const activeWeights = new Set();
+        const activeRange = rmActiveRange();
 
         RANKS.forEach((r1, i) => {
           RANKS.forEach((r2, j) => {
-            let hand, type, label;
+            let hand, type;
             if (i === j) {
               hand = r1 + r2;
               type = "p";
-              label = hand;
             } else if (i < j) {
               hand = r1 + r2;
               type = "s";
-              label = hand + "s";
             } else {
               hand = r2 + r1;
               type = "o";
-              label = hand + "o";
             }
 
             const key = hand + type;
-            const weight = tempPreflopRange[key] || 0;
+            const weight = activeRange[key] || 0;
             const active = weight > 0;
 
             if (active) activeWeights.add(weight);
 
-            let styleAttr = "";
-            if (active) {
-              const bg = getColorForWeight(weight);
-              // Letra oscura para que resalte sobre el color pastel
-              styleAttr = `style="background-color:${bg}; color: var(--text-primary); border-color:${bg}; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"`;
-            }
+            const cls =
+              "rm-cell" +
+              (type === "p" ? " rm-cell-pair" : "") +
+              (active ? " active" : "");
+            const barStyle = active
+              ? `height:${weight}%;background:${getColorForWeight(weight)};`
+              : "height:0;";
 
-            gridHtml += `<div class="rm-cell" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)" ${styleAttr}>${label}</div>`;
+            gridHtml += `<div class="${cls}" data-key="${key}" onmousedown="rmCellDown(event,'${key}')" onmouseover="rmCellOver(event,'${key}')" onmouseup="rmCellUp(event)"><div class="rm-cell-bar" style="${barStyle}"></div><div class="rm-cell-lbl">${hand}</div></div>`;
           });
         });
 
@@ -3210,9 +3492,9 @@
         }
         legendEl.innerHTML = legendHtml;
 
-        const totalCombos = countCombosInRange(tempPreflopRange);
-        const handCount = Object.keys(tempPreflopRange).filter(
-          (k) => tempPreflopRange[k] > 0,
+        const totalCombos = countCombosInRange(activeRange);
+        const handCount = Object.keys(activeRange).filter(
+          (k) => activeRange[k] > 0,
         ).length;
         document.getElementById("rm-info").textContent =
           `${handCount} manos (${totalCombos} combos)`;
@@ -3234,7 +3516,7 @@
 
       function rmCellDown(e, key) {
         rmMouseDown = true;
-        const set = new Set(Object.keys(tempPreflopRange));
+        const set = new Set(Object.keys(rmActiveRange()));
         rmDragModeAdd = !set.has(key);
         rmApplyAction(key);
         e.preventDefault();
@@ -3250,10 +3532,11 @@
       });
 
       function rmApplyAction(key) {
+        const activeRange = rmActiveRange();
         if (rmDragModeAdd) {
-          tempPreflopRange[key] = 100; // Al hacer click, pone 100% por defecto
+          activeRange[key] = 100; // Al hacer click, pone 100% por defecto
         } else {
-          delete tempPreflopRange[key]; // Al borrar, quita la mano
+          delete activeRange[key]; // Al borrar, quita la mano
         }
         renderRangeGrid();
         updateRangeInputText();
@@ -3264,7 +3547,7 @@
         const rangeDict = {};
 
         if (!text.trim()) {
-          tempPreflopRange = {};
+          rmSetActiveRange({});
           renderRangeGrid();
           return;
         }
@@ -3287,7 +3570,7 @@
           processRangeTokens(innerText, weight, rangeDict);
         }
 
-        tempPreflopRange = rangeDict;
+        rmSetActiveRange(rangeDict);
         renderRangeGrid();
       }
 
@@ -3297,7 +3580,31 @@
           t = t.trim();
           if (t.length < 2) return;
 
-          if (t.includes("-")) {
+          if (t.endsWith("+")) {
+            // "TT+" -> TT y todos los pares mejores (hasta AA).
+            // "AJs+" / "KTo+" -> AJs..AKs (mismo ancla, kicker mejora hasta uno menos que el ancla).
+            const body = t.slice(0, -1);
+            if (body.length < 2) return;
+            const r1 = body[0],
+              r2 = body[1];
+            if (!RANKS.includes(r1) || !RANKS.includes(r2)) return;
+            const isPair = r1 === r2;
+            if (isPair) {
+              const i1 = RANKS.indexOf(r1);
+              for (let i = 0; i <= i1; i++) {
+                rangeDict[RANKS[i] + RANKS[i] + "p"] = weight;
+              }
+            } else {
+              const suffix = body.length > 2 ? body[2].toUpperCase() : "S";
+              const g = suffix === "O" ? "o" : "s";
+              const iAnchor = RANKS.indexOf(r1);
+              const iKicker = RANKS.indexOf(r2);
+              if (iKicker <= iAnchor) return; // el kicker ya es igual o mejor que el ancla
+              for (let i = iAnchor + 1; i <= iKicker; i++) {
+                rangeDict[r1 + RANKS[i] + g] = weight;
+              }
+            }
+          } else if (t.includes("-")) {
             const parts = t.split("-");
             if (parts.length === 2) {
               const a = parts[0].trim();
@@ -3451,18 +3758,19 @@
       }
 
       function updateRangeInputText() {
-        const text = generateRangeString(tempPreflopRange);
+        const text = generateRangeString(rmActiveRange());
         document.getElementById("rm-input").value = text;
       }
 
       function clearRange() {
-        tempPreflopRange = {};
+        rmSetActiveRange({});
         document.getElementById("rm-input").value = "";
         renderRangeGrid();
       }
 
       function applyRangeToSpot() {
         data.spots[rangeSpotIdx].preflopRange = tempPreflopRange;
+        data.spots[rangeSpotIdx].villainRange = tempVillainRange;
         commit();
         closeModal("range");
       }
@@ -4366,7 +4674,7 @@
             pcTempFlopCards.splice(idx, 1);
           } else {
             if (pcTempFlopCards.length >= 3) {
-              alert("Máximo 3 cartas para el Flop.");
+              showToast("Máximo 3 cartas para el Flop.");
               return;
             }
             pcTempFlopCards.push(card);
@@ -4376,7 +4684,7 @@
           let node = data.spots[aS].textures[aT].flopNodes[aF];
           if (!node.turnCards) node.turnCards = [];
           if (node.turnCards.length >= 6) {
-            alert("Máximo 6 Turn Cards.");
+            showToast("Máximo 6 Turn Cards.");
             return;
           }
           node.turnCards.push({ name: card.toUpperCase(), turnActions: [] });
@@ -4388,7 +4696,7 @@
               .turnActions[aTA];
           if (!act.riverCards) act.riverCards = [];
           if (act.riverCards.length >= 6) {
-            alert("Máximo 6 River Cards.");
+            showToast("Máximo 6 River Cards.");
             return;
           }
           act.riverCards.push({ name: card.toUpperCase(), riverActions: [] });
@@ -4475,7 +4783,7 @@
             if (!node.turnCards) node.turnCards = [];
             // LÍMITE AJUSTADO A 6 AQUÍ
             if (node.turnCards.length >= 6) {
-              alert("Máximo 6 Turn Cards.");
+              showToast("Máximo 6 Turn Cards.");
               closeModal("nodo");
               return;
             }
@@ -4483,7 +4791,7 @@
             selectTurnCard(node.turnCards.length - 1);
           } else if (mTarget === "turnAction") {
             if (aF === -1 || aTC === -1) {
-              alert("Selecciona una Turn Card primero.");
+              showToast("Selecciona una Turn Card primero.");
               closeModal("nodo");
               return;
             }
@@ -4500,7 +4808,7 @@
             selectTurnAction(card.turnActions.length - 1);
           } else if (mTarget === "riverCard") {
             if (aF === -1 || aTC === -1 || aTA === -1) {
-              alert("Selecciona una acción de Turn primero.");
+              showToast("Selecciona una acción de Turn primero.");
               closeModal("nodo");
               return;
             }
@@ -4510,7 +4818,7 @@
             if (!act.riverCards) act.riverCards = [];
             // LÍMITE AJUSTADO A 6 AQUÍ
             if (act.riverCards.length >= 6) {
-              alert("Máximo 6 River Cards.");
+              showToast("Máximo 6 River Cards.");
               closeModal("nodo");
               return;
             }
@@ -4518,7 +4826,7 @@
             selectRiverCard(act.riverCards.length - 1);
           } else if (mTarget === "riverAction") {
             if (aF === -1 || aTC === -1 || aTA === -1 || aRC === -1) {
-              alert("Selecciona una River Card primero.");
+              showToast("Selecciona una River Card primero.");
               closeModal("nodo");
               return;
             }
@@ -4538,7 +4846,7 @@
           closeModal("nodo");
         } catch (e) {
           console.error("Error en confirmModal:", e, "mTarget:", mTarget);
-          alert("Ocurrió un error al crear la pestaña. Revisa la consola.");
+          showToast("Ocurrió un error al crear la pestaña. Revisa la consola.");
           closeModal("nodo");
         }
       }
@@ -5290,11 +5598,16 @@
         board,
       ) {
         const buckets = [
-          { label: "80-100%", min: 0.8, max: 1.01, weight: 0 },
-          { label: "60-80%", min: 0.6, max: 0.8, weight: 0 },
-          { label: "40-60%", min: 0.4, max: 0.6, weight: 0 },
-          { label: "20-40%", min: 0.2, max: 0.4, weight: 0 },
-          { label: "0-20%", min: -0.01, max: 0.2, weight: 0 },
+          { label: "90-100%", min: 0.9, max: 1.01, weight: 0 },
+          { label: "80-90%", min: 0.8, max: 0.9, weight: 0 },
+          { label: "70-80%", min: 0.7, max: 0.8, weight: 0 },
+          { label: "60-70%", min: 0.6, max: 0.7, weight: 0 },
+          { label: "50-60%", min: 0.5, max: 0.6, weight: 0 },
+          { label: "40-50%", min: 0.4, max: 0.5, weight: 0 },
+          { label: "30-40%", min: 0.3, max: 0.4, weight: 0 },
+          { label: "20-30%", min: 0.2, max: 0.3, weight: 0 },
+          { label: "10-20%", min: 0.1, max: 0.2, weight: 0 },
+          { label: "0-10%", min: -0.01, max: 0.1, weight: 0 },
         ];
 
         const boardInt = board.map(eqObjToInt);
@@ -5346,6 +5659,140 @@
                 b.weight += w;
                 break;
               }
+            }
+          }
+        }
+
+        const bucketsPct = buckets.map((b) => ({
+          label: b.label,
+          pct: totalWeight > 0 ? (b.weight / totalWeight) * 100 : 0,
+        }));
+        const avgEquity = totalWeight > 0 ? totalEquity / totalWeight : null;
+        return { buckets: bucketsPct, avgEquity, totalWeight };
+      }
+
+      // ══════════════════════════════════════════
+      //  Wrapper WASM para distribución de equity del villano.
+      //  Llama a window.EqWasm.calculate_range_equity UNA VEZ POR CADA
+      //  combo villano (rango1 = combo único, rango2 = rango hero completo),
+      //  acumula resultados en buckets. Misma firma/salida que eqVillainBuckets
+      //  para poder usarse como reemplazo directo (con fallback).
+      // ══════════════════════════════════════════
+      const EQ_WASM_TRIALS = 15000;
+
+      // {r,s} -> "Ah" (rank letra mayúscula + suit minúscula), formato esperado por WASM
+      function eqObjToWasmStr(c) {
+        const rankChar =
+          c.r === 14
+            ? "A"
+            : c.r === 13
+              ? "K"
+              : c.r === 12
+                ? "Q"
+                : c.r === 11
+                  ? "J"
+                  : c.r === 10
+                    ? "T"
+                    : String(c.r);
+        return rankChar + c.s;
+      }
+
+      function eqComboIdToWasmStr(comboId) {
+        // comboId ya viene como "AhKd" (rank+suit x2), formato compatible directo
+        return comboId;
+      }
+
+      // Deja que el navegador respire (repinte, atienda clics) entre tandas
+      // de cálculo largas, sin necesidad de un Web Worker.
+      function eqYieldToUI() {
+        return new Promise((resolve) => setTimeout(resolve, 0));
+      }
+
+      async function wasmVillainBuckets(
+        villainRangeExpanded,
+        heroRangeExpanded,
+        board,
+      ) {
+        const buckets = [
+          { label: "90-100%", min: 0.9, max: 1.01, weight: 0 },
+          { label: "80-90%", min: 0.8, max: 0.9, weight: 0 },
+          { label: "70-80%", min: 0.7, max: 0.8, weight: 0 },
+          { label: "60-70%", min: 0.6, max: 0.7, weight: 0 },
+          { label: "50-60%", min: 0.5, max: 0.6, weight: 0 },
+          { label: "40-50%", min: 0.4, max: 0.5, weight: 0 },
+          { label: "30-40%", min: 0.3, max: 0.4, weight: 0 },
+          { label: "20-30%", min: 0.2, max: 0.3, weight: 0 },
+          { label: "10-20%", min: 0.1, max: 0.2, weight: 0 },
+          { label: "0-10%", min: -0.01, max: 0.1, weight: 0 },
+        ];
+
+        if (!window.EqWasm || !window.EqWasm.ready) {
+          throw new Error("EqWasm no disponible");
+        }
+
+        const boardInt = board.map(eqObjToInt);
+        const boardSet = new Set(boardInt);
+        const boardStr = board.map(eqObjToWasmStr).join(",");
+
+        // Filtrar villano y hero por colisión con board
+        const villList = [];
+        for (let i = 0; i < villainRangeExpanded.length; i++) {
+          const v = villainRangeExpanded[i];
+          const vi1 = v.intCards ? v.intCards[0] : eqObjToInt(v.cards[0]);
+          const vi2 = v.intCards ? v.intCards[1] : eqObjToInt(v.cards[1]);
+          if (boardSet.has(vi1) || boardSet.has(vi2)) continue;
+          villList.push(v);
+        }
+
+        const heroStrParts = [];
+        for (let i = 0; i < heroRangeExpanded.length; i++) {
+          const h = heroRangeExpanded[i];
+          const hi1 = h.intCards ? h.intCards[0] : eqObjToInt(h.cards[0]);
+          const hi2 = h.intCards ? h.intCards[1] : eqObjToInt(h.cards[1]);
+          if (boardSet.has(hi1) || boardSet.has(hi2)) continue;
+          const c1s = eqObjToWasmStr(h.cards[0]);
+          const c2s = eqObjToWasmStr(h.cards[1]);
+          heroStrParts.push(`${c1s}${c2s}:${h.weight}`);
+        }
+        const heroStr = heroStrParts.join(",");
+
+        if (villList.length === 0 || heroStrParts.length === 0)
+          return {
+            buckets: buckets.map((b) => ({ label: b.label, pct: 0 })),
+            avgEquity: null,
+            totalWeight: 0,
+          };
+
+        let totalWeight = 0;
+        let totalEquity = 0;
+
+        for (let vi = 0; vi < villList.length; vi++) {
+          if (vi > 0 && vi % 20 === 0) {
+            await eqYieldToUI();
+          }
+          const v = villList[vi];
+          const c1s = eqObjToWasmStr(v.cards[0]);
+          const c2s = eqObjToWasmStr(v.cards[1]);
+          const villStr = `${c1s}${c2s}:1.0`;
+          const ranges = villStr + "|" + heroStr;
+
+          const resultStr = window.EqWasm.calculate_range_equity(
+            ranges,
+            boardStr,
+            "",
+            EQ_WASM_TRIALS,
+          );
+          const parts = resultStr.split(",");
+          const equity = parseFloat(parts[0]);
+          if (isNaN(equity)) continue;
+
+          const w = v.weight;
+          totalWeight += w;
+          totalEquity += equity * w;
+          for (const b of buckets) {
+            if (equity >= b.min && equity < b.max) {
+              b.weight += w;
+              break;
             }
           }
         }
@@ -5682,34 +6129,34 @@
 
       function autoFillPanel(type) {
         if (isNodeLocked(type))
-          return alert(
+          return showToast(
             "Desbloquea el nodo actual para usar el autoreconocimiento.",
           );
 
         if (type === "turnAction") {
           if (aF === -1)
-            return alert("Selecciona una pestaña de Flop primero.");
+            return showToast("Selecciona una pestaña de Flop primero.");
           const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
           if (!flopNode || !flopNode.locked)
-            return alert(
+            return showToast(
               "Debes bloquear el nodo del Flop (candado cerrado) para autodetectar en el Turn.",
             );
           if (getComboCountFromNode(flopNode) === 0)
-            return alert(
+            return showToast(
               "La pestaña de Flop activa no tiene combos. No hay nada que autodetectar.",
             );
         } else if (type === "riverAction") {
           if (aTA === -1)
-            return alert("Selecciona una pestaña de Turn primero.");
+            return showToast("Selecciona una pestaña de Turn primero.");
           const turnNode =
             data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC]
               .turnActions[aTA];
           if (!turnNode || !turnNode.locked)
-            return alert(
+            return showToast(
               "Debes bloquear el nodo del Turn (candado cerrado) para autodetectar en el River.",
             );
           if (getComboCountFromNode(turnNode) === 0)
-            return alert(
+            return showToast(
               "La pestaña de Turn activa no tiene combos. No hay nada que autodetectar.",
             );
         }
@@ -5718,7 +6165,7 @@
         if (!node) return;
         const board = getActiveBoard(type);
         if (!board || board.length < 3) {
-          alert("Define el board primero (mínimo el flop).");
+          showToast("Define el board primero (mínimo el flop).");
           return;
         }
         const hasData =
@@ -5833,7 +6280,7 @@
         });
 
         if (newCombos.length === 0) {
-          return alert(
+          return showToast(
             "No se encontraron combos válidos para autodetectar. Revisa que la pestaña anterior tenga combos y no estén todos bloqueados/eliminados.",
           );
         }
@@ -5850,32 +6297,32 @@
 
       function autoFillSingleCategory(type, ci) {
         if (isNodeLocked(type))
-          return alert(
+          return showToast(
             "Desbloquea el nodo actual para usar el autoreconocimiento.",
           );
 
         if (type === "turnAction") {
           if (aF === -1)
-            return alert("Selecciona una pestaña de Flop primero.");
+            return showToast("Selecciona una pestaña de Flop primero.");
           const flopNode = data.spots[aS].textures[aT].flopNodes[aF];
           if (!flopNode || !flopNode.locked)
-            return alert(
+            return showToast(
               "Debes bloquear el nodo del Flop (candado cerrado) para autodetectar en el Turn.",
             );
           if (getComboCountFromNode(flopNode) === 0)
-            return alert("La pestaña de Flop activa no tiene combos.");
+            return showToast("La pestaña de Flop activa no tiene combos.");
         } else if (type === "riverAction") {
           if (aTA === -1)
-            return alert("Selecciona una pestaña de Turn primero.");
+            return showToast("Selecciona una pestaña de Turn primero.");
           const turnNode =
             data.spots[aS].textures[aT].flopNodes[aF].turnCards[aTC]
               .turnActions[aTA];
           if (!turnNode || !turnNode.locked)
-            return alert(
+            return showToast(
               "Debes bloquear el nodo del Turn (candado cerrado) para autodetectar en el River.",
             );
           if (getComboCountFromNode(turnNode) === 0)
-            return alert("La pestaña de Turn activa no tiene combos.");
+            return showToast("La pestaña de Turn activa no tiene combos.");
         }
 
         const node = getNodeByType(type);
@@ -5885,7 +6332,7 @@
 
         const board = getActiveBoard(type);
         if (!board || board.length < 3) {
-          alert("Define el board primero (mínimo el flop).");
+          showToast("Define el board primero (mínimo el flop).");
           return;
         }
 
@@ -6229,7 +6676,7 @@
 
       function openCardModal2(ci, type, cid) {
         if (isNodeLocked(type))
-          return alert("Desbloquea el nodo para editar combos.");
+          return showToast("Desbloquea el nodo para editar combos.");
         cmCtx = { ci, type, cid };
         cmHand = null;
         cmSelectedHands = [];
@@ -6797,7 +7244,7 @@
 
       function openComboModal(type) {
         if (isNodeLocked(type))
-          return alert("Desbloquea el nodo para agregar jugadas.");
+          return showToast("Desbloquea el nodo para agregar jugadas.");
         currentEditType = type;
         let node = getNodeByType(type);
         if (!node) return;
@@ -6973,15 +7420,15 @@
         try {
           let node = getNodeByType(currentEditType);
           if (!node || node.locked) {
-            alert("Desbloquea el nodo para subir imágenes.");
+            showToast("Desbloquea el nodo para subir imágenes.");
             return;
           }
           if (!file) {
-            alert("No se recibió archivo.");
+            showToast("No se recibió archivo.");
             return;
           }
           if (file.size > 15 * 1024 * 1024) {
-            alert(
+            showToast(
               "Imagen demasiado grande (" +
                 (file.size / 1024 / 1024).toFixed(1) +
                 "MB). Maximo 15MB. Reducila antes de subirla.",
@@ -7014,7 +7461,7 @@
                   canvas.getContext("2d").drawImage(img, 0, 0, w, h);
 
                   if (!node) {
-                    alert("Error: no hay nodo activo.");
+                    showToast("Error: no hay nodo activo.");
                     return;
                   }
                   let dataUrl = canvas.toDataURL("image/jpeg", 0.65);
@@ -7036,7 +7483,7 @@
                   } catch (e) {
                     delete node.imageData;
                     updateMicroButtons(currentEditType, node);
-                    alert(
+                    showToast(
                       "No se pudo guardar la imagen. El almacenamiento del navegador esta lleno.\n\nSolucion: borra imagenes viejas o exporta la DB y limpia el navegador.\n\nError: " +
                         e.message,
                     );
@@ -7044,23 +7491,23 @@
                   }
                   openImgModal(currentEditType);
                 } catch (err) {
-                  alert("Error al procesar imagen: " + err.message);
+                  showToast("Error al procesar imagen: " + err.message);
                 }
               };
               img.onerror = function () {
-                alert("Error: no se pudo cargar la imagen.");
+                showToast("Error: no se pudo cargar la imagen.");
               };
               img.src = e.target.result;
             } catch (err) {
-              alert("Error al crear imagen: " + err.message);
+              showToast("Error al crear imagen: " + err.message);
             }
           };
           reader.onerror = function () {
-            alert("Error al leer el archivo.");
+            showToast("Error al leer el archivo.");
           };
           reader.readAsDataURL(file);
         } catch (err) {
-          alert("Error en processImageFile: " + err.message);
+          showToast("Error en processImageFile: " + err.message);
         }
       }
       function handleImageUpload(event) {
@@ -7072,7 +7519,7 @@
           processImageFile(f);
           event.target.value = "";
         } catch (err) {
-          alert("Error en handleImageUpload: " + err.message);
+          showToast("Error en handleImageUpload: " + err.message);
         }
       }
       function deleteImage() {
@@ -7103,7 +7550,7 @@
         if (aRA !== -1) type = "riverAction";
         else if (aTA !== -1) type = "turnAction";
         else if (aF === -1) {
-          alert("Selecciona un nodo primero para pegar la imagen.");
+          showToast("Selecciona un nodo primero para pegar la imagen.");
           return;
         }
         currentEditType = type;
@@ -7119,52 +7566,184 @@
       });
 
       // ══════════════════════════════════════════
-      //  PANEL VILLANO — rango del oponente + cálculo de equity
+      //  PANEL VILLANO — equity del rango del rival (definido en el botón "R",
+      //  data.spots[aS].villainRange), armado por categoría de mano con peso.
       // ══════════════════════════════════════════
-      let cmvVillainRange = {};
-      let cmvMouseDown = false;
-      let cmvDragModeAdd = false;
-
-      function cmvGetNode() {
-        if (!cmCtx) return null;
-        return getNodeByType(cmCtx.type);
-      }
-
-      let cmvSelectedCategories = new Set();
+      let cmvActiveCategories = new Set(); // catIds activas (multi-selección, clic acumula/saca)
+      let cmvPendingWeight = 100; // peso elegido en el selector de la matriz
+      let cmvHandWeights = {}; // {handKey: pesoPintado%} — pintura compartida entre categorías activas
 
       function cmvInit() {
-        const node = cmvGetNode();
-        if (!node) {
-          cmvVillainRange = {};
-        } else {
-          if (!node.villainRange || typeof node.villainRange !== "object") {
-            node.villainRange = {};
-          }
-          cmvVillainRange = node.villainRange;
-        }
-        const inputEl = document.getElementById("cmv-input");
-        if (inputEl) inputEl.value = "";
-        const resEl = document.getElementById("cmv-results");
-        if (resEl) resEl.innerHTML = "";
-        cmvSelectedCategories = new Set();
-        cmvRenderGrid();
+        cmvActiveCategories = new Set();
+        cmvPendingWeight = 100;
+        cmvHandWeights = {};
+        cmvRenderModule1();
+        cmvRenderModule2();
+        cmvRenderModule3();
         cmvUpdateInfo();
-        cmvRenderCategoryCheckboxes();
+        document.getElementById("cmv-results").innerHTML = "";
       }
 
-      function cmvSave() {
-        const node = cmvGetNode();
-        if (node) {
-          node.villainRange = cmvVillainRange;
-          commit();
-        }
-      }
-
-      function cmvRenderGrid() {
-        const gridEl = document.getElementById("cmv-grid");
-        if (!gridEl) return;
+      // Clasifica el rango del villano (botón R) por categoría de mano según
+      // el board activo. Retorna { catId: [{id, rangeWeight}, ...] }
+      function getVillainCategoryUniverse(type) {
+        const result = {};
+        const board = getActiveBoard(type) || [];
+        if (board.length < 3) return result; // sin board no hay categorías
+        const street = board.length;
         const deadSet = getDeadCards();
+        const villainRange = getActiveVillainRange();
+        Object.keys(villainRange).forEach((key) => {
+          const weight = villainRange[key];
+          if (!weight || weight <= 0) return;
+          const r1 = key[0],
+            r2 = key[1];
+          const isPair = r1 === r2;
+          const g = isPair ? "p" : key[2];
+          suitCombos(r1 + r2).forEach((sc) => {
+            if (g === "s" && sc.g !== "s") return;
+            if (g === "o" && sc.g !== "o") return;
+            if (g === "p" && sc.g !== "p") return;
+            const c1 = sc.id.slice(0, 2).toLowerCase();
+            const c2 = sc.id.slice(2, 4).toLowerCase();
+            if (deadSet.has(c1) || deadSet.has(c2)) return;
+            const cat = bestCategory([c1, c2], board, street);
+            if (!result[cat]) result[cat] = [];
+            result[cat].push({ id: sc.id, rangeWeight: weight });
+          });
+        });
+        return result;
+      }
+
+      function cmvUpdateInfo() {
+        const el = document.getElementById("cmv-info");
+        if (!el) return;
+        const villainRange = getActiveVillainRange();
+        const hasRange = Object.keys(villainRange).some(
+          (k) => villainRange[k] > 0,
+        );
+        el.textContent = hasRange
+          ? ""
+          : "Definí el rango del villano en el botón R del spot.";
+      }
+
+      // ── Módulo 1: lista de categorías (misma taxonomía que el botón +) ──
+      function cmvRenderModule1() {
+        const listEl = document.getElementById("cmv-cat-list2");
+        if (!listEl || !cmCtx) return;
+        const universe = getVillainCategoryUniverse(cmCtx.type);
+        const catIds = Object.keys(universe);
+        if (catIds.length === 0) {
+          listEl.innerHTML =
+            '<div class="cmv-cat-empty">Sin categorías todavía (definí el rango del villano en el botón R y el board).</div>';
+          return;
+        }
+        const sortedCats = COMBOS_MASTER.filter((m) => universe[m.id]).sort(
+          (a, b) => a.sort - b.sort,
+        );
         let html = "";
+        sortedCats.forEach((m) => {
+          const combos = universe[m.id];
+          const count = combos.reduce((s, c) => s + c.rangeWeight / 100, 0);
+          const active = cmvActiveCategories.has(m.id);
+          html += `<div class="cmv-cat-row${active ? " cmv-cat-added" : ""}" onclick="cmvToggleCategory('${m.id}')">
+            <span class="cmv-cat-row-name">${m.name}</span>
+            <span class="cmv-cat-row-count">${count.toFixed(1)}</span>
+          </div>`;
+        });
+        listEl.innerHTML = html;
+      }
+
+      // ── Módulo 2: matriz de combos exactos de la categoría + peso ──
+      const CMV_WEIGHT_STEPS = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10];
+
+      // "AhKs" -> "AKs" / "AhAd" -> "AAp" (mismo formato de clave que usa el
+      // botón R). El peso se pinta por mano, no por combo suelto: el rango
+      // del botón R ya aplica el mismo peso a todos los combos de una mano.
+      function eqComboIdToHandKey(id) {
+        const r1 = id[0].toUpperCase(),
+          s1 = id[1].toLowerCase();
+        const r2 = id[2].toUpperCase(),
+          s2 = id[3].toLowerCase();
+        if (r1 === r2) return r1 + r2 + "p";
+        const i1 = RANKS.indexOf(r1),
+          i2 = RANKS.indexOf(r2);
+        const hi = i1 < i2 ? r1 : r2,
+          lo = i1 < i2 ? r2 : r1;
+        return hi + lo + (s1 === s2 ? "s" : "o");
+      }
+
+      // Click en una categoría del módulo 1: la acumula (o la saca si ya
+      // estaba activa) — no reemplaza a las demás categorías activas.
+      function cmvToggleCategory(catId) {
+        if (!cmCtx) return;
+        const universe = getVillainCategoryUniverse(cmCtx.type);
+        const combos = universe[catId];
+        if (!combos || combos.length === 0) return;
+
+        if (cmvActiveCategories.has(catId)) {
+          cmvActiveCategories.delete(catId);
+          // Limpiar pesos de manos que ya no pertenecen a NINGUNA categoría activa
+          const stillActiveHands = new Set();
+          cmvActiveCategories.forEach((cid) => {
+            (universe[cid] || []).forEach((c) =>
+              stillActiveHands.add(eqComboIdToHandKey(c.id)),
+            );
+          });
+          new Set(combos.map((c) => eqComboIdToHandKey(c.id))).forEach((h) => {
+            if (!stillActiveHands.has(h)) delete cmvHandWeights[h];
+          });
+        } else {
+          cmvActiveCategories.add(catId);
+          // Pre-pintar al 100% las manos nuevas que todavía no tengan peso
+          combos.forEach((c) => {
+            const handKey = eqComboIdToHandKey(c.id);
+            if (!(handKey in cmvHandWeights)) cmvHandWeights[handKey] = 100;
+          });
+        }
+        cmvRenderModule1();
+        cmvRenderModule2();
+        cmvRenderModule3();
+      }
+
+      function cmvSetPendingWeight(w) {
+        cmvPendingWeight = w;
+        cmvRenderModule2();
+      }
+
+      function cmvToggleHandWeight(handKey) {
+        if (cmvHandWeights[handKey] === cmvPendingWeight) {
+          delete cmvHandWeights[handKey];
+        } else {
+          cmvHandWeights[handKey] = cmvPendingWeight;
+        }
+        cmvRenderModule2();
+        cmvRenderModule3();
+      }
+
+      // Matriz 13x13 estática (siempre visible): las manos de CUALQUIER
+      // categoría activa son pintables; el resto del rango del botón R se ve
+      // atenuado solo como referencia.
+      function cmvRenderModule2() {
+        if (!cmCtx) return;
+        const universe = getVillainCategoryUniverse(cmCtx.type);
+        const activeHands = new Set();
+        cmvActiveCategories.forEach((catId) => {
+          (universe[catId] || []).forEach((c) =>
+            activeHands.add(eqComboIdToHandKey(c.id)),
+          );
+        });
+        const villainRange = getActiveVillainRange();
+
+        let pickerHtml = "";
+        CMV_WEIGHT_STEPS.forEach((w) => {
+          const bg = getColorForWeight(w);
+          const active = w === cmvPendingWeight ? " active" : "";
+          pickerHtml += `<div class="cmv-weight-btn${active}" style="background:${bg}" onclick="cmvSetPendingWeight(${w})">${w}%</div>`;
+        });
+        document.getElementById("cmv-weight-picker").innerHTML = pickerHtml;
+
+        let gridHtml = "";
         RANKS.forEach((r1, i) => {
           RANKS.forEach((r2, j) => {
             let hand, grp, label;
@@ -7182,221 +7761,138 @@
               label = hand + "o";
             }
             const key = hand + grp;
+            const inActive = activeHands.has(key);
+            const inVillainRange = (villainRange[key] || 0) > 0;
+            const painted = cmvHandWeights[key];
 
-            // Determinar si toda la mano está muerta (todas sus combinaciones chocan con dead cards)
-            let allDead = true;
-            for (const sc of suitCombos(hand)) {
-              if (grp === "s" && sc.g !== "s") continue;
-              if (grp === "o" && sc.g !== "o") continue;
-              if (grp === "p" && sc.g !== "p") continue;
-              const c1 = sc.id.slice(0, 2).toLowerCase();
-              const c2 = sc.id.slice(2, 4).toLowerCase();
-              if (!deadSet.has(c1) && !deadSet.has(c2)) {
-                allDead = false;
-                break;
-              }
+            let cls = "cmv-hcell";
+            let barStyle = "height:0;";
+            if (painted) {
+              cls += " on";
+              barStyle = `height:${painted}%;background:${getColorForWeight(painted)};`;
+            } else if (inVillainRange) {
+              cls += " cmv-hcell-ref";
             }
-
-            const weight = cmvVillainRange[key] || 0;
-            const active = weight > 0;
-            let style = "";
-            if (active) {
-              style =
-                'style="background:var(--accent-light);color:var(--accent-text);border-color:var(--accent-border);font-weight:700;"';
-            }
-            const cls = allDead ? "cmv-cell dead" : "cmv-cell";
-            const click = allDead
-              ? ""
-              : `onmousedown="cmvCellDown(event,'${key}')" onmouseover="cmvCellOver(event,'${key}')"`;
-            html += `<div class="${cls}" data-key="${key}" ${click} ${style} title="${label}">${label}</div>`;
+            if (!inActive) cls += " cmv-hcell-na";
+            else cls += " cmv-hcell-clickable";
+            const click = inActive
+              ? ` onclick="cmvToggleHandWeight('${key}')"`
+              : "";
+            gridHtml += `<div class="${cls}"${click} title="${label}"><div class="cmv-hcell-bar" style="${barStyle}"></div><div class="cmv-hcell-lbl">${hand}</div></div>`;
           });
         });
-        gridEl.innerHTML = html;
+        document.getElementById("cmv-hgrid").innerHTML = gridHtml;
       }
 
-      function cmvCellDown(e, key) {
-        cmvMouseDown = true;
-        cmvDragModeAdd = !cmvVillainRange[key];
-        cmvApplyCell(key);
-        e.preventDefault();
-      }
-      function cmvCellOver(e, key) {
-        if (cmvMouseDown) cmvApplyCell(key);
-      }
-      document.addEventListener("mouseup", function () {
-        if (cmvMouseDown) {
-          cmvMouseDown = false;
-          cmvSave();
-        }
-      });
-
-      function cmvApplyCell(key) {
-        if (cmvDragModeAdd) {
-          cmvVillainRange[key] = 100;
-        } else {
-          delete cmvVillainRange[key];
-        }
-        cmvRenderGrid();
-        cmvUpdateInfo();
-        cmvRenderCategoryCheckboxes();
-      }
-
-      function cmvClearRange() {
-        cmvVillainRange = {};
-        const inputEl = document.getElementById("cmv-input");
-        if (inputEl) inputEl.value = "";
-        cmvSelectedCategories = new Set();
-        cmvRenderGrid();
-        cmvUpdateInfo();
-        cmvSave();
-        const resEl = document.getElementById("cmv-results");
-        if (resEl) resEl.innerHTML = "";
-        cmvRenderCategoryCheckboxes();
-      }
-
-      function cmvParseRangeText() {
-        const inputEl = document.getElementById("cmv-input");
-        if (!inputEl) return;
-        const text = inputEl.value.toUpperCase();
-        if (!text.trim()) return;
-        // Reutiliza el parser existente de rangos preflop
-        const dict = {};
-        processRangeTokens(text, 100, dict);
-        // Fusiona con el rango actual (no reemplaza)
-        Object.keys(dict).forEach((k) => {
-          cmvVillainRange[k] = dict[k];
+      // Arma la lista de categorías activas + sus combos pesados, en vivo,
+      // a partir de cmvActiveCategories + cmvHandWeights (no hay paso de
+      // "confirmar": pintar en la matriz ya es el estado real).
+      function cmvGetActiveEntries() {
+        if (!cmCtx) return [];
+        const universe = getVillainCategoryUniverse(cmCtx.type);
+        const entries = [];
+        cmvActiveCategories.forEach((catId) => {
+          const combos = universe[catId];
+          if (!combos) return;
+          const chosen = [];
+          combos.forEach((c) => {
+            const handKey = eqComboIdToHandKey(c.id);
+            const paintedWeight = cmvHandWeights[handKey];
+            if (!paintedWeight) return;
+            chosen.push({
+              id: c.id,
+              handKey,
+              rangeWeight: c.rangeWeight,
+              paintedWeight,
+              finalWeight: (c.rangeWeight * paintedWeight) / 100,
+            });
+          });
+          if (chosen.length === 0) return;
+          const meta = COMBOS_MASTER.find((m) => m.id === catId);
+          entries.push({
+            catId,
+            name: meta ? meta.name : catId,
+            combos: chosen,
+          });
         });
-        inputEl.value = "";
-        cmvRenderGrid();
-        cmvUpdateInfo();
-        cmvSave();
-        cmvRenderCategoryCheckboxes();
+        return entries;
       }
 
-      // ─────────────────────────────────────────
-      // Clasificación del rango villano por categoría (según board activo)
-      // Retorna { catId: { combos: [ids...], weight: number } }
-      // ─────────────────────────────────────────
-      function cmvClassifyVillainRange() {
-        const result = {};
-        if (!cmCtx) return result;
-        const board = getActiveBoard(cmCtx.type) || [];
-        if (board.length < 3) return result; // sin board no hay categorías (preflop)
-        const street = board.length;
-        const deadSet = getDeadCards();
-        const expanded = eqExpandRange(cmvVillainRange, deadSet);
-        expanded.forEach((combo) => {
-          const c1 = combo.id.slice(0, 2).toLowerCase();
-          const c2 = combo.id.slice(2, 4).toLowerCase();
-          const cat = bestCategory([c1, c2], board, street);
-          if (!result[cat]) result[cat] = { combos: [], weight: 0 };
-          result[cat].combos.push(combo.id);
-          result[cat].weight += combo.weight;
-        });
-        return result;
-      }
-
-      // Renderiza los checkboxes de categoría en #cmv-cat-list y muestra/oculta la caja
-      function cmvRenderCategoryCheckboxes() {
-        const box = document.getElementById("cmv-cat-box");
-        const list = document.getElementById("cmv-cat-list");
-        if (!box || !list) return;
-
-        const classification = cmvClassifyVillainRange();
-        const catIds = Object.keys(classification);
-
-        if (catIds.length === 0) {
-          box.style.display = "none";
-          list.innerHTML = "";
+      // ── Módulo 3: manos seleccionadas con peso + disparador del cálculo ──
+      function cmvRenderModule3() {
+        const listEl = document.getElementById("cmv-added-list");
+        const btn = document.getElementById("cmv-calc-btn");
+        const entries = cmvGetActiveEntries();
+        if (entries.length === 0) {
+          listEl.className = "cmv-added-empty";
+          listEl.innerHTML = "Elegí una jugada arriba para empezar.";
+          if (btn) btn.disabled = true;
           return;
         }
-
-        box.style.display = "block";
-
-        // Mantener sólo las categorías seleccionadas que aún existen
-        cmvSelectedCategories = new Set(
-          Array.from(cmvSelectedCategories).filter((id) => classification[id]),
-        );
-
-        const sortedCats = COMBOS_MASTER.filter(
-          (m) => classification[m.id],
-        ).sort((a, b) => a.sort - b.sort);
-
+        listEl.className = "";
         let html = "";
-        sortedCats.forEach((m) => {
-          const info = classification[m.id];
-          const checked = cmvSelectedCategories.has(m.id) ? "checked" : "";
-          html += `<label class="cmv-cat-item">
-            <input type="checkbox" data-cat="${m.id}" ${checked} onchange="cmvOnCategoryToggle('${m.id}', this.checked)" />
-            <span class="cmv-cat-name">${m.name}</span>
-            <span class="cmv-cat-count">${info.weight.toFixed(1)}</span>
-          </label>`;
+        entries.forEach((entry) => {
+          const count = entry.combos.reduce(
+            (s, c) => s + c.finalWeight / 100,
+            0,
+          );
+          html += `<div class="cmv-added-row">
+            <span class="name">${entry.name}</span>
+            <span class="count">${count.toFixed(1)} combos</span>
+            <span class="rm-btn" onclick="cmvToggleCategory('${entry.catId}')">×</span>
+          </div>`;
         });
-        list.innerHTML = html;
+        listEl.innerHTML = html;
+        if (btn) btn.disabled = false;
       }
 
-      function cmvOnCategoryToggle(catId, checked) {
-        if (checked) cmvSelectedCategories.add(catId);
-        else cmvSelectedCategories.delete(catId);
-      }
+      // ── Módulo 4: cálculo — tabla por jugada + resumen + EQ buckets ──
+      // Cache del último cálculo: si las manos agregadas, los combos propios,
+      // el board o la jugada activa no cambiaron, se reutiliza el resultado
+      // en vez de recalcular todo desde cero (ver EQUITY_AUDIT.md, punto 10).
+      let cmvLastCalcKey = null;
+      let cmvLastCalcHtml = null;
 
-      function cmvGetSelectedCategories() {
-        return Array.from(cmvSelectedCategories);
-      }
+      // Techo de trabajo para el motor de respaldo JS de la distribución
+      // rango-vs-rango. Por encima de esto, el respaldo JS puede tardar
+      // muchos segundos y congelar la pantalla (ver EQUITY_AUDIT.md, punto
+      // 8.3), así que se omite esa sección en vez de bloquear la interfaz.
+      const CMV_JS_FALLBACK_PAIR_CAP = 3000;
 
-      function cmvCategoryQuickAll() {
-        const classification = cmvClassifyVillainRange();
-        cmvSelectedCategories = new Set(Object.keys(classification));
-        cmvRenderCategoryCheckboxes();
-      }
-
-      function cmvCategoryQuickNone() {
-        cmvSelectedCategories = new Set();
-        cmvRenderCategoryCheckboxes();
-      }
-
-      function cmvUpdateInfo() {
-        const el = document.getElementById("cmv-info");
-        if (!el) return;
-        const deadSet = getDeadCards();
-        let totalCombos = 0;
-        let totalHands = 0;
-        Object.keys(cmvVillainRange).forEach((key) => {
-          const w = cmvVillainRange[key];
-          if (!w || w <= 0) return;
-          totalHands++;
-          const r1 = key[0],
-            r2 = key[1];
-          const isPair = r1 === r2;
-          const g = isPair ? "p" : key[2];
-          suitCombos(r1 + r2).forEach((sc) => {
-            if (g === "s" && sc.g !== "s") return;
-            if (g === "o" && sc.g !== "o") return;
-            if (g === "p" && sc.g !== "p") return;
-            const c1 = sc.id.slice(0, 2).toLowerCase();
-            const c2 = sc.id.slice(2, 4).toLowerCase();
-            if (deadSet.has(c1) || deadSet.has(c2)) return;
-            totalCombos += w / 100;
-          });
+      // Equity promedio ponderada de un grupo de combos del villano (con su
+      // peso final) contra el/los combo(s) actuales de hero.
+      function cmvComputeCategoryEQ(comboEntries, heroComboIds, boardCards) {
+        if (comboEntries.length === 0 || heroComboIds.length === 0)
+          return { avgEq: null, combos: 0 };
+        const catCombosInt = comboEntries.map((e) => eqComboToInts(e.id));
+        const heroList = heroComboIds.map((id) => {
+          const ints = eqComboToInts(id);
+          return { i1: ints[0], i2: ints[1], weight: getComboWeight(id) || 1 };
         });
-        el.textContent =
-          totalHands === 0
-            ? "0 combos seleccionados"
-            : totalHands + " manos — " + totalCombos.toFixed(1) + " combos";
+        const boardInt = boardCards.map(eqObjToInt);
+        const results = eqCoreBatch(catCombosInt, heroList, boardInt);
+        let totalW = 0,
+          totalEqW = 0;
+        results.forEach((res, idx) => {
+          if (res.weight === 0) return;
+          const eq = (res.win + res.tie / 2) / res.weight;
+          const w = comboEntries[idx].finalWeight / 100;
+          totalEqW += eq * w;
+          totalW += w;
+        });
+        return { avgEq: totalW > 0 ? totalEqW / totalW : null, combos: totalW };
       }
 
-      function cmvCalculate() {
+      function cmvCalculateEQ() {
         if (!cmCtx) return;
         const btn = document.getElementById("cmv-calc-btn");
         const resEl = document.getElementById("cmv-results");
         if (!resEl) return;
 
-        const hasVillainRange = Object.keys(cmvVillainRange).some(
-          (k) => cmvVillainRange[k] > 0,
-        );
-        if (!hasVillainRange) {
+        const activeEntries = cmvGetActiveEntries();
+        if (activeEntries.length === 0) {
           resEl.innerHTML =
-            '<div class="cmv-loading">Selecciona un rango de villano primero.</div>';
+            '<div class="cmv-loading">Agregá al menos una jugada con peso.</div>';
           return;
         }
 
@@ -7411,44 +7907,108 @@
         const board = getActiveBoard(cmCtx.type) || [];
         const boardCards = board.map((c2) => eqParseCard(c2));
 
+        const calcKey = JSON.stringify({
+          t: cmCtx.type,
+          ci: cmCtx.ci,
+          added: activeEntries,
+          h: heroComboIds.slice().sort(),
+          b: board,
+        });
+        if (calcKey === cmvLastCalcKey && cmvLastCalcHtml !== null) {
+          resEl.innerHTML = cmvLastCalcHtml;
+          return;
+        }
+
         if (btn) btn.disabled = true;
-        resEl.innerHTML = '<div class="cmv-loading">Calculando equity...</div>';
+        resEl.innerHTML = '<div class="cmv-loading">Calculando EQ...</div>';
 
-        setTimeout(() => {
+        setTimeout(async () => {
           try {
-            const deadSet = getDeadCards();
-            const villainExpanded = eqExpandRange(cmvVillainRange, deadSet);
-
-            const eqResult = eqComboListVsRange(
-              heroComboIds,
-              villainExpanded,
-              boardCards,
-            );
-
-            const bucketsResult = eqVillainBuckets(
-              villainExpanded,
-              heroComboIds.map((id) => ({
-                cards: eqComboToCards(id),
-                weight: getComboWeight(id) || 1,
-              })),
-              boardCards,
-            );
+            // 1) Tabla por jugada + resumen
+            let sumCombos = 0;
+            let sumEqW = 0;
+            const rows = activeEntries.map((entry) => {
+              const r = cmvComputeCategoryEQ(
+                entry.combos,
+                heroComboIds,
+                boardCards,
+              );
+              if (r.avgEq !== null) {
+                sumCombos += r.combos;
+                sumEqW += r.avgEq * r.combos;
+              }
+              return { name: entry.name, combos: r.combos, eq: r.avgEq };
+            });
+            const resumenEq = sumCombos > 0 ? sumEqW / sumCombos : null;
 
             let html = '<div class="cmv-eq-box">';
-            html += '<div class="cmv-eq-title">Equity vs Rango Villano</div>';
-            if (eqResult.equity === null) {
-              html +=
-                '<div class="cmv-eq-sub">No hay matchups válidos (colisión total de cartas).</div>';
-            } else {
-              html += `<div class="cmv-eq-val">${(eqResult.equity * 100).toFixed(1)}%</div>`;
-              html += `<div class="cmv-eq-sub">${eqResult.n} combo(s) de tu mano evaluados</div>`;
-            }
-            html += "</div>";
+            html += '<div class="cmv-eq-title">EQ por jugada</div>';
+            html += '<table class="cmv-eq-table"><thead><tr>';
+            html += "<th>Mano</th><th># Combos</th><th>EQ</th>";
+            html += "</tr></thead><tbody>";
+            rows.forEach((r) => {
+              html += `<tr><td>${r.name}</td><td>${r.combos.toFixed(1)}</td><td>${r.eq === null ? "—" : (r.eq * 100).toFixed(1) + "%"}</td></tr>`;
+            });
+            html += `<tr class="cmv-eq-resumen"><td>Resumen</td><td>${sumCombos.toFixed(1)}</td><td>${resumenEq === null ? "—" : (resumenEq * 100).toFixed(1) + "%"}</td></tr>`;
+            html += "</tbody></table></div>";
 
-            if (bucketsResult.totalWeight > 0) {
-              html += '<div class="cmv-eq-box">';
+            // 2) EQ buckets del rango COMPLETO del villano (botón R), de 10 en 10%
+            const deadSet = getDeadCards();
+            const villainRange = getActiveVillainRange();
+            const villainExpanded = eqExpandRange(villainRange, deadSet);
+            const heroExpandedForBuckets = heroComboIds.map((id) => ({
+              cards: eqComboToCards(id),
+              weight: getComboWeight(id) || 1,
+            }));
+
+            const pairCount =
+              villainExpanded.length * heroExpandedForBuckets.length;
+            const wasmAvailable = window.EqWasm && window.EqWasm.ready;
+
+            let bucketsResult = null;
+            let bucketsSkipped = false;
+
+            if (villainExpanded.length === 0) {
+              bucketsSkipped = true;
+            } else if (wasmAvailable) {
+              try {
+                bucketsResult = await wasmVillainBuckets(
+                  villainExpanded,
+                  heroExpandedForBuckets,
+                  boardCards,
+                );
+              } catch (wasmErr) {
+                console.warn(
+                  "wasmVillainBuckets falló, usando fallback JS:",
+                  wasmErr,
+                );
+                if (pairCount > CMV_JS_FALLBACK_PAIR_CAP) {
+                  bucketsSkipped = true;
+                } else {
+                  bucketsResult = eqVillainBuckets(
+                    villainExpanded,
+                    heroExpandedForBuckets,
+                    boardCards,
+                  );
+                }
+              }
+            } else if (pairCount > CMV_JS_FALLBACK_PAIR_CAP) {
+              bucketsSkipped = true;
+            } else {
+              bucketsResult = eqVillainBuckets(
+                villainExpanded,
+                heroExpandedForBuckets,
+                boardCards,
+              );
+            }
+
+            html += '<div class="cmv-eq-box">';
+            html +=
+              '<div class="cmv-eq-title">EQ buckets (rango completo del villano)</div>';
+            if (bucketsSkipped) {
               html +=
-                '<div class="cmv-eq-title">Distribución de equity del Villano</div>';
+                '<div class="cmv-eq-sub">No disponible: no hay rango del villano definido en el botón R, o el motor rápido (WASM) no está listo y el rango es demasiado amplio para calcularla sin congelar la pantalla.</div>';
+            } else if (bucketsResult && bucketsResult.totalWeight > 0) {
               html += `<div class="cmv-eq-sub" style="margin-bottom:6px;">Equity promedio del villano: <b>${(bucketsResult.avgEquity * 100).toFixed(1)}%</b></div>`;
               html += '<div class="cmv-buckets">';
               bucketsResult.buckets.forEach((b) => {
@@ -7458,9 +8018,15 @@
                 html += `<div class="cmv-bucket-pct">${b.pct.toFixed(1)}%</div>`;
                 html += "</div>";
               });
-              html += "</div></div>";
+              html += "</div>";
+            } else {
+              html +=
+                '<div class="cmv-eq-sub">No hay matchups válidos (colisión total de cartas).</div>';
             }
+            html += "</div>";
 
+            cmvLastCalcKey = calcKey;
+            cmvLastCalcHtml = html;
             resEl.innerHTML = html;
           } catch (err) {
             resEl.innerHTML =
@@ -7481,6 +8047,290 @@
         // Aquí puedes agregar cualquier lógica de inicialización necesaria
         console.log("La aplicación se ha cargado correctamente.");
       });
+    </script>
+
+    <!-- ══════════════════════════════════════════
+         Motor de equity WASM (@cloviz/eq-mc) — embebido inline en base64.
+         Se usa para calcular la distribución de equity del rango completo
+         del villano (calculate_range_equity), con fallback automático al
+         motor JS (eqVillainBuckets) si WASM falla o no carga a tiempo.
+         ══════════════════════════════════════════ -->
+    <script src="wasm/eq_mc_data.js"></script>
+    <script>
+      window.EqWasm = { ready: false, mod: null, wasm: null };
+
+      (function () {
+        // ---- Runtime mínimo adaptado de eq_mc.js (sin import/export, sin fetch) ----
+        function getImports() {
+          const imports = {
+            __proto__: null,
+            __wbg___wbindgen_is_function_0095a73b8b156f76: function (arg0) {
+              return typeof arg0 === "function";
+            },
+            __wbg___wbindgen_is_object_5ae8e5880f2c1fbd: function (arg0) {
+              return typeof arg0 === "object" && arg0 !== null;
+            },
+            __wbg___wbindgen_is_string_cd444516edc5b180: function (arg0) {
+              return typeof arg0 === "string";
+            },
+            __wbg___wbindgen_is_undefined_9e4d92534c42d778: function (arg0) {
+              return arg0 === undefined;
+            },
+            __wbg___wbindgen_throw_be289d5034ed271b: function (arg0, arg1) {
+              throw new Error(getStringFromWasm0(arg0, arg1));
+            },
+            __wbg_call_389efe28435a9388: function (arg0, arg1) {
+              try {
+                return arg0.call(arg1);
+              } catch (e) {
+                handleErr(e);
+              }
+            },
+            __wbg_call_4708e0c13bdc8e95: function (arg0, arg1, arg2) {
+              try {
+                return arg0.call(arg1, arg2);
+              } catch (e) {
+                handleErr(e);
+              }
+            },
+            __wbg_crypto_86f2631e91b51511: function (arg0) {
+              return arg0.crypto;
+            },
+            __wbg_getRandomValues_b3f15fcbfabb0f8b: function (arg0, arg1) {
+              try {
+                arg0.getRandomValues(arg1);
+              } catch (e) {
+                handleErr(e);
+              }
+            },
+            __wbg_length_32ed9a279acd054c: function (arg0) {
+              return arg0.length;
+            },
+            __wbg_msCrypto_d562bbe83e0d4b91: function (arg0) {
+              return arg0.msCrypto;
+            },
+            __wbg_new_no_args_1c7c842f08d00ebb: function (arg0, arg1) {
+              return new Function(getStringFromWasm0(arg0, arg1));
+            },
+            __wbg_new_with_length_a2c39cbe88fd8ff1: function (arg0) {
+              return new Uint8Array(arg0 >>> 0);
+            },
+            __wbg_node_e1f24f89a7336c2e: function (arg0) {
+              return arg0.node;
+            },
+            __wbg_process_3975fd6c72f520aa: function (arg0) {
+              return arg0.process;
+            },
+            __wbg_prototypesetcall_bdcdcc5842e4d77d: function (
+              arg0,
+              arg1,
+              arg2,
+            ) {
+              Uint8Array.prototype.set.call(
+                getArrayU8FromWasm0(arg0, arg1),
+                arg2,
+              );
+            },
+            __wbg_randomFillSync_f8c153b79f285817: function (arg0, arg1) {
+              try {
+                arg0.randomFillSync(arg1);
+              } catch (e) {
+                handleErr(e);
+              }
+            },
+            __wbg_require_b74f47fc2d022fd6: function () {
+              try {
+                throw new Error("require not supported in browser");
+              } catch (e) {
+                handleErr(e);
+              }
+            },
+            __wbg_static_accessor_GLOBAL_12837167ad935116: function () {
+              const ret = typeof global === "undefined" ? null : global;
+              return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+            },
+            __wbg_static_accessor_GLOBAL_THIS_e628e89ab3b1c95f: function () {
+              const ret = typeof globalThis === "undefined" ? null : globalThis;
+              return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+            },
+            __wbg_static_accessor_SELF_a621d3dfbb60d0ce: function () {
+              const ret = typeof self === "undefined" ? null : self;
+              return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+            },
+            __wbg_static_accessor_WINDOW_f8727f0cf888e0bd: function () {
+              const ret = typeof window === "undefined" ? null : window;
+              return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+            },
+            __wbg_subarray_a96e1fef17ed23cb: function (arg0, arg1, arg2) {
+              return arg0.subarray(arg1 >>> 0, arg2 >>> 0);
+            },
+            __wbg_versions_4e31226f5e8dc909: function (arg0) {
+              return arg0.versions;
+            },
+            __wbindgen_cast_0000000000000001: function (arg0, arg1) {
+              return getArrayU8FromWasm0(arg0, arg1);
+            },
+            __wbindgen_cast_0000000000000002: function (arg0, arg1) {
+              return getStringFromWasm0(arg0, arg1);
+            },
+            __wbindgen_init_externref_table: function () {
+              const table = wasm.__wbindgen_externrefs;
+              const offset = table.grow(4);
+              table.set(0, undefined);
+              table.set(offset + 0, undefined);
+              table.set(offset + 1, null);
+              table.set(offset + 2, true);
+              table.set(offset + 3, false);
+            },
+          };
+          return { __proto__: null, "./eq_mc_bg.js": imports };
+        }
+
+        let wasm = null;
+        let cachedUint8Mem = null;
+        function getU8Mem() {
+          if (cachedUint8Mem === null || cachedUint8Mem.byteLength === 0) {
+            cachedUint8Mem = new Uint8Array(wasm.memory.buffer);
+          }
+          return cachedUint8Mem;
+        }
+        function getArrayU8FromWasm0(ptr, len) {
+          ptr = ptr >>> 0;
+          return getU8Mem().subarray(ptr, ptr + len);
+        }
+        const textDecoder = new TextDecoder("utf-8", {
+          ignoreBOM: true,
+          fatal: true,
+        });
+        function getStringFromWasm0(ptr, len) {
+          ptr = ptr >>> 0;
+          return textDecoder.decode(getU8Mem().subarray(ptr, ptr + len));
+        }
+        const textEncoder = new TextEncoder();
+        function passStringToWasm0(arg, malloc, realloc) {
+          if (realloc === undefined) {
+            const buf = textEncoder.encode(arg);
+            const ptr = malloc(buf.length, 1) >>> 0;
+            getU8Mem()
+              .subarray(ptr, ptr + buf.length)
+              .set(buf);
+            WASM_VECTOR_LEN = buf.length;
+            return ptr;
+          }
+          let len = arg.length;
+          let ptr = malloc(len, 1) >>> 0;
+          const mem = getU8Mem();
+          let offset = 0;
+          for (; offset < len; offset++) {
+            const code = arg.charCodeAt(offset);
+            if (code > 0x7f) break;
+            mem[ptr + offset] = code;
+          }
+          if (offset !== len) {
+            if (offset !== 0) arg = arg.slice(offset);
+            ptr = realloc(ptr, len, (len = offset + arg.length * 3), 1) >>> 0;
+            const view = getU8Mem().subarray(ptr + offset, ptr + len);
+            const ret = textEncoder.encodeInto(arg, view);
+            offset += ret.written;
+            ptr = realloc(ptr, len, offset, 1) >>> 0;
+          }
+          WASM_VECTOR_LEN = offset;
+          return ptr;
+        }
+        let WASM_VECTOR_LEN = 0;
+        function isLikeNone(x) {
+          return x === undefined || x === null;
+        }
+        function addToExternrefTable0(obj) {
+          const idx = wasm.__externref_table_alloc();
+          wasm.__wbindgen_externrefs.set(idx, obj);
+          return idx;
+        }
+        let lastErr = null;
+        function handleErr(e) {
+          lastErr = e;
+          const idx = addToExternrefTable0(e);
+          wasm.__wbindgen_exn_store(idx);
+        }
+
+        function base64ToBytes(b64) {
+          const binStr = atob(b64);
+          const len = binStr.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) bytes[i] = binStr.charCodeAt(i);
+          return bytes;
+        }
+
+        function initEqWasm() {
+          try {
+            if (typeof EQ_WASM_B64 === "undefined") {
+              console.warn(
+                "EqWasm: EQ_WASM_B64 no definido, usando fallback JS.",
+              );
+              return;
+            }
+            const bytes = base64ToBytes(EQ_WASM_B64);
+            const imports = getImports();
+            const module = new WebAssembly.Module(bytes);
+            const instance = new WebAssembly.Instance(module, imports);
+            wasm = instance.exports;
+            cachedUint8Mem = null;
+            wasm.__wbindgen_start();
+
+            window.EqWasm.mod = module;
+            window.EqWasm.wasm = wasm;
+            window.EqWasm.ready = true;
+
+            window.EqWasm.calculate_range_equity = function (
+              ranges,
+              board,
+              deadCards,
+              trials,
+            ) {
+              const ptr0 = passStringToWasm0(
+                ranges,
+                wasm.__wbindgen_malloc,
+                wasm.__wbindgen_realloc,
+              );
+              const len0 = WASM_VECTOR_LEN;
+              const ptr1 = passStringToWasm0(
+                board,
+                wasm.__wbindgen_malloc,
+                wasm.__wbindgen_realloc,
+              );
+              const len1 = WASM_VECTOR_LEN;
+              const ptr2 = passStringToWasm0(
+                deadCards,
+                wasm.__wbindgen_malloc,
+                wasm.__wbindgen_realloc,
+              );
+              const len2 = WASM_VECTOR_LEN;
+              const ret = wasm.calculate_range_equity(
+                ptr0,
+                len0,
+                ptr1,
+                len1,
+                ptr2,
+                len2,
+                trials,
+              );
+              const result = getStringFromWasm0(ret[0], ret[1]);
+              wasm.__wbindgen_free(ret[0], ret[1], 1);
+              return result;
+            };
+
+            console.log("EqWasm: motor WASM de equity cargado correctamente.");
+          } catch (e) {
+            console.warn(
+              "EqWasm: fallo al inicializar WASM, se usará fallback JS.",
+              e,
+            );
+            window.EqWasm.ready = false;
+          }
+        }
+
+        initEqWasm();
+      })();
     </script>
   </body>
 </html>

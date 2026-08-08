@@ -1,0 +1,31 @@
+{
+  "name": "@cloviz/eq-mc",
+  "type": "module",
+  "version": "0.1.7",
+  "description": "Poker equity calculator compiled to WebAssembly",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CLOViZ-inc/rust-utils.git",
+    "directory": "eq_mc"
+  },
+  "keywords": [
+    "poker",
+    "equity",
+    "texas-holdem",
+    "wasm",
+    "webassembly"
+  ],
+  "files": [
+    "eq_mc_bg.wasm",
+    "eq_mc_bg.wasm.d.ts",
+    "eq_mc.js",
+    "eq_mc.d.ts",
+    "README.md"
+  ],
+  "main": "eq_mc.js",
+  "types": "eq_mc.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
